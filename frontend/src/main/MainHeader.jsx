@@ -1,9 +1,13 @@
 import React from "react";
-
+import MainTitle from "../mainImg/Title ver kingsman.png"
 
 function MainHeader() {
-
-
+    const styles={
+        TitleImgSize:{
+            width:"210px",
+            height:"50px"
+        }
+    }
 
     return (
         <div>
@@ -16,6 +20,9 @@ function MainHeader() {
                     <ul className="navbar-nav">
                         <li className="nav-item active">
                             <a className="nav-link" href="#">Menu 1</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href = "#"><img src={MainTitle} style={styles.TitleImgSize} alt={""}/></a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#">Menu 2</a>
