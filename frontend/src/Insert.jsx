@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 
-function Insert(props){
+function Insert(props) {
 
     const [HName, setHName] = useState('');
     const [HAddr, setHAddr] = useState('');
@@ -10,33 +10,30 @@ function Insert(props){
     const [HMealChild, setHMealChild] = useState('');
 
 
+    const nameChangeHandler = (e) => {
+        setHName(e.target.value);
 
+    }
 
+    const addrChangeHandler = (e) => {
+        setHAddr(e.target.value);
 
-const nameChangeHandler = (e)=>{
-    setHName(e.target.value);
+    }
 
-}
+    const telChangeHandler = (e) => {
+        setHTEl(e.target.value);
 
-const addrChangeHandler = (e)=>{
-    setHAddr(e.target.value);
+    }
 
-}
+    const mealAdultChangeHandler = (e) => {
+        setHMealAdult(e.target.value);
 
-const telChangeHandler = (e)=>{
-    setHTEl(e.target.value);
+    }
 
-}
+    const mealChildChangeHandler = (e) => {
+        setHMealChild(e.target.value);
 
-const mealAdultChangeHandler = (e)=>{
-    setHMealAdult(e.target.value);
-
-}
-
-const mealChildChangeHandler = (e)=>{
-    setHMealChild(e.target.value);
-
-}
+    }
 
     const insert = (e) => {
 
@@ -49,11 +46,14 @@ const mealChildChangeHandler = (e)=>{
             hotelMealChild: Number(HMealChild),
         }
 
+        const roomInfo = {
+            rName: HName,
+            TC: Number(HAddr),
+            FC: Number(HTel),
+        }
 
 
-
-
-        axios.post("http://localhost:8080/insert",hotelInfo
+        axios.post("http://localhost:8080/insert", null, {params: roomInfo}
         ).then((req) => {
             console.log("데이터 전송 성공")
             console.log(req.data);
@@ -65,17 +65,15 @@ const mealChildChangeHandler = (e)=>{
     }
 
 
-
-
-    return(
+    return (
         <div>
             <form onSubmit={insert} action={"#"}>
-            <input onChange={nameChangeHandler}/>
-            <input onChange={addrChangeHandler}/>
-            <input onChange={telChangeHandler}/>
-            <input onChange={mealAdultChangeHandler}/>
-            <input onChange={mealChildChangeHandler}/>
-            <button type={"submit"}>보내기</button>
+                <input onChange={nameChangeHandler}/>
+                <input onChange={addrChangeHandler}/>
+                <input onChange={telChangeHandler}/>
+                <input onChange={mealAdultChangeHandler}/>
+                <input onChange={mealChildChangeHandler}/>
+                <button type={"submit"}>보내기</button>
             </form>
         </div>
     );

@@ -12,4 +12,5 @@ public class SinDto {
     private int hotelMealAdult;
     private int hotelMealChild;
 
+
 }

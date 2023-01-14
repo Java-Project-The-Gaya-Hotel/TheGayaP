@@ -13,4 +13,13 @@
         values (#{hotelName}, #{hotelAddr}, #{hotelTel}, #{hotelMealAdult}, #{hotelMealChild});
     </insert>
 
+    <insert id="insertRoom" parameterType="com.gaya.thegayap.dto.SinDto2">
+        insert into room_table(room_hotel_idx, room_name, room_twin_cost, room_twin_weekend, room_family_cost,room_family_weekend,room_code)
+        values (#{roomHotelIdx}, #{roomName}, #{roomTwinCost}, #{roomTwinWeekend}, #{roomFamilyCost},#{roomFamilyWeekend},#{roomCode});
+    </insert>
+
+    <select id="checkCodeOverlap" parameterType="String" resultType="int">
+        select count(*) from room_table where room_code = #{code};
+    </select>
+
 </mapper>

@@ -1,12 +1,10 @@
 package com.gaya.thegayap.controller;
 
 import com.gaya.thegayap.dto.SinDto;
+import com.gaya.thegayap.dto.SinDto2;
 import com.gaya.thegayap.service.SinService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -16,15 +14,15 @@ public class SinController {
     SinService sinService;
 
 
-//    호텔 DB 넣기
 
-//    @RequestMapping("/insert")
-//    public void insert(@RequestBody SinDto sinDto) throws Exception {
-//        sinService.insertHotel(sinDto);
-//    }
-    
+
     @RequestMapping("/insert")
-    public void insert(@RequestBody SinDto sinDto) throws Exception {
-        sinService.insertHotel(sinDto);
+    public void insert(@RequestParam("rName") String name, @RequestParam("TC") int twinCost, @RequestParam("FC") int familyCost ) throws Exception {
+        //    호텔 DB 넣기
+//        sinService.insertHotel(sinDto);
+        sinService.insertRoom(name,twinCost,familyCost);
+
+
     }
+
 }
