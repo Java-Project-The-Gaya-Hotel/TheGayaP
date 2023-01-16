@@ -1,5 +1,6 @@
 import React from "react";
 import MainTitle from "../mainImg/Title ver kingsman.png"
+import {Link, Outlet} from "react-router-dom";
 
 function MainHeader() {
     const styles={
@@ -19,7 +20,7 @@ function MainHeader() {
                 <div className="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
                     <ul className="navbar-nav">
                         <li className="nav-item active">
-                            <a className="nav-link" href="#">Menu 1</a>
+                            <Link to={"/"}>Home</Link>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href = "#"><img src={MainTitle} style={styles.TitleImgSize} alt={""}/></a>
@@ -30,6 +31,8 @@ function MainHeader() {
                     </ul>
                 </div>
             </nav>
+
+            <Outlet/>
         </div>
     )
 }

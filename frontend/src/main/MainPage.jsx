@@ -3,7 +3,6 @@ import MainFooter from "./MainFooter";
 import MainHeader from "./MainHeader";
 import Carosel from "./Carosel"
 import MainDatePicker from "./MainDatePicker";
-import {BrowserRouter, Routes, route} from "react-router-dom";
 
 
 function MainPage(props) {
@@ -11,17 +10,9 @@ function MainPage(props) {
 
     return (
         <div>
-            {/*pageRouter*/}
-            {/*<BrowserRouter>*/}
-            {/*    <Routes>*/}
-            {/*        <Route>*/}
-
-            {/*        </Route>*/}
-            {/*    </Routes>*/}
-            {/*</BrowserRouter>*/}
-
-            {/*Header*/}
-            <MainHeader/>
+            <div>
+                {/*<MainHeader/>*/}
+            </div>
 
             {/*main*/}
             <main>
