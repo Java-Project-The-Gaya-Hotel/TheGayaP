@@ -1,8 +1,9 @@
 import React from "react";
 import MainFooter from "./MainFooter";
-import MainHeader from "./MainHeader";
 import Carosel from "./Carosel"
 import MainDatePicker from "./MainDatePicker";
+import DateChoose from "./DateChoose";
+import MainExtra from "./MainExtra";
 
 
 function MainPage(props) {
@@ -10,9 +11,6 @@ function MainPage(props) {
 
     return (
         <div>
-            <div>
-                {/*<MainHeader/>*/}
-            </div>
 
             {/*main*/}
             <main>
@@ -22,45 +20,19 @@ function MainPage(props) {
                         <Carosel/>
                     </div>
 
-                    <div className={"p-5 m-5"}>
-                        <div className={"container text-center"}>
-                            <div className={"row"}>
-
-                                <div className={"col"}>
-                                    <select className={"m-0 p-0"}>
-                                        <option>Hotel</option>
-                                        <option>Stay</option>
-                                    </select>
-                                </div>
-
-                                <div className={"col"}>
-                                    <MainDatePicker/>
-                                </div>
-                                {/* 인원 수 - 수정 예정 */}
-                                <div className={"col m-0 p-0"}>
-                                    <p>인원</p>
-                                </div>
-                                {/* 페이지 이동 - 수정 중*/}
-                                <div className={"col"}>
-                                    <button type={"button"}> 검색하기</button>
-                                </div>
-                            </div>
-                        </div>
+                    <div>
+                        <DateChoose/>
                     </div>
 
                     <div>
-                    </div>
-
-                    <div>
-                        components 1
+                        <MainExtra/>
                     </div>
                 </div>
             </main>
 
             {/* Footer */}
             <MainFooter/>
-        </div>
-    )
+        </div>)
 }
 
 export default MainPage;
