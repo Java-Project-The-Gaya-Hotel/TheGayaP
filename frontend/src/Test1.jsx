@@ -1,20 +1,40 @@
 import React from "react";
 import "../src/Test.css"
-function Test1(){
-    return(
-        <div className={"container p-3"}>
+import Test2 from "./Test2";
+import Test3 from "./Test3";
+
+
+function Test1() {
+    return (
+        <div className={"container"}>
             <div className={"row"}>
-                <div className={"col-sm-8"}>
-                    <h3>회정정보입력</h3>
+                <div className={"col"}>
+
+                    <h3>회원정보</h3>
                 </div>
                 <hr/>
-                <div className={"m-5"}>
-                    <h5>기본 입력</h5>
-                    <h5 className={"Text"}>* 표시 필수입력사항</h5>
+                <div className={"row"}>
+                    <div className={"col"}>
+                        <h5>기본정보</h5>
+                    </div>
+                    <div className={"col text-end"}>
+                        <h5>* 표시 필수입력 사항</h5>
+                    </div>
                 </div>
+
+
+            <Test3/>
+
+                <Test2/>
+                <br/><hr/>
+
+                <button>
+                    회원 가입
+                </button>
             </div>
 
         </div>
     )
 }
+
 export default Test1;
