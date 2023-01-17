@@ -1,6 +1,7 @@
 package com.gaya.thegayap.controller;
 
 import com.gaya.thegayap.dto.SinDto2;
+import com.gaya.thegayap.dto.SinReservDto;
 import com.gaya.thegayap.dto.SinRoomDto;
 import com.gaya.thegayap.service.SinService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,16 +39,16 @@ public class SinController {
 
 
         String hotelName = "서울가야호텔";
-        int checkIn = 20230115;
-        int checkOut = 20230117;
-        String nights = "5";
+        int checkIn = 20230203;
+        int checkOut = 20230205;
+
 
 
 
 //        들어온 정보로 예약 가능한 룸 확인
 
 
-        List<SinRoomDto> ableRoomList = sinService.checkRoomList(hotelName,checkIn,checkOut,nights);
+        List<SinRoomDto> ableRoomList = sinService.checkRoomList(hotelName,checkIn,checkOut);
 
 
         return ableRoomList;
@@ -57,14 +58,54 @@ public class SinController {
 
 
     // 방 예약 코드
-    @PostMapping("/bookRoom")
+    @GetMapping("/bookRoom")
     public void bookRoom() {
+
+//        DB에 필요한 정보
+//        예약번호/ 호텔번호/ 룸코드/ 고객이름/ 고객아이디/ 체크인/ 체크아웃/ 예약을 진행한 시간/ 몇박/ 조식옵션(어른/아이)/ 예약한 인원/ 총 금액/ 예약시 요청정보
+//        -------------------------------------------
 
 //        어떠한 정보들이 넘어오겠는가
 
-//        예약하려는 호텔/ 체크인시간/ 체크아웃시간/ 몇박/ 인원수/ 예약한 시간
-//        예약자 이름/
+//        예약하려는 호텔/ 체크인시간/ 체크아웃시간/ 몇박/ 인원수(어른/아이)/ 예약한 시간/ 룸코드
+
+//        예약자 이름/ 이메일/ 연락처
 //        옵션사항: 회원일시 아이디/ 조식옵션/
+
+//        System.currentTimeMillis() = 예약 번호 생성을 위한 1/1000초 생성
+
+
+//        백엔드가 진행해야할 정보
+//        예약번호 생성
+
+
+//        변수 지정
+
+
+
+        long reservationNum = System.currentTimeMillis();
+        int hotelNum = 1;
+        String roomCode = "hotel-cKHEX";
+        String customerName = "테스터1";
+        String customerId = "test1";
+        String checkIn = "2023-01-26";
+        String checkOut = "2023-01-28";
+        String  reservationTime = "2023-01-04 22:23:00" ;
+        int nights = 3;
+        int breakfastAdultNum = 1;
+        int breakfastChildNum = 1;
+        int peopleAdultNum = 2;
+        int peopleChildNum = 1;
+        int reservationPeople = 3;
+        int totalCost = 498550;
+        String reservationRequest = "방 주세요";
+
+        SinReservDto sinReservDto ;
+
+        sinReservDto = new SinReservDto(reservationNum,hotelNum,roomCode,customerName,customerId,checkIn,checkOut,reservationTime,nights,breakfastAdultNum,breakfastChildNum,peopleAdultNum,peopleChildNum,totalCost,reservationPeople,reservationRequest);
+
+        sinService.reservationRoom(sinReservDto);
+
 
 
 

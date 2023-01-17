@@ -1,11 +1,13 @@
 package com.gaya.thegayap.dto;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class SinRoomDto {
     private String roomName;
     private int roomTwinCost;

@@ -44,5 +44,9 @@
         where hotel_name = "서울가야호텔";
     </select>
 
+    <insert id="reservationRoom" parameterType="com.gaya.thegayap.dto.SinReservDto">
+        insert into reservation_table values (#{reservationNum},#{hotelNum},#{roomCode},#{customerName},#{customerId},#{checkIn},#{checkOut},#{reservationTime},#{nights},#{breakfastAdultNum},#{breakfastChildNum},#{reservationPeople},#{totalCost},#{reservationRequest})
+    </insert>
+
 
 </mapper>

@@ -2,12 +2,12 @@ package com.gaya.thegayap.service;
 
 import com.gaya.thegayap.dto.SinDto;
 import com.gaya.thegayap.dto.SinDto2;
+import com.gaya.thegayap.dto.SinReservDto;
 import com.gaya.thegayap.dto.SinRoomDto;
 import com.gaya.thegayap.mapper.SinMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -81,6 +81,23 @@ public class SinServiceImpl implements SinService {
 
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //    Set 형식으로 필터
 
 //    @Override
@@ -122,22 +139,24 @@ public class SinServiceImpl implements SinService {
 ////        SinRoomDto = 방의 정보를 담을 Dto
 //        for (SinRoomDto sinRoomDto : resultList) {
 //
+//                예약이 돼있는 방                지금 예약있는 모든방
 //            if (!unableRoomSet.contains(sinRoomDto.getRoomCode())) {
+//                          중복처리 한값
 //                if (!roomSet.contains(sinRoomDto.getRoomCode())) {
 //                    filterList.add(sinRoomDto);
 //                    roomSet.add(sinRoomDto.getRoomCode());
 //                }
 //            }
 //
-//
 //        }
 //        return filterList;
 //
 //    }
 
+
     //    Map형식으로 필터
     @Override
-    public List<SinRoomDto> checkRoomList(String hotelName, int checkIn, int checkOut, String nights) {
+    public List<SinRoomDto> checkRoomList(String hotelName, int checkIn, int checkOut) {
 
 
 //        예약될 호텔에 있는 방에 예약된 정보를 불러옴
@@ -183,6 +202,12 @@ public class SinServiceImpl implements SinService {
 
 
         return filterList;
+    }
+
+    @Override
+    public void reservationRoom(SinReservDto sinReservDto) {
+
+        sinMapper.reservationRoom(sinReservDto);
     }
 
 

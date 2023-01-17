@@ -2,6 +2,7 @@ package com.gaya.thegayap.mapper;
 
 import com.gaya.thegayap.dto.SinDto;
 import com.gaya.thegayap.dto.SinDto2;
+import com.gaya.thegayap.dto.SinReservDto;
 import com.gaya.thegayap.dto.SinRoomDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,4 +19,6 @@ public interface SinMapper {
     List<SinRoomDto> checkBookOverlap(int hotelNum);
 
     int getHotelNum(String hotelName);
+
+    void reservationRoom(SinReservDto sinReservDto);
 }
