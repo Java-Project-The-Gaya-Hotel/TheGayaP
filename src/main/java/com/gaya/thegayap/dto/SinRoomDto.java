@@ -1,20 +1,21 @@
 package com.gaya.thegayap.dto;
 
+
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Setter
-public class SinDto2 {
-    private int roomHotelIdx;
+@NoArgsConstructor
+public class SinRoomDto {
     private String roomName;
-    private String roomInfo;
-    private String roomCode;
     private int roomTwinCost;
     private int roomTwinWeekend;
     private int roomFamilyCost;
     private int roomFamilyWeekend;
-
+    private String roomCode;
+    private String roomInfo;
     private int roomMaxAdult;
 
+    private String reservationCheckIn;
+    private String reservationCheckOut;
 }

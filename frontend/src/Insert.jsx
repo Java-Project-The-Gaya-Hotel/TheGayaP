@@ -47,13 +47,13 @@ function Insert(props) {
         }
 
         const roomInfo = {
-            rName: HName,
-            TC: Number(HAddr),
-            FC: Number(HTel),
+            roomName: HName,
+            roomTwinCost: Number(HAddr),
+            roomMaxAdult: Number(HTel),
         }
 
 
-        axios.post("http://localhost:8080/insert", null, {params: roomInfo}
+        axios.post("http://localhost:8080/insert", roomInfo
         ).then((req) => {
             console.log("데이터 전송 성공")
             console.log(req.data);
