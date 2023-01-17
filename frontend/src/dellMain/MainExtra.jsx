@@ -1,6 +1,6 @@
 import React from 'react';
 import ComponentImg1 from '../mainImg/R0000001RDTF_KR.jpg'
-import "../main/mainCss/ComponentCss.css"
+import "./dellmainCss/ComponentCss.css"
 
 function MainComponent1() {
     return (

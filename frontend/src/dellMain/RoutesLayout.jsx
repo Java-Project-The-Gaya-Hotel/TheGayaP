@@ -1,7 +1,7 @@
 import React from 'react';
 import {Outlet, Link} from "react-router-dom";
 import MainLogo from "../mainImg/Title ver kingsman.png"
-import "../main/mainCss/LayoutCss.css"
+import "./dellmainCss/LayoutCss.css"
 
 const styles = {
     TitleImgSize: {

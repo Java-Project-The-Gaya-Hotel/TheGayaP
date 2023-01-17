@@ -1,8 +1,8 @@
 import './App.css';
-import MainPage from "./main/MainPage";
+import MainPage from "./dellMain/MainPage";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import RoutesLayout from "./main/RoutesLayout";
-import BeingPage from "./main/BeingPage";
+import RoutesLayout from "./dellMain/RoutesLayout";
+import BeingPage from "./dellMain/BeingPage";
 
 function App(props) {
     return (

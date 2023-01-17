@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import DateChoose from "./main/DateChoose";
+import DateChoose from "./dellMain/DateChoose";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

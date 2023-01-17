@@ -1,5 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import MainDatePicker from "./MainDatePicker";
+import {Link} from "react-router-dom";
+import MainCounter from "./MainCounter";
 
 const styles = {
     selectCenter: {
@@ -8,21 +10,27 @@ const styles = {
     },
     optionBox: {
         width: "125px",
-        height: "30px",
         textAlign: "center"
+    },
+    linkDecoLine: {
+        textDecorationLine: "none",
+        color: "inherit"
     }
+
 }
 
 
-function DateChoose() {
+function DateChoose(props) {
+    //인원 수 count 함수
+
 
     return (
         <div className={"container justify-content-center align-items-baseline"}>
             <div className={"row align-items-center p-3"}>
                 <div className={"col"} style={styles.selectCenter}>
-                    <select style={styles.optionBox}>
-                        <option> Hotel</option>
-                        <option> Stay</option>
+                    <select style={styles.optionBox} className={"form-select form-select"}>
+                        <option>Hotel</option>
+                        <option>Stay</option>
                     </select>
                 </div>
 
@@ -32,15 +40,15 @@ function DateChoose() {
 
                 <div className={"col"}>
                     <div className={"container p-0 m-0"}>
-                    <dt> 인원</dt>
-                    <dd>
-                        <button> ←</button> value <button> → </button>
-                    </dd>
+                        <dt> 인원</dt>
+                        <dd>
+                            <MainCounter/>
+                        </dd>
                     </div>
                 </div>
 
                 <div className={"col"}>
-                    <button className={"btn btn-outline-dark"}> Reservation</button>
+                    <button className={"btn btn-outline-dark"}><Link to='/menu1' style={styles.linkDecoLine}>Reservation</Link></button>
                 </div>
             </div>
         </div>)
