@@ -15,7 +15,7 @@ const MainDatePicker = () => {
 
     return (
 
-        <div>
+        <div className={'d-flex justify-content-between'}>
             <div>
                 <DatePicker
                     dateFormat="yyyy-MM-dd"
