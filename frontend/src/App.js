@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import Test1 from "./Test1";
+import Join1 from "./join/Join1";
 
 function App() {
   return (
     <div >
-  <Test1/>
+      <Join1/>
     </div>
   );
 }

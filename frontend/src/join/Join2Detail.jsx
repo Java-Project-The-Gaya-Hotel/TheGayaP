@@ -1,10 +1,14 @@
 import React from "react";
 
-function Test2Detail(){
+function Join2Detail(){
+    const [Birth, setBirth] = React.useState("")
+    const onBirthHandler = (event) => {
+        setBirth(event.currentTarget.value)
+    }
     return(
         <div className={"row"}>
             <div className="selector col" id="uniform-birthYear" >
-                <select  className="form-select form-select-sm" >
+                <select  className="form-select form-select-sm" value={Birth} onChange={onBirthHandler} >
                     <option value="">선택</option>
                     <option value="2004" title="2004">2004</option>
                     <option value="2003" title="2003">2003</option>
@@ -163,4 +167,4 @@ function Test2Detail(){
         </div>
     )
 }
-export default Test2Detail;
+export default Join2Detail;

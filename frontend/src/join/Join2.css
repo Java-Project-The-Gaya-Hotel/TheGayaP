@@ -1,0 +1,68 @@
+.Text {
+    text-align: end;
+}
+
+.Img {
+
+    width: 866px;
+    height: 40px;
+}
+
+
+.tableTypeB {
+    margin: 20px 0px 0px 0px;
+    border: none;
+    width: 100%;
+    border-top: #cdcbbe solid 1px;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.tableTypeB th,
+.tableTypeB td {
+    border: none;
+    padding: 7px ;
+    text-align: left;
+    border-bottom: #eceae1 solid 1px;
+    color: #333333;
+}
+
+.tableTypeB th {
+    color: #666;
+    background: #faf9f4;
+}
+
+
+
+.tableTypeA .last th, .tableTypeA .last td {
+    border-bottom: #cdcbbe solid 1px;
+}
+
+.tableTypeA .bdBot {
+    border-bottom: #cdcbbe solid 1px !important;
+}
+
+.ast {
+    color: #F33;
+     font-weight: bold;
+    font-size: 10px;
+    font-family: Verdana;
+    vertical-align: middle;
+}
+
+
+.id{
+    width: 130px;
+}
+
+.contain{ padding:65px 0 0 0;}
+.contain .container{width:1200px;min-height:500px;margin:auto;zoom:1;margin:0 auto 100px auto;}
+.contain .container:after{clear:both;content:"";display:block;font-size:0;height:0;line-height:0;visibility:hidden}
+
+.contain .btn{
+    margin-top: 10px;
+
+}
+.number {
+    margin: auto;
+}
