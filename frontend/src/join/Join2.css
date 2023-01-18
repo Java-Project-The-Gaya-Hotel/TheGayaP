@@ -63,6 +63,7 @@
     margin-top: 10px;
 
 }
-.number {
-    margin: auto;
+
+.tableTypeB .number {
+    size: 30px;
 }

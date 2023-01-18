@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "../join/Join3.css"
 import "../join/Join2.css"
+import axios from "axios";
 
 
 function Join1(props) {
@@ -47,20 +48,67 @@ function Join1(props) {
         console.log('name', Name);
         console.log('Birth', Birth);
         console.log('number', Number);
+
+
+        axios.get("http://localhost:8080/gaya/sendUser",{params:{
+            Email:Email,
+            }}).then((req) =>{
+                console.log("데이터 전송에 성공했습니다.")
+        }).catch((err)=>{
+            console.log(err + "데이터 전송에 실패한 코드")
+        })
+
+
         // 비밀번호와 비밀번호 확인 같을띠 회원가입 되게 함
         if (Password !== ConfirmPassword) {
             return alert('비밀번호와 비밀번호 확인은 같아야 합니다.')
         }   //여기서 걸리면 아래로 못감
 
-        let body = {
-            email: Email,
-            password: Password,
-            id: Id
+        // const userInfo = {
+        //     idx: Number(userIdx),
+        //     name: userName,
+        //     password: userPass,
+        // }
+
+
+
+
+
+        // axios.post("http://localhost:8080/SpReCol/testPost",userInfo
+        // ).then((req) => {
+        //     console.log("데이터 전송 성공")
+        //     console.log(req.data);
+        // }).catch(err => {
+        //     console.log(`데이터 전송 실패 ${err}`)
+        // })
+        // e.preventDefault();
+        // let body = {
+        //     email: Email,
+        //     password: Password,
+        //     id: Id
+        // }
+    }
+    const handlePress = (e) => {
+        const regex = /^[0-9\b -]{0,13}$/;
+        if (regex.test(e.target.value)) {
+            setNumber(e.target.value);
         }
     }
 
+    useEffect(() => {
+        if (Number.length === 10) {
+            setNumber(Number.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
+        }
+        if (Number.length === 13) {
+            setNumber(Number.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
+        }
+    }, [Number]);
 
     return (
+
+
+
+
 
         <div className={"contain"}>
             <form onSubmit={onSubmitHandler}>
@@ -197,9 +245,9 @@ function Join1(props) {
                             <tr className="first">
                                 <th scope="row" className="first"><em className="ast">*</em> 휴대전화</th>
                                 <td className="first">
-                                    <div className={"number"}>
-                                        <div className="selector disabled row ">
-                                            <select className="form-select form-select-sm col">
+                                    <div className={"ms-sm-2"}>
+                                        <div className="selector disabled row  ">
+                                            <select className="col-sm-1">
                                                 <option value="+82" title="+82">+82</option>
                                                 <option value="+82" title="+82">+82</option>
                                                 <option value="+82" title="+82">+82</option>
@@ -207,7 +255,7 @@ function Join1(props) {
                                                 <option value="+82" title="+82">+82</option>
                                                 <option value="+82" title="+82">+82</option>
                                             </select>
-                                            <input value={Number} onChange={onNumberHandler} />
+                                            <input className={"col-2"} value={Number} onChange={onNumberHandler} />
 
                                         </div>
                                         <div className={"col"}>

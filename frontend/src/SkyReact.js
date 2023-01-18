@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Join1 from "./join/Join1";
 
-function App() {
+function SkyReact() {
   return (
     <div >
       <Join1/>
@@ -10,4 +10,4 @@ function App() {
   );
 }
 
-export default App;
+export default SkyReact;
