@@ -2,7 +2,7 @@ HELP.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
+!frontend/src/dellMain/**/build/
 !**/src/test/**/build/
 
 ### STS ###
@@ -14,7 +14,7 @@ build/
 .springBeans
 .sts4-cache
 bin/
-!**/src/main/**/bin/
+!frontend/src/dellMain/**/bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
@@ -23,7 +23,7 @@ bin/
 *.iml
 *.ipr
 out/
-!**/src/main/**/out/
+!frontend/src/dellMain/**/out/
 !**/src/test/**/out/
 
 ### NetBeans ###
