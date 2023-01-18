@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Login from "./login/Login";
+import DellReact from "./DellReact";
+import SkyReact from "./SkyReact";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/*<App />*/}
-    {/*  {<Insert/>}*/}
+    {<DellReact/>}
+    <SkyReact/>
     {<Login/>}
   </React.StrictMode>
 );
