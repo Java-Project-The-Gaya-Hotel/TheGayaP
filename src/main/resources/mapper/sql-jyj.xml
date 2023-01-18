@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gaya.thegayap.mapper.JeongMapper">
+
+<!--    회원 테이블 추가 -->
+    <insert id="joinMember" parameterType="com.gaya.thegayap.dto.JeongMemberDto">
+        insert into member_table(member_id, member_pw, member_name, member_email, member_tel, member_birth, member_create_date)
+        values (#{memberId}, #{memberPw}, #{memberName}, #{memberEmail}, #{memberTel}, #{memberBirth}, NOW());
+    </insert>
+
+<!--    아이디 중복 체크 -->
+    <select id="idCheck" parameterType="com.gaya.thegayap.dto.JeongMemberDto" resultType="int">
+        SELECT count(member_id)
+        FROM member_table
+        WHERE member_id=#{memberId}
+    </select>
+
+<!--    이메일 중복 체크 -->
+    <select id="emailCheck" parameterType="com.gaya.thegayap.dto.JeongMemberDto" resultType="int">
+        SELECT count(member_email)
+        FROM member_table
+        WHERE member_email=#{memberEmail}
+    </select>
+
+<!--    내 예약확인 조회-->
+    <select id="checkResv" resultType="com.gaya.thegayap.dto.JeongResvDto">
+        SELECT resv.*, ht.hotel_name,
+            (CASE
+                WHEN (resv.reservation_hotel_num=1 OR resv.reservation_hotel_num=16)
+                THEN (SELECT hr.room_code FROM hotel_room_table AS hr WHERE hr.room_code = resv.reservation_room_code)
+                ELSE (SELECT sr.room_code FROM stay_room_table AS sr WHERE sr.room_code = resv.reservation_room_code)
+            END) AS room_code
+        FROM reservation_table AS resv
+            JOIN hotel_table AS ht ON ht.hotel_num = resv.reservation_hotel_num
+        WHERE reservation_customer_id=#{memberId}
+    </select>
+
+<!--    내 등급, 포인트 조회 -->
+    <select id="myAccount" resultType="com.gaya.thegayap.dto.JeongMemberDto">
+        SELECT member_num, member_id, member_name, member_tier, member_point
+        FROM member_table
+        WHERE member_id=#{memberId}
+    </select>
+
+<!--    내 포인트 사용내역 조회 -->
+    <select id="checkPoints" resultType="com.gaya.thegayap.dto.JeongMemberDto">
+        SELECT ct.customer_id, ct.customer_name, ct.customer_earned_points, ct.customer_used_points, resv.reservation_date
+        FROM customer_table AS ct
+            JOIN reservation_table AS resv ON resv.reservation_num = ct.customer_reservation_num
+        WHERE customer_id=#{memberId}
+    </select>
+
+<!--    프로필 수정 -->
+    <update id="updateProfile" parameterType="com.gaya.thegayap.dto.JeongMemberDto">
+        UPDATE member_table
+        SET member_email = #{memberEmail},
+            member_tel  = #{memberTel}
+        WHERE member_id  = #{memberId}
+    </update>
+
+<!--    비밀번호 변경 -->
+    <update id="changePw" parameterType="com.gaya.thegayap.dto.JeongMemberDto">
+        UPDATE member_table
+        SET member_pw = #{memberPw}
+        WHERE member_id  = #{memberId} AND member_pw = #{memberPw}
+    </update>
+
+<!--    회원 탈퇴 -->
+    <update id="withdrawalMember" parameterType="com.gaya.thegayap.dto.JeongMemberDto">
+        UPDATE member_table
+        SET member_withdrawal_yn = 'Y'
+        WHERE member_id = #{memberId}
+    </update>
+
+</mapper>
