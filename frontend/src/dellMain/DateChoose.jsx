@@ -48,7 +48,7 @@ function DateChoose(props) {
                 </div>
 
                 <div className={"col"}>
-                    <button className={"btn btn-outline-dark"}><Link to='/menu1' style={styles.linkDecoLine}>Reservation</Link></button>
+                    <button className={"btn btn-outline-dark"}><Link to='/reservation' style={styles.linkDecoLine}>Reservation</Link></button>
                 </div>
             </div>
         </div>)

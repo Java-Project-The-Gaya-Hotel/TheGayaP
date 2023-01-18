@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import DateChoose from "./dellMain/DateChoose";
+import DellReact from './DellReact';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <App/>
+        <DellReact/>
     </React.StrictMode>
 );

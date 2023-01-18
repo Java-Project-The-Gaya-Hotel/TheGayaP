@@ -53,7 +53,7 @@ function MainFooter() {
 
                     <section className="p-3 pt-0 text-center">
                         <div>
-                            <p>Copyright copy; by React & Spring 4Them </p>
+                            <p>Copyright &copy; by React & Spring 4Them </p>
                         </div>
 
                     </section>
