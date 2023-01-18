@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping({"/gaya","/"})
+@RequestMapping("/join")
 public class JeongController {
 
     @Autowired
@@ -20,13 +20,13 @@ public class JeongController {
 
 //    회원가입페이지
     // 회원 데이터 입력
-    @RequestMapping(value = "/join", method = RequestMethod.POST)
-    public void joinMember(JeongMemberDto member) throws Exception {
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    public void joinMember(@RequestBody JeongMemberDto member) throws Exception {
         jeongService.joinMember(member);
     }
 
     // ID 중복 체크
-    @RequestMapping(value = "/join/idCheck", method = RequestMethod.GET)
+    @RequestMapping(value = "/idCheck", method = RequestMethod.GET)
     public int idCheck(JeongMemberDto member) throws Exception{
         int idResult = jeongService.idCheck(member);
 
@@ -34,7 +34,7 @@ public class JeongController {
     }
 
     // 이메일 중복 체크
-    @RequestMapping(value = "/join/emailCheck", method = RequestMethod.GET)
+    @RequestMapping(value = "/emailCheck", method = RequestMethod.GET)
     public int emailCheck(JeongMemberDto member) throws Exception{
         int emailResult = jeongService.emailCheck(member);
 

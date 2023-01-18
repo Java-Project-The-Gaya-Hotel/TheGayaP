@@ -1,10 +1,8 @@
 // JoinTest.jsx
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 
 function JoinTest(props) {
-  const baseUrl = "http://localhost:8080";
-  const [data,setData] = useState([]);
 
   const [memberName, setMemberName] = useState("");
   const [memberBirth, setMemberBirth] = useState("");
@@ -14,36 +12,44 @@ function JoinTest(props) {
   const [memberPw, setMemberPw] = useState("");
   const [confirmPw, setConfirmPw] = useState("");
 
-  const handleSubmit = () => {
-
-    if (memberPw !== confirmPw) {
-      return alert('비밀번호와 비밀번호 확인이 같지 않습니다.')
-    }
-    alert("save");
-
-    setData()
-    console.log(data)
-
-    // axios.post("http://localhost:8080/join", {
-    //   memberName: memberName,
-    //   memberId: memberId,
-    //   memberPw: memberPw,
-    //   memberEmail: memberEmail,
-    //   memberTel: memberTel,
-    //   memberBirth: memberBirth,
-    //
-    //   })
-    //   .then(function (req) {
-    //     alert('성공');
-    //
-    //     console.log(req);
-    //   })
-    //   .catch(function (error) {
-    //     alert('통신실패');
-    //     console.log(error);
-    //   })
+  const data = {
+    memberName: memberName,
+    memberId: memberId,
+    memberPw: memberPw,
+    memberEmail: memberEmail,
+    memberTel: memberTel,
+    memberBirth: memberBirth,
   };
 
+
+  // 회원가입
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios.post("http://localhost:8080/join/insert",data)
+      .then((req) => {
+        console.log("데이터 전송 성공")
+        console.log(req.data);
+      }).catch(err => {
+        console.log(`데이터 전송 실패 ${err}`)
+      })
+  };
+
+  const handleIdCheck = (e) => {
+    e.preventDefault();
+
+    axios.get("http://localhost:8080/join/idCheck",
+      {
+        params: {memberId: memberId}
+      })
+      .then((req) => {
+        console.log("데이터 전송 성공")
+        if (req.data === 1) alert('중복된 아이디입니다.');
+        else if(req.data === 0) alert('사용가능한 아이디입니다.');
+      }).catch(err => {
+      console.log(`데이터 전송 실패 ${err}`)
+    })
+  }
 
 
   return (
@@ -61,6 +67,7 @@ function JoinTest(props) {
 
         <label>아이디</label>
         <input type='text' value={memberId} onChange={(e) => {setMemberId(e.target.value)}}/>
+        <button onClick={handleIdCheck}>아이디 중복체크</button>
         <label>비밀번호</label>
         <input type='text' value={memberPw} onChange={(e) => {setMemberPw(e.target.value)}}/>
         <label>비밀번호확인</label>
