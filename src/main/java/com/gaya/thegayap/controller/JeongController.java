@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping({"/gaya","/"})
+@RestController
+@RequestMapping({"/"})
 public class JeongController {
 
     @Autowired
@@ -44,13 +44,12 @@ public class JeongController {
 
 //    마이페이지
 
-//    // 예약확인 조회
+    // 예약확인 조회
 //    @GetMapping("/mypage/resv")
 //    public List<JeongResvDto> resvList() {
 //
 //
-//
-//        return ;
+//        return jeongService.resvList;
 //    }
 
 
