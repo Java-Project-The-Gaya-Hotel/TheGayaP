@@ -1,10 +1,10 @@
 import './App.css';
-import Join1 from "./join/Join1";
+import Join from "./join/Join";
 
 function SkyReact() {
     return (
         <div>
-            <Join1/>
+            <Join/>
         </div>
     );
 }
