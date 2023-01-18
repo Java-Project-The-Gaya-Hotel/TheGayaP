@@ -1,4 +1,3 @@
-import './App.css';
 import MainPage from "./dellMain/MainPage";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import RoutesLayout from "./dellMain/RoutesLayout";
