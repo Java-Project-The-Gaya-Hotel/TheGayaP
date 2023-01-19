@@ -1,11 +1,85 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import RoutesLayout from "../dellMain/RoutesLayout";
 import MainFooter from "../dellMain/MainFooter";
 import "../dellReservation/dellReservCss/BreadCrumb.css"
+import Swal from "sweetalert2";
 
 
 function ReservationPageDetail() {
+    const [count, setCount] = useState(2);
+    const [childCount, setChildCount] = useState(0);
+    const [personnel, setPersonnel] = useState(0)
+
+    const peopleChange = () => {
+
+
+
+        setPersonnel(count + childCount);
+        console.log(personnel);
+    }
+
+    const counts = () => {
+
+        if (personnel <= 4) {
+
+            Swal.fire({
+                icon: 'info',
+                title: '확인해주세요!',
+                text: ' 인원 수는 4명까지 선택할 수 있습니다. ',
+                footer: '<a href=""> 고객문의 안내는 여기로 </a>'
+            })
+
+            setPersonnel(personnel => Math.max(4))
+        }
+    }
+
+
+    //
+    // useEffect(() => {
+    //     if (personnel >= 4 ) {
+    //         Swal.fire({
+    //             icon: 'info',
+    //             title: '확인해주세요!',
+    //             text: ' 인원 수는 4명까지 선택할 수 있습니다. ',
+    //             footer: '<a href=""> 고객문의 안내는 여기로 </a>'
+    //         });
+    //
+    //             setPersonnel(Math.max(4))
+    //
+    //     }
+    // },[personnel])
+
+    const plusBtn = () => {
+        setCount(count + 1 < 5 ? count + 1 : 4)
+        // if(count >= 4){
+        //     Swal.fire({
+        //         icon: 'info',
+        //         title: '확인해주세요!',
+        //         text: ' 인원 수는 4명까지 선택할 수 있습니다. ',
+        //         footer: '<a href=""> 고객문의 안내는 여기로 </a>'
+        //     });
+        //
+        //     setCount((count)=>Math.max(4))
+        // }
+
+    }
+
+    const minusBtn = () => {
+        setCount(count - 1 > 1 ? count - 1 : 1)
+    }
+
+    const cdPlusBtn = () => {
+        setChildCount(childCount + 1 < 4 ? childCount + 1 : 3);
+    }
+    const cdMinusBtn = () => {
+        setChildCount(childCount - 1 > 0 ? childCount - 1 : 0)
+    }
+
+
+
     return (
+
+
         <div>
             <div>
                 <RoutesLayout/>
@@ -32,13 +106,13 @@ function ReservationPageDetail() {
                         <h2 className="accordion-header" id="headingOne">
                             <button className="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                               객실 1
+                                객실 1
                             </button>
                         </h2>
                         <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne"
                              data-bs-parent="#accordionExample">
                             <div className="accordion-body">
-                               옵션 사항
+                                옵션 사항
                             </div>
                         </div>
                     </div>
@@ -56,7 +130,7 @@ function ReservationPageDetail() {
                         <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse show"
                              aria-labelledby="panelsStayOpen-headingOne">
                             <div className="accordion-body">
-                               <strong>호텔 이용안내</strong>
+                                <strong>호텔 이용안내</strong>
                                 <ul className={""}>
                                     <li>요금에는 10% 부가가치세가 부과됩니다.</li>
                                     <li>2인 1실 기준</li>
@@ -76,18 +150,39 @@ function ReservationPageDetail() {
                             <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
                                     aria-controls="panelsStayOpen-collapseTwo">
-                             취소 및 환불 규정
+                                취소 및 환불 규정
                             </button>
                         </h2>
                         <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse"
                              aria-labelledby="panelsStayOpen-headingTwo">
                             <div className="accordion-body">
-                                <strong>This is the second item's accordion body.</strong> It is hidden by default,
-                                until the collapse plugin adds the appropriate classes that we use to style each
-                                element. These classes control the overall appearance, as well as the showing and hiding
-                                via CSS transitions. You can modify any of this with custom CSS or overriding our
-                                default variables. It's also worth noting that just about any HTML can go within
-                                the <code>.accordion-body</code>, though the transition does limit overflow.
+                                <h3>객실 및 인원 선택</h3>
+                                <div>객실</div>
+                                <div>성인 : {count} </div>
+                                <div>어린이 : {childCount}</div>
+                                <div className={"row"}>
+                                    <button className={"col"} onClick={minusBtn}>
+                                        인원수 감소
+                                    </button>
+                                    <div className={"col"}>
+                                        <input  value={count} onChange={peopleChange}/>
+
+
+                                    </div>
+                                    <button className={"col"} onClick={plusBtn} onChange={counts}>
+                                        인원수 증가
+                                    </button>
+                                    <button className={"col"} onClick={cdMinusBtn} >
+                                        인원수 감소
+                                    </button>
+                                    <div className={"col"}>
+                                        <h4>아이 : {childCount}</h4>
+                                    </div>
+                                    <button className={"col"} onClick={cdPlusBtn} >
+                                        인원수 증가
+                                    </button>
+                                </div>
+
                             </div>
                         </div>
                     </div>
