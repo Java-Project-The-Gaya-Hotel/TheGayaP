@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 function ReservationPageDetail() {
     const [count, setCount] = useState(2);
     const [childCount, setChildCount] = useState(0);
-    const [personnel, setPersonnel] = useState(0)
+    const [personnel, setPersonnel] = useState(2)
 
     const peopleChange = () => {
 
@@ -18,49 +18,50 @@ function ReservationPageDetail() {
         console.log(personnel);
     }
 
-    const counts = () => {
-
-        if (personnel <= 4) {
-
-            Swal.fire({
-                icon: 'info',
-                title: '확인해주세요!',
-                text: ' 인원 수는 4명까지 선택할 수 있습니다. ',
-                footer: '<a href=""> 고객문의 안내는 여기로 </a>'
-            })
-
-            setPersonnel(personnel => Math.max(4))
-        }
-    }
-
-
+    // const counts = () => {
     //
-    // useEffect(() => {
-    //     if (personnel >= 4 ) {
+    //     if (personnel < 4) {
+    //
     //         Swal.fire({
     //             icon: 'info',
     //             title: '확인해주세요!',
     //             text: ' 인원 수는 4명까지 선택할 수 있습니다. ',
     //             footer: '<a href=""> 고객문의 안내는 여기로 </a>'
-    //         });
+    //         })
     //
-    //             setPersonnel(Math.max(4))
-    //
+    //         setPersonnel(personnel => Math.max(4))
     //     }
-    // },[personnel])
+    // }
+
+
+    //
+    useEffect(() => {
+        if (personnel > 4 ) {
+            Swal.fire({
+                icon: 'info',
+                title: '확인해주세요!',
+                text: ' 인원 수는 4명까지 선택할 수 있습니다. ',
+                footer: '<a href=""> 고객문의 안내는 여기로 </a>'
+            });
+
+                setPersonnel(Math.max(4))
+
+        }
+    },[personnel])
+
 
     const plusBtn = () => {
-        setCount(count + 1 < 5 ? count + 1 : 4)
-        // if(count >= 4){
-        //     Swal.fire({
-        //         icon: 'info',
-        //         title: '확인해주세요!',
-        //         text: ' 인원 수는 4명까지 선택할 수 있습니다. ',
-        //         footer: '<a href=""> 고객문의 안내는 여기로 </a>'
-        //     });
-        //
-        //     setCount((count)=>Math.max(4))
-        // }
+        // setCount(count + 1 < 5 ? count + 1 : 4)
+        setCount( personnel+1 < 5 ?  count +1 : count)
+
+        setPersonnel(count + childCount);
+
+        if(personnel > 4){
+          setCount(prevState => prevState);
+            setPersonnel(4);
+            // setCount((count)=>Math.max(4))
+
+        }
 
     }
 
@@ -69,7 +70,15 @@ function ReservationPageDetail() {
     }
 
     const cdPlusBtn = () => {
-        setChildCount(childCount + 1 < 4 ? childCount + 1 : 3);
+        // setChildCount(childCount + 1 < 4 ? childCount + 1 : 3);
+        setChildCount( personnel+1 < 5 ?  childCount +1 : childCount)
+
+        setPersonnel(count + childCount);
+
+        if(personnel > 4){
+            setChildCount(prevState => prevState);
+            setPersonnel(4);
+        }
     }
     const cdMinusBtn = () => {
         setChildCount(childCount - 1 > 0 ? childCount - 1 : 0)
@@ -158,6 +167,7 @@ function ReservationPageDetail() {
                             <div className="accordion-body">
                                 <h3>객실 및 인원 선택</h3>
                                 <div>객실</div>
+                                <div> 총 인원 : </div>
                                 <div>성인 : {count} </div>
                                 <div>어린이 : {childCount}</div>
                                 <div className={"row"}>
@@ -165,11 +175,11 @@ function ReservationPageDetail() {
                                         인원수 감소
                                     </button>
                                     <div className={"col"}>
-                                        <input  value={count} onChange={peopleChange}/>
+                                        <input value={count} onChange={peopleChange}/>
 
 
                                     </div>
-                                    <button className={"col"} onClick={plusBtn} onChange={counts}>
+                                    <button className={"col"} onClick={plusBtn}>
                                         인원수 증가
                                     </button>
                                     <button className={"col"} onClick={cdMinusBtn} >
