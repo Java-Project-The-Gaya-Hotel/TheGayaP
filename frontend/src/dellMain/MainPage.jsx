@@ -1,13 +1,12 @@
 import React from "react";
 import MainFooter from "./MainFooter";
 import Carosel from "./Carosel"
-import MainDatePicker from "./MainDatePicker";
 import DateChoose from "./DateChoose";
 import MainExtra from "./MainExtra";
+import 'animate.css'
 
 
 function MainPage(props) {
-
 
     return (
         <div>
@@ -20,7 +19,7 @@ function MainPage(props) {
                         <Carosel/>
                     </div>
 
-                    <div>
+                    <div className={"animate__animated animate__fadeInDown"}>
                         <DateChoose/>
                     </div>
 

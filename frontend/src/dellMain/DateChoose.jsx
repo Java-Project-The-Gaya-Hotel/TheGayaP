@@ -1,8 +1,11 @@
-import React, {useState} from "react";
-import MainDatePicker from "./MainDatePicker";
-import {Link} from "react-router-dom";
-import MainCounter from "./MainCounter";
+import React, {forwardRef, useEffect, useState} from "react";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {ko} from 'date-fns/esm/locale';
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
+import Swal from "sweetalert2";
 
+//css
 const styles = {
     selectCenter: {
         width: "300px",
@@ -16,12 +19,94 @@ const styles = {
         textDecorationLine: "none",
         color: "inherit"
     }
-
 }
 
+function DateChoose() {
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const [count, setCount] = useState(0);
+    const Navigate = useNavigate();
+//date picker
 
-function DateChoose(props) {
-    //인원 수 count 함수
+    const MainDatePicker = () => {
+
+
+        const CustomInput = forwardRef(({value, onClick}, ref) => (
+            <button className="btn btn-outline-secondary" onClick={onClick} ref={ref}>
+                {value}{}
+            </button>))
+
+
+        return (
+            <div className={"d-flex justify-content-between "}>
+                <div>
+                    <DatePicker
+                        dateFormat="yyyy-MM-dd"
+                        selected={startDate}
+                        onChange={(date) => setStartDate(date)}
+                        selectsStart
+                        startDate={startDate}
+                        minDate={startDate}
+                        locale={ko}
+                        customInput={<CustomInput/>}
+                    />
+                </div>
+                <div>
+                    <DatePicker
+                        dateFormat="yyyy-MM-dd"
+                        selected={endDate}
+                        onChange={(date) => setEndDate(date)}
+                        selectsEnd
+                        startDate={startDate}
+                        endDate={endDate}
+                        minDate={startDate}
+                        locale={ko}
+                        customInput={<CustomInput/>}
+                    />
+                </div>
+            </div>
+        )
+
+    }
+
+
+// 인원 count
+    const MainCounter = () => {
+
+        const plusBtn = () => {
+            setCount(count + 1)
+            if (count >= 4) {
+                Swal.fire({
+                    icon: 'info',
+                    title: '확인해주세요!',
+                    text: ' 인원 수는 4명까지 선택할 수 있습니다. ',
+                    footer: '<a href=""> 고객문의 안내는 여기로 </a>'
+                });
+                setCount((count) => Math.max(4))
+            }
+        }
+        const minusBtn = () => {
+            setCount((count) => Math.max(-1, 0))
+        }
+
+        return (
+            <div>
+                <button onClick={minusBtn} className={"btn btn-outline-secondary"}> -</button>
+                <span> {count} </span>
+                <button onClick={plusBtn} className={"btn btn-outline-secondary"}> +</button>
+            </div>
+        )
+    }
+
+
+    const SendReservationInfo = () => {
+        Navigate(`/reservation?sDate=${startDate}&eDate=${endDate}&people=${count}`);
+        // Navigate('/reservation',
+        //     {state: {
+        //             startDate: startDate,
+        //             endDate: endDate,
+        //             count: count}})
+    }
 
 
     return (
@@ -48,7 +133,7 @@ function DateChoose(props) {
                 </div>
 
                 <div className={"col"}>
-                    <button className={"btn btn-outline-dark"}><Link to='/reservation' style={styles.linkDecoLine}>Reservation</Link></button>
+                    <button className={"btn btn-outline-dark"} style={styles.linkDecoLine} onClick={SendReservationInfo}>Reservation</button>
                 </div>
             </div>
         </div>)
