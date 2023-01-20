@@ -6,10 +6,10 @@ import DellReact from "./DellReact";
 import Join from "./join/Join";
 
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <DellReact/>
-    <Join/>
   </React.StrictMode>
 );

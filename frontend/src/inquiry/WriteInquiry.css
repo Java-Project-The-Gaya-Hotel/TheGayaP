@@ -1,0 +1,15 @@
+.headline{
+    border-bottom: solid 3px darkgray;
+}
+
+input, select {
+    height: 45px;
+}
+
+.required{
+    color: red;
+}
+
+label{
+    font-size: 17px ;
+}
