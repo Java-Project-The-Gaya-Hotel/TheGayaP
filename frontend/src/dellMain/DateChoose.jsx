@@ -32,7 +32,7 @@ function DateChoose() {
 
 
         const CustomInput = forwardRef(({value, onClick}, ref) => (
-            <button className="btn btn-outline-secondary" onClick={onClick} ref={ref}>
+            <button className="btn btn-outline-secondary rounded-5" onClick={onClick} ref={ref}>
                 {value}{}
             </button>))
 
@@ -46,6 +46,7 @@ function DateChoose() {
                         onChange={(date) => setStartDate(date)}
                         selectsStart
                         startDate={startDate}
+                        endDate={endDate}
                         minDate={startDate}
                         locale={ko}
                         customInput={<CustomInput/>}

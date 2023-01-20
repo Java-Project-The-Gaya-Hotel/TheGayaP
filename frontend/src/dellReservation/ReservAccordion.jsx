@@ -1,29 +1,33 @@
 import React, {forwardRef, useEffect, useState} from "react";
 import {useLocation} from 'react-router-dom';
-import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+import {getYear, getMonth} from "date-fns";
 import {ko} from "date-fns/esm/locale";
 import axios from "axios";
+import "../dellReservation/dellReservCss/formCss.css"
+import _ from "lodash";
+
 
 const styles = {
     inputBox: {
-        width: "200px",
-        height: "30px",
+        width: "190px",
+        height: "45px",
     }
 }
 
 
 function ReservAccordion() {
 
+    //use location으로 가져 온 주소 값 설정
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const getSDate = searchParams.get('sDate');
     const getEDate = searchParams.get('eDate');
     const count = searchParams.get('people');
+
+    // datepicker 변수 / datepicker data 가져와 연동
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    const [hotelName, setHotelName] = useState([])
-
 
     useEffect(() => {
         const testStart = new Date(getSDate)
@@ -34,6 +38,8 @@ function ReservAccordion() {
 
     }, [])
 
+    // hotel List 가져오기
+    const [hotelName, setHotelName] = useState([])
     //axios input button roop connection
     useEffect(() => {
         axios.get("http://10.100.204.69:8080/gaya/gethotel")
@@ -44,6 +50,12 @@ function ReservAccordion() {
             })
             .catch()
     }, [])
+
+// datepicker header css에 사용할 변수
+    const _ = require('lodash');
+    const years = _.range(2023, getYear(new Date()) + 2, 1);
+    //공식 문서대로 사용하면 오류나기때문에 수정함.
+    const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
 
 
     const CustomInput = forwardRef(({value, onClick}, ref) => (<button className="btn btn-outline-secondary" onClick={onClick} ref={ref}>
@@ -67,7 +79,7 @@ function ReservAccordion() {
                                     {
                                         hotelName.map((name) => {
                                                 return (
-                                                    <input style={styles.inputBox} className={"text-center form-control rounded-0 border-1 m-3"} value={name} readOnly={true}/>
+                                                    <input type={"button"} style={styles.inputBox} className={"text-center form-control rounded-0 m-3"} value={name} readOnly={true}/>
                                                 );
                                             }
                                         )
@@ -86,20 +98,35 @@ function ReservAccordion() {
                         </button>
                     </h2>
                     <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                        <div className="accordion-body d-grid justify-content-center">
-                            <div className={"container"}>
-                                <DatePicker
-                                    dateFormat="yyyy-MM-dd"
-                                    selected={endDate}
-                                    onChange={(date) => setEndDate(date)}
-                                    selectsEnd
-                                    startDate={startDate}
-                                    endDate={endDate}
-                                    minDate={startDate}
-                                    locale={ko}
-                                    customInput={<CustomInput/>}
-                                    inline
-                                />
+                        <div className="accordion-body">
+                            <div className={"row"}>
+                                    <DatePicker
+                                        dateFormat="yyyy-MM-dd"
+                                        selected={startDate}
+                                        onChange={(date) => setStartDate(date)}
+                                        selectsStart
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        minDate={new Date()}
+                                        locale={ko}
+                                        customInput={<CustomInput/>}
+                                        inline
+                                    />
+
+
+                                    <DatePicker
+                                        dateFormat="yyyy-MM-dd"
+                                        selected={endDate}
+                                        onChange={(date) => setEndDate(date)}
+                                        selectsEnd
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        minDate={startDate}
+                                        locale={ko}
+                                        customInput={<CustomInput/>}
+                                        inline
+                                    />
+
                             </div>
                         </div>
                     </div>
