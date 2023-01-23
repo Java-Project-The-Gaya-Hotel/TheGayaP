@@ -113,11 +113,8 @@ function DateChoose() {
     return (
         <div className={"container justify-content-center align-items-baseline"}>
             <div className={"row align-items-center p-3"}>
-                <div className={"col"} style={styles.selectCenter}>
-                    <select style={styles.optionBox} className={"form-select form-select"}>
-                        <option>Hotel</option>
-                        <option>Stay</option>
-                    </select>
+                <div className={"col"}>
+                    <h5> 예약 조회 </h5>
                 </div>
 
                 <div className={"col"}>

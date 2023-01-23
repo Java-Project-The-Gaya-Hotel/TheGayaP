@@ -9,10 +9,6 @@ import ReservAccordion from "./ReservAccordion";
 function ReservationPage() {
     return (
         <div>
-            {/*header*/}
-            <div>
-                <RoutesLayout/>
-            </div>
             <p className={"pt-5 pb-5"}></p>
             {/*main*/}
 

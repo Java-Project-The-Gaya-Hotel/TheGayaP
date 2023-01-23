@@ -1,38 +1,35 @@
 import React from "react";
 import CarouselTestImg from"../mainImg/R0000001RUXJ_KR.jpg"
+import CarouselImg1 from"../mainImg/Untitled-1.jpg"
+import CarouselImg2 from"../mainImg/Untitled-2.jpg"
+import CarouselImg3 from"../mainImg/Untitled-3.jpg"
 
 function Carosel() {
     return(
         <div>
             <div id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-ride="carousel">
-                <div className="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                </div>
+                {/*<div className="carousel-indicators">*/}
+                {/*    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>*/}
+                {/*    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>*/}
+                {/*    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>*/}
+                {/*</div>*/}
                 <div className="carousel-inner">
                     <div className="carousel-item active" data-bs-interval="10000">
-                        {/*<img src="..." className="d-block w-100" alt="...">*/}
-                        <img src={CarouselTestImg} className={"d-block w-100"}/>
+                        <img src={CarouselImg1} className={"d-block w-100"}/>
                             <div className="carousel-caption d-none d-md-block">
-                                <h5>-</h5>
-                                <p>-</p>
+
                             </div>
                     </div>
                     <div className="carousel-item" data-bs-interval="2000">
-                        {/*<img src="..." className="d-block w-100" alt="...">*/}
-                        <img src={CarouselTestImg} className={"d-block w-100"}/>
+                        <img src={CarouselImg2} className={"d-block w-100"}/>
                             <div className="carousel-caption d-none d-md-block">
-                                <h5>-</h5>
-                                <p>-</p>
+
                             </div>
                     </div>
                     <div className="carousel-item">
-                        {/*<img src="..." className="d-block w-100" alt="...">*/}
-                        <img src={CarouselTestImg} className={"d-block w-100"}/>
+                        <img src={CarouselImg3} className={"d-block w-100"}/>
                             <div className="carousel-caption d-none d-md-block">
-                                <h5>-</h5>
-                                <p>-</p>
+
                             </div>
                     </div>
                 </div>

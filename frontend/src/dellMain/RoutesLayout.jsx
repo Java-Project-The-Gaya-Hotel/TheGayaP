@@ -1,12 +1,12 @@
 import React from 'react';
 import {Outlet, Link} from "react-router-dom";
-import MainLogo from "../mainImg/Title ver kingsman.png"
+import MainLogo from "../mainImg/headerTitle.svg"
 import "./dellmainCss/LayoutCss.css"
 
 const styles = {
     TitleImgSize: {
-        width: "180px",
-        height: "50px"
+        width :"650px",
+        height:"40px"
     }
 }
 
@@ -32,7 +32,7 @@ function RoutesLayout(props) {
                                 <Link to ={"/"} className="nav-link active" aria-current="page">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to={"/menu1"} className="nav-link">Menu 1</Link>
+                                <Link to={"/reservation"} className="nav-link">Menu 1</Link>
                             </li>
                             <li className="nav-item">
                                 <Link to={"/menu1"} className="nav-link">Menu 2</Link>

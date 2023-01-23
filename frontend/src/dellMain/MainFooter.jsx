@@ -1,67 +1,106 @@
 import React from "react";
-import Title from "../mainImg/Title ver kingsman.png"
+import "../dellMain/dellmainCss/FooterCss.css"
+import {Link} from "react-router-dom";
+
 
 const styles = {
     headerTitle: {
-        width: "380px", height: "130px"
+        width: "350px", height: "100px"
     }
 }
 
 
 function MainFooter() {
     return (
-
         <div>
-            <footer className="text-center text-lg-start text-black">
+            <footer>
+                <div className="container">
+                    <div className="footer-top">
+                        <div className="row">
+                            <div className="col-md-6 col-lg-3 about-footer">
+                                <h3> The Gaya Hotel </h3>
 
-                <div className="p-4 pb-0">
-
-                    <section>
-                        <div className="row align-items-center justify-content-center">
-
-                            <div className="col-md-3 col-lg-3 col-xl-3 container">
-                                <img src={Title} style={styles.headerTitle}/>
+                            </div>
+                            <div className="col-md-6 col-lg-2 page-more-info">
+                                <div className="footer-title">
+                                    <h4>Links</h4>
+                                </div>
+                                <ul>
+                                    <li><Link to={"/reservation"}>Reservation</Link></li>
+                                </ul>
                             </div>
 
-                            {/*<hr className="w-100 clearfix d-md-none"/>*/}
-
-                            {/*<div className="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">*/}
-                            {/*    <ul>*/}
-                            {/*        <li>고객센터</li>*/}
-                            {/*        <li>약관</li>*/}
-                            {/*        <li>제작팀 - 4Them</li>*/}
-                            {/*    </ul>*/}
-                            {/*    <p> 위치 / 번호 </p>*/}
-                            {/*</div>*/}
-
-                            <hr className="w-100 clearfix d-md-none"/>
-
-                            <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-                                <p>
-                                    Here you can use rows and columns to organize your footer
-                                    content. Lorem ipsum dolor sit amet, consectetur adipisicing
-                                    elit.
-                                </p>
+                            <div className="col-md-6 col-lg-3 page-more-info">
+                                <div className="footer-title">
+                                    <h4>More Info</h4>
+                                </div>
+                                <ul>
+                                    <li><a href="#">Lorem ipsum</a></li>
+                                    <li><a href="#">Dolor sit amet</a></li>
+                                    <li><a href="#">Consectetur Adipisicing </a></li>
+                                    <li><a href="#">Ed do eiusmod tempor incididunt</a></li>
+                                </ul>
                             </div>
+                            <div className="col-md-6 col-lg-4 open-hours">
+                                <div className="footer-title">
+                                    <h4>Open hours</h4>
+                                    <ul className="footer-social">
+                                        <li><a href="" target="_blank"><i className="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="" target="_blank"><i className="fab fa-instagram"></i></a></li>
+                                        <li><a href="" target="_blank"><i className="fab fa-linkedin-in"></i></a></li>
 
+                                    </ul>
+                                </div>
+                                <table className="table">
+                                    <tbody>
+                                    <tr>
+                                        <td><i className="far fa-clock"></i>Monday Thursday</td>
+                                        <td>09:00am - 05:00pm</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i className="far fa-clock"></i>Friday</td>
+                                        <td>09:00am - 04:00pm</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i className="far fa-clock"></i>Sturday</td>
+                                        <td>09:00am - 01:30pm</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i className="far fa-clock"></i>Sunday</td>
+                                        <td>09:30am - 12:00pm</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <hr/>
+                                <div className="footer-logo">
 
+                                    <table>
+                                        <tbody>
+                                        <tr>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                    </section>
-
-
-                    <hr className="my-3"/>
-
-                    <section className="p-3 pt-0 text-center">
-                        <div>
-                            <p>Copyright &copy; by React & Spring 4Them </p>
+                    </div>
+                    <div className="footer-bottom">
+                        <div className="row">
+                            <div className="col-sm-4">
+                                <a href="">Privacy policy</a>
+                            </div>
+                            <div className="col-sm-8">
+                                <p>Team 4 Project - The Gaya Hotel - @ 2023 All rights reserved</p>
+                            </div>
                         </div>
-
-                    </section>
+                    </div>
                 </div>
             </footer>
         </div>
     )
-
 }
 
 export default MainFooter;
+
+
