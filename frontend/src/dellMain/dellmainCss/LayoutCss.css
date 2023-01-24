@@ -11,7 +11,7 @@
 }
 
 a.dropdown-toggle {
-    color: #dfdfdf !important
+    color: #020202 !important
 }
 
 a.dropdown-item:hover {
@@ -19,15 +19,12 @@ a.dropdown-item:hover {
 }
 
 .nav-item {
-    color: #dcdcdc;
+    color: #000000;
+    min-width: 12vw;
 }
 
 .nav-item :hover {
-    color: #000000
-}
-
-.nav-item {
-    min-width: 12vw;
+    color: rgba(0, 87, 255, 0.45)
 }
 
 #mainNavigation {
@@ -46,6 +43,6 @@ a.dropdown-item:hover {
 
 #navbarNavDropdown.collapsing .navbar-nav,
 #navbarNavDropdown.show .navbar-nav {
-    background: #070202;
+    background: rgba(127, 127, 127, 0);
     padding: 12px;
 }

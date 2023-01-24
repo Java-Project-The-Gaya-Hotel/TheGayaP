@@ -7,20 +7,22 @@ import 'animate.css'
 
 function MainComponent1() {
     return (
-        <div id={"contain"} >
-            <div className="box animate__animated animate__fadeInUp">
-                <img src="https://source.unsplash.com/1000x800/?hotel"/>
+
+            <div id={"contain"}>
+                <div className="box">
+                    <img src="https://source.unsplash.com/1000x800/?hotel" alt={"random1"}/>
+                </div>
+                <div className="box">
+                    <img src="https://source.unsplash.com/1000x802/?hotel" alt={"random2"}/>
+                </div>
+                <div className="box">
+                    <img src="https://source.unsplash.com/1000x804/?hotel" alt={"random3"}/>
+                </div>
+                <div className="box">
+                    <img src="https://source.unsplash.com/1000x806/?hotel" alt={"random4"}/>
+                </div>
             </div>
-            <div className="box box animate__animated animate__fadeInUp">
-                <img src="https://source.unsplash.com/1000x802/?hotel"/>
-            </div>
-            <div className="box">
-                <img src="https://source.unsplash.com/1000x804/?hotel"/>
-            </div>
-            <div className="box">
-                <img src="https://source.unsplash.com/1000x806/?hotel"/>
-            </div>
-        </div>
+
     )
 }
 
