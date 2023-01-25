@@ -70,7 +70,9 @@ function DateChoose() {
                     icon: 'info',
                     title: '확인해주세요!',
                     text: ' 인원 수는 4명까지 선택할 수 있습니다. ',
-                    footer: '<a href=""> 고객문의 안내는 여기로 </a>'
+                    footer: '<a href=""> 고객문의 안내는 여기로 </a>',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor : 'rgb(0 0 0)'
                 });
                 setCount((count) => Math.max(4))
             }
