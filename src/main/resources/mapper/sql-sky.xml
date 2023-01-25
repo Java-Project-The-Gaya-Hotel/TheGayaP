@@ -4,6 +4,10 @@
 <!-- mybatis SQL 매핑 파일을 뜻하는 지시문 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gaya.thegayap.mapper.SkyMapper">
-
+<select id="idCk" resultType="int">
+    select count(idenyification)
+    from user
+    where idenyification = #{idenyification}
+</select>
 
 </mapper>

@@ -3,6 +3,7 @@ import RoutesLayout from "../dellMain/RoutesLayout";
 import MainFooter from "../dellMain/MainFooter";
 import "../dellReservation/dellReservCss/BreadCrumb.css"
 import Swal from "sweetalert2";
+import ReservationPageDetail2 from "./ReservationPageDetail2";
 
 
 
@@ -85,7 +86,6 @@ function ReservationPageDetail() {
 
 
     return (
-
 
         <div>
             <div>

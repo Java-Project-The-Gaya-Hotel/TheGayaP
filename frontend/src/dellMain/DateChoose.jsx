@@ -50,6 +50,7 @@ function DateChoose(props) {
                 <div className={"col"}>
                     <button className={"btn btn-outline-dark"}><Link to='/reservation' style={styles.linkDecoLine}>Reservation</Link></button>
                     <button className={"btn btn-outline-dark"}><Link to='/reservationPage' style={styles.linkDecoLine}>Reservation1</Link></button>
+                    <button className={"btn btn-outline-dark"}><Link to='/reservationPage2' style={styles.linkDecoLine}>Reservation2</Link></button>
                 </div>
             </div>
         </div>)
