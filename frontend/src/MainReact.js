@@ -1,5 +1,5 @@
 import MainPage from "./dellMain/MainPage";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import RoutesLayout from "./dellMain/RoutesLayout";
 import BeingPage from "./dellMain/BeingPage";
 import BookingPage from "./dellBooking/BookingPage";
@@ -7,7 +7,7 @@ import IntroPage from "./dellIntro/IntroPage";
 import BookingRoom from "./dellBooking/BookingRoom";
 import Login from "./login/Login";
 import Join from "./join/Join";
-import InquiryList from "./inquiryBoard/InquiryList";
+import InquiryMain from "./inquiryBoard/InquiryMain";
 
 
 function MainReact(props) {
@@ -23,7 +23,7 @@ function MainReact(props) {
                         <Route path={"/menu1"} element={<BeingPage/>}/>
                         <Route path={"/login"} element={<Login/>}/>
                         <Route path={"/join"} element={<Join/>}/>
-                        <Route path={"/qa"} element={<InquiryList/>}/>
+                        <Route path={"/qa"} element={<InquiryMain/>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>

@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import "./InquiryWrite.css";
-import MainFooter from "../dellMain/MainFooter";
+import MainFooter from "../../dellMain/MainFooter";
 
 function InquiryWrite() {
 
@@ -202,9 +202,9 @@ function InquiryWrite() {
 
 
       </div>
-      <div className={"mt-5"} style={{backgroundColor:"darkgray"}}>
-        <MainFooter />
-      </div>
+      {/*<div className={"mt-5"} style={{backgroundColor:"darkgray"}}>*/}
+      {/*  <MainFooter />*/}
+      {/*</div>*/}
     </div>
   );
 }
