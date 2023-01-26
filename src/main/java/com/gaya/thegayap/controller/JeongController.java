@@ -42,6 +42,14 @@ public class JeongController {
         return emailResult;
     }
 
+    // 전화번호 중복 체크
+    @RequestMapping(value = "/join/telCheck", method = RequestMethod.GET)
+    public int telCheck(JeongMemberDto member) throws Exception{
+        int telResult = jeongService.telCheck(member);
+
+        return telResult;
+    }
+
 
 
 //    마이페이지
@@ -54,8 +62,8 @@ public class JeongController {
 
     // 내 등급, 포인트 조회
     @GetMapping("/mypage/account")
-    public Object myAccount(@RequestParam("memberId") String memberId) throws Exception {
-        JeongMemberDto memberDto = jeongService.myAccount(memberId);
+    public Object account(@RequestParam("memberId") String memberId) throws Exception {
+        JeongMemberDto memberDto = jeongService.profile(memberId);
         return memberDto;
     }
 
@@ -65,4 +73,20 @@ public class JeongController {
         List<JeongCustomerDto> checkPoints = jeongService.checkPoints(customerId);
         return checkPoints;
     }
+
+    // 프로필 수정페이지 프로필 조회
+    @GetMapping("/mypage/profile")
+    public Object profile(@RequestParam("memberId") String memberId) throws Exception {
+        JeongMemberDto memberDto = jeongService.profile(memberId);
+        return memberDto;
+    }
+
+
+    // 프로필 수정
+    @PutMapping("/mypage/update")
+    public void updateProfile(JeongMemberDto member, @RequestParam("memberId") String memberId) throws Exception {
+        member.setMemberId(memberId);
+        jeongService.updateProfile(member);
+    }
+
 }

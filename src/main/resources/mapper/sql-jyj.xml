@@ -23,6 +23,13 @@
         WHERE member_email=#{memberEmail}
     </select>
 
+<!--    연락처 중복 체크 -->
+    <select id="telCheck" parameterType="com.gaya.thegayap.dto.JeongMemberDto" resultType="int">
+        SELECT count(member_tel)
+        FROM member_table
+        WHERE member_tel=#{memberTel}
+    </select>
+
 <!--    내 예약확인 조회-->
     <select id="resvList" resultType="com.gaya.thegayap.dto.JeongResvDto">
         SELECT resv.*, ht.hotel_name,
@@ -37,9 +44,9 @@
         ORDER BY reservation_date DESC
     </select>
 
-<!--    내 등급, 포인트 조회 -->
-    <select id="myAccount" resultType="com.gaya.thegayap.dto.JeongMemberDto">
-        SELECT member_num, member_id, member_name, member_tier, member_point
+<!--    내 등급, 포인트, 프로필 조회 -->
+    <select id="profile" resultType="com.gaya.thegayap.dto.JeongMemberDto">
+        SELECT *
         FROM member_table
         WHERE member_id=#{memberId}
     </select>
@@ -66,7 +73,6 @@
         UPDATE member_table
         SET member_pw = #{memberPw}
         WHERE member_id  = #{memberId} AND member_pw = #{memberPw}
-        
     </update>
 
 <!--    회원 탈퇴 -->

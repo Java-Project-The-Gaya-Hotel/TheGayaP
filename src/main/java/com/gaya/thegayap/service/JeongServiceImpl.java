@@ -32,13 +32,18 @@ public class JeongServiceImpl implements JeongService{
     }
 
     @Override
+    public int telCheck(JeongMemberDto member) throws Exception {
+        return jeongMapper.telCheck(member);
+    }
+
+    @Override
     public List<JeongResvDto> resvList(String customerId) throws Exception {
         return jeongMapper.resvList(customerId);
     }
 
     @Override
-    public JeongMemberDto myAccount(String memberId) throws Exception {
-        JeongMemberDto memberDto = jeongMapper.myAccount(memberId);
+    public JeongMemberDto profile(String memberId) throws Exception {
+        JeongMemberDto memberDto = jeongMapper.profile(memberId);
 
         return memberDto;
     }
@@ -46,6 +51,11 @@ public class JeongServiceImpl implements JeongService{
     @Override
     public List<JeongCustomerDto> checkPoints(String customerId) throws Exception {
         return jeongMapper.checkPoints(customerId);
+    }
+
+    @Override
+    public void updateProfile(JeongMemberDto member) throws Exception {
+        jeongMapper.updateProfile(member);
     }
 
 
