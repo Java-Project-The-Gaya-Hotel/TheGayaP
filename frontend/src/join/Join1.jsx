@@ -7,6 +7,7 @@ import axios from "axios";
 function Join1(props) {
 
 
+
     const [Email, setEmail] = React.useState("")
     const [Password, setPassword] = React.useState("")
     const [Id, setId] = React.useState("")
@@ -105,6 +106,7 @@ function Join1(props) {
     }, [Number]);
 
     return (
+
 
 
 
@@ -258,21 +260,13 @@ function Join1(props) {
                                             <input className={"col-2"} value={Number} onChange={onNumberHandler} />
 
                                         </div>
-                                        <div className={"col"}>
 
-
-                                        </div>
-                                        <div className={"col"}>
-
-                                        </div>
 
                                     </div>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
-                        {/*<Join3/>*/}
-                        {/*<Join2/>*/}
 
                     </div>
 

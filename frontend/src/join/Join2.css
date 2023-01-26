@@ -34,11 +34,11 @@
 
 
 
-.tableTypeA .last th, .tableTypeA .last td {
+.tableTypeB .last th, .tableTypeB .last td {
     border-bottom: #cdcbbe solid 1px;
 }
 
-.tableTypeA .bdBot {
+.tableTypeB .bdBot {
     border-bottom: #cdcbbe solid 1px !important;
 }
 
