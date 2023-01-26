@@ -16,6 +16,7 @@ function WriteInquiry() {
   const [password, setPassword] = useState("");
   const [hidden, setHidden] = useState("");
 
+
   const data =
     {
       inquiryHotelName: hotelName,
@@ -29,37 +30,23 @@ function WriteInquiry() {
       inquiryHidden: hidden
     };
 
+  const hotelVal = ["서울가야호텔", "제주가야호텔", "가야스테이 광화문", "가야스테이 마포", "가야스테이 서대문", "가야스테이 역삼", "가야스테이 서초",
+    "가야스테이 구로", "가야스테이 삼성", "가야스테이 동탄", "가야스테이 천안", "가야스테이 울산", "가야스테이 해운대",
+    "가야스테이 서부산", "가야스테이 여수", "가야스테이 제주"];
 
-  const hotelVal = ["호텔1", "호텔2"];
-  const stayVal = ["스테이1", "스테이2"];
-
-
-
-
-  const selChange = (e) => {
-    e.preventDefault();
-    if (e.target.value === "hotel"){
-
-    }
-  }
 
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     console.log(data);
-      // axios.post("http://localhost:8080/join/insert",data)
-      //   .then((req) => {
-      //     console.log("데이터 전송 성공")
-      //   }).catch(err => {
-      //   console.log(`데이터 전송 실패 ${err}`)
-      // })
+
     };
 
 
 
   return (
-    <div style={{paddingTop: 136}}>
+    <div className={"inquiry"} style={{paddingTop: 136}}>
       <div className={"container mt-5"}>
         {/* 헤드라인 부분 추후 이동 예정 */}
         <div className={"headline w-75 mx-auto pb-3"}>
@@ -87,20 +74,15 @@ function WriteInquiry() {
               </div>
 
               {/* 호텔선택 */}
-              <div className={"chain"}>
+              <div className={"selHotel"}>
                 <span className={"required"}>* </span>
-                <label htmlFor={"chain"} className={"form-label"}>체인명</label>
+                <label htmlFor={"selHotel"} className={"form-label"}>체인명</label>
                 <div className={"row"}>
-                  <div className={"col-sm-5 pe-0"}>
-                    <select name={"chain"} className={"form-select"} onChange={selChange}>
-                      <option value={"hotel"}>가야호텔</option>
-                      <option value={"stay"}>가야스테이</option>
-                    </select>
-                  </div>
                   <div className={"col-sm"}>
-                    <select id={"selHotel"} className={"form-select"} onChange={(e) => {setHotelName(e.target.value)}}>
-                      <option value={"호텔1"}>호텔1</option>
-                      <option value={"호텔2"}>호텔2</option>
+                    <select className={"form-select"} onChange={(e) => {setHotelName(e.target.value)}}>
+                      {hotelVal.map((item) => {
+                        return <option key={item} value={item}>{item}</option>
+                      })}
                     </select>
                   </div>
                 </div>

@@ -1,109 +1,87 @@
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import "./Join.css"
 import axios from "axios";
 
 
 function Join(props) {
 
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [number, setNumber] = useState("")
+  const [birth, setBirth] = useState("")
+  const [id, setId] = useState("")
+  const [pw, setPw] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
 
-  const [Email, setEmail] = React.useState("")
-  const [Password, setPassword] = React.useState("")
-  const [Id, setId] = React.useState("")
-  const [ConfirmPassword, setConfirmPassword] = React.useState("")
-  const [Name, setName] = React.useState("")
-  const [Number, setNumber] = React.useState("")
-  const [Birth, setBirth] = React.useState("")
-  const onBirthHandler = (event) => {
-    setBirth(event.currentTarget.value)
+  const data = {
+    memberName: name,
+    memberId: id,
+    memberPw: pw,
+    memberEmail: email,
+    memberTel: number,
+    memberBirth: birth,
+  };
+
+  const onBirthHandler = (e) => {
+    setBirth(e.target.value)
   }
 
-  const onNameHandler = (event) => {
-    setName(event.currentTarget.value)
+  const onNameHandler = (e) => {
+    setName(e.target.value)
   }
 
-  const onNumberHandler = (event) => {
-    setNumber(event.target.value)
+  const onNumberHandler = (e) => {
+    setNumber(e.target.value)
   }
-  const onEmailHandler = (event) => {
-    setEmail(event.currentTarget.value)
-  }
-
-  const onIdHandler = (event) => {
-    setId(event.currentTarget.value)
+  const onEmailHandler = (e) => {
+    setEmail(e.target.value)
   }
 
-  const onPasswordHandler = (event) => {
-    setPassword(event.currentTarget.value)
+  const onIdHandler = (e) => {
+    setId(e.target.value)
   }
 
-  const onConfirmPasswordHandler = (event) => {
-    setConfirmPassword(event.currentTarget.value)
+  const onPasswordHandler = (e) => {
+    setPw(e.target.value)
+  }
+
+  const onConfirmPasswordHandler = (e) => {
+    setConfirmPassword(e.target.value)
   }
   const onSubmitHandler = (event) => {
     event.preventDefault(); //리프레시 방지-> 방지해야 이 아래 라인의 코드들 실행 가능
 
-    console.log('Email', Email);
-    console.log('Password', Password);
-    console.log('name', Name);
-    console.log('Birth', Birth);
-    console.log('number', Number);
-
-
-    axios.get("http://localhost:8080/gaya/sendUser",{params:{
-        Email:Email,
-      }}).then((req) =>{
-      console.log("데이터 전송에 성공했습니다.")
-    }).catch((err)=>{
-      console.log(err + "데이터 전송에 실패한 코드")
-    })
-
-
     // 비밀번호와 비밀번호 확인 같을띠 회원가입 되게 함
-    if (Password !== ConfirmPassword) {
+    if (pw !== confirmPassword) {
       return alert('비밀번호와 비밀번호 확인은 같아야 합니다.')
     }   //여기서 걸리면 아래로 못감
 
+    axios.post("http://localhost:8080/join/insert",data)
+      .then((req) => {
+        console.log("데이터 전송 성공")
+        console.log(data);
+      }).catch(err => {
+      console.log(`데이터 전송 실패 ${err}`)
+    })
+
   }
 
+  // 아이디 중복체크
+  const handleIdCheck = (e) => {
+    e.preventDefault();
 
-  //////////////////////////참고해서 변경할 부분////////////////////////////////////////
-  // const data = {
-  //   memberName: memberName,
-  //   memberId: memberId,
-  //   memberPw: memberPw,
-  //   memberEmail: memberEmail,
-  //   memberTel: memberTel,
-  //   memberBirth: memberBirth,
-  // };
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //
-  //   axios.post("http://localhost:8080/join/insert",data)
-  //     .then((req) => {
-  //       console.log("데이터 전송 성공")
-  //       console.log(req.data);
-  //     }).catch(err => {
-  //     console.log(`데이터 전송 실패 ${err}`)
-  //   })
-  // };
-  //
-  // const handleIdCheck = (e) => {
-  //   e.preventDefault();
-  //
-  //   axios.get("http://localhost:8080/join/idCheck",
-  //     {
-  //       params: {memberId: memberId}
-  //     })
-  //     .then((req) => {
-  //       console.log("데이터 전송 성공")
-  //       if (req.data === 1) alert('중복된 아이디입니다.');
-  //       else if(req.data === 0) alert('사용가능한 아이디입니다.');
-  //     }).catch(err => {
-  //     console.log(`데이터 전송 실패 ${err}`)
-  //   })
-  // }
-  /////////////////////////////////////////////////////////////////
-
+    axios.get("http://localhost:8080/join/idCheck",
+      {
+        params: {memberId: id}
+      })
+      .then((req) => {
+        console.log("데이터 전송 성공")
+        if (req.data === 1) alert('중복된 아이디입니다.');
+        else if(req.data === 0) alert('사용가능한 아이디입니다.');
+      }).catch(err => {
+      console.log(`데이터 전송 실패 ${err}`)
+    })
+  }
 
 
 
@@ -153,7 +131,7 @@ function Join(props) {
                 <th className={"first"}><em className={"ast"}>*</em> 아이디</th>
                 <td>
                   <div className="first ">
-                    <input type={"text"} value={Id} onChange={onIdHandler} className={"id"}
+                    <input type={"text"} value={id} onChange={onIdHandler} className={"id"}
                            autoComplete={"off"}/>
                     {/*<span className="idConfirm"><a href="javascript:checkDuplicateLognId()">아이디 중복확인</a></span>*/}
                     <span className="msgCheck msgCheck2"> 5~12자  이내 영문 또는 /숫자 조합</span>
@@ -168,7 +146,7 @@ function Join(props) {
                 <td className="first">
                   <div className={"row"}>
                     <div className={"col"}>
-                      <input type={"Email"} value={Email} onChange={onEmailHandler}/>
+                      <input type={"Email"} value={email} onChange={onEmailHandler}/>
                       <span>@</span>
                       <input/>
                       <div className={"text"}>
@@ -217,12 +195,12 @@ function Join(props) {
               <tr className={"first col"}>
                 <th><em className={"ast"}>*</em> 비밀번호</th>
                 <td>
-                  <input type={"password"} value={Password} onChange={onPasswordHandler}/>
+                  <input type={"password"} value={pw} onChange={onPasswordHandler}/>
                 </td>
 
                 <th><em className={"ast"}>*</em> 비밀번호 확인</th>
                 <td>
-                  <input type={"password"} value={ConfirmPassword}
+                  <input type={"password"} value={confirmPassword}
                          onChange={onConfirmPasswordHandler}/>
                 </td>
 
@@ -241,7 +219,7 @@ function Join(props) {
                 <td className="first">
                   <div className={"row"}>
                     <div className={"col"}>
-                      <input type={"text"} value={Name} onChange={onNameHandler}/>
+                      <input type={"text"} value={name} onChange={onNameHandler}/>
                     </div>
 
                   </div>
@@ -251,7 +229,7 @@ function Join(props) {
               <tr className={"first"}>
                 <th scope="row" className="first"><em className="ast">*</em> 생년월일</th>
                 <td className="first ">
-                  <input type={"date"} value={Birth} onChange={onBirthHandler} className={"Birth"}/>
+                  <input type={"date"} value={birth} onChange={onBirthHandler} className={"Birth"}/>
                   {/*<Join2Detail/>*/}
                 </td>
               </tr>
@@ -269,7 +247,7 @@ function Join(props) {
                         <option value="+82" title="+82">+82</option>
                         <option value="+82" title="+82">+82</option>
                       </select>
-                      <input className={"col-2"} value={Number} onChange={onNumberHandler} />
+                      <input className={"col-2"} value={number} onChange={onNumberHandler} />
 
                     </div>
                     <div className={"col"}>
@@ -292,6 +270,9 @@ function Join(props) {
 
           <button formAction={""} className={"btn btn-primary"}>
             회원 가입
+          </button>
+          <button onClick={handleIdCheck} className={"btn btn-primary"}>
+            아이디중복
           </button>
         </div>
       </form>

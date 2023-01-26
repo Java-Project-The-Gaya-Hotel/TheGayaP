@@ -1,15 +1,11 @@
-.headline{
+.inquiry .headline{
     border-bottom: solid 3px darkgray;
 }
 
-input, select {
-    height: 45px;
-}
-
-.required{
+.inquiry .required{
     color: red;
 }
 
-label{
+.inquiry label{
     font-size: 17px ;
 }

@@ -1,6 +1,7 @@
 package com.gaya.thegayap.controller;
 
 
+import com.gaya.thegayap.dto.JeongCustomerDto;
 import com.gaya.thegayap.dto.JeongMemberDto;
 import com.gaya.thegayap.dto.JeongResvDto;
 import com.gaya.thegayap.service.JeongService;
@@ -9,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/join")
 public class JeongController {
 
     @Autowired
@@ -20,13 +21,13 @@ public class JeongController {
 
 //    회원가입페이지
     // 회원 데이터 입력
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @RequestMapping(value = "/join/insert", method = RequestMethod.POST)
     public void joinMember(@RequestBody JeongMemberDto member) throws Exception {
         jeongService.joinMember(member);
     }
 
     // ID 중복 체크
-    @RequestMapping(value = "/idCheck", method = RequestMethod.GET)
+    @RequestMapping(value = "/join/idCheck", method = RequestMethod.GET)
     public int idCheck(JeongMemberDto member) throws Exception{
         int idResult = jeongService.idCheck(member);
 
@@ -34,7 +35,7 @@ public class JeongController {
     }
 
     // 이메일 중복 체크
-    @RequestMapping(value = "/emailCheck", method = RequestMethod.GET)
+    @RequestMapping(value = "/join/emailCheck", method = RequestMethod.GET)
     public int emailCheck(JeongMemberDto member) throws Exception{
         int emailResult = jeongService.emailCheck(member);
 
@@ -42,17 +43,26 @@ public class JeongController {
     }
 
 
+
 //    마이페이지
+    // 예약확인 조회
+    @GetMapping("/mypage/resv")
+    public Object myResv(@RequestParam("customerId") String customerId) throws Exception {
+        List<JeongResvDto> resvList = jeongService.resvList(customerId);
+        return resvList;
+    }
 
-//    // 예약확인 조회
-//    @GetMapping("/mypage/resv")
-//    public List<JeongResvDto> resvList() {
-//
-//
-//
-//        return ;
-//    }
+    // 내 등급, 포인트 조회
+    @GetMapping("/mypage/account")
+    public Object myAccount(@RequestParam("memberId") String memberId) throws Exception {
+        JeongMemberDto memberDto = jeongService.myAccount(memberId);
+        return memberDto;
+    }
 
-
-
+    // 내 포인트 사용내역 조회
+    @GetMapping("/mypage/point")
+    public Object myPoint(@RequestParam("customerId") String customerId) throws Exception {
+        List<JeongCustomerDto> checkPoints = jeongService.checkPoints(customerId);
+        return checkPoints;
+    }
 }

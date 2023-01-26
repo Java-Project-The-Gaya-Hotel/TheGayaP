@@ -1,9 +1,14 @@
 package com.gaya.thegayap.service;
 
+import com.gaya.thegayap.dto.JeongCustomerDto;
 import com.gaya.thegayap.dto.JeongMemberDto;
+import com.gaya.thegayap.dto.JeongResvDto;
+import com.gaya.thegayap.dto.SinDto;
 import com.gaya.thegayap.mapper.JeongMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class JeongServiceImpl implements JeongService{
@@ -25,4 +30,23 @@ public class JeongServiceImpl implements JeongService{
     public int emailCheck(JeongMemberDto member) throws Exception {
         return jeongMapper.emailCheck(member);
     }
+
+    @Override
+    public List<JeongResvDto> resvList(String customerId) throws Exception {
+        return jeongMapper.resvList(customerId);
+    }
+
+    @Override
+    public JeongMemberDto myAccount(String memberId) throws Exception {
+        JeongMemberDto memberDto = jeongMapper.myAccount(memberId);
+
+        return memberDto;
+    }
+
+    @Override
+    public List<JeongCustomerDto> checkPoints(String customerId) throws Exception {
+        return jeongMapper.checkPoints(customerId);
+    }
+
+
 }
