@@ -1,8 +1,34 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import InquiryUserChat from "./inquiryUserChat";
 import InquiryAdminChat from "./inquiryAdminChat";
 
+import {useSearchParams} from "react-router-dom";
+import axios from "axios";
+
+
 function InquiryDetail() {
+
+
+    const [qaIdx, setQAIdx] = useSearchParams()
+    const [qaDetailData, setQaDetailData] = useState([]);
+
+
+    useEffect(() => {
+        const getData = async () => {
+            const data = await axios.get("http://localhost:8080/qa/detail", {
+                params: {
+                    idx: qaIdx.get('idx'),
+                }
+            }).then(req => {
+                console.log("통신 성공")
+            })
+        }
+        getData();
+
+
+    }, [])
+
+
     return (
         <div className={"container vh-100 vw-50 p-5"}>
             <div className={"row"}>
@@ -29,17 +55,7 @@ function InquiryDetail() {
                     <InquiryUserChat/>
                     <InquiryAdminChat/>
                 </div>
-                <div className={"chat_input_box bg-secondary fixed-bottom col-4 mx-auto p-3"}>
-                    <div className={"border-bottom"}>
-                        <p>유저 이름</p>
-                    </div>
-                    <div className={"col-11 mx-auto mt-4"}>
-                        <input className={"form-control"} style={{height:150}}/>
-                    </div>
-                    <div className={"d-flex justify-content-end mt-3"}>
-                        <button className={"btn btn-warning"}>작성 하기</button>
-                    </div>
-                </div>
+
             </div>
         </div>
     );

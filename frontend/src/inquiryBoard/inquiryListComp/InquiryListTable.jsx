@@ -9,14 +9,16 @@ function InquiryListTable(props) {
         console.log();
     }
 
-    useEffect(() => {
-
-        axios.get("http://localhost:8080/gaya/inquirylist")
+    useEffect( () => {
+        const getQaData = async ()=>{
+        const data = await axios.get("http://localhost:8080/gaya/inquirylist")
             .then((req) => {
                 console.log("데이터 전송 성공")
                 const {data} = req;
                 setQAData(data);
             }).catch(err => console.log(err))
+        }
+        getQaData();
 
     }, []);
 
@@ -27,7 +29,7 @@ function InquiryListTable(props) {
                 <h1>고객 문의 게시판</h1>
             </div>
             <div className={"row"}>
-                <div className={"col-md-10 mx-auto"}>
+                <div className={"col-md-10 m-1"}>
                     <table className={'table table-striped table-hover text-center'}>
                         <thead>
                         <tr>
@@ -48,7 +50,7 @@ function InquiryListTable(props) {
                     </table>
                 </div>
             </div>
-            <div className={"col-11 d-flex justify-content-end"}>
+            <div className={"d-flex justify-content-end col-10"}>
                 <button>문의 작성</button>
 
             </div>
