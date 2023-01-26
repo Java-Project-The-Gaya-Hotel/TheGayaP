@@ -24,7 +24,7 @@
     </select>
 
 <!--    내 예약확인 조회-->
-    <select id="checkResv" resultType="com.gaya.thegayap.dto.JeongResvDto">
+    <select id="resvList" resultType="com.gaya.thegayap.dto.JeongResvDto">
         SELECT resv.*, ht.hotel_name,
             (CASE
                 WHEN (resv.reservation_hotel_num=1 OR resv.reservation_hotel_num=16)
@@ -33,7 +33,8 @@
             END) AS room_code
         FROM reservation_table AS resv
             JOIN hotel_table AS ht ON ht.hotel_num = resv.reservation_hotel_num
-        WHERE reservation_customer_id=#{memberId}
+        WHERE reservation_customer_id=#{customerId}
+        ORDER BY reservation_date DESC
     </select>
 
 <!--    내 등급, 포인트 조회 -->
@@ -44,11 +45,12 @@
     </select>
 
 <!--    내 포인트 사용내역 조회 -->
-    <select id="checkPoints" resultType="com.gaya.thegayap.dto.JeongMemberDto">
-        SELECT ct.customer_id, ct.customer_name, ct.customer_earned_points, ct.customer_used_points, resv.reservation_date
+    <select id="checkPoints" resultType="com.gaya.thegayap.dto.JeongCustomerDto">
+        SELECT ct.customer_id, ct.customer_name, ct.customer_earned_points, ct.customer_used_points, resv.reservation_date, resv.reservation_num
         FROM customer_table AS ct
             JOIN reservation_table AS resv ON resv.reservation_num = ct.customer_reservation_num
-        WHERE customer_id=#{memberId}
+        WHERE customer_id=#{customerId}
+        ORDER BY resv.reservation_num DESC
     </select>
 
 <!--    프로필 수정 -->
@@ -72,5 +74,13 @@
         SET member_withdrawal_yn = 'Y'
         WHERE member_id = #{memberId}
     </update>
+
+
+<!--    호텔 리스트 조회 -->
+    <select id="hotelList" resultType="com.gaya.thegayap.dto.SinDto">
+        SELECT *
+        FROM hotel_table
+    </select>
+
 
 </mapper>

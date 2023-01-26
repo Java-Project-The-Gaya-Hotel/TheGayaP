@@ -1,0 +1,11 @@
+.inquiry .headline{
+    border-bottom: solid 3px darkgray;
+}
+
+.inquiry .required{
+    color: red;
+}
+
+.inquiry label{
+    font-size: 17px ;
+}
