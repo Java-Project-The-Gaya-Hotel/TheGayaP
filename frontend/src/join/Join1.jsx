@@ -160,6 +160,7 @@ function Join1(props) {
                                             <span>@</span>
                                             <input/>
                                             <div className={"text"}>
+
                                             </div>
 
                                         </div>

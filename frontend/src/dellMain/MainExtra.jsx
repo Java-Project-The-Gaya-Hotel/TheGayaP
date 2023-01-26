@@ -1,6 +1,6 @@
 import React from 'react';
 import "./dellmainCss/ComponentCss.css"
-import 'animate.css'
+// import 'animate.css'
 
 
 

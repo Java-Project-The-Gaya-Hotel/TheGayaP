@@ -66,10 +66,11 @@ function Join(props) {
 
   }
 
+
   // 아이디 중복체크
   const handleIdCheck = (e) => {
     e.preventDefault();
-
+    console.log(id);
     axios.get("http://localhost:8080/join/idCheck",
       {
         params: {memberId: id}
@@ -133,6 +134,9 @@ function Join(props) {
                   <div className="first ">
                     <input type={"text"} value={id} onChange={onIdHandler} className={"id"}
                            autoComplete={"off"}/>
+                    <button onClick={handleIdCheck} className={"btn btn-primary"}>
+                      아이디중복
+                    </button>
                     {/*<span className="idConfirm"><a href="javascript:checkDuplicateLognId()">아이디 중복확인</a></span>*/}
                     <span className="msgCheck msgCheck2"> 5~12자  이내 영문 또는 /숫자 조합</span>
                   </div>
@@ -271,9 +275,7 @@ function Join(props) {
           <button formAction={""} className={"btn btn-primary"}>
             회원 가입
           </button>
-          <button onClick={handleIdCheck} className={"btn btn-primary"}>
-            아이디중복
-          </button>
+
         </div>
       </form>
     </div>

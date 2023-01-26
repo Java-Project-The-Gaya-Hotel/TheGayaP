@@ -3,7 +3,7 @@ import MainFooter from "./MainFooter";
 import Carosel from "./Carosel"
 import DateChoose from "./DateChoose";
 import MainExtra from "./MainExtra";
-import 'animate.css'
+// import 'animate.css'
 import styled from "styled-components";
 
 const MainCaroselDiv = styled.div`
