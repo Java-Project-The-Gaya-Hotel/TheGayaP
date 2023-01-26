@@ -1,9 +1,6 @@
 package com.gaya.thegayap.service;
 
-import com.gaya.thegayap.dto.SinDto;
-import com.gaya.thegayap.dto.SinDto2;
-import com.gaya.thegayap.dto.SinReservDto;
-import com.gaya.thegayap.dto.SinRoomDto;
+import com.gaya.thegayap.dto.*;
 
 import java.util.List;
 
@@ -17,4 +14,10 @@ public interface SinService {
     List<SinRoomDto> checkRoomList(String hotelName, int checkIn, int checkOut);
 
     void reservationRoom(SinReservDto sinReservDto);
+
+    List<SinInquiryDto> getQAList();
+
+    List<String> getHotelName();
+
+    SinRoomDto getRoomBucket(String roomCode);
 }

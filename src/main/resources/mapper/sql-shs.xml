@@ -48,5 +48,17 @@
         insert into reservation_table values (#{reservationNum},#{hotelNum},#{roomCode},#{customerName},#{customerId},#{checkIn},#{checkOut},#{reservationTime},#{nights},#{breakfastAdultNum},#{breakfastChildNum},#{reservationPeople},#{totalCost},#{reservationRequest})
     </insert>
 
+    <select id="getQAList" resultType="com.gaya.thegayap.dto.SinInquiryDto">
+        select *
+        from inquiry_table
+        where inquiry_deleted_yn ='N'
+    </select>
+
+    <select id="getHotelName" resultType="String">
+        select hotel_name
+        from hotel_table
+        where 1 = 1
+    </select>
+
 
 </mapper>

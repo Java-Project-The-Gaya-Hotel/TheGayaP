@@ -1,27 +1,30 @@
 package com.gaya.thegayap.service;
 
-import com.gaya.thegayap.dto.SinDto;
-import com.gaya.thegayap.dto.SinDto2;
-import com.gaya.thegayap.dto.SinReservDto;
-import com.gaya.thegayap.dto.SinRoomDto;
+import com.gaya.thegayap.dto.*;
 import com.gaya.thegayap.mapper.SinMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class SinServiceImpl implements SinService {
 
-    @Autowired
-    SinMapper sinMapper;
 
+
+    private final SinMapper sinMapper;
+
+
+//    임시 호텔 입력 코드
     @Override
     public void insertHotel(SinDto sinDto) {
         sinMapper.insertHotel(sinDto);
 
     }
 
+
+//    임시 방 입력 코드
     @Override
     public void insertRoom(SinDto2 sinDto2) {
 
@@ -80,21 +83,6 @@ public class SinServiceImpl implements SinService {
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -204,10 +192,36 @@ public class SinServiceImpl implements SinService {
         return filterList;
     }
 
+//    방 예약
     @Override
     public void reservationRoom(SinReservDto sinReservDto) {
 
         sinMapper.reservationRoom(sinReservDto);
+    }
+
+//    문의 리스트
+    @Override
+    public List<SinInquiryDto> getQAList() {
+        try {
+            List<SinInquiryDto> inquiryList = sinMapper.getQAList();
+            return inquiryList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+//    호텔명 불러오기
+    @Override
+    public List<String> getHotelName() {
+        List<String> hotelName = sinMapper.getHotelName();
+
+        return hotelName;
+    }
+
+    @Override
+    public SinRoomDto getRoomBucket(String roomCode) {
+        return sinMapper.getRoomInfo(roomCode);
     }
 
 
