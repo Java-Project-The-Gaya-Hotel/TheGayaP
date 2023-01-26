@@ -1,16 +1,23 @@
 import React, {useState} from "react";
-import MainFooter from "../dellMain/MainFooter";
 import styled from 'styled-components'
 import RoomCondition from "./RoomCondition";
-
-//styled components area
-const tabBtn = styled.button`
-color : #000000;
-`
+import "../dellMain/dellmainCss/BtnDateChoose.css"
+import BeingImg from "../mainImg/pexels-castorly-stock-3761182.jpg"
+import "./dellBookingCss/NavColor.css"
 
 
 
 function BookingRoom(props) {
+
+    const [showRoom, setShowRoom] = useState(false);
+
+    const roomOpenInfo = (e) => {
+        if (!showRoom) {
+            setShowRoom(prevState => true);
+        } else {
+            setShowRoom(prevstate => false);
+        }
+    }
 
     return (
         <div>
@@ -20,8 +27,6 @@ function BookingRoom(props) {
                 <section>
                     <nav>
                         <ol className="cd-multi-steps text-top">
-                            {/*<li className="visited"><a>01</a></li>*/}
-                            {/*<li className="current"><em>02</em></li>*/}
                             <li className={"visited fw-lighter"}><em> Booking Condition </em></li>
                             <li className={"current fw-bold"}><a> Room Condition</a></li>
                             <li><em>03</em></li>
@@ -38,11 +43,11 @@ function BookingRoom(props) {
                     <hr/>
                 </div>
 
-                <div className={"container pt-5 pb-5"}>
+                <div className={"container pt-5 pb-5"} id={"navLikBtnColor"}>
                     <nav>
                         <nav className="nav nav-tabs" id="nav-tab" role="tablist">
-                            <tabBtn className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">회원 전용</tabBtn>
-                            <tabBtn className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">객실</tabBtn>
+                            <button className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">회원 전용 객실</button>
+                            <button className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">일반 객실</button>
                         </nav>
 
                         <div className={"p-3 border border-1 m-3"}>
@@ -50,34 +55,72 @@ function BookingRoom(props) {
                         </div>
 
                     </nav>
-                    <hr className={"m-5 border-0"}/>
+                    <hr className={"m-4 border-0"}/>
 
+                    {/*tab - Content */}
                     <div className="tab-content" id="nav-tabContent">
-                        {/*1번 회원 전용 tab*/}
+
+                        {/* tab - 1 회원 전용*/}
                         <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
-                            {/*DB에서 가져오는 반복문 area */}
                             <div className={"container"}>
-                                <div className={"row align-items-center"}>
-                                    <div className={"col"}>사진</div>
-                                    <div className={"col"}>정보</div>
-                                    <button type={"button"} className={"col"}> reserve</button>
-                                    {/*    Room Condition Table Area  */}
+                                <hr className={"border-0"}/>
+                                <h2>Room Condition</h2>
+                                <hr className={"border-0"}/>
+
+                                {/* 객실 묶음 */}
+                                <div className={"p-3"}>
+                                    <h5 className={"p-2"}>Room Name</h5>
+                                    <div className={"row text-center align-items-center"}>
+                                        <div className={"col"}><img src={BeingImg}/></div>
+                                        <div className={"col"}>Information</div>
+                                        <div className={"col"}>
+                                            <button className={" btnDate"} onClick={roomOpenInfo}><span className="text">객실찾기</span> reserve</button>
+                                        </div>
+                                        {/*컴포넌트 3항 연산자  ShowRoom t = Roomcondition : f = 공백 */}
+                                        <div>
+                                            {showRoom ? <RoomCondition/> : <div></div>}
+                                        </div>
+                                    </div>
                                 </div>
                                 <hr/>
                             </div>
                         </div>
 
-                        {/*2번 객실 */}
                         <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabIndex="0">
-                            ...
-                        </div>
+                            {/* tab - 2 일반 객실*/}
+                            <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
+                                <div className={"container"}>
+                                    <hr className={"border-0"}/>
+                                    <h2>Room Condition</h2>
+                                    <hr className={"border-0"}/>
 
+                                    {/* 객실 묶음 */}
+                                    <div className={"p-3"}>
+                                        <h5 className={"p-2"}>Room Name</h5>
+                                        <div className={"row text-center align-items-center"}>
+                                            <div className={"col"}><img src={BeingImg}/></div>
+                                            <div className={"col"}>Information</div>
+                                            <div className={"col"}>
+                                                <button className={" btnDate"} onClick={roomOpenInfo}><span className="text">객실찾기</span> reserve</button>
+                                            </div>
+                                            {/*컴포넌트 3항 연산자  ShowRoom t = Roomcondition : f = 공백 */}
+                                            <div>
+                                                {showRoom ? <RoomCondition/> : <div></div>}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
+
+
                 </div>
             </div>
 
 
-            <MainFooter/>
         </div>
     )
 }

@@ -3,6 +3,7 @@ import {Outlet, Link} from "react-router-dom";
 import MainLogo from "../mainImg/headerTitle.svg"
 import "./dellmainCss/LayoutCss.css"
 import Menucon from "../mainImg/icons8-key.svg"
+import MainFooter from "./MainFooter";
 
 const styles = {
     TitleImgSize: {
@@ -61,8 +62,11 @@ function RoutesLayout(props) {
                     </div>
                 </div>
             </div>
-
             <Outlet/>
+            <div>
+                <MainFooter/>
+            </div>
+
         </div>
     )
 

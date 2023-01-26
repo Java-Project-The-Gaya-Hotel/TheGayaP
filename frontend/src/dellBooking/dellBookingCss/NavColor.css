@@ -1,0 +1,11 @@
+.nav{
+    -bs-nav-link-color:  #000000;
+    --bs-nav-link-hover-color: #000000;
+}
+.nav-link {
+    color: #000000;
+}
+
+.active {
+    font-weight: bold;
+}

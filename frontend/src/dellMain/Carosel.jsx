@@ -1,5 +1,4 @@
 import React from "react";
-import CarouselTestImg from"../mainImg/R0000001RUXJ_KR.jpg"
 import CarouselImg1 from"../mainImg/Untitled-1.jpg"
 import CarouselImg2 from"../mainImg/Untitled-2.jpg"
 import CarouselImg3 from"../mainImg/Untitled-3.jpg"

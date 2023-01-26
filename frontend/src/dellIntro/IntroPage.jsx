@@ -28,7 +28,6 @@ function IntroPage() {
                 </div>
             </div>
 
-            <MainFooter/>
         </div>
     )
 }

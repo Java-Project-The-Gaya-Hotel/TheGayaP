@@ -34,10 +34,6 @@ function BookingPage() {
                 <BookingAccordion/>
             </div>
 
-            {/*footer*/}
-            <div>
-                <MainFooter/>
-            </div>
 
 
         </div>)

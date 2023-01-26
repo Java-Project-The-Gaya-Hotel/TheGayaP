@@ -42,7 +42,7 @@ function BookingAccordion() {
     const [hotelName, setHotelName] = useState([])
     //axios input button roop connection
     useEffect(() => {
-        axios.get("http://10.100.204.69:8080/gaya/gethotel")
+        axios.get("http://10.100.204.69:8080/gaya/hotelname")
             .then((req) => {
                 const {data} = req
                 setHotelName(data);
@@ -63,8 +63,10 @@ function BookingAccordion() {
             {value}
         </button>))
 
-const navigate = useNavigate();
-    const clickE =()=>{navigate("/reservroom", {replace:true})};
+    const navigate = useNavigate();
+    const clickE = () => {
+        navigate("/reservroom", {replace: true})
+    };
 // 뒤로가기 클릭 시 이전 페이지가 아닌 메인으로 돌아가게 만듬. 기본 값 : false
 
     return (
@@ -92,34 +94,36 @@ const navigate = useNavigate();
                         <li className="item" id="about">
                             <a href="#about" className="btnAcc">투숙 기간</a>
                             <div className="subMenu">
-                                <div className={"row"}>
-                                    <div className={"col"}>
-                                        <DatePicker
-                                            dateFormat="yyyy-MM-dd"
-                                            selected={startDate}
-                                            onChange={(date) => setStartDate(date)}
-                                            selectsStart
-                                            startDate={startDate}
-                                            endDate={endDate}
-                                            minDate={new Date()}
-                                            locale={ko}
-                                            customInput={<CustomInput/>}
-                                            inline
-                                        />
-                                    </div>
-                                    <div className={"col"}>
-                                        <DatePicker
-                                            dateFormat="yyyy-MM-dd"
-                                            selected={endDate}
-                                            onChange={(date) => setEndDate(date)}
-                                            selectsEnd
-                                            startDate={startDate}
-                                            endDate={endDate}
-                                            minDate={new Date()}
-                                            locale={ko}
-                                            customInput={<CustomInput/>}
-                                            inline
-                                        />
+                                <div className={"container p-5 text-center"}>
+                                    <div className={"row"}>
+                                        <div className={"col"}>
+                                            <DatePicker
+                                                dateFormat="yyyy-MM-dd"
+                                                selected={startDate}
+                                                onChange={(date) => setStartDate(date)}
+                                                selectsStart
+                                                startDate={startDate}
+                                                endDate={endDate}
+                                                minDate={new Date()}
+                                                locale={ko}
+                                                customInput={<CustomInput/>}
+                                                inline
+                                            />
+                                        </div>
+                                        <div className={"col"}>
+                                            <DatePicker
+                                                dateFormat="yyyy-MM-dd"
+                                                selected={endDate}
+                                                onChange={(date) => setEndDate(date)}
+                                                selectsEnd
+                                                startDate={startDate}
+                                                endDate={endDate}
+                                                minDate={new Date()}
+                                                locale={ko}
+                                                customInput={<CustomInput/>}
+                                                inline
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -1,5 +1,4 @@
 import React from "react";
-import MainFooter from "./MainFooter";
 import Carosel from "./Carosel"
 import DateChoose from "./DateChoose";
 import MainExtra from "./MainExtra";
@@ -61,8 +60,6 @@ function MainPage(props) {
                 </div>
             </main>
 
-            {/* Footer */}
-            <MainFooter/>
         </div>)
 }
 
