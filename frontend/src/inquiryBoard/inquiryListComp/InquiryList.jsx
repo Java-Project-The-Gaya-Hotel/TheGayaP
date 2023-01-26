@@ -4,11 +4,12 @@ import {Link} from "react-router-dom";
 
 
 function InquiryList() {
+
+
     return (
-            <div className={"col-9 vh-100"}>
-                <h1>문의 리스트자리</h1>
-                <InquiryListTable/>
-            </div>
+        <div className={"col-10 vh-100"}>
+            <InquiryListTable/>
+        </div>
     );
 }
 

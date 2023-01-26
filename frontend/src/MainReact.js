@@ -8,6 +8,11 @@ import BookingRoom from "./dellBooking/BookingRoom";
 import Login from "./login/Login";
 import Join from "./join/Join";
 import InquiryMain from "./inquiryBoard/InquiryMain";
+import InquiryList from "./inquiryBoard/inquiryListComp/InquiryList";
+import InquiryHotelInfo from "./inquiryBoard/InquiryHotelInfo/InquiryHotelInfo";
+import InquiryListTable from "./inquiryBoard/inquiryListComp/InquiryListTable";
+import InquiryWrite from "./inquiryBoard/InquiryWriteComp/InquiryWrite";
+import InquiryDetail from "./inquiryBoard/inquiryDetailComp/inquiryDetail";
 
 
 function MainReact(props) {
@@ -23,8 +28,14 @@ function MainReact(props) {
                         <Route path={"/menu1"} element={<BeingPage/>}/>
                         <Route path={"/login"} element={<Login/>}/>
                         <Route path={"/join"} element={<Join/>}/>
-                        <Route path={"/qa"} element={<InquiryMain/>}/>
+                        <Route path={"/qa"} element={<InquiryMain/>}>
+                            <Route index element={<InquiryHotelInfo/>}/>
+                            <Route path={"list"} element={<InquiryListTable/>}/>
+                            <Route path={"write"} element={<InquiryWrite/>}/>
+                            <Route path={"list/detail"} element={<InquiryDetail/>}/>
+                        </Route>
                     </Route>
+
                 </Routes>
             </BrowserRouter>
         </div>

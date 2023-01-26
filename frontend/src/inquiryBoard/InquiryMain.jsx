@@ -1,58 +1,47 @@
 import React, {useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 import InquiryHotelInfo from "./InquiryHotelInfo/InquiryHotelInfo";
 import InquiryList from "./inquiryListComp/InquiryList";
 import InquiryWrite from "./InquiryWriteComp/InquiryWrite";
 
 
 function InquiryMain() {
-    const [componentName, setComponentName] = useState("info");
-
-    const compNameChange = (name) => {
-        setComponentName(name);
-    }
-
-    let Comp = <InquiryHotelInfo/>
-
-    if (componentName === "list"){
-        Comp = <InquiryList/>
-    }else if(componentName === "write"){
-        Comp = <InquiryWrite/>
-    }
+    // const [componentName, setComponentName] = useState("info");
+    //
+    // const compNameChange = (name) => {
+    //     setComponentName(name);
+    // }
+    //
+    // let Comp = <InquiryHotelInfo/>
+    //
+    // if (componentName === "list"){
+    //     Comp = <InquiryList/>
+    // }else if(componentName === "write"){
+    //     Comp = <InquiryWrite/>
+    // }
 
     return (
         <div className={"container"}>
-            <div className={"d-flex"}>
-                <div className={"col-3"}>
+            <div className={"d-flex "}>
+                <div className={"col-2"}>
                     <h1>네비자리</h1>
                     <nav className={"p-3 grid bg-opacity-10 bg-secondary"}>
                         <h3>고객 문의</h3>
-                        <ul className={""} style={{width: 276}}>
+                        <ul>
                             <li className="nav-item">
-                                <span style={{cursor:"pointer"}} onClick={()=> {
-                                    compNameChange("info")
-                                }}>호텔 소개</span>
+                                <Link to={"/qa"} className="nav-link active" aria-current="page">호텔 소개</Link>
                             </li>
                             <li className="nav-item">
-                                <span style={{cursor:"pointer"}} onClick={()=> {
-                                    compNameChange("list")
-                                }}>문의 리스트</span>
+                                <Link to={"list"} className="nav-link">문의 리스트</Link>
                             </li>
                             <li className="nav-item">
-                                <span style={{cursor:"pointer"}} onClick={()=> {
-                                    compNameChange("write")
-                                }}>문의 작성</span>
+                                <Link to={"write"} className="nav-link">문의 작성</Link>
                             </li>
                         </ul>
                     </nav>
                 </div>
-                <div className={"col-12 vh-100"}>
-                    <h1>컴포넌트 자리</h1>
-                    <div>
-                        {
-                           Comp
-                        }
-                    </div>
+                <div className={"col-12"}>
+                    <Outlet/>
                 </div>
             </div>
         </div>

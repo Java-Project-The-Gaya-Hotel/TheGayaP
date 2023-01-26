@@ -12,13 +12,12 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping({"/gaya","/"})
+@RequestMapping({"/gaya", "/"})
 @RequiredArgsConstructor
 public class SinController {
 
 
     private final SinService sinService;
-
 
 
     //임시 db 입력 코드 시작
@@ -31,17 +30,17 @@ public class SinController {
     }
 
 
-//    호텔 이름 가져오기
-    @GetMapping("/gethotel")
+    //    호텔 이름 가져오기
+    @GetMapping("/hotelname")
     public List<String> getHotel() {
         List<String> hotelName = sinService.getHotelName();
 
         return hotelName;
     }
 
-//    문의 게시판 글 리스트 가져오기
+    //    문의 게시판 글 리스트 가져오기
     @GetMapping("/inquirylist")
-    public List<SinInquiryDto> getQAList(){
+    public List<SinInquiryDto> getQAList() {
 
         List<SinInquiryDto> inquiryList = sinService.getQAList();
 
@@ -49,8 +48,6 @@ public class SinController {
     }
 
 //    로그인 스프링 시큐리티 테스트
-
-
 
 
     //임시 db 입력 코드 종료
@@ -71,17 +68,14 @@ public class SinController {
 
 
 
-
 //        들어온 정보로 예약 가능한 룸 확인
 
 
-        List<SinRoomDto> ableRoomList = sinService.checkRoomList(hotelName,checkIn,checkOut);
+        List<SinRoomDto> ableRoomList = sinService.checkRoomList(hotelName, checkIn, checkOut);
 
 
         return ableRoomList;
     }
-
-
 
 
     // 방 예약 코드
@@ -109,7 +103,6 @@ public class SinController {
 //        변수 지정
 
 
-
         long reservationNum = System.currentTimeMillis();
         int hotelNum = 1;
         String roomCode = "hotel-cKHEX";
@@ -117,7 +110,7 @@ public class SinController {
         String customerId = "test1";
         String checkIn = "2023-01-26";
         String checkOut = "2023-01-28";
-        String  reservationTime = "2023-01-04 22:23:00" ;
+        String reservationTime = "2023-01-04 22:23:00";
         int nights = 3;
         int breakfastAdultNum = 1;
         int breakfastChildNum = 1;
@@ -127,32 +120,29 @@ public class SinController {
         int totalCost = 498550;
         String reservationRequest = "방 주세요";
 
-        SinReservDto sinReservDto ;
+        SinReservDto sinReservDto;
 
-        sinReservDto = new SinReservDto(reservationNum,hotelNum,roomCode,customerName,customerId,checkIn,checkOut,reservationTime,nights,breakfastAdultNum,breakfastChildNum,peopleAdultNum,peopleChildNum,totalCost,reservationPeople,reservationRequest);
+        sinReservDto = new SinReservDto(reservationNum, hotelNum, roomCode, customerName, customerId, checkIn, checkOut, reservationTime, nights, breakfastAdultNum, breakfastChildNum, peopleAdultNum, peopleChildNum, totalCost, reservationPeople, reservationRequest);
 
         sinService.reservationRoom(sinReservDto);
-
-
-
-
 
     }
 
 
-
-//    장바구니 기능
+    //    장바구니 기능
     @GetMapping("/bucket")
-    public SinRoomDto getBucket(@RequestParam("roomCode")String roomCode){
+    public SinRoomDto getBucket(@RequestParam("roomCode") String roomCode) {
         return sinService.getRoomBucket(roomCode);
     }
 
 
+    //    QA Detail Page
+    @GetMapping("/qa/detail")
+    public SinInquiryDto getDetail(@RequestParam("idx") int idx) {
 
 
-
-
-
+        return null;
+    }
 
 
 }
