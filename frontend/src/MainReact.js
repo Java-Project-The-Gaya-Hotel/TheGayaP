@@ -24,6 +24,7 @@ function MainReact(props) {
                         <Route path={"/login"} element={<Login/>}/>
                         <Route path={"/join"} element={<Join/>}/>
                         <Route path={"/qa"} element={<InquiryList/>}/>
+                        
                     </Route>
                 </Routes>
             </BrowserRouter>
