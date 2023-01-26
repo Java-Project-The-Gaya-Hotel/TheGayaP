@@ -66,6 +66,7 @@
         UPDATE member_table
         SET member_pw = #{memberPw}
         WHERE member_id  = #{memberId} AND member_pw = #{memberPw}
+        
     </update>
 
 <!--    회원 탈퇴 -->
