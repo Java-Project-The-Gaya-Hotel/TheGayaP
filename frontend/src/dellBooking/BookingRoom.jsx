@@ -9,6 +9,7 @@ color : #000000;
 `
 
 
+
 function BookingRoom(props) {
 
     return (
@@ -54,13 +55,13 @@ function BookingRoom(props) {
                     <div className="tab-content" id="nav-tabContent">
                         {/*1번 회원 전용 tab*/}
                         <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
-                            {/*DB에서 가져오는 반복문*/}
+                            {/*DB에서 가져오는 반복문 area */}
                             <div className={"container"}>
                                 <div className={"row align-items-center"}>
                                     <div className={"col"}>사진</div>
                                     <div className={"col"}>정보</div>
                                     <button type={"button"} className={"col"}> reserve</button>
-                                    {/*    Room Condition Table Area */}
+                                    {/*    Room Condition Table Area  */}
                                 </div>
                                 <hr/>
                             </div>
