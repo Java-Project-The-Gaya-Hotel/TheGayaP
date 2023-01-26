@@ -1,10 +1,11 @@
 package com.gaya.thegayap.controller;
 
 import com.gaya.thegayap.dto.SinDto2;
+import com.gaya.thegayap.dto.SinInquiryDto;
 import com.gaya.thegayap.dto.SinReservDto;
 import com.gaya.thegayap.dto.SinRoomDto;
 import com.gaya.thegayap.service.SinService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,14 +13,15 @@ import java.util.List;
 @RestController
 @CrossOrigin("http://localhost:3000")
 @RequestMapping({"/gaya","/"})
+@RequiredArgsConstructor
 public class SinController {
 
-    @Autowired
-    SinService sinService;
+
+    private final SinService sinService;
 
 
 
-    //임시 db 입력 코드
+    //임시 db 입력 코드 시작
 
     @PostMapping("/insert")
     public void insert(@RequestBody SinDto2 sinDto2) {
@@ -27,6 +29,31 @@ public class SinController {
 //        sinService.insertHotel(sinDto);
         sinService.insertRoom(sinDto2);
     }
+
+
+//    호텔 이름 가져오기
+    @GetMapping("/gethotel")
+    public List<String> getHotel() {
+        List<String> hotelName = sinService.getHotelName();
+
+        return hotelName;
+    }
+
+//    문의 게시판 글 리스트 가져오기
+    @GetMapping("/inquirylist")
+    public List<SinInquiryDto> getQAList(){
+
+        List<SinInquiryDto> inquiryList = sinService.getQAList();
+
+        return inquiryList;
+    }
+
+//    로그인 스프링 시큐리티 테스트
+
+
+
+
+    //임시 db 입력 코드 종료
 
 
     // 방 선택시 리스트
@@ -111,6 +138,21 @@ public class SinController {
 
 
     }
+
+
+
+//    장바구니 기능
+    @GetMapping("/bucket")
+    public SinRoomDto getBucket(@RequestParam("roomCode")String roomCode){
+        return sinService.getRoomBucket(roomCode);
+    }
+
+
+
+
+
+
+
 
 
 }
