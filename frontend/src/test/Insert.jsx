@@ -73,6 +73,7 @@ function Insert(props) {
                 <input onChange={telChangeHandler}/>
                 <input onChange={mealAdultChangeHandler}/>
                 <input onChange={mealChildChangeHandler}/>
+                
                 <button type={"submit"}>보내기</button>
             </form>
         </div>
