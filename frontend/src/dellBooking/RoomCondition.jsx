@@ -13,7 +13,7 @@ function RoomCondition(props) {
                         <button>객실 상세보기</button>
                     </div>
                     <div className={"col"}>요금</div>
-                    <div className = {"col"}>
+                    <div className={"col"}>
                         <button>예약하기</button>
                     </div>
                 </div>

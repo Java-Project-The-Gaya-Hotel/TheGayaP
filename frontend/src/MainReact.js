@@ -6,7 +6,7 @@ import BookingPage from "./dellBooking/BookingPage";
 import IntroPage from "./dellIntro/IntroPage";
 import BookingRoom from "./dellBooking/BookingRoom";
 import Login from "./login/Login";
-import Join from "./join/Join";
+import Join1 from "./join/Join1";
 import InquiryList from "./inquiryBoard/InquiryList";
 
 
@@ -22,7 +22,7 @@ function MainReact(props) {
                         <Route path={"/reservroom"} element={<BookingRoom/>}/>
                         <Route path={"/menu1"} element={<BeingPage/>}/>
                         <Route path={"/login"} element={<Login/>}/>
-                        <Route path={"/join"} element={<Join/>}/>
+                        <Route path={"/join"} element={<Join1/>}/>
                         <Route path={"/qa"} element={<InquiryList/>}/>
                     </Route>
                 </Routes>

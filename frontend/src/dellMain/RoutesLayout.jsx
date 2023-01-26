@@ -26,8 +26,8 @@ function RoutesLayout(props) {
                 <nav role="navigation">
                     <div style = {styles.LiFont}>
                         <ul className={"row row-cols-auto justify-content-end text-center px-5 pt-2"}>
-                            <li className={"col"}>로그인</li>
-                            <li className={"col"}>예약확인</li>
+                            <li className={"col"}> <Link to={"/login"}>Login</Link></li>
+                            <li className={"col"}><Link to={"/join"}>Join Us</Link></li>
                             <li className={"col"}>고객문의</li>
                         </ul>
                     </div>

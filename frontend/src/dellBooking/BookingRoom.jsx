@@ -1,15 +1,50 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from 'styled-components'
 import RoomCondition from "./RoomCondition";
 import "../dellMain/dellmainCss/BtnDateChoose.css"
 import BeingImg from "../mainImg/pexels-castorly-stock-3761182.jpg"
 import "./dellBookingCss/NavColor.css"
-
+import {useLocation, useNavigate} from "react-router-dom";
+import axios from "axios";
+import moment from "moment";
 
 
 function BookingRoom(props) {
 
+    //객실조회
     const [showRoom, setShowRoom] = useState(false);
+
+    //주소 값 받아오기
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    let getSDate = searchParams.get('sDate');
+    let getEDate = searchParams.get('eDate');
+    const count = searchParams.get('people');
+    const hotelName = searchParams.get('hotelName');
+    const [hotelRoomList, setHotelRoomList]=useState();
+
+    getSDate=moment().format('YYYY-MM-DD');
+    getEDate=moment().format('YYYY-MM-DD');
+
+
+    useEffect(() => {
+        axios.get("http://10.100.204.69:8080/gaya/roomlist", {
+            params: {
+                hotelName:hotelName,
+                sDate:getSDate,
+                eDate:getEDate,
+                count:count,
+
+            }
+        })
+            .then((req) => {
+                const {data} = req
+                setHotelRoomList(data)
+                console.log(data)
+            })
+            .catch(e=>{console.log(e)})
+
+    }, [])
 
     const roomOpenInfo = (e) => {
         if (!showRoom) {
@@ -19,11 +54,11 @@ function BookingRoom(props) {
         }
     }
 
+
     return (
         <div>
             {/*Bread crumb*/}
-            <p className={"pt-4 pb-4"}></p>
-            <div className={"pt-4 pb-4 mt-5 mb-5 animate__animated animate__fadeInDown"}>
+            <div className={"pt-2 pb-4 mb-5 animate__animated animate__fadeInDown"}>
                 <section>
                     <nav>
                         <ol className="cd-multi-steps text-top">
@@ -72,7 +107,7 @@ function BookingRoom(props) {
                                     <h5 className={"p-2"}>Room Name</h5>
                                     <div className={"row text-center align-items-center"}>
                                         <div className={"col"}><img src={BeingImg}/></div>
-                                        <div className={"col"}>Information</div>
+                                        <div className={"col"}></div>
                                         <div className={"col"}>
                                             <button className={" btnDate"} onClick={roomOpenInfo}><span className="text">객실찾기</span> reserve</button>
                                         </div>

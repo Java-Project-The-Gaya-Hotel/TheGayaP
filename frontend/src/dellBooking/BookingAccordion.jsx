@@ -7,6 +7,7 @@ import axios from "axios";
 import "../dellBooking/dellBookingCss/formCss.css"
 import "../dellMain/dellmainCss/BtnDateChoose.css"
 import "../dellBooking/dellBookingCss/AccoCss.css"
+import data from "bootstrap/js/src/dom/data";
 
 const styles = {
     inputBox: {
@@ -17,6 +18,8 @@ const styles = {
 
 
 function BookingAccordion() {
+    const [hotelNameList, setHotelNameList] = useState([])
+    const [hotelName, setHotelName] = useState("");
 
     //use location으로 가져 온 주소 값 설정
     const location = useLocation();
@@ -24,6 +27,7 @@ function BookingAccordion() {
     const getSDate = searchParams.get('sDate');
     const getEDate = searchParams.get('eDate');
     const count = searchParams.get('people');
+
 
     // datepicker 변수 / datepicker data 가져와 연동
     const [startDate, setStartDate] = useState(new Date());
@@ -39,17 +43,21 @@ function BookingAccordion() {
     }, [])
 
     // hotel List 가져오기
-    const [hotelName, setHotelName] = useState([])
     //axios input button roop connection
     useEffect(() => {
         axios.get("http://10.100.204.69:8080/gaya/hotelname")
             .then((req) => {
                 const {data} = req
-                setHotelName(data);
+                setHotelNameList(data);
                 console.log(data)
             })
             .catch()
     }, [])
+
+
+    const onBtnClick = e => {
+        setHotelName(e.target.value);
+    };
 
 // datepicker header css에 사용할 변수
     const _ = require('lodash');
@@ -65,8 +73,9 @@ function BookingAccordion() {
 
     const navigate = useNavigate();
     const clickE = () => {
-        navigate("/reservroom", {replace: true})
+        navigate(`/reservroom?sDate=${startDate}&eDate=${endDate}&people=${count}&hotelName=${hotelName}`, {replace: true})
     };
+
 // 뒤로가기 클릭 시 이전 페이지가 아닌 메인으로 돌아가게 만듬. 기본 값 : false
 
     return (
@@ -80,9 +89,9 @@ function BookingAccordion() {
                                 <div className={"container"}>
                                     <div className={"row justify-content-center"}>
                                         {
-                                            hotelName.map((name) => {
+                                            hotelNameList.map((item,idx) => {
                                                     return (
-                                                        <input type={"button"} style={styles.inputBox} className={"text-center form-control rounded-0 m-3"} value={name} readOnly={true}/>
+                                                        <input style={styles.inputBox} className={"text-center form-control rounded-0 m-3"} value={item} readOnly={true} onClick={onBtnClick}/>
                                                     );
                                                 }
                                             )
