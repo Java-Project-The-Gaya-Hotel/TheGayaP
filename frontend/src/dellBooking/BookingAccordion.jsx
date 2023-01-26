@@ -1,12 +1,12 @@
 import React, {forwardRef, useEffect, useState} from "react";
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import {getYear, getMonth} from "date-fns";
 import {ko} from "date-fns/esm/locale";
 import axios from "axios";
-import "../dellReservation/dellReservCss/formCss.css"
+import "../dellBooking/dellBookingCss/formCss.css"
 import "../dellMain/dellmainCss/BtnDateChoose.css"
-import styled from 'styled-components'
+import "../dellBooking/dellBookingCss/AccoCss.css"
 
 const styles = {
     inputBox: {
@@ -16,8 +16,7 @@ const styles = {
 }
 
 
-
-function ReservAccordion() {
+function BookingAccordion() {
 
     //use location으로 가져 온 주소 값 설정
     const location = useLocation();
@@ -64,19 +63,18 @@ function ReservAccordion() {
             {value}
         </button>))
 
+const navigate = useNavigate();
+    const clickE =()=>{navigate("/reservroom", {replace:true})};
+// 뒤로가기 클릭 시 이전 페이지가 아닌 메인으로 돌아가게 만듬. 기본 값 : false
 
     return (
         <div>
             <div className={"container"}>
-                <div className="accordion" id="accordionExample">
-                    <div className="accordion-item">
-                        <h2 className="accordion-header" id="headingOne">
-                            <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                호텔 선택
-                            </button>
-                        </h2>
-                        <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                            <div className="accordion-body ">
+                <div className="wrapper">
+                    <ui className="mainMenu">
+                        <li className="item" id="account">
+                            <a href="#account" className="btnAcc">호텔 선택</a>
+                            <div className="subMenu">
                                 <div className={"container"}>
                                     <div className={"row justify-content-center"}>
                                         {
@@ -90,18 +88,10 @@ function ReservAccordion() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    {/*Date */}
-                    <div className="accordion-item">
-                        <h2 className="accordion-header" id="headingTwo">
-                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                투숙 기간
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                            <div className="accordion-body">
+                        </li>
+                        <li className="item" id="about">
+                            <a href="#about" className="btnAcc">투숙 기간</a>
+                            <div className="subMenu">
                                 <div className={"row"}>
                                     <div className={"col"}>
                                         <DatePicker
@@ -133,33 +123,23 @@ function ReservAccordion() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="accordion-item">
-                        <h2 className="accordion-header" id="headingThree">
-                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                인원 선택
-                            </button>
-                        </h2>
-                        <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                            <div className="accordion-body">
-                                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes
-                                control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth
-                                noting
-                                that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        </li>
+                        <li className="item" id="support">
+                            <a href="#support" className="btnAcc">인원</a>
+                            <div className="subMenu">
+                                <a href="">item-1</a>
                             </div>
-                        </div>
-                    </div>
+                        </li>
+                    </ui>
+                </div>
+
+                <div className={"d-flex justify-content-center p-5"}>
+                    <button className={"btnDate"} role={"button"} onClick={clickE}><span className="text">객실 찾기</span>Booking</button>
                 </div>
             </div>
-
-            <div className={"d-flex justify-content-center p-5"}>
-                <button className={"btnDate"} role={"button"}><span className="text">객실 찾기</span>Reservation</button>
-            </div>
-
         </div>
 
     )
 }
 
-export default ReservAccordion
+export default BookingAccordion

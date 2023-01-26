@@ -49,7 +49,7 @@ function RoutesLayout(props) {
                                 <Link to={"/"} className="nav-link active" aria-current="page">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to={"/reservation"} className="nav-link">Reservation</Link>
+                                <Link to={"/reservation"} className="nav-link">Booking</Link>
                             </li>
                             <li className="nav-item">
                                 <Link to={"/welcome"} className="nav-link">About Us</Link>

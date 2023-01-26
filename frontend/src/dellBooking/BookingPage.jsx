@@ -1,12 +1,12 @@
 import React from "react";
 import RoutesLayout from "../dellMain/RoutesLayout";
 import MainFooter from "../dellMain/MainFooter";
-import "../dellReservation/dellReservCss/BreadCrumb.css"
+import "../dellBooking/dellBookingCss/BreadCrumb.css"
 import 'animate.css'
-import ReservAccordion from "./ReservAccordion";
+import BookingAccordion from "./BookingAccordion";
 
 
-function ReservationPage() {
+function BookingPage() {
     return (
         <div>
             <p className={"pt-4 pb-4"}></p>
@@ -17,7 +17,7 @@ function ReservationPage() {
                         <ol className="cd-multi-steps text-top">
                             {/*<li className="visited"><a>01</a></li>*/}
                             {/*<li className="current"><em>02</em></li>*/}
-                            <li><a> Reservation Condition </a></li>
+                            <li className={"current fw-bold"}><a> Reservation Condition </a></li>
                             <li><em>02</em></li>
                             <li><em>03</em></li>
                             <li><em>04</em></li>
@@ -31,7 +31,7 @@ function ReservationPage() {
             <div>
                 {/*예약 메뉴 Line */}
 
-                <ReservAccordion/>
+                <BookingAccordion/>
             </div>
 
             {/*footer*/}
@@ -43,4 +43,4 @@ function ReservationPage() {
         </div>)
 }
 
-export default ReservationPage;
+export default BookingPage;

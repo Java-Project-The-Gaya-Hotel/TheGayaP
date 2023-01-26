@@ -129,7 +129,7 @@ function DateChoose() {
                 </div>
 
                 <div className={"col"}>
-                    <button className={"btnDate"} role={"button"} onClick={SendReservationInfo}><span className="text">객실 찾기</span>Reservation</button>
+                    <button className={"btnDate"} role={"button"} onClick={SendReservationInfo}><span className="text">객실 찾기</span>Booking</button>
                 </div>
             </div>
         </div>)
