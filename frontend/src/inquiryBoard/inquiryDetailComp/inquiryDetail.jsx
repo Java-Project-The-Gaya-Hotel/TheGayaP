@@ -1,6 +1,6 @@
 import React from "react";
-import InquiryUserChat from "./inquiryDetailComp/inquiryUserChat";
-import InquiryAdminChat from "./inquiryDetailComp/inquiryAdminChat";
+import InquiryUserChat from "./inquiryUserChat";
+import InquiryAdminChat from "./inquiryAdminChat";
 
 function InquiryDetail() {
     return (

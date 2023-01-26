@@ -22,7 +22,7 @@ function LoginBody() {
                 </button>
             </div>
             {
-                isMember == true ? <LoginMember/> : <NotMember/>
+                isMember ? <LoginMember/> : <NotMember/>
             }
         </div>
     );

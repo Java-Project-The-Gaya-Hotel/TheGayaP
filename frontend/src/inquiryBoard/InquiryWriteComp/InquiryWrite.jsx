@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import "./InquiryWrite.css";
-import MainFooter from "../dellMain/MainFooter";
+import MainFooter from "../../dellMain/MainFooter";
 
 function InquiryWrite() {
 
@@ -46,10 +46,10 @@ function InquiryWrite() {
 
 
   return (
-    <div className={"inquiry"} style={{paddingTop: 136}}>
-      <div className={"container mt-5"}>
+    <div className={"inquiry"}>
+      <div className={"container mt-2"}>
         {/* 헤드라인 부분 추후 이동 예정 */}
-        <div className={"headline w-75 mx-auto pb-3"}>
+        <div className={"headline w-75 pb-3"}>
           <div className={"text-end"} style={{fontSize: 13}}>
             <span><a href="/" style={{color: "black"}}>홈</a></span>
             <span> > 고객문의 > 고객문의</span>
@@ -60,7 +60,7 @@ function InquiryWrite() {
         </div>
 
         {/* 문의 작성 페이지 */}
-        <div className={"w-50 mx-auto mt-5"}>
+        <div className={"w-50 mt-5"}>
           <form onSubmit={submitHandler}>
 
             {/* 문의 내용 */}
@@ -189,22 +189,16 @@ function InquiryWrite() {
               </div>
             </div>
 
-            <div className={"d-flex justify-content-center gap-3 mt-5"}>
+            <div className={"d-flex justify-content-center gap-3 my-5"}>
               <button className={"btn btn-primary btn-lg col-sm-2"}>확인</button>
               <button className={"btn btn-secondary btn-lg col-sm-2"}>취소</button>
             </div>
-
-
-
-
+            <br/>
           </form>
         </div>
 
+      </div>
 
-      </div>
-      <div className={"mt-5"} style={{backgroundColor:"darkgray"}}>
-        <MainFooter />
-      </div>
     </div>
   );
 }
