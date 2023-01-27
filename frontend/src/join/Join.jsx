@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import "./Join.css"
-import axios from "axios";
+import axios, {request} from "axios";
+
 
 
 function Join(props) {
@@ -12,6 +13,14 @@ function Join(props) {
   const [id, setId] = useState("")
   const [pw, setPw] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+
+  // function checkSpace(str) {
+  //   if(str.search(/\s/) != -1) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   const data = {
     memberName: name,
@@ -39,6 +48,8 @@ function Join(props) {
 
   const onIdHandler = (e) => {
     setId(e.target.value)
+
+
   }
 
   const onPasswordHandler = (e) => {
@@ -50,6 +61,7 @@ function Join(props) {
   }
   const onSubmitHandler = (event) => {
     event.preventDefault(); //리프레시 방지-> 방지해야 이 아래 라인의 코드들 실행 가능
+
 
     // 비밀번호와 비밀번호 확인 같을띠 회원가입 되게 함
     if (pw !== confirmPassword) {
@@ -71,20 +83,37 @@ function Join(props) {
   const handleIdCheck = (e) => {
     e.preventDefault();
     console.log(id);
+
     axios.get("http://localhost:8080/join/idCheck",
       {
         params: {memberId: id}
       })
+
       .then((req) => {
         console.log("데이터 전송 성공")
+     
         if (req.data === 1) alert('중복된 아이디입니다.');
         else if(req.data === 0) alert('사용가능한 아이디입니다.');
       }).catch(err => {
       console.log(`데이터 전송 실패 ${err}`)
     })
   }
-
-
+  //이메일 중복체크
+  const handleEmailCheck = (e) => {
+    e.preventDefault();
+    console.log(email);
+    axios.get("http://localhost:8080/join/emailCheck",
+        {
+          params: {memberEmail: email}
+        })
+        .then((req) => {
+          console.log("데이터 전송 성공")
+          if (req.data === 1) alert('중복된 이메일입니다.');
+          else if(req.data === 0) alert('사용가능한 이메일입니다.');
+        }).catch(err => {
+      console.log(`데이터 전송 실패 ${err}`)
+    })
+  }
 
   const handlePress = (e) => {
     const regex = /^[0-9\b -]{0,13}$/;
@@ -94,13 +123,13 @@ function Join(props) {
   }
 
   useEffect(() => {
-    if (Number.length === 10) {
-      setNumber(Number.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
+    if (number.length === 10) {
+      setNumber(number.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
     }
-    if (Number.length === 13) {
-      setNumber(Number.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
+    if (number.length === 13) {
+      setNumber(number.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
     }
-  }, [Number]);
+  }, [number]);
 
   return (
     <div className={"contain"}>
@@ -134,7 +163,7 @@ function Join(props) {
                   <div className="first ">
                     <input type={"text"} value={id} onChange={onIdHandler} className={"id"}
                            autoComplete={"off"}/>
-                    <button onClick={handleIdCheck} className={"btn btn-primary"}>
+                    <button  onClick={handleIdCheck} className={"btn btn-primary"}>
                       아이디중복
                     </button>
                     {/*<span className="idConfirm"><a href="javascript:checkDuplicateLognId()">아이디 중복확인</a></span>*/}
@@ -151,33 +180,36 @@ function Join(props) {
                   <div className={"row"}>
                     <div className={"col"}>
                       <input type={"Email"} value={email} onChange={onEmailHandler}/>
-                      <span>@</span>
-                      <input/>
+                      {/*<span>@</span>*/}
+                      {/*<input/>*/}
+                      <button  onClick={handleEmailCheck} className={"btn btn-primary"}>
+                        이메일 중복
+                      </button>
                       <div className={"text"}>
 
                       </div>
 
-                    </div>
-                    <div className={"col"}>
-                      <div className="selector disabled col">
-                        <select className="form-select form-select-sm">
-                          <option value="">직접입력</option>
+                    {/*</div>*/}
+                    {/*<div className={"col"}>*/}
+                    {/*  <div className="selector disabled col">*/}
+                    {/*    /!*<select className="form-select form-select-sm">*!/*/}
+                    {/*    /!*  <option value="">직접입력</option>*!/*/}
+                    {/*    */}
+                    {/*    /!*  <option value="naver.com" title="naver.com">naver.com</option>*!/*/}
+                    {/*    */}
+                    {/*    /!*  <option value="hanmail.net" title="hanmail.net">hanmail.net</option>*!/*/}
+                    {/*    */}
+                    {/*    /!*  <option value="nate.com" title="nate.com">nate.com</option>*!/*/}
+                    {/*    */}
+                    {/*    /!*  <option value="gmail.com" title="gmail.com">gmail.com</option>*!/*/}
+                    {/*    */}
+                    {/*    /!*  <option value="hotmail.com" title="hotmail.com">hotmail.com</option>*!/*/}
+                    {/*    */}
+                    {/*    /!*  <option value="yahoo.co.kr" title="yahoo.co.kr">yahoo.co.kr</option>*!/*/}
+                    {/*    */}
+                    {/*    /!*</select>*!/*/}
 
-                          <option value="naver.com" title="naver.com">naver.com</option>
-
-                          <option value="hanmail.net" title="hanmail.net">hanmail.net</option>
-
-                          <option value="nate.com" title="nate.com">nate.com</option>
-
-                          <option value="gmail.com" title="gmail.com">gmail.com</option>
-
-                          <option value="hotmail.com" title="hotmail.com">hotmail.com</option>
-
-                          <option value="yahoo.co.kr" title="yahoo.co.kr">yahoo.co.kr</option>
-
-                        </select>
-
-                      </div>
+                    {/*  </div>*/}
                       {/*<Join3Detail/>*/}
                     </div>
                   </div>
