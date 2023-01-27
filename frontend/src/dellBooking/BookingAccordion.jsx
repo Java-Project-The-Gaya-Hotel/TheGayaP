@@ -8,6 +8,7 @@ import "../dellBooking/dellBookingCss/formCss.css"
 import "../dellMain/dellmainCss/BtnDateChoose.css"
 import "../dellBooking/dellBookingCss/AccoCss.css"
 import data from "bootstrap/js/src/dom/data";
+import Swal from "sweetalert2";
 
 const styles = {
     inputBox: {
@@ -18,15 +19,17 @@ const styles = {
 
 
 function BookingAccordion() {
-    const [hotelNameList, setHotelNameList] = useState([])
-    const [hotelName, setHotelName] = useState("");
 
     //use location으로 가져 온 주소 값 설정
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
+    const [count, setCount] = useState(1); // 성인
+    const [personnel, setPersonnel] = useState(0) //총 토탈
+    const [childCount, setChildCount] = useState(0); //아이
+    const [hotelNameList, setHotelNameList] = useState([])
+    const [hotelName, setHotelName] = useState("");
     const getSDate = searchParams.get('sDate');
     const getEDate = searchParams.get('eDate');
-    const count = searchParams.get('people');
 
 
     // datepicker 변수 / datepicker data 가져와 연동
@@ -73,10 +76,82 @@ function BookingAccordion() {
 
     const navigate = useNavigate();
     const clickE = () => {
-        navigate(`/reservroom?sDate=${startDate}&eDate=${endDate}&people=${count}&hotelName=${hotelName}`, {replace: true})
+        navigate(`/reservroom?sDate=${startDate}&eDate=${endDate}&count=${count}&childCount=${childCount}&total=${personnel}&hotelName=${hotelName}`, {replace: true})
     };
 
 // 뒤로가기 클릭 시 이전 페이지가 아닌 메인으로 돌아가게 만듬. 기본 값 : false
+
+// 인원 수 계산
+
+    const plusBtn = () => {
+
+        let adult = count;
+        let totalP;
+
+        adult++
+        totalP = adult + childCount;
+
+        if (totalP > 4) {
+            Swal.fire({
+                icon: 'info',
+                title: '확인해주세요!',
+                text: ' 총 인원 수는 4명까지 선택할 수 있습니다. ',
+                footer: '<a href=""> 고객문의 안내는 여기로 </a>'
+            })
+        } else {
+            setCount(adult);
+            setPersonnel(totalP);
+
+        }
+
+
+    }
+
+    const minusBtn = () => {
+
+        let adult = count;
+
+        adult--
+
+        if (adult < 1) {
+            setCount(1);
+        } else {
+
+            setCount(adult);
+        }
+
+    }
+
+    const cdPlusBtn = () => {
+        let child = childCount;
+        let totalP;
+
+        child++
+        totalP = count + child;
+        if (totalP > 4) {
+            Swal.fire({
+                icon: 'info',
+                title: '확인해주세요!',
+                text: ' 총 인원 수는 4명까지 선택할 수 있습니다. ',
+                footer: '<a href=""> 고객문의 안내는 여기로 </a>'
+            })
+        } else {
+            setChildCount(child);
+            setPersonnel(totalP);
+        }
+    }
+
+    const cdMinusBtn = () => {
+        let child = childCount;
+
+        child--
+        if (child < 0) {
+            setChildCount(0);
+        } else {
+
+            setChildCount(child);
+        }
+    }
 
     return (
         <div>
@@ -89,7 +164,7 @@ function BookingAccordion() {
                                 <div className={"container"}>
                                     <div className={"row justify-content-center"}>
                                         {
-                                            hotelNameList.map((item,idx) => {
+                                            hotelNameList.map((item, idx) => {
                                                     return (
                                                         <input style={styles.inputBox} className={"text-center form-control rounded-0 m-3"} value={item} readOnly={true} onClick={onBtnClick}/>
                                                     );
@@ -138,12 +213,56 @@ function BookingAccordion() {
                             </div>
                         </li>
                         <li className="item" id="support">
-                            <a href="#support" className="btnAcc">인원</a>
+                            <a href="#support" className="btnAcc">인원
+                                <div className={"row d-flex text-end"}>
+                                    <div className={"col"}>성인 : {count} </div>
+                                    <div className={"col"}>어린이 : {childCount}</div>
+                                </div>
+                            </a>
                             <div className="subMenu">
-                                <a href="">item-1</a>
+
+                                <div className={"container"}>
+                                    <div className={"row"}>
+                                        <button className={"col-auto"} onClick={minusBtn}>
+                                            인원수 감소
+                                        </button>
+                                        <div className={"col-auto"}>
+                                            <h4>어른 : {count}</h4>
+
+                                        </div>
+                                        <button className={"col-auto"} onClick={plusBtn}>
+                                            인원수 증가
+                                        </button>
+                                    </div>
+
+                                    <div className={"row"}>
+                                        <button className={"col-auto"} onClick={cdMinusBtn}>
+                                            인원수 감소
+                                        </button>
+                                        <div className={"col-auto"}>
+                                            <h4>아이 : {childCount}</h4>
+                                        </div>
+                                        <button className={"col-auto"} onClick={cdPlusBtn}>
+                                            인원수 증가
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                     </ui>
+                    <hr className={"border-0"}/>
+
+                    <ul className={""}>
+                        <li>요금에는 10% 부가가치세가 부과됩니다.</li>
+                        <li>2인 1실 기준</li>
+                        <li>체크인 시 등록카드 작성 및 투숙객 본인 확인을 위해 본인 사진이 포함된 신분증을 반드시 제시해 주시기 바랍니다.</li>
+                        <li>13세 이하 어린이는 객실 인원 추가 요금을 받지 않습니다.</li>
+                        <li>37개월 미만 유아는 조식이 무료입니다.</li>
+                        <li>안내견을 제외한 애완견 등 동물 입장은 불가합니다.</li>
+                        <li>부모를 동반하지 않은 만 19세 미만 미성년자는 투숙할 수 없습니다. (청소년 보호법 30조/58조)</li>
+                        <li>상기 요금은 할인 요금이며, 중복 할인은 적용되지 않습니다.</li>
+                        <li>자세한 객실안내는 02-2230-0700로 문의 바랍니다.</li>
+                    </ul>
                 </div>
 
                 <div className={"d-flex justify-content-center p-5"}>

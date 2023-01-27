@@ -69,25 +69,9 @@ function ReservationPageDetail2() {
     }, [num]);
     return (
         <div>
-            <div>
-                <RoutesLayout/>
-            </div>
-            <p className={"pt-5 pb-5"}></p>
+
             {/*main*/}
             <div className={"container"}>
-
-                <div className={"pt-5 pb-5 mt-5 mb-5"}>
-                    <section>
-                        <nav>
-                            <ol className="cd-multi-steps text-top">
-                                <li className="visited"><a href="#0">Cart</a></li>
-                                <li className="visited"><a href="#0">Billing</a></li>
-                                <li className="current"><em>Delivery</em></li>
-                                <li><em>Review</em></li>
-                            </ol>
-                        </nav>
-                    </section>
-                </div>
                 <div className={"container"}>
                     <div className={"row"}>
                         <div className={"row"}>
@@ -111,8 +95,7 @@ function ReservationPageDetail2() {
                                         <th className={"first"}><em className={"ast"}>*</em> 이름</th>
                                         <td className="first ">
                                             <div>
-                                                <input type={"text"} className={"id"}
-                                                       autoComplete={"off"}/>
+                                                <input type={"text"} className={"id"} autoComplete={"off"}/>
                                                 {/*<span className="idConfirm"><a href="javascript:checkDuplicateLognId()">아이디 중복확인</a></span>*/}
 
                                             </div>
@@ -223,9 +206,6 @@ function ReservationPageDetail2() {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
-                <MainFooter/>
             </div>
         </div>
     )

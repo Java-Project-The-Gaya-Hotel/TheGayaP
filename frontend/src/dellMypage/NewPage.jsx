@@ -1,7 +1,6 @@
 import React from 'react';
 import MypageNav from "./MypageNav";
 import {Outlet} from "react-router-dom";
-import NewPage from "./NewPage";
 
 
 function MypageMain() {
@@ -10,11 +9,7 @@ function MypageMain() {
             <div className={"row"}>
 
                 <div className={"col"}>
-                    <MypageNav/>
-                </div>
 
-                <div className={"col"}>
-                    <NewPage/>
                 </div>
             </div>
         </div>

@@ -8,6 +8,9 @@ import BookingRoom from "./dellBooking/BookingRoom";
 import Login from "./login/Login";
 import Join1 from "./join/Join1";
 import InquiryList from "./inquiryBoard/InquiryList";
+import MypageMain from "./dellMypage/MypageMain";
+import ReservationPageDetail2 from "./skyReservation/ReservationPageDetail2";
+import NewPage from "./dellMypage/NewPage";
 
 
 function MainReact(props) {
@@ -24,6 +27,9 @@ function MainReact(props) {
                         <Route path={"/login"} element={<Login/>}/>
                         <Route path={"/join"} element={<Join1/>}/>
                         <Route path={"/qa"} element={<InquiryList/>}/>
+                        <Route path={"/nextreserv"} element={<ReservationPageDetail2/>}/>
+                        <Route path={"/mypage"} element={<MypageMain/>}/>
+                        <Route path={"/pre"} element={<NewPage/>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>

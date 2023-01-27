@@ -26,9 +26,11 @@ function RoutesLayout(props) {
                 <nav role="navigation">
                     <div style = {styles.LiFont}>
                         <ul className={"row row-cols-auto justify-content-end text-center px-5 pt-2"}>
-                            <li className={"col"}> <Link to={"/login"}>Login</Link></li>
+                            <li className={"col"}> <Link to={"/login"}>{
+                                1 === 1 ? <p> Login </p> : <p> Log Out </p>
+                            }</Link></li>
                             <li className={"col"}><Link to={"/join"}>Join Us</Link></li>
-                            <li className={"col"}>고객문의</li>
+                            <li className={"col"}><Link to={"/mypage"}>My Page</Link></li>
                         </ul>
                     </div>
                     <hr style={styles.HrHidden}/>

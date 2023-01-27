@@ -9,32 +9,37 @@ import axios from "axios";
 import moment from "moment";
 
 
-function BookingRoom(props) {
+function BookingRoom() {
 
     //객실조회
-    const [showRoom, setShowRoom] = useState(false);
+
 
     //주소 값 받아오기
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    let getSDate = searchParams.get('sDate');
-    let getEDate = searchParams.get('eDate');
-    const count = searchParams.get('people');
+    const count = searchParams.get('count');
+    const childCount = searchParams.get('childCount')
+    const personnel = searchParams.get('total')
     const hotelName = searchParams.get('hotelName');
-    const [hotelRoomList, setHotelRoomList]=useState();
+    const [hotelRoomList, setHotelRoomList] = useState([]);
+    let startDate = searchParams.get('sDate');
+    let endDate = searchParams.get('eDate');
 
-    getSDate=moment().format('YYYY-MM-DD');
-    getEDate=moment().format('YYYY-MM-DD');
+    startDate = moment().format('YYYY-MM-DD');
+    endDate = moment().format('YYYY-MM-DD');
+
+
 
 
     useEffect(() => {
         axios.get("http://10.100.204.69:8080/gaya/roomlist", {
             params: {
-                hotelName:hotelName,
-                sDate:getSDate,
-                eDate:getEDate,
-                count:count,
-
+                hotelName: hotelName,
+                sDate: startDate,
+                eDate: endDate,
+                count: count,
+                childCount:childCount,
+                total:personnel
             }
         })
             .then((req) => {
@@ -42,17 +47,12 @@ function BookingRoom(props) {
                 setHotelRoomList(data)
                 console.log(data)
             })
-            .catch(e=>{console.log(e)})
+            .catch(e => {
+                console.log(e)
+            })
 
     }, [])
 
-    const roomOpenInfo = (e) => {
-        if (!showRoom) {
-            setShowRoom(prevState => true);
-        } else {
-            setShowRoom(prevstate => false);
-        }
-    }
 
 
     return (
@@ -63,8 +63,8 @@ function BookingRoom(props) {
                     <nav>
                         <ol className="cd-multi-steps text-top">
                             <li className={"visited fw-lighter"}><em> Booking Condition </em></li>
-                            <li className={"current fw-bold"}><a> Room Condition</a></li>
-                            <li><em>03</em></li>
+                            <li className={"visited fw-lighter"}><a> Room Condition</a></li>
+                            <li className={"current fw-bold"}><a> Find Room </a></li>
                             <li><em>04</em></li>
                         </ol>
                     </nav>
@@ -82,7 +82,7 @@ function BookingRoom(props) {
                     <nav>
                         <nav className="nav nav-tabs" id="nav-tab" role="tablist">
                             <button className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">회원 전용 객실</button>
-                            <button className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">일반 객실</button>
+                            {/*<button className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">일반 객실</button>*/}
                         </nav>
 
                         <div className={"p-3 border border-1 m-3"}>
@@ -96,68 +96,42 @@ function BookingRoom(props) {
                     <div className="tab-content" id="nav-tabContent">
 
                         {/* tab - 1 회원 전용*/}
+
                         <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
-                            <div className={"container"}>
-                                <hr className={"border-0"}/>
-                                <h2>Room Condition</h2>
-                                <hr className={"border-0"}/>
-
-                                {/* 객실 묶음 */}
-                                <div className={"p-3"}>
-                                    <h5 className={"p-2"}>Room Name</h5>
-                                    <div className={"row text-center align-items-center"}>
-                                        <div className={"col"}><img src={BeingImg}/></div>
-                                        <div className={"col"}></div>
-                                        <div className={"col"}>
-                                            <button className={" btnDate"} onClick={roomOpenInfo}><span className="text">객실찾기</span> reserve</button>
-                                        </div>
-                                        {/*컴포넌트 3항 연산자  ShowRoom t = Roomcondition : f = 공백 */}
-                                        <div>
-                                            {showRoom ? <RoomCondition/> : <div></div>}
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr/>
-                            </div>
-                        </div>
-
-                        <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabIndex="0">
-                            {/* tab - 2 일반 객실*/}
-                            <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
+                            <div>
                                 <div className={"container"}>
                                     <hr className={"border-0"}/>
                                     <h2>Room Condition</h2>
                                     <hr className={"border-0"}/>
 
                                     {/* 객실 묶음 */}
-                                    <div className={"p-3"}>
-                                        <h5 className={"p-2"}>Room Name</h5>
-                                        <div className={"row text-center align-items-center"}>
-                                            <div className={"col"}><img src={BeingImg}/></div>
-                                            <div className={"col"}>Information</div>
-                                            <div className={"col"}>
-                                                <button className={" btnDate"} onClick={roomOpenInfo}><span className="text">객실찾기</span> reserve</button>
-                                            </div>
-                                            {/*컴포넌트 3항 연산자  ShowRoom t = Roomcondition : f = 공백 */}
-                                            <div>
-                                                {showRoom ? <RoomCondition/> : <div></div>}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr/>
+
+
+                                    {
+                                        hotelRoomList.map((room) => {
+                                            return (
+                                                <div>
+                                                    <RoomCondition value={room}/>
+                                                </div>
+
+                                            )
+                                        })
+                                    }
+
+
+
                                 </div>
                             </div>
-
                         </div>
+
+
                     </div>
-
-
                 </div>
             </div>
-
-
         </div>
+
     )
 }
+
 
 export default BookingRoom;
