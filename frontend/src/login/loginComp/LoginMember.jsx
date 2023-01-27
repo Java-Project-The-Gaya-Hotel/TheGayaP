@@ -1,8 +1,39 @@
-import React from "react";
+import React, {useState} from "react";
+import axios from "axios";
 
 
 function LoginMember(props) {
 
+    const [id, setId] = useState("")
+    const [pw, setPw] = useState("")
+
+
+    const loginData = {
+        memberId: id,
+        memberPw: pw
+    };
+
+    const submitLogin = (e) => {
+        e.preventDefault(); //리프레시 방지-> 방지해야 이 아래 라인의 코드들 실행 가능
+
+        axios.post("http://localhost:8080/login/check",loginData)
+          .then((req) => {
+              console.log("데이터 전송 성공")
+              ;
+              if (req.data === 0) {
+                  alert("아이디와 비밀번호를 다시 확인해주세요.");
+              }
+              else {
+                  window.location.href="/";
+                  alert(req.data.memberName + "님 반갑습니다.");
+              }
+
+
+          }).catch(err => {
+            console.log(`데이터 전송 실패 ${err}`)
+        })
+
+    }
 
     return (
         <div>
@@ -14,14 +45,20 @@ function LoginMember(props) {
                             <div className={"row mt-2"}>
                                 <div className={'col-10'}>
                                     {/*아이디*/}
-                                    <input type={"text"} className={"col-11"} placeholder={"아이디 or 회원 번호"}/>
+                                    <input type={"text"} className={"col-11"} placeholder={"아이디 or 회원 번호"}
+                                           onChange={(e) => {
+                                               setId(e.target.value)
+                                           }}/>
                                     {/*비밀번호*/}
-                                    <input type={"text"} className={"col-11"} placeholder={"비밀번호"}/>
+                                    <input type={"text"} className={"col-11"} placeholder={"비밀번호"}
+                                           onChange={(e) => {
+                                               setPw(e.target.value)
+                                           }}/>
                                 </div>
                                 <div className={'col-2 p-0 d-flex row'}>
                                     {/*로그인 버튼*/}
                                     <button className={"btn btn-secondary btn-lg p-0"}
-                                            style={{borderRadius: 0}}>로그인
+                                            style={{borderRadius: 0}} onClick={submitLogin}>로그인
                                     </button>
                                 </div>
                             </div>

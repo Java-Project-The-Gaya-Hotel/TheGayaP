@@ -29,6 +29,7 @@ function RoutesLayout(props) {
                             <li className={"col"}><Link to={"/join"}>회원가입</Link></li>
                             <li className={"col"}><Link to={"/reservation"}>예약확인</Link></li>
                             <li className={"col"}><Link to={"/qa"}>고객문의</Link></li>
+                            <li className={"col"}><Link to={"/test"}>테스트</Link></li>
                             <li className={"col"}>고객문의</li>
                         </ul>
                     </div>

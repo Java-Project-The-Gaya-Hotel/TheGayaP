@@ -6,8 +6,11 @@ import com.gaya.thegayap.dto.JeongMemberDto;
 import com.gaya.thegayap.dto.JeongResvDto;
 import com.gaya.thegayap.service.JeongService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
@@ -18,11 +21,17 @@ public class JeongController {
     @Autowired
     JeongService jeongService;
 
+    @Autowired
+    private PasswordEncoder pwEncoder;
+
 
 //    회원가입페이지
     // 회원 데이터 입력
     @RequestMapping(value = "/join/insert", method = RequestMethod.POST)
     public void joinMember(@RequestBody JeongMemberDto member) throws Exception {
+        String rawPw = member.getMemberPw();
+        String encodePw = pwEncoder.encode(rawPw);
+        member.setMemberPw(encodePw);
         jeongService.joinMember(member);
     }
 
@@ -41,15 +50,6 @@ public class JeongController {
 
         return emailResult;
     }
-
-    // 전화번호 중복 체크
-    @RequestMapping(value = "/join/telCheck", method = RequestMethod.GET)
-    public int telCheck(JeongMemberDto member) throws Exception{
-        int telResult = jeongService.telCheck(member);
-
-        return telResult;
-    }
-
 
 
 //    마이페이지
@@ -84,9 +84,40 @@ public class JeongController {
 
     // 프로필 수정
     @PutMapping("/mypage/update")
-    public void updateProfile(JeongMemberDto member, @RequestParam("memberId") String memberId) throws Exception {
+    public void updateProfile(@RequestBody JeongMemberDto member, @RequestParam("memberId") String memberId) throws Exception {
         member.setMemberId(memberId);
         jeongService.updateProfile(member);
+    }
+
+
+//    로그인
+    // 로그인 처리
+    @PostMapping("/login/check")
+    public Object memberLogin(@RequestBody JeongMemberDto member, HttpServletRequest request) throws Exception {
+        HttpSession session = request.getSession();
+
+        if(session.getAttribute("member") != null) {
+            session.removeAttribute("member");
+        }
+
+        JeongMemberDto memberDto = jeongService.loginCheck(member);
+
+        if (memberDto != null) {
+            String rawPw = member.getMemberPw();
+            String encodePw = memberDto.getMemberPw();
+
+            // 비밀번호 일치 여부 판단
+            if (pwEncoder.matches(rawPw, encodePw)) {
+                memberDto.setMemberPw("");    // 인코딩된 비밀번호 정보 지움
+                session.setAttribute("member", memberDto);
+                return memberDto;
+            }
+            else {return 0;}
+        }
+        else {return 0;}
+
+
+
     }
 
 }

@@ -23,13 +23,6 @@
         WHERE member_email=#{memberEmail}
     </select>
 
-<!--    연락처 중복 체크 -->
-    <select id="telCheck" parameterType="com.gaya.thegayap.dto.JeongMemberDto" resultType="int">
-        SELECT count(member_tel)
-        FROM member_table
-        WHERE member_tel=#{memberTel}
-    </select>
-
 <!--    내 예약확인 조회-->
     <select id="resvList" resultType="com.gaya.thegayap.dto.JeongResvDto">
         SELECT resv.*, ht.hotel_name,
@@ -87,6 +80,13 @@
     <select id="hotelList" resultType="com.gaya.thegayap.dto.SinDto">
         SELECT *
         FROM hotel_table
+    </select>
+
+<!--    로그인 체크 -->
+    <select id="loginCheck" resultType="com.gaya.thegayap.dto.JeongMemberDto" parameterType="String">
+        SELECT *
+        FROM member_table
+        WHERE member_id=#{memberId}
     </select>
 
 

@@ -60,6 +60,7 @@ function Join(props) {
       .then((req) => {
         console.log("데이터 전송 성공")
         console.log(data);
+        alert('가입완료');
       }).catch(err => {
       console.log(`데이터 전송 실패 ${err}`)
     })
