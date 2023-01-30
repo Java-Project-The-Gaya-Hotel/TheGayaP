@@ -11,7 +11,7 @@ public interface SinService {
 
     void insertRoom(SinDto2 sinDto2);
 
-    List<SinRoomDto> checkRoomList(String hotelName, int checkIn, int checkOut);
+    List<SinRoomDto> checkRoomList(String hotelName, String checkIn, String checkOut);
 
     void reservationRoom(SinReservDto sinReservDto);
 
@@ -20,4 +20,10 @@ public interface SinService {
     List<String> getHotelName();
 
     SinRoomDto getRoomBucket(String roomCode);
+
+    List<SinAnswerChatDto> getAnswerDataList(int idx);
+
+    void insertReply(SinAnswerChatDto sinAnswerChatDto);
+
+    SInRoomCostDto getRoomCost(String roomCode);
 }

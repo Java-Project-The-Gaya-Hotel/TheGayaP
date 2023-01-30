@@ -1,7 +1,66 @@
-import React from "react";
+import React, {useState} from "react";
+import axios from "axios";
 
 
 function LoginMember(props) {
+
+    const [memberId, setMemberId] = useState("");
+    const [memberPw, setMemberPw] = useState("");
+    const [token, setToken] = useState("");
+
+    const login = async (id, pw) => {
+        try {
+            const response = await axios.post("http://localhost:8080/members/login", {
+                memberId: id,
+                memberPw: pw
+            })
+            if (response.data == "") {
+                alert("아이디 혹은 비밀번호가 틀렸습니다.")
+            } else {
+                console.log(response);
+                setToken(response.data.accessToken);
+
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
+    // 로그인 클릭 버튼 이벤트
+    const loginUser = () => {
+        if (memberId == "") {
+            alert("아이디를 입력해 주세요")
+        } else if (memberPw == "") {
+            alert("비밀번호를 입력해주세요")
+        } else {
+            login(memberId, memberPw);
+        }
+    }
+
+    const checkTokenValid = () => {
+
+        axios.defaults.headers.common[
+            "Authorization"
+            ] = `Bearer ${token}`;
+
+        axios.post("http://localhost:8080/members/test"
+
+        ).then(req => {
+            console.log(req.data);
+        }).catch(e => {
+            console.log(e);
+        })
+    }
+
+    const onChangeMemberId = (e) => {
+        setMemberId(e.target.value);
+    }
+
+    const onChangeMemberPw = (e) => {
+        setMemberPw(e.target.value);
+    }
 
 
     return (
@@ -14,14 +73,16 @@ function LoginMember(props) {
                             <div className={"row mt-2"}>
                                 <div className={'col-10'}>
                                     {/*아이디*/}
-                                    <input type={"text"} className={"col-11"} placeholder={"아이디 or 회원 번호"}/>
+                                    <input type={"text"} className={"col-11"} placeholder={"아이디 or 회원 번호"}
+                                           onChange={onChangeMemberId}/>
                                     {/*비밀번호*/}
-                                    <input type={"text"} className={"col-11"} placeholder={"비밀번호"}/>
+                                    <input type={"text"} className={"col-11"} placeholder={"비밀번호"}
+                                           onChange={onChangeMemberPw}/>
                                 </div>
                                 <div className={'col-2 p-0 d-flex row'}>
                                     {/*로그인 버튼*/}
                                     <button className={"btn btn-secondary btn-lg p-0"}
-                                            style={{borderRadius: 0}}>로그인
+                                            style={{borderRadius: 0}} onClick={loginUser}>로그인
                                     </button>
                                 </div>
                             </div>
@@ -33,7 +94,9 @@ function LoginMember(props) {
                         </div>
                         {/*회원가입 및 아이디 비밀번호 찾기*/}
                         <div className={"d-flex"}>
-                            <button className={"btn btn-dark p-1"} style={{borderRadius: 0}}>가야 리워즈 가입</button>
+                            <button className={"btn btn-dark p-1"} style={{borderRadius: 0}}
+                                    onClick={checkTokenValid}>가야 리워즈 가입
+                            </button>
                             <button className={"btn btn-secondary mx-2 p-1"} style={{borderRadius: 0}}>가야 리워즈 번호 또는 아이디
                                 찾기
                             </button>

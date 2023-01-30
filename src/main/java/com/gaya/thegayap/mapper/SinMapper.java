@@ -16,9 +16,6 @@ public interface SinMapper {
 
 //
     int checkCodeOverlap(String code);
-
-    List<SinRoomDto> checkBookOverlap(int hotelNum);
-
     int getHotelNum(String hotelName);
 
     void reservationRoom(SinReservDto sinReservDto);
@@ -28,4 +25,16 @@ public interface SinMapper {
     List<String> getHotelName();
 
     SinRoomDto getRoomInfo(String roomCode);
+
+    List<SinAnswerChatDto> getAnswerList(int idx);
+
+    void insertReply(SinAnswerChatDto sinAnswerChatDto);
+
+    List<SinRoomDto> getHotelList(int hotelNum);
+
+    List<SinRoomDto> getStayList(int hotelNum);
+
+    List<SinRoomDto> checkBookOverlap(SinReservDto build);
+
+    SInRoomCostDto getRoomCost(String roomCode);
 }

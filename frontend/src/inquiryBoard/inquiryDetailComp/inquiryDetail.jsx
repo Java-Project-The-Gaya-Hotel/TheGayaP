@@ -9,18 +9,23 @@ import axios from "axios";
 function InquiryDetail() {
 
 
-    const [qaIdx, setQAIdx] = useSearchParams()
+    const [userParam, setUserParam] = useSearchParams();
+
     const [qaDetailData, setQaDetailData] = useState([]);
 
 
     useEffect(() => {
         const getData = async () => {
-            const data = await axios.get("http://localhost:8080/qa/detail", {
+            const data = await axios.get("http://localhost:8080/gaya/qa/detail", {
                 params: {
-                    idx: qaIdx.get('idx'),
+                    idx: userParam.get('idx'),
                 }
             }).then(req => {
-                console.log("통신 성공")
+               const {data} = req
+                setQaDetailData(data);
+               console.log(data);
+            }).catch(err=>{
+                console.log(err);
             })
         }
         getData();
@@ -30,32 +35,32 @@ function InquiryDetail() {
 
 
     return (
-        <div className={"container vh-100 vw-50 p-5"}>
+        <div className={"container vh-100 vw-50"}>
             <div className={"row"}>
 
                 {/*고객 문의 헤더*/}
-                <div className={"d-grid inquiry_header col-10 mx-auto"}>
-                    <div>
+                <div className={"d-grid inquiry_header col-10 "}>
+                    <div className={"border-bottom"}>
                         <h1>고객 문의</h1>
                     </div>
                     <div className={"inquiry_status"}>
-                        <p>문의 상황란</p>
-                    </div>
-                    <div className={"inquiry_update_date"}>
-                        <p>문의 진행 업데이트 시간</p>
+                        <p>현재 답변 단계 = {userParam.get('status')}</p>
                     </div>
                     {/*고객이 작성한 제목*/}
                     <div className={"inquiry_title"}>
-                        <p className={"border-bottom"}>고객의 문의 제목</p>
+                        <p className={"border-bottom"}>문의 제목 = {userParam.get('title')}</p>
                     </div>
                 </div>
 
                 {/* 전체 채팅 박스*/}
-                <div id={"chat"} className={"text-center d-grid col-10 mx-auto"}>
-                    <InquiryUserChat/>
-                    <InquiryAdminChat/>
+                <div id={"chat"} className={"text-center d-grid col-10 "}>
+                    {
+                        qaDetailData.map((item)=>{
+                          return   (item.answerIsAdmin == "N" ? <InquiryUserChat data={item}/> : <InquiryAdminChat data={item}/>)
+                        })
+                    }
                 </div>
-                <InquiryReplyWrite/>
+                <InquiryReplyWrite qaNum={userParam.get('idx')}/>
             </div>
         </div>
     );

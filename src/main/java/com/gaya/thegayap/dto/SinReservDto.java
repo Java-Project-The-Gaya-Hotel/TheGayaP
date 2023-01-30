@@ -1,10 +1,8 @@
 package com.gaya.thegayap.dto;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,4 +24,6 @@ public class SinReservDto {
 
     private int reservationPeople;
     private String reservationRequest;
+
+
 }

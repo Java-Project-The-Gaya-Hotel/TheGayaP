@@ -24,18 +24,17 @@ function InquiryMain() {
         <div className={"container"}>
             <div className={"d-flex "}>
                 <div className={"col-2"}>
-                    <h1>네비자리</h1>
-                    <nav className={"p-3 grid bg-opacity-10 bg-secondary"}>
+                    <nav className={"p-3 grid bg-opacity-10 bg-secondary mt-5"}>
                         <h3>고객 문의</h3>
                         <ul>
                             <li className="nav-item">
-                                <Link to={"/qa"} className="nav-link active" aria-current="page">호텔 소개</Link>
+                                <Link to={"/qa"} className={"nav-link  mb-2"} aria-current="page">호텔 소개</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to={"list"} className="nav-link">문의 리스트</Link>
+                                <Link to={"list"} className={"nav-link mb-2"}>문의 리스트</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to={"write"} className="nav-link">문의 작성</Link>
+                                <Link to={"write"} className={"nav-link mb-2"}>문의 작성</Link>
                             </li>
                         </ul>
                     </nav>

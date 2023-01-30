@@ -12,11 +12,10 @@ import java.util.*;
 public class SinServiceImpl implements SinService {
 
 
-
     private final SinMapper sinMapper;
 
 
-//    임시 호텔 입력 코드
+    //    임시 호텔 입력 코드
     @Override
     public void insertHotel(SinDto sinDto) {
         sinMapper.insertHotel(sinDto);
@@ -24,7 +23,7 @@ public class SinServiceImpl implements SinService {
     }
 
 
-//    임시 방 입력 코드
+    //    임시 방 입력 코드
     @Override
     public void insertRoom(SinDto2 sinDto2) {
 
@@ -85,7 +84,6 @@ public class SinServiceImpl implements SinService {
     }
 
 
-
 //    Set 형식으로 필터
 
 //    @Override
@@ -143,44 +141,54 @@ public class SinServiceImpl implements SinService {
 
 
     //    Map형식으로 필터
+
+    /**
+     * 예약된 방을 필터하여 방의 리스트를 보냄
+     * @param hotelName 호텔 이름
+     * @param sDate 체크인 날짜
+     * @param eDate 체크아웃 날짜
+     * @return
+     */
     @Override
-    public List<SinRoomDto> checkRoomList(String hotelName, int checkIn, int checkOut) {
+    public List<SinRoomDto> checkRoomList(String hotelName, String sDate, String eDate) {
 
 
-//        예약될 호텔에 있는 방에 예약된 정보를 불러옴
+        //  체크인 체크아웃으로 필터링 된 예약된 방 룸코드
+        List<SinRoomDto> reservationList;
+        //  전체 방 리스트
+        List<SinRoomDto> roomList;
+
+        //        실제 예약가능한 리스트를 넣을 곳
+
+        List<SinRoomDto> filterList = new ArrayList<>();
+        //      필터링 할 Map
+        Map<String, SinRoomDto> roomMap = new HashMap<>();
+
         int hotelNum = sinMapper.getHotelNum(hotelName);
 
+//        선택된 호텔의 방 리스트 가져오기
+        if (hotelNum == 1 || hotelNum == 16) {
 //        DB에서 온 데이터를 넣음
-        List<SinRoomDto> resultList = sinMapper.checkBookOverlap(hotelNum);
-        Map<String, SinRoomDto> roomMap = new HashMap<>();
-        //        실제 예약가능한 리스트를 넣을 곳
-        List<SinRoomDto> filterList = new ArrayList<>();
+            roomList = sinMapper.getHotelList(hotelNum);
+        } else {
+            roomList = sinMapper.getStayList(hotelNum);
+        }
 
-        for (SinRoomDto sinRoomDto : resultList) {
+
+        reservationList = sinMapper.checkBookOverlap(SinReservDto.builder().hotelNum(hotelNum).checkIn(sDate).checkOut(eDate).build());
+
+
+        for (SinRoomDto sinRoomDto : roomList) {
             roomMap.put(sinRoomDto.getRoomCode(), sinRoomDto);
         }
 
 
-        for (SinRoomDto sinRoomDto : resultList) {
-
-
-            //            예약 날짜가 null이면 그냥 바로 리스트에 추가하고 continue
-            if (sinRoomDto.getReservationCheckIn() == null || sinRoomDto.getReservationCheckOut() == null) {
-                continue;
-            }
-
-//            DB에서 온 date 타입을 yyyy-MM-dd 에서 yyyyMMdd로 변경
-            int dbCheckIn = Integer.parseInt((sinRoomDto.getReservationCheckIn().replaceAll("-", "")));
-            int dbCheckOut = Integer.parseInt(sinRoomDto.getReservationCheckOut().replaceAll("-", ""));
-
-//            예약하려는 날짜가 중첩되는게 있으면 Set에 넣어 중복 처리
-            if (dbCheckOut > checkIn && checkOut > dbCheckIn) {
+        if (reservationList != null) {
+            for (SinRoomDto sinRoomDto : reservationList) {
+//            동일한 코드가 있을시 dto를 null 처리
                 roomMap.put(sinRoomDto.getRoomCode(), null);
             }
-
-
         }
-
 
         roomMap.forEach((key, value) -> {
             if (value != null) {
@@ -192,14 +200,14 @@ public class SinServiceImpl implements SinService {
         return filterList;
     }
 
-//    방 예약
+    //    방 예약
     @Override
     public void reservationRoom(SinReservDto sinReservDto) {
 
         sinMapper.reservationRoom(sinReservDto);
     }
 
-//    문의 리스트
+    //    문의 리스트
     @Override
     public List<SinInquiryDto> getQAList() {
         try {
@@ -211,7 +219,8 @@ public class SinServiceImpl implements SinService {
         }
     }
 
-//    호텔명 불러오기
+    //    호텔명 불러오기
+
     @Override
     public List<String> getHotelName() {
         List<String> hotelName = sinMapper.getHotelName();
@@ -219,9 +228,37 @@ public class SinServiceImpl implements SinService {
         return hotelName;
     }
 
+    /**
+     * 임시 방 비교 메서드
+     * @param roomCode 방 코드
+     * @return
+     */
     @Override
     public SinRoomDto getRoomBucket(String roomCode) {
         return sinMapper.getRoomInfo(roomCode);
+    }
+
+    @Override
+    public List<SinAnswerChatDto> getAnswerDataList(int idx) {
+
+
+        return sinMapper.getAnswerList(idx);
+    }
+
+    //    답글 DB insert
+    @Override
+    public void insertReply(SinAnswerChatDto sinAnswerChatDto) {
+        sinMapper.insertReply(sinAnswerChatDto);
+    }
+
+
+    // 예약 할 방과 호텔 조식 가격 전송
+    @Override
+    public SInRoomCostDto getRoomCost(String roomCode) {
+
+
+
+        return sinMapper.getRoomCost(roomCode);
     }
 
 

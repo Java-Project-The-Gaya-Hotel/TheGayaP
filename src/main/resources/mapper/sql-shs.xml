@@ -30,18 +30,28 @@
 
     </select>
 
+    <select id="getHotelList" parameterType="int" resultType="com.gaya.thegayap.dto.SinRoomDto">
+        SELECT *
+        FROM hotel_room_table
+        where room_hotel_num = #{hotelNum}
+    </select>
 
-    <select id="checkBookOverlap" parameterType="int" resultType="com.gaya.thegayap.dto.SinRoomDto">
-        select room_name,room_twin_cost,room_twin_weekend, room_max_adult, room_code, reservation_check_in,reservation_check_out,reservation_room_code
-        from hotel_room_table as hrt
-                 left join reservation_table as rt
-                           on hrt.room_hotel_num = rt.reservation_hotel_num and hrt.room_code = rt.reservation_room_code
-        where hrt.room_hotel_num = 1;
+    <select id="getStayList" parameterType="int" resultType="com.gaya.thegayap.dto.SinRoomDto">
+        SELECT *
+        FROM stay_room_table
+        where room_hotel_num = #{hotelNum}
+    </select>
+
+    <select id="checkBookOverlap" parameterType="com.gaya.thegayap.dto.SinReservDto" resultType="com.gaya.thegayap.dto.SinRoomDto">
+        select reservation_room_code
+        from reservation_table
+        where reservation_hotel_num = #{hotelNum}
+        and reservation_check_out > #{checkIn} and #{checkOut} > reservation_check_in
     </select>
 
     <select id="getHotelNum" parameterType="String" resultType="int">
         select hotel_num from hotel_table
-        where hotel_name = "서울가야호텔";
+        where hotel_name = #{hotelName};
     </select>
 
     <insert id="reservationRoom" parameterType="com.gaya.thegayap.dto.SinReservDto">
@@ -60,5 +70,36 @@
         where 1 = 1
     </select>
 
+    <select id="getAnswerList" parameterType="int" resultType="com.gaya.thegayap.dto.SinAnswerChatDto">
+        select *
+        from answer_table
+        where answer_inquiry_num = #{idx}
+    </select>
+
+    <insert id="insertReply" parameterType="com.gaya.thegayap.dto.SinAnswerChatDto">
+        insert into answer_table(answer_inquiry_num, answer_contents, answer_create_date, answer_user_name, answer_is_admin)
+        values (#{answerInquiryNum},#{answerContents},now(),#{answerUserName},#{answerIsAdmin});
+    </insert>
+
+
+    <select id="getRoomCost" parameterType="String" resultType="com.gaya.thegayap.dto.SInRoomCostDto">
+
+<if test='roomCode.contains("stay")'>
+    SELECT ht.hotel_meal_adult, ht.hotel_meal_child, srt.room_twin_cost, srt.room_twin_weekend, srt.room_family_cost, srt.room_family_weekend
+    from stay_room_table as srt
+    left join hotel_table as ht
+    on srt.room_hotel_num = ht.hotel_num
+    where srt.room_code = #{roomCode}
+</if>
+
+<if test='roomCode.contains("hotel")'>
+    SELECT ht.hotel_meal_adult, ht.hotel_meal_child, hrt.room_twin_cost, hrt.room_twin_weekend
+    from hotel_room_table as hrt
+    left join hotel_table as ht
+    on hrt.room_hotel_num = ht.hotel_num
+    where hrt.room_code = #{roomCode}
+</if>
+
+    </select>
 
 </mapper>

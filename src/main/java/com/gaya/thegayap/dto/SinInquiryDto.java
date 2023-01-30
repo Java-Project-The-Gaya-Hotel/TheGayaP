@@ -1,15 +1,16 @@
 package com.gaya.thegayap.dto;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SinInquiryDto {
 
-    private int inquiryIdx;
+    private int inquiryNum;
     private int inquiryReservationNum;
     private String inquiryCategory;
     private String inquiryHotelName;

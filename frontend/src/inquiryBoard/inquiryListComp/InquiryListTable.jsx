@@ -5,15 +5,10 @@ import InquiryItem from "./InquiryItem";
 function InquiryListTable(props) {
     const [QAData, setQAData] = useState([]);
 
-    const goBoardDetail = () => {
-        console.log();
-    }
-
     useEffect( () => {
         const getQaData = async ()=>{
         const data = await axios.get("http://localhost:8080/gaya/inquirylist")
             .then((req) => {
-                console.log("데이터 전송 성공")
                 const {data} = req;
                 setQAData(data);
             }).catch(err => console.log(err))
