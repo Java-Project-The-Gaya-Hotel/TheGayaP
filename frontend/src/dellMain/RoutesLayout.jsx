@@ -58,7 +58,7 @@ function RoutesLayout(props) {
                                 <Link to={"/welcome"} className="nav-link">About Us</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to={"/menu1"} className="nav-link">Menu 3</Link>
+                                <Link to={"/qa"} className="nav-link">Menu 3</Link>
                             </li>
                         </ul>
                     </div>

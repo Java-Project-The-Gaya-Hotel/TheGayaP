@@ -4,37 +4,37 @@ import axios from "axios";
 
 function LoginMember(props) {
 
-    // 종율씨 코드
-    const [id, setId] = useState("")
-    const [pw, setPw] = useState("")
-
-
-    const loginData = {
-        memberId: id,
-        memberPw: pw
-    };
-
-    const submitLogin = (e) => {
-        e.preventDefault(); //리프레시 방지-> 방지해야 이 아래 라인의 코드들 실행 가능
-
-        axios.post("http://localhost:8080/login/check",loginData)
-          .then((req) => {
-              console.log("데이터 전송 성공")
-              ;
-              if (req.data === 0) {
-                  alert("아이디와 비밀번호를 다시 확인해주세요.");
-              }
-              else {
-                  window.location.href="/";
-                  alert(req.data.memberName + "님 반갑습니다.");
-              }
-
-
-          }).catch(err => {
-            console.log(`데이터 전송 실패 ${err}`)
-        })
-
-    }
+    // // 종율씨 코드
+    // const [id, setId] = useState("")
+    // const [pw, setPw] = useState("")
+    //
+    //
+    // const loginData = {
+    //     memberId: id,
+    //     memberPw: pw
+    // };
+    //
+    // const submitLogin = (e) => {
+    //     e.preventDefault(); //리프레시 방지-> 방지해야 이 아래 라인의 코드들 실행 가능
+    //
+    //     axios.post("http://localhost:8080/login/check",loginData)
+    //       .then((req) => {
+    //           console.log("데이터 전송 성공")
+    //           ;
+    //           if (req.data === 0) {
+    //               alert("아이디와 비밀번호를 다시 확인해주세요.");
+    //           }
+    //           else {
+    //               window.location.href="/";
+    //               alert(req.data.memberName + "님 반갑습니다.");
+    //           }
+    //
+    //
+    //       }).catch(err => {
+    //         console.log(`데이터 전송 실패 ${err}`)
+    //     })
+    //
+    // }
 
     //
 
@@ -116,19 +116,17 @@ function LoginMember(props) {
                                 <div className={'col-10'}>
                                     {/*아이디*/}
                                     <input type={"text"} className={"col-11"} placeholder={"아이디 or 회원 번호"}
-                                           onChange={(e) => {
-                                               setId(e.target.value)
-                                           }}/>
+                                           onChange={onChangeMemberId
+                                           }/>
                                     {/*비밀번호*/}
                                     <input type={"text"} className={"col-11"} placeholder={"비밀번호"}
-                                           onChange={(e) => {
-                                               setPw(e.target.value)
-                                           }}/>
+                                           onChange={onChangeMemberPw
+                                           }/>
                                 </div>
                                 <div className={'col-2 p-0 d-flex row'}>
                                     {/*로그인 버튼*/}
                                     <button className={"btn btn-secondary btn-lg p-0"}
-                                            style={{borderRadius: 0}} onClick={submitLogin}>로그인
+                                            style={{borderRadius: 0}} onClick={loginUser}>로그인
                                     </button>
                                 </div>
                             </div>
@@ -140,7 +138,7 @@ function LoginMember(props) {
                         </div>
                         {/*회원가입 및 아이디 비밀번호 찾기*/}
                         <div className={"d-flex"}>
-                            <button className={"btn btn-dark p-1"} style={{borderRadius: 0}}>가야 리워즈 가입</button>
+                            <button className={"btn btn-dark p-1"} style={{borderRadius: 0}} onClick={checkTokenValid}>가야 리워즈 가입</button>
                             <button className={"btn btn-secondary mx-2 p-1"} style={{borderRadius: 0}}>가야 리워즈 번호 또는 아이디
                                 찾기
                             </button>
