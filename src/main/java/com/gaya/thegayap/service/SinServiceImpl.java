@@ -171,9 +171,9 @@ public class SinServiceImpl implements SinService {
 //        선택된 호텔의 방 리스트 가져오기
         if (hotelNum == 1 || hotelNum == 16) {
 //        DB에서 온 데이터를 넣음
-            roomList = sinMapper.getHotelList(hotelNum);
+            roomList = sinMapper.getHotelRoomList(hotelNum);
         } else {
-            roomList = sinMapper.getStayList(hotelNum);
+            roomList = sinMapper.getStayRoomList(hotelNum);
         }
 
 
@@ -268,7 +268,7 @@ public class SinServiceImpl implements SinService {
 
 
     /**
-     * roomCode를 받아 그 방의 호텔 조식 가격을 보내는 서비스
+     * roomCode를 받아 그 방의 호텔 조식과 방의 가격을 보내는 서비스
      * @param roomCode
      * @return SInRoomCostDto
      */
@@ -277,7 +277,7 @@ public class SinServiceImpl implements SinService {
 
 
 
-        return sinMapper.getRoomCost(roomCode);
+        return sinMapper.getRoomAndMealCost(roomCode);
     }
 
 

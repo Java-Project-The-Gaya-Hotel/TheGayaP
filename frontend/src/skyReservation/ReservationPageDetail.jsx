@@ -11,6 +11,7 @@ function ReservationPageDetail() {
     const [childCount, setChildCount] = useState(0);
     const [personnel, setPersonnel] = useState(0)
 
+
     const plusBtn = () => {
 
         let adult = count;

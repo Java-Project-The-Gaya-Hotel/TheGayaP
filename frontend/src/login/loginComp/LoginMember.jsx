@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {el} from "date-fns/locale";
 
 
 function LoginMember(props) {
@@ -42,8 +43,6 @@ function LoginMember(props) {
     //신현섭 코드
     const [memberId, setMemberId] = useState("");
     const [memberPw, setMemberPw] = useState("");
-    const [token, setToken] = useState("");
-    const [refreshToken, setRefreshToken] = useState("");
     const navi = useNavigate();
 
     const login = async (id, pw) => {
@@ -55,10 +54,11 @@ function LoginMember(props) {
             if (response.data === "") {
                 alert("아이디 혹은 비밀번호가 틀렸습니다.")
             } else {
-                console.log(response);
-                setToken(response.data.accessToken);
-                setRefreshToken(response.data.refreshToken)
+                console.log(response.data);
+                alert(id + "님 환영합니다.")
+                localStorage.setItem("token", JSON.stringify(response.data));
             }
+                window.location.href="/";
 
         } catch (err) {
             console.log(err)
@@ -77,23 +77,42 @@ function LoginMember(props) {
         }
     }
 
-    const goToSignup = () =>{
+    const goToSignup = () => {
         navi("/join");
     }
 
     const checkTokenValid = () => {
 
+        const tokenJson = JSON.parse(localStorage.getItem("token"));
+        const acToken = tokenJson["accessToken"];
+        console.log(tokenJson);
 
-        axios.post("http://localhost:8080/members/test", null,{
+        axios.post("http://localhost:8080/members/test", null, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${acToken}`
                 }
             }
-        ).then(req => {
-            console.log(req.data);
-        }).catch(e => {
-            console.log(e);
+        ).then(() => {
+
+        }).catch(async () => {
+
+            try {
+                const response = await axios.post("http://localhost:8080/members/tokenvalid", tokenJson);
+                if (localStorage.getItem("token") != null) {
+                    localStorage.removeItem("token");
+                    localStorage.setItem("token", JSON.stringify(response.data));
+                } else {
+                    localStorage.setItem("token", JSON.stringify(response.data));
+                }
+
+            } catch (e) {
+                console.log("로그인페이지로 보내기" + e);
+                localStorage.removeItem("token");
+                navi("/login")
+            }
+
         })
+
     }
 
     const onChangeMemberId = (e) => {
@@ -106,9 +125,6 @@ function LoginMember(props) {
 
 
     //
-
-
-
 
 
     return (
@@ -144,8 +160,11 @@ function LoginMember(props) {
                         </div>
                         {/*회원가입 및 아이디 비밀번호 찾기*/}
                         <div className={"d-flex"}>
-                            <button className={"btn btn-dark p-1"} style={{borderRadius: 0}} onClick={goToSignup}>가야 리워즈 가입</button>
-                            <button className={"btn btn-secondary mx-2 p-1"} style={{borderRadius: 0}}>가야 리워즈 번호 또는 아이디
+                            <button className={"btn btn-dark p-1"} style={{borderRadius: 0}} onClick={goToSignup}>가야 리워즈
+                                가입
+                            </button>
+                            <button className={"btn btn-secondary mx-2 p-1"} style={{borderRadius: 0}}
+                                    onClick={checkTokenValid}>가야 리워즈 번호 또는 아이디
                                 찾기
                             </button>
                             <button className={"btn btn-secondary p-1"} style={{borderRadius: 0}}>비밀번호 찾기</button>

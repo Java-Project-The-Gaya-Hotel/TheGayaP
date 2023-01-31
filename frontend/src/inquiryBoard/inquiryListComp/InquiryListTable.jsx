@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import InquiryItem from "./InquiryItem";
+import {useNavigate} from "react-router-dom";
 
 function InquiryListTable(props) {
     const [QAData, setQAData] = useState([]);
+    const navi = useNavigate();
 
     useEffect( () => {
         const getQaData = async ()=>{
@@ -16,6 +18,10 @@ function InquiryListTable(props) {
         getQaData();
 
     }, []);
+
+    const goWrite = () => {
+        navi("/qa/write")
+    }
 
     return (
         <div>
@@ -46,7 +52,7 @@ function InquiryListTable(props) {
                 </div>
             </div>
             <div className={"d-flex justify-content-end col-10"}>
-                <button>문의 작성</button>
+                <button onClick={goWrite}>문의 작성</button>
 
             </div>
         </div>

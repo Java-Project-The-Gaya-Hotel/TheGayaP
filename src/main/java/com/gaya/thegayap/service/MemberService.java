@@ -34,4 +34,12 @@ public class MemberService {
         return tokenInfo;
     }
 
+    public TokenInfo validate(TokenInfo token) {
+
+        if (jwtTokenProvider.validateToken(token.getRefreshToken())){
+            return jwtTokenProvider.reGenerateToken(token);
+        }
+
+        return null;
+    }
 }

@@ -1,7 +1,6 @@
 package com.gaya.thegayap.jwt;
 
 
-
 import com.gaya.thegayap.dto.TokenInfo;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -42,7 +41,7 @@ public class JwtTokenProvider {
 
         long now = (new Date()).getTime();
         // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + 3600000);
+        Date accessTokenExpiresIn = new Date(now + 1000);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
@@ -52,7 +51,7 @@ public class JwtTokenProvider {
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + 3600000))
+                .setExpiration(new Date(now + 36000))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
@@ -62,6 +61,33 @@ public class JwtTokenProvider {
                 .refreshToken(refreshToken)
                 .build();
     }
+
+
+    public TokenInfo reGenerateToken(TokenInfo token) {
+        Claims claims = parseClaims(token.getAccessToken());
+
+        long now = (new Date()).getTime();
+        Date accessTokenExpiresIn = new Date(now + 60000);
+        String accessToken = Jwts.builder()
+                .setSubject(claims.getSubject())
+                .claim("auth", claims.get("auth"))
+                .setExpiration(accessTokenExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+
+
+        String refreshToken = Jwts.builder()
+                .setExpiration(new Date(now + 36000))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+
+        return TokenInfo.builder()
+                .grantType("Bearer")
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
 
     // JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
     public Authentication getAuthentication(String accessToken) {
@@ -98,6 +124,17 @@ public class JwtTokenProvider {
             log.info("JWT claims string is empty.", e);
         }
         return false;
+    }
+
+    public String decodeId(String accessToken) {
+        try {
+            Claims claims = parseClaims(accessToken);
+            String memberId =claims.getSubject();
+            return memberId;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "토큰 형식 불일치";
+        }
     }
 
     private Claims parseClaims(String accessToken) {

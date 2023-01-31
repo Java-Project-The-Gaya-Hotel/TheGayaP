@@ -1,11 +1,13 @@
 package com.gaya.thegayap.controller;
 
 
+import com.gaya.thegayap.configuration.SecurityConfig;
 import com.gaya.thegayap.dto.JeongCustomerDto;
 import com.gaya.thegayap.dto.JeongMemberDto;
 import com.gaya.thegayap.dto.JeongResvDto;
 import com.gaya.thegayap.service.JeongService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,12 +27,15 @@ public class JeongController {
     private PasswordEncoder pwEncoder;
 
 
+
 //    회원가입페이지
     // 회원 데이터 입력
     @RequestMapping(value = "/join/insert", method = RequestMethod.POST)
     public void joinMember(@RequestBody JeongMemberDto member) throws Exception {
+        PasswordEncoder pwe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
         String rawPw = member.getMemberPw();
-        String encodePw = pwEncoder.encode(rawPw);
+        String encodePw = pwe.encode(rawPw);
         member.setMemberPw(encodePw);
         jeongService.joinMember(member);
     }

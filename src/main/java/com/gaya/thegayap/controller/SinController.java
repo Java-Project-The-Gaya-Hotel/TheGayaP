@@ -157,7 +157,6 @@ public class SinController {
      * @param roomCode
      * @return
      */
-
     @GetMapping("/bucket")
     public SinRoomDto getBucket(@RequestParam("roomCode") String roomCode) {
         return sinService.getRoomBucket(roomCode);

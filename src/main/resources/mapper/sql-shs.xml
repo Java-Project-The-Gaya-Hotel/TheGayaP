@@ -8,6 +8,8 @@
 <!-- ★★★ xml 파일이기 때문에 스프링 프로젝트의 전체 구조를 모르기 때문에 전체 패키지 명을 다 입력해야 함 ★★★ -->
 <mapper namespace="com.gaya.thegayap.mapper.SinMapper">
 
+
+<!--    임시코드 시작-->
     <insert id="insertHotel" parameterType="com.gaya.thegayap.dto.SinDto">
         insert into hotel_table(hotel_name, hotel_addr, hotel_tel, hotel_meal_adult, hotel_meal_child)
         values (#{hotelName}, #{hotelAddr}, #{hotelTel}, #{hotelMealAdult}, #{hotelMealChild});
@@ -23,6 +25,9 @@
 
     </insert>
 
+<!--    임시코드 종료-->
+
+<!--    roomCode 중복확인-->
     <select id="checkCodeOverlap" parameterType="String" resultType="int">
 
 
@@ -30,18 +35,23 @@
 
     </select>
 
-    <select id="getHotelList" parameterType="int" resultType="com.gaya.thegayap.dto.SinRoomDto">
+
+<!--    호텔에 방 리스트-->
+    <select id="getHotelRoomList" parameterType="int" resultType="com.gaya.thegayap.dto.SinRoomDto">
         SELECT *
         FROM hotel_room_table
         where room_hotel_num = #{hotelNum}
     </select>
 
-    <select id="getStayList" parameterType="int" resultType="com.gaya.thegayap.dto.SinRoomDto">
+
+<!--   스테이에 방 리스트 -->
+    <select id="getStayRoomList" parameterType="int" resultType="com.gaya.thegayap.dto.SinRoomDto">
         SELECT *
         FROM stay_room_table
         where room_hotel_num = #{hotelNum}
     </select>
 
+<!--    예약 중복 확인-->
     <select id="checkBookOverlap" parameterType="com.gaya.thegayap.dto.SinReservDto" resultType="com.gaya.thegayap.dto.SinRoomDto">
         select reservation_room_code
         from reservation_table
@@ -49,40 +59,43 @@
         and reservation_check_out > #{checkIn} and #{checkOut} > reservation_check_in
     </select>
 
+<!--    호텔 이름으로 호텔 번호 불러오기-->
     <select id="getHotelNum" parameterType="String" resultType="int">
         select hotel_num from hotel_table
         where hotel_name = #{hotelName};
     </select>
 
+<!--    예약 DB 입력-->
     <insert id="reservationRoom" parameterType="com.gaya.thegayap.dto.SinReservDto">
         insert into reservation_table values (#{reservationNum},#{hotelNum},#{roomCode},#{customerName},#{customerId},#{checkIn},#{checkOut},#{reservationTime},#{nights},#{breakfastAdultNum},#{breakfastChildNum},#{reservationPeople},#{totalCost},#{reservationRequest})
     </insert>
 
+<!--    문의 게시글 -->
     <select id="getQAList" resultType="com.gaya.thegayap.dto.SinInquiryDto">
         select *
         from inquiry_table
         where inquiry_deleted_yn ='N'
     </select>
-
+<!-- 전체 호텔 이름-->
     <select id="getHotelName" resultType="String">
         select hotel_name
         from hotel_table
         where 1 = 1
     </select>
-
+<!-- 문의 답글 불러오기 -->
     <select id="getAnswerList" parameterType="int" resultType="com.gaya.thegayap.dto.SinAnswerChatDto">
         select *
         from answer_table
         where answer_inquiry_num = #{idx}
     </select>
-
+<!-- 답글 DB 입력-->
     <insert id="insertReply" parameterType="com.gaya.thegayap.dto.SinAnswerChatDto">
         insert into answer_table(answer_inquiry_num, answer_contents, answer_create_date, answer_user_name, answer_is_admin)
         values (#{answerInquiryNum},#{answerContents},now(),#{answerUserName},#{answerIsAdmin});
     </insert>
 
-
-    <select id="getRoomCost" parameterType="String" resultType="com.gaya.thegayap.dto.SInRoomCostDto">
+<!-- 방의 가격과 조식 가격 불러오기-->
+    <select id="getRoomAndMealCost" parameterType="String" resultType="com.gaya.thegayap.dto.SInRoomCostDto">
 
 <if test='roomCode.contains("stay")'>
     SELECT ht.hotel_meal_adult, ht.hotel_meal_child, srt.room_twin_cost, srt.room_twin_weekend, srt.room_family_cost, srt.room_family_weekend

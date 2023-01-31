@@ -1,33 +1,53 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 
 function InquiryItem(props) {
 
-  const [goNum, setGoNum] = useState();
-  const [title, setTitle] = useState();
-  const [status, setStatus] = useState();
+    const [goNum, setGoNum] = useState();
+    const [title, setTitle] = useState();
+    const [status, setStatus] = useState();
+    const [inquiryId, setInquiryId] = useState();
+    const [memberId, setMemberId] = useState();
 
-  useEffect(() => {
-  setGoNum(props.data.inquiryNum);
-  setTitle(props.data.inquiryTitle);
-  setStatus(props.data.inquiryStatus);
+    useEffect(() => {
+        const tokenJson = JSON.parse(localStorage.getItem("token"));
+        const acToken = tokenJson["accessToken"];
 
-  },[]);
+        axios.get("http://localhost:8080/members/access", {params: {accessToken:acToken}})
+            .then((response) => {
+                setMemberId(response.data);
+                console.log(response.data);
+            }).catch(e => {
+                console.log(e)
+        })
 
 
-  const navi = useNavigate();
+        setGoNum(props.data.inquiryNum);
+        setTitle(props.data.inquiryTitle);
+        setStatus(props.data.inquiryStatus);
+        setInquiryId(props.data.inquiryUserName);
 
-const onClickHandler = () => {
+    }, []);
+
+
+    const navi = useNavigate();
+
+    const onClickHandler = () => {
 //     컴포넌트를 하나 더만들어서 idx를 넘겨서 그 페이지가 보이게하기
 //     쿼리스트링을 쓰기 주소값으로 url?페이지=goIdx
-    navi(`/qa/list/detail?idx=${goNum}&title=${title}&status=${status}`);
+        if (inquiryId === memberId) {
+            navi(`/qa/list/detail?idx=${goNum}&title=${title}&status=${status}`);
+        } else {
+            alert("비밀글은 볼수 없습니다.");
+        }
 
-}
+    }
 
     return (
 
-        <tr key={props.data.inquiryNum} onClick={onClickHandler} style={{cursor:"pointer"}}>
+        <tr key={props.data.inquiryNum} onClick={onClickHandler} style={{cursor: "pointer"}}>
             <td>{props.data.inquiryHotelName}</td>
             <td>{props.data.inquiryTitle}</td>
             <td>{props.data.inquiryUserName}</td>
