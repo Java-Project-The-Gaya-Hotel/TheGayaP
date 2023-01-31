@@ -9,9 +9,8 @@ import BookingAccordion from "./BookingAccordion";
 function BookingPage() {
     return (
         <div>
-            <p className={"pt-4 pb-4"}></p>
 
-            <div className={"pt-4 pb-4 mt-5 mb-5 animate__animated animate__fadeInDown"}>
+            <div className={"pt-2 pb-4  mb-5 animate__animated animate__fadeInDown"}>
                 <section>
                     <nav>
                         <ol className="cd-multi-steps text-top">
@@ -34,10 +33,6 @@ function BookingPage() {
                 <BookingAccordion/>
             </div>
 
-            {/*footer*/}
-            <div>
-                <MainFooter/>
-            </div>
 
 
         </div>)

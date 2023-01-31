@@ -3,6 +3,7 @@ import {Outlet, Link} from "react-router-dom";
 import MainLogo from "../mainImg/headerTitle.svg"
 import "./dellmainCss/LayoutCss.css"
 import Menucon from "../mainImg/icons8-key.svg"
+import MainFooter from "./MainFooter";
 
 const styles = {
     TitleImgSize: {
@@ -25,9 +26,11 @@ function RoutesLayout(props) {
                 <nav role="navigation">
                     <div style = {styles.LiFont}>
                         <ul className={"row row-cols-auto justify-content-end text-center px-5 pt-2"}>
-                            <li className={"col"}>로그인</li>
-                            <li className={"col"}>예약확인</li>
-                            <li className={"col"}>고객문의</li>
+                            <li className={"col"}> <Link to={"/login"}>{
+                                1 === 1 ? <p> Login </p> : <p> Log Out </p>
+                            }</Link></li>
+                            <li className={"col"}><Link to={"/join"}>Join Us</Link></li>
+                            <li className={"col"}><Link to={"/mypage"}>My Page</Link></li>
                         </ul>
                     </div>
                     <hr style={styles.HrHidden}/>
@@ -61,8 +64,11 @@ function RoutesLayout(props) {
                     </div>
                 </div>
             </div>
-
             <Outlet/>
+            <div>
+                <MainFooter/>
+            </div>
+
         </div>
     )
 

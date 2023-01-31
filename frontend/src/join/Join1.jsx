@@ -1,11 +1,10 @@
 import React, {useEffect} from "react";
-import "../join/Join3.css"
+import "../join/Join.css"
 import "../join/Join2.css"
 import axios from "axios";
 
 
 function Join1(props) {
-
 
 
     const [Email, setEmail] = React.useState("")
@@ -51,11 +50,13 @@ function Join1(props) {
         console.log('number', Number);
 
 
-        axios.get("http://localhost:8080/gaya/sendUser",{params:{
-            Email:Email,
-            }}).then((req) =>{
-                console.log("데이터 전송에 성공했습니다.")
-        }).catch((err)=>{
+        axios.get("http://localhost:8080/gaya/sendUser", {
+            params: {
+                Email: Email,
+            }
+        }).then((req) => {
+            console.log("데이터 전송에 성공했습니다.")
+        }).catch((err) => {
             console.log(err + "데이터 전송에 실패한 코드")
         })
 
@@ -70,9 +71,6 @@ function Join1(props) {
         //     name: userName,
         //     password: userPass,
         // }
-
-
-
 
 
         // axios.post("http://localhost:8080/SpReCol/testPost",userInfo
@@ -108,29 +106,32 @@ function Join1(props) {
     return (
 
 
-
-
-
-
-        <div className={"contain"}>
+        <div className={"contain animate__animated animate__fadeInLeft"}>
             <form onSubmit={onSubmitHandler}>
 
 
                 <div className={"container"}>
-                    <div className={"row"}>
-                        <div className={"col"}>
 
-                            <h3>회원정보</h3>
+                    <div className={"row"}>
+                        {/*회원정보 타이틀*/}
+                        <div className={"col"}>
+                            <h3 className={"fw-semibold"}>회원정보</h3>
                         </div>
-                        <hr/>
-                        <div className={"row"}>
-                            <div className={"col"}>
-                                <h5>기본정보</h5>
+
+                        <hr className={"pb-2"}/>
+
+                        {/* 회원 기본 정보 컨테이너 */}
+                        <div className={"container"}>
+                            <div className={"row align-items-center"}>
+                                <div className={"col"}>
+                                    <div className={"h5 m-0 fw-semibold"}>기본정보</div>
+                                </div>
                             </div>
                             <div className={"col text-end"}>
-                                <h5><em className="ast">*</em> 표시 필수입력 사항</h5>
+                                <div className={"fw-semibold small"}><em className="ast">*</em> 표시 필수입력 사항</div>
                             </div>
                         </div>
+
                         <table className={"tableTypeA"}>
                             <colgroup>
                                 <col width="16%" className="col1"></col>
@@ -141,8 +142,7 @@ function Join1(props) {
                                 <th className={"first"}><em className={"ast"}>*</em> 아이디</th>
                                 <td>
                                     <div className="first ">
-                                        <input type={"text"} value={Id} onChange={onIdHandler} className={"id"}
-                                               autoComplete={"off"}/>
+                                        <input type={"text"} value={Id} onChange={onIdHandler} className={"id"} autoComplete={"off"}/>
                                         {/*<span className="idConfirm"><a href="javascript:checkDuplicateLognId()">아이디 중복확인</a></span>*/}
                                         <span className="msgCheck msgCheck2"> 5~12자  이내 영문 또는 /숫자 조합</span>
                                     </div>
@@ -210,8 +210,7 @@ function Join1(props) {
 
                                 <th><em className={"ast"}>*</em> 비밀번호 확인</th>
                                 <td>
-                                    <input type={"password"} value={ConfirmPassword}
-                                           onChange={onConfirmPasswordHandler}/>
+                                    <input type={"password"} value={ConfirmPassword} onChange={onConfirmPasswordHandler}/>
                                 </td>
 
                             </tr>
@@ -257,7 +256,7 @@ function Join1(props) {
                                                 <option value="+82" title="+82">+82</option>
                                                 <option value="+82" title="+82">+82</option>
                                             </select>
-                                            <input className={"col-2"} value={Number} onChange={onNumberHandler} />
+                                            <input className={"col-2"} value={Number} onChange={onNumberHandler}/>
 
                                         </div>
 
@@ -270,9 +269,10 @@ function Join1(props) {
 
                     </div>
 
-                    <button formAction={""} className={"btn btn-primary"}>
-                        회원 가입
-                    </button>
+
+                    <div className={"d-flex justify-content-end"}>
+                        <button formAction={""} className={"btn btn-outline-secondary m-3"}>회원 가입</button>
+                    </div>
                 </div>
             </form>
         </div>
