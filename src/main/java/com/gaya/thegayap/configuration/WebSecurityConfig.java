@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Configuration
 @EnableWebSecurity
 @Component
-public class WebSecurityConfig {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Bean
     PasswordEncoder passwordEncoder() {
