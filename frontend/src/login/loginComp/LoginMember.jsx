@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 
 function LoginMember(props) {
@@ -43,6 +44,7 @@ function LoginMember(props) {
     const [memberPw, setMemberPw] = useState("");
     const [token, setToken] = useState("");
     const [refreshToken, setRefreshToken] = useState("");
+    const navi = useNavigate();
 
     const login = async (id, pw) => {
         try {
@@ -73,6 +75,10 @@ function LoginMember(props) {
         } else {
             login(memberId, memberPw);
         }
+    }
+
+    const goToSignup = () =>{
+        navi("/join");
     }
 
     const checkTokenValid = () => {
@@ -138,7 +144,7 @@ function LoginMember(props) {
                         </div>
                         {/*회원가입 및 아이디 비밀번호 찾기*/}
                         <div className={"d-flex"}>
-                            <button className={"btn btn-dark p-1"} style={{borderRadius: 0}} onClick={checkTokenValid}>가야 리워즈 가입</button>
+                            <button className={"btn btn-dark p-1"} style={{borderRadius: 0}} onClick={goToSignup}>가야 리워즈 가입</button>
                             <button className={"btn btn-secondary mx-2 p-1"} style={{borderRadius: 0}}>가야 리워즈 번호 또는 아이디
                                 찾기
                             </button>

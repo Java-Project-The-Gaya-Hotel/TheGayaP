@@ -35,7 +35,7 @@ function InquiryDetail() {
 
 
     return (
-        <div className={"container vh-100 vw-50"}>
+        <div className={"container min-vh-100 vw-50"}>
             <div className={"row"}>
 
                 {/*고객 문의 헤더*/}
