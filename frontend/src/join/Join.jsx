@@ -86,7 +86,10 @@ function Join(props) {
             alert('공백만 입력되었습니다.');
         }
     }
+s
 
+
+    
 // 아이디 중복체크
 const handleIdCheck = (e) => {
     e.preventDefault();
