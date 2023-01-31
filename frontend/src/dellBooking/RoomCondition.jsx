@@ -2,10 +2,10 @@ import React, {useEffect, useState} from "react";
 import BeingImg from "../mainImg/pexels-castorly-stock-3761182.jpg";
 import Collapse from "react-bootstrap/Collapse";
 import Button from "react-bootstrap/Button";
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import ToggleButton from 'react-bootstrap/ToggleButton';
 import {useLocation, useNavigate, useNavigation} from "react-router-dom";
-import moment from "moment/moment";
+import Swal from "sweetalert2";
+import 'animate.css';
+
 
 
 function RoomCondition(props) {
@@ -32,10 +32,42 @@ function RoomCondition(props) {
     let startDate = searchParams.get('sDate');
     let endDate = searchParams.get('eDate');
 
-    const [chooseValue, setChooseValue] = useState();
+    const dateA = new Date(startDate);
+    const dateB = new Date(endDate);
+    const diffCount = dateB.getTime() - dateA.getTime();
+    const reservationTime = diffCount / (24 * 60 * 60 * 1000);
 
-    startDate = moment().format('YYYY-MM-DD');
-    endDate = moment().format('YYYY-MM-DD');
+
+    //~박 계산
+
+
+    //(1일 1박 금액 * 사용 인원) * 사용일
+    //+ 조식 금액 (인당 추가)
+
+
+    const [chooseRoomCost, setChooseRoomCost] = useState("");
+    const navigate = useNavigate();
+
+
+    const clickRoomCost1 = () =>{
+        setChooseRoomCost(data.roomTwinCost);
+    }
+    const clickRoomCost2 = () =>{
+        setChooseRoomCost(data.roomFamilyCost);
+    }
+
+    const clickNextE = () => {
+        const roomCode = data.roomCode;
+        if (chooseRoomCost !== ""){
+            navigate(`/nextreserv?sDate=${startDate}&eDate=${endDate}&count=${count}&childCount=${childCount}&total=${personnel}&hotelName=${hotelName}&roomCode=${roomCode}&roomCost=${chooseRoomCost}&reservationTime=${reservationTime}`, {replace: true});
+        }
+        else {
+            Swal.fire('사용하실 방을 선택해 주세요 ');
+        }
+    };
+
+
+
 
 
     return (
@@ -60,18 +92,16 @@ function RoomCondition(props) {
                             <h5 className={"p-2"}>{data.roomName}</h5>
                             <div className={"text-center align-items-center row"}>
                                 <div className="form-check form-check-inline col">
-                                    <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Twin"/>
+                                    <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" onClick={clickRoomCost1}/>
                                     <label className="form-check-label" htmlFor="inlineRadio1">Twin</label>
                                     <dd className={"col"}>{data.roomTwinCost}</dd>
                                 </div>
-                                <div className="form-check form-check-inline col">
-                                    <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Family"/>
-                                        <label className="form-check-label" htmlFor="inlineRadio2">Family</label>
-                                    <dd className={"col"}>{data.roomFamilyCost}</dd>
-                                </div>
-
-                                <button>ok</button>
-
+                                {/*<div className="form-check form-check-inline col">*/}
+                                {/*    <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" onClick={clickRoomCost2}/>*/}
+                                {/*        <label className="form-check-label" htmlFor="inlineRadio2">Family</label>*/}
+                                {/*    <dd className={"col"}>{data.roomFamilyCost}</dd>*/}
+                                {/*</div>*/}
+                                <button onClick={clickNextE}>ok</button>
                             </div>
                         </div>
                         <hr/>

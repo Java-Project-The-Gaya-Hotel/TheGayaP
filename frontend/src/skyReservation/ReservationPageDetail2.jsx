@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
-import RoutesLayout from "../dellMain/RoutesLayout";
-import MainFooter from "../dellMain/MainFooter";
 import axios from "axios";
+import {useLocation} from "react-router-dom";
+import moment from "moment";
 
 
 function collapse(element) {
@@ -21,6 +21,25 @@ function collapse(element) {
 }
 
 function ReservationPageDetail2() {
+
+    //주소 값 가져오기 --------------------------------------
+
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    // const hotelName = searchParams.get('hotelName');
+    let startDate = searchParams.get('sDate');
+    let endDate = searchParams.get('eDate');
+    const count = searchParams.get('count');
+    const childCount = searchParams.get('childCount')
+    const personnel = searchParams.get('total')
+    const roomCode = searchParams.get('roomCode')
+    const reservationTime = searchParams.get('reservationTime');
+
+
+
+
+    //-------------------------------------------------------
+
 
 
     const [name, setName] = React.useState("")
@@ -44,6 +63,13 @@ function ReservationPageDetail2() {
         axios.get("http://localhost:8080/gaya/sendUser", {
             params: {
                 Email: email,
+
+                // checkIn : startDate,
+                // checkOut : endDate,
+                // peopleAdultNum : count,
+                // peopleChildNum : childCount,
+                // totalCost:personnel,
+                // roomCode : roomCode
             }
         }).then((req) => {
             console.log("데이터 전송에 성공했습니다.")

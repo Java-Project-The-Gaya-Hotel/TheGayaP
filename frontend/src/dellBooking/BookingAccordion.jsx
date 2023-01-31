@@ -36,6 +36,7 @@ function BookingAccordion() {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
 
+
     useEffect(() => {
         const testStart = new Date(getSDate)
         setStartDate(testStart);
@@ -44,6 +45,10 @@ function BookingAccordion() {
         setEndDate(testEnd);
 
     }, [])
+
+
+    console.log(startDate)
+
 
     // hotel List 가져오기
     //axios input button roop connection
@@ -54,7 +59,9 @@ function BookingAccordion() {
                 setHotelNameList(data);
                 console.log(data)
             })
-            .catch()
+            .catch(e=>{
+                console.log("err>>" + e);
+            })
     }, [])
 
 
@@ -103,7 +110,6 @@ function BookingAccordion() {
             setPersonnel(totalP);
 
         }
-
 
     }
 

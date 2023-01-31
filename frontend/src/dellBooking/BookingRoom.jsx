@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import styled from 'styled-components'
 import RoomCondition from "./RoomCondition";
 import "../dellMain/dellmainCss/BtnDateChoose.css"
-import BeingImg from "../mainImg/pexels-castorly-stock-3761182.jpg"
 import "./dellBookingCss/NavColor.css"
 import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
@@ -24,10 +23,13 @@ function BookingRoom() {
     const [hotelRoomList, setHotelRoomList] = useState([]);
     let startDate = searchParams.get('sDate');
     let endDate = searchParams.get('eDate');
+    const [roomCode , setRoomCode] =useState([]);
 
-    startDate = moment().format('YYYY-MM-DD');
-    endDate = moment().format('YYYY-MM-DD');
+    startDate = moment().format('YYYY-MM-DD')
+    endDate = moment().format('YYYY-MM-DD')
 
+
+    //date moment 설정하기
 
 
 
@@ -39,7 +41,9 @@ function BookingRoom() {
                 eDate: endDate,
                 count: count,
                 childCount:childCount,
-                total:personnel
+                total:personnel,
+                roomCode:roomCode
+
             }
         })
             .then((req) => {
@@ -52,6 +56,9 @@ function BookingRoom() {
             })
 
     }, [])
+
+
+
 
 
 
@@ -107,13 +114,13 @@ function BookingRoom() {
                                     {/* 객실 묶음 */}
 
 
+
                                     {
                                         hotelRoomList.map((room) => {
                                             return (
                                                 <div>
                                                     <RoomCondition value={room}/>
                                                 </div>
-
                                             )
                                         })
                                     }
