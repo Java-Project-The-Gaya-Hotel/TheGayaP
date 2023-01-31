@@ -58,13 +58,14 @@ function Join(props) {
             return alert('비밀번호와 비밀번호 확인은 같아야 합니다.')
         }   //여기서 걸리면 아래로 못감
 
-        axios.post("http://localhost:8080/join/insert", data)
-            .then((req) => {
-                console.log("데이터 전송 성공")
-                console.log(data);
-            }).catch(err => {
-            console.log(`데이터 전송 실패 ${err}`)
-        })
+    axios.post("http://localhost:8080/join/insert",data)
+      .then((req) => {
+        console.log("데이터 전송 성공")
+        console.log(data);
+        alert('가입완료');
+      }).catch(err => {
+      console.log(`데이터 전송 실패 ${err}`)
+    })
 
     }
 

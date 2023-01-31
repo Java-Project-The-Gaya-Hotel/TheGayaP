@@ -4,8 +4,6 @@ import {Link} from "react-router-dom";
 
 
 function InquiryList() {
-
-
     return (
         <div className={"col-10 vh-100"}>
             <InquiryListTable/>

@@ -18,7 +18,11 @@ public interface JeongMapper {
 
     List<JeongResvDto> resvList(String customerId) throws Exception;
 
-    JeongMemberDto myAccount(String memberId) throws Exception;
+    JeongMemberDto profile(String memberId) throws Exception;
 
     List<JeongCustomerDto> checkPoints(String customerId) throws Exception;
+
+    void updateProfile(JeongMemberDto member) throws Exception;
+
+    JeongMemberDto loginCheck(JeongMemberDto member) throws Exception;
 }
