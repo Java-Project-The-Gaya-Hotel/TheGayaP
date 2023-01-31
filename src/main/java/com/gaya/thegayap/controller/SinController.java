@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:3000")
 @RequestMapping({"/gaya", "/"})
 @RequiredArgsConstructor
 public class SinController {
@@ -44,16 +45,11 @@ public class SinController {
         return inquiryList;
     }
 
-//    로그인 스프링 시큐리티 테스트
-
-
     //임시 db 입력 코드 종료
 
 
-    // 방 선택시 리스트
-
     /**
-     *
+     * 체크인 체크아웃 날짜를 받아 해당 날짜에 미예약 방 리스트를 뿌려주는 컨트롤러
      * @param hotelName 호텔이름
      * @param sDate 체크인 날짜
      * @param eDate 체크아웃 날짜
@@ -94,7 +90,7 @@ public class SinController {
 
 //    @RequestParam("roomCode") String roomCode
     /**
-     * 방 코드를 받아 가격 정보를 보내주는 메서드
+     * 방 코드를 받아 가격 정보를 보내주는 컨트롤러
      * @param //roomCode  방의 코드
      * @return SInRoomCostDto 타입으로 리턴
      */
@@ -156,7 +152,11 @@ public class SinController {
 //    }
 
 
-    //    장바구니 기능
+    /**
+     * 룸코드 기반 방 비교 컨트롤러(예정)
+     * @param roomCode
+     * @return
+     */
 
     @GetMapping("/bucket")
     public SinRoomDto getBucket(@RequestParam("roomCode") String roomCode) {
@@ -166,7 +166,7 @@ public class SinController {
 
 
     /**
-     * 문의 게시글 번호를 받아 문의 상세 데이터를 보내는 메서드
+     * 문의 게시글 번호를 받아 문의 상세 데이터를 보내는 컨트롤러
      * @param idx 문의 게시글 번호
      * @return List(SinAnswerChatDto) 타입으로 리턴
      */
@@ -183,9 +183,9 @@ public class SinController {
     //  QA 답글 Insert
 
     /**
-     * QA답글 작성 시 DB 입력 메서드
+     * QA답글 작성 시 DB 입력 컨트롤러
      * @param sinAnswerChatDto 문의답변 타입 dto
-     * @return String 타입으로 입력 성공 실패 리턴
+     * @return String 타입으로 입력 성공,실패 서버에 리턴
      */
     @PostMapping("/qa/reply/insert")
     public String insertReply(@RequestBody SinAnswerChatDto sinAnswerChatDto) {

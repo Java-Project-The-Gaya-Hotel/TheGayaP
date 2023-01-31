@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final MemberRepository memberRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -34,4 +33,5 @@ public class MemberService {
 
         return tokenInfo;
     }
+
 }

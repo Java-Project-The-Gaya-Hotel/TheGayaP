@@ -7,6 +7,7 @@ function LoginMember(props) {
     const [memberId, setMemberId] = useState("");
     const [memberPw, setMemberPw] = useState("");
     const [token, setToken] = useState("");
+    const [refreshToken, setRefreshToken] = useState("");
 
     const login = async (id, pw) => {
         try {
@@ -14,12 +15,12 @@ function LoginMember(props) {
                 memberId: id,
                 memberPw: pw
             })
-            if (response.data == "") {
+            if (response.data === "") {
                 alert("아이디 혹은 비밀번호가 틀렸습니다.")
             } else {
                 console.log(response);
                 setToken(response.data.accessToken);
-
+                setRefreshToken(response.data.refreshToken)
             }
 
         } catch (err) {
@@ -30,9 +31,9 @@ function LoginMember(props) {
 
     // 로그인 클릭 버튼 이벤트
     const loginUser = () => {
-        if (memberId == "") {
+        if (memberId === "") {
             alert("아이디를 입력해 주세요")
-        } else if (memberPw == "") {
+        } else if (memberPw === "") {
             alert("비밀번호를 입력해주세요")
         } else {
             login(memberId, memberPw);
@@ -41,12 +42,12 @@ function LoginMember(props) {
 
     const checkTokenValid = () => {
 
-        axios.defaults.headers.common[
-            "Authorization"
-            ] = `Bearer ${token}`;
 
-        axios.post("http://localhost:8080/members/test"
-
+        axios.post("http://localhost:8080/members/test", null,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
         ).then(req => {
             console.log(req.data);
         }).catch(e => {

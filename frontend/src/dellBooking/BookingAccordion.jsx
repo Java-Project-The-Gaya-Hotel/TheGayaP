@@ -42,7 +42,7 @@ function BookingAccordion() {
     const [hotelName, setHotelName] = useState([])
     //axios input button roop connection
     useEffect(() => {
-        axios.get("http://10.100.204.69:8080/gaya/gethotel")
+        axios.get("http://10.100.204.69:8080/gaya/hotelname")
             .then((req) => {
                 const {data} = req
                 setHotelName(data);

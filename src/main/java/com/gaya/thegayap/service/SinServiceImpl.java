@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+
 @Service
 @RequiredArgsConstructor
 public class SinServiceImpl implements SinService {
@@ -200,14 +201,22 @@ public class SinServiceImpl implements SinService {
         return filterList;
     }
 
-    //    방 예약
+
+
+    /**
+     * 방을 예약하는 서비스
+     * @param sinReservDto
+     */
     @Override
     public void reservationRoom(SinReservDto sinReservDto) {
 
         sinMapper.reservationRoom(sinReservDto);
     }
 
-    //    문의 리스트
+    /**
+     * 문의 게시글 리스트를 불러오는 서비스
+     * @return List(SinInquiryDto)
+     */
     @Override
     public List<SinInquiryDto> getQAList() {
         try {
@@ -219,8 +228,10 @@ public class SinServiceImpl implements SinService {
         }
     }
 
-    //    호텔명 불러오기
-
+    /**
+     * 호텔 이름 리스트를 불러오는 서비스
+     * @return List(String)
+     */
     @Override
     public List<String> getHotelName() {
         List<String> hotelName = sinMapper.getHotelName();
@@ -229,9 +240,9 @@ public class SinServiceImpl implements SinService {
     }
 
     /**
-     * 임시 방 비교 메서드
+     * 임시 방 비교 서비스
      * @param roomCode 방 코드
-     * @return
+     * @return SinRoomDto
      */
     @Override
     public SinRoomDto getRoomBucket(String roomCode) {
@@ -245,14 +256,21 @@ public class SinServiceImpl implements SinService {
         return sinMapper.getAnswerList(idx);
     }
 
-    //    답글 DB insert
+    /**
+     * 문의 답글을 DB에 넣는 서비스
+     * @param sinAnswerChatDto
+     */
     @Override
     public void insertReply(SinAnswerChatDto sinAnswerChatDto) {
         sinMapper.insertReply(sinAnswerChatDto);
     }
 
 
-    // 예약 할 방과 호텔 조식 가격 전송
+    /**
+     * roomCode를 받아 그 방의 호텔 조식 가격을 보내는 서비스
+     * @param roomCode
+     * @return SInRoomCostDto
+     */
     @Override
     public SInRoomCostDto getRoomCost(String roomCode) {
 
@@ -262,8 +280,10 @@ public class SinServiceImpl implements SinService {
     }
 
 
-//    랜덤 room 코드 생성
-
+    /**
+     * roomCode 랜덤 생성 메서드
+     * @return
+     */
     public String roomCodeGenerate() {
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'

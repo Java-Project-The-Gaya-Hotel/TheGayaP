@@ -26,16 +26,34 @@ public class SecurityConfig {
         http
                 .httpBasic().disable()
                 .csrf().disable()
+                .cors().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/members/login").permitAll()
                 .antMatchers("/members/test").hasRole("USER")
-                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
+
+
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource(){
+//        CorsConfiguration corsConfiguration = new CorsConfiguration();
+//        corsConfiguration.addAllowedOriginPattern("*");
+//        corsConfiguration.addAllowedHeader("*");
+//        corsConfiguration.addAllowedMethod("*");
+//        corsConfiguration.setAllowCredentials(true);
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**",corsConfiguration);
+//
+//        return source;
+//
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
