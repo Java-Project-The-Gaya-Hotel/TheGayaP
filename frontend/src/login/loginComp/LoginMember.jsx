@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import {el} from "date-fns/locale";
-import moment, {now} from "moment";
+import moment from "moment";
+import {CheckTokenValid} from "../../jwtAccess/CheckTokenVaild";
 
 
 function LoginMember(props) {
@@ -40,53 +40,13 @@ function LoginMember(props) {
     // }
 
     //
-
     //신현섭 코드
     const [memberId, setMemberId] = useState("");
     const [memberPw, setMemberPw] = useState("");
     const navi = useNavigate();
 
-    const login = async (id, pw) => {
-        try {
-            const response = await axios.post("http://localhost:8080/members/login", {
-                memberId: id,
-                memberPw: pw
-            })
-            if (response.data === "") {
-                alert("아이디 혹은 비밀번호가 틀렸습니다.")
-            } else {
-                console.log(response.data);
-                alert(id + "님 환영합니다.")
-                sessionStorage.setItem("token", JSON.stringify(response.data));
-                sessionStorage.setItem("loginInfo", moment.now().toString())
-            }
-                window.location.href="/";
 
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-
-    // 로그인 클릭 버튼 이벤트
-    const loginUser = () => {
-        if (memberId === "") {
-            alert("아이디를 입력해 주세요")
-        } else if (memberPw === "") {
-            alert("비밀번호를 입력해주세요")
-        } else {
-            login(memberId, memberPw);
-        }
-    }
-
-
-    // 회원가입 버튼
-    const goToSignup = () => {
-        navi("/join");
-    }
-
-
-    const checkTokenValid = () => {
+    const CheckTokenValid = () => {
 
         const tokenJson = JSON.parse(sessionStorage.getItem("token"));
         const acToken = tokenJson["accessToken"];
@@ -120,6 +80,47 @@ function LoginMember(props) {
 
     }
 
+
+    const login = async (id, pw) => {
+        try {
+            const response = await axios.post("http://localhost:8080/members/login", {
+                memberId: id,
+                memberPw: pw
+            })
+            if (response.data === "") {
+                alert("아이디 혹은 비밀번호가 틀렸습니다.")
+            } else {
+                console.log(response.data);
+                alert(id + "님 환영합니다.")
+                sessionStorage.setItem("token", JSON.stringify(response.data));
+                sessionStorage.setItem("loginInfo", moment.now().toString())
+            }
+            window.location.href = "/";
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
+    // 로그인 클릭 버튼 이벤트
+    const loginUser = () => {
+        if (memberId === "") {
+            alert("아이디를 입력해 주세요")
+        } else if (memberPw === "") {
+            alert("비밀번호를 입력해주세요")
+        } else {
+            login(memberId, memberPw);
+        }
+    }
+
+
+    // 회원가입 버튼
+    const goToSignup = () => {
+        navi("/join");
+    }
+
+
     const onChangeMemberId = (e) => {
         setMemberId(e.target.value);
     }
@@ -127,9 +128,6 @@ function LoginMember(props) {
     const onChangeMemberPw = (e) => {
         setMemberPw(e.target.value);
     }
-
-
-    //
 
 
     return (
@@ -169,7 +167,7 @@ function LoginMember(props) {
                                 가입
                             </button>
                             <button className={"btn btn-secondary mx-2 p-1"} style={{borderRadius: 0}}
-                                    onClick={checkTokenValid}>가야 리워즈 번호 또는 아이디
+                                    onClick={CheckTokenValid}>가야 리워즈 번호 또는 아이디
                                 찾기
                             </button>
                             <button className={"btn btn-secondary p-1"} style={{borderRadius: 0}}>비밀번호 찾기</button>

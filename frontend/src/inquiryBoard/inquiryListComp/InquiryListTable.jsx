@@ -2,20 +2,31 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import InquiryItem from "./InquiryItem";
 import {useNavigate} from "react-router-dom";
+import InquiryPagination from "./InquiryPageNation";
+import {CheckTokenValid} from "../../jwtAccess/CheckTokenVaild";
+import {LoginCheck} from "../../login/LoginBoolean";
 
 function InquiryListTable(props) {
     const [QAData, setQAData] = useState([]);
+    const [limit, setLimit] = useState(10);
+    const [page, setPage] = useState(1);
+    const offset = (page - 1) * limit;
     const navi = useNavigate();
 
-    useEffect( () => {
-        const getQaData = async ()=>{
-        const data = await axios.get("http://localhost:8080/gaya/inquirylist")
-            .then((req) => {
-                const {data} = req;
+    useEffect(() => {
+
+        LoginCheck();
+
+            const getQaData = async () => {
+                const response = await axios.get("http://localhost:8080/gaya/inquirylist")
+
+                const data = response.data;
                 setQAData(data);
-            }).catch(err => console.log(err))
-        }
-        getQaData();
+            }
+            getQaData();
+
+
+
 
     }, []);
 
@@ -29,6 +40,22 @@ function InquiryListTable(props) {
             <div className={"text-center border-bottom"}>
                 <h1>고객 문의 게시판</h1>
             </div>
+
+            <label>
+                페이지 당 표시할 게시물 수:&nbsp;
+                <select
+                    type="number"
+                    value={limit}
+                    onChange={({ target: { value } }) => setLimit(Number(value))}
+                >
+                    <option value="10">10</option>
+                    <option value="12">12</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </label>
+
             <div className={"row"}>
                 <div className={"col-md-10 m-1"}>
                     <table className={'table table-striped table-hover text-center'}>
@@ -43,8 +70,8 @@ function InquiryListTable(props) {
                         </thead>
                         <tbody>
                         {
-                            QAData.map((item) => {
-                                return <InquiryItem key={item.inquiryIdx} data={item}/>
+                            QAData.slice(offset, offset + limit).map((item, idx) => {
+                                return <InquiryItem key={idx} data={item}/>
                             })
                         }
                         </tbody>
@@ -53,10 +80,18 @@ function InquiryListTable(props) {
             </div>
             <div className={"d-flex justify-content-end col-10"}>
                 <button onClick={goWrite}>문의 작성</button>
-
             </div>
+            <footer>
+                <InquiryPagination
+                    total={QAData.length}
+                    limit={limit}
+                    page={page}
+                    setPage={setPage}
+                />
+            </footer>
         </div>
 
     );
 }
+
 export default InquiryListTable;

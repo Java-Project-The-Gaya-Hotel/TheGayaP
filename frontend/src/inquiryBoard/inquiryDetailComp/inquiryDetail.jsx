@@ -55,8 +55,8 @@ function InquiryDetail() {
                 {/* 전체 채팅 박스*/}
                 <div id={"chat"} className={"text-center d-grid col-10 "}>
                     {
-                        qaDetailData.map((item)=>{
-                          return   (item.answerIsAdmin == "N" ? <InquiryUserChat data={item}/> : <InquiryAdminChat data={item}/>)
+                        qaDetailData.map((item,idx)=>{
+                          return   (item.answerIsAdmin === "N" ? <InquiryUserChat data={item} key={idx}/> : <InquiryAdminChat data={item} key={idx}/>)
                         })
                     }
                 </div>
