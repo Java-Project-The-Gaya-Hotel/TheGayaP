@@ -44,6 +44,10 @@ function RoutesLayout(props) {
 
     }
 
+    useEffect(()=>{
+        console.log("토큰 정보")
+    },[]);
+
 
     return (
         <div>
