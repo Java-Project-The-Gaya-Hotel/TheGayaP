@@ -1,11 +1,12 @@
 import React from "react";
 import "../dellMain/dellmainCss/FooterCss.css"
 import {Link} from "react-router-dom";
-
+import footerTitle from "../mainImg/footerTitle.svg"
 
 const styles = {
-    headerTitle: {
-        width: "350px", height: "100px"
+    footerTitleImg: {
+        width: "350px",
+        height: "350px"
     }
 }
 
@@ -13,19 +14,21 @@ const styles = {
 function MainFooter() {
     return (
         <div>
-            <footer className={"fixed-bottom"}>
+            <footer>
                 <div className="container">
                     <div className="footer-top">
-                        <div className="row">
+                        <div className="row align-items-center">
                             <div className="col-md-6 col-lg-3 about-footer">
-                                <h3> The Gaya Hotel </h3>
-
+                                <div><a href = ""><img style={styles.footerTitleImg} src={footerTitle}/></a></div>
                             </div>
+
                             <div className="col-md-6 col-lg-2 page-more-info">
-                                <div className="footer-title">
+                                <div className="footer-title">cd
                                     <h4>Links</h4>
                                 </div>
                                 <ul>
+                                    <li><Link to={"/reservation"}>Reservation</Link></li>
+                                    <li><Link to={"/reservation"}>Reservation</Link></li>
                                     <li><Link to={"/reservation"}>Reservation</Link></li>
                                 </ul>
                             </div>
@@ -38,40 +41,40 @@ function MainFooter() {
                                     <li><a href="#">Lorem ipsum</a></li>
                                     <li><a href="#">Dolor sit amet</a></li>
                                     <li><a href="#">Consectetur Adipisicing </a></li>
-                                    <li><a href="#">Ed do eiusmod tempor incididunt</a></li>
                                 </ul>
                             </div>
+
                             <div className="col-md-6 col-lg-4 open-hours">
                                 <div className="footer-title">
-                                    <h4>Open hours</h4>
+                                    <h4>Contect</h4>
                                     <ul className="footer-social">
                                         <li><a href="" target="_blank"><i className="fab fa-facebook-f"></i></a></li>
                                         <li><a href="" target="_blank"><i className="fab fa-instagram"></i></a></li>
                                         <li><a href="" target="_blank"><i className="fab fa-linkedin-in"></i></a></li>
-
                                     </ul>
                                 </div>
                                 <table className="table">
                                     <tbody>
+                                    <div className={"m-3"}></div>
                                     <tr>
-                                        <td><i className="far fa-clock"></i>Monday Thursday</td>
-                                        <td>09:00am - 05:00pm</td>
+                                        <td><i className="far fa-clock"></i>The Gaya Hotel</td>
+                                        <td>051-2222-3333</td>
                                     </tr>
                                     <tr>
-                                        <td><i className="far fa-clock"></i>Friday</td>
-                                        <td>09:00am - 04:00pm</td>
+                                        <td><i className="far fa-clock"></i>The Gaya Stay</td>
+                                        <td>051-0000-1111</td>
                                     </tr>
                                     <tr>
-                                        <td><i className="far fa-clock"></i>Sturday</td>
-                                        <td>09:00am - 01:30pm</td>
+                                        <td><i className="far fa-clock"></i>Service center</td>
+                                        <td>051-5555-0111</td>
                                     </tr>
                                     <tr>
-                                        <td><i className="far fa-clock"></i>Sunday</td>
-                                        <td>09:30am - 12:00pm</td>
+                                        <td><i className="far fa-clock"></i></td>
+                                        <td><small>Service Open Till 12:00am</small></td>
                                     </tr>
                                     </tbody>
                                 </table>
-                                <hr/>
+
                                 <div className="footer-logo">
 
                                     <table>
@@ -88,7 +91,7 @@ function MainFooter() {
                     <div className="footer-bottom">
                         <div className="row">
                             <div className="col-sm-4">
-                                <a href="">Privacy policy</a>
+                                <div></div>
                             </div>
                             <div className="col-sm-8">
                                 <p>Team 4 Project - The Gaya Hotel - @ 2023 All rights reserved</p>

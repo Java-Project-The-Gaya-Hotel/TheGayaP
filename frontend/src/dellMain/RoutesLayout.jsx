@@ -7,7 +7,7 @@ import MainFooter from "./MainFooter";
 
 const styles = {
     TitleImgSize: {
-        width: "500px",
+        width: "300px",
         height: "40px"
     },
     HrHidden: {
@@ -25,21 +25,21 @@ function RoutesLayout(props) {
             <div id="mainNavigation">
                 <nav role="navigation">
                     <div style = {styles.LiFont}>
-                        <ul className={"row row-cols-auto justify-content-end text-center px-5 pt-2"}>
+                        <ul className={"row row-cols-auto justify-content-end text-center px-5 pt-1 pb-1"}>
                             <li className={"col"}> <Link to={"/login"}>{
-                                1 === 1 ? <p> Login </p> : <p> Log Out </p>
+                                1 === 1 ? <div> Login </div> : <div> Log Out </div>
                             }</Link></li>
-                            <li className={"col"}><Link to={"/join"}>Join Us</Link></li>
-                            <li className={"col"}><Link to={"/mypage"}>My Page</Link></li>
+                            <li className={"col"}><Link to={"/join"}><div>Join Us</div></Link></li>
+                            <li className={"col"}><Link to={"/mypage"}><div>My Page</div></Link></li>
                         </ul>
                     </div>
                     <hr style={styles.HrHidden}/>
-                    <div className="text-center border-bottom border-opacity-25 pb-2">
+                    <div className="text-center border-bottom border-opacity-25 pb-3">
                         <img style={styles.TitleImgSize} src={MainLogo} alt="" className="invert"/>
                     </div>
                 </nav>
                 <div className="navbar-expand-md">
-                    <div className="navbar-dark text-center my-2">
+                    <div className="navbar-dark text-center">
                         <button className="navbar-toggler w-75" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
                                 aria-label="Toggle navigation">
                             {/*<span className="navbar-toggler-icon"></span> <span className="align-middle">Menu</span>*/}

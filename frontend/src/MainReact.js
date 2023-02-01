@@ -14,6 +14,8 @@ import InquiryListTable from "./inquiryBoard/inquiryListComp/InquiryListTable";
 import InquiryWrite from "./inquiryBoard/InquiryWriteComp/InquiryWrite";
 import InquiryDetail from "./inquiryBoard/inquiryDetailComp/inquiryDetail";
 import MypageTest from "./test/MypageTest";
+import ReservationPageDetail2 from "./skyReservation/ReservationPageDetail2";
+
 
 
 function MainReact(props) {
@@ -29,6 +31,7 @@ function MainReact(props) {
                         <Route path={"/menu1"} element={<BeingPage/>}/>
                         <Route path={"/login"} element={<Login/>}/>
                         <Route path={"/join"} element={<Join/>}/>
+                        <Route path={"/nextreserv"} element={<ReservationPageDetail2/>}/>
                         <Route path={"/qa"} element={<InquiryMain/>}>
                             <Route index element={<InquiryHotelInfo/>}/>
                             <Route path={"list"} element={<InquiryListTable/>}/>

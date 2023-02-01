@@ -2,6 +2,8 @@ import React from "react";
 import CarouselImg1 from"../mainImg/Untitled-1.jpg"
 import CarouselImg2 from"../mainImg/Untitled-2.jpg"
 import CarouselImg3 from"../mainImg/Untitled-3.jpg"
+import styled from "styled-components";
+
 
 function Carosel() {
     return(

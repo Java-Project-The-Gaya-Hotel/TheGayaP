@@ -3,6 +3,7 @@ import axios from "axios";
 import {useLocation} from "react-router-dom";
 import moment from "moment";
 
+//자바독스
 
 function collapse(element) {
     const before = document.getElementsByClassName("active")[0];               // 기존에 활성화된 버튼
@@ -34,7 +35,7 @@ function ReservationPageDetail2() {
     const personnel = searchParams.get('total')
     const roomCode = searchParams.get('roomCode')
     const reservationTime = searchParams.get('reservationTime');
-
+    const costSum = searchParams.get('costSum');
 
 
 
