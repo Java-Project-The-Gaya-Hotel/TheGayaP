@@ -13,7 +13,7 @@ const styles = {
 function MainFooter() {
     return (
         <div>
-            <footer className={"fixed-bottom"}>
+            <footer>
                 <div className="container">
                     <div className="footer-top">
                         <div className="row">
@@ -35,19 +35,19 @@ function MainFooter() {
                                     <h4>More Info</h4>
                                 </div>
                                 <ul>
-                                    <li><a href="#">Lorem ipsum</a></li>
-                                    <li><a href="#">Dolor sit amet</a></li>
-                                    <li><a href="#">Consectetur Adipisicing </a></li>
-                                    <li><a href="#">Ed do eiusmod tempor incididunt</a></li>
+                                    <li><a href="#!">Lorem ipsum</a></li>
+                                    <li><a href="#!">Dolor sit amet</a></li>
+                                    <li><a href="#!">Consectetur Adipisicing </a></li>
+                                    <li><a href="#!">Ed do eiusmod tempor incididunt</a></li>
                                 </ul>
                             </div>
                             <div className="col-md-6 col-lg-4 open-hours">
                                 <div className="footer-title">
                                     <h4>Open hours</h4>
                                     <ul className="footer-social">
-                                        <li><a href="" target="_blank"><i className="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="" target="_blank"><i className="fab fa-instagram"></i></a></li>
-                                        <li><a href="" target="_blank"><i className="fab fa-linkedin-in"></i></a></li>
+                                        <li><a href="#!" target="_blank"><i className="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="#!" target="_blank"><i className="fab fa-instagram"></i></a></li>
+                                        <li><a href="#!" target="_blank"><i className="fab fa-linkedin-in"></i></a></li>
 
                                     </ul>
                                 </div>

@@ -38,16 +38,14 @@ function BookingAccordion() {
 
 
     useEffect(() => {
-        const testStart = new Date(getSDate)
+        const testStart = new Date(getSDate);
         setStartDate(testStart);
 
-        const testEnd = new Date(getEDate)
+        const testEnd = new Date(getEDate);
         setEndDate(testEnd);
 
     }, [])
 
-
-    console.log(startDate)
 
 
     // hotel List 가져오기
@@ -83,7 +81,7 @@ function BookingAccordion() {
 
     const navigate = useNavigate();
     const clickE = () => {
-        navigate(`/reservroom?sDate=${startDate}&eDate=${endDate}&count=${count}&childCount=${childCount}&total=${personnel}&hotelName=${hotelName}`, {replace: true})
+        navigate(`/reservroom?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&count=${count}&childCount=${childCount}&total=${personnel}&hotelName=${hotelName}`, {replace: true})
     };
 
 // 뒤로가기 클릭 시 이전 페이지가 아닌 메인으로 돌아가게 만듬. 기본 값 : false
@@ -163,7 +161,7 @@ function BookingAccordion() {
         <div>
             <div className={"container"}>
                 <div className="wrapper">
-                    <ui className="mainMenu">
+                    <ul className="mainMenu">
                         <li className="item" id="account">
                             <a href="#account" className="btnAcc">호텔 선택</a>
                             <div className="subMenu">
@@ -255,7 +253,7 @@ function BookingAccordion() {
                                 </div>
                             </div>
                         </li>
-                    </ui>
+                    </ul>
                     <hr className={"border-0"}/>
 
                     <ul className={""}>

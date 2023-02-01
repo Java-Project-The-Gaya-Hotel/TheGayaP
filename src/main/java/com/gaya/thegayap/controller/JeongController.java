@@ -25,6 +25,7 @@ public class JeongController {
     private PasswordEncoder pwEncoder;
 
 
+
 //    회원가입페이지
     // 회원 데이터 입력
     @RequestMapping(value = "/join/insert", method = RequestMethod.POST)

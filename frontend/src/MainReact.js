@@ -13,7 +13,7 @@ import InquiryHotelInfo from "./inquiryBoard/InquiryHotelInfo/InquiryHotelInfo";
 import InquiryListTable from "./inquiryBoard/inquiryListComp/InquiryListTable";
 import InquiryWrite from "./inquiryBoard/InquiryWriteComp/InquiryWrite";
 import InquiryDetail from "./inquiryBoard/inquiryDetailComp/inquiryDetail";
-import MypageTest from "./test/MypageTest";
+import Payment from "./payment/Payment";
 
 
 function MainReact(props) {
@@ -26,6 +26,7 @@ function MainReact(props) {
                         <Route path={"/reservation"} element={<BookingPage/>}/>
                         <Route path={"/welcome"} element={<IntroPage/>}/>
                         <Route path={"/reservroom"} element={<BookingRoom/>}/>
+                        <Route path={"/nextreserv"} element={<Payment/>}/>
                         <Route path={"/menu1"} element={<BeingPage/>}/>
                         <Route path={"/login"} element={<Login/>}/>
                         <Route path={"/join"} element={<Join/>}/>
@@ -35,9 +36,6 @@ function MainReact(props) {
                             <Route path={"write"} element={<InquiryWrite/>}/>
                             <Route path={"list/detail"} element={<InquiryDetail/>}/>
                         </Route>
-
-
-                        <Route path={"/test"} element={<MypageTest/>}/>
 
                     </Route>
                 </Routes>

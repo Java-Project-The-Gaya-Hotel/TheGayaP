@@ -1,26 +1,115 @@
 import React, {useEffect} from "react";
-import RoutesLayout from "../dellMain/RoutesLayout";
-import MainFooter from "../dellMain/MainFooter";
 import axios from "axios";
+import {useLocation} from "react-router-dom";
 
 
-function collapse(element) {
-    const before = document.getElementsByClassName("active")[0];               // 기존에 활성화된 버튼
-    if (before && document.getElementsByClassName("active")[0] != element) {  // 자신 이외에 이미 활성화된 버튼이 있으면
-        before.nextElementSibling.style.maxHeight = null;   // 기존에 펼쳐진 내용 접고
-        before.classList.remove("active");                  // 버튼 비활성화
+// function collapse(element) {
+//     const before = document.getElementsByClassName("active")[0];               // 기존에 활성화된 버튼
+//     if (before && document.getElementsByClassName("active")[0] != element) {  // 자신 이외에 이미 활성화된 버튼이 있으면
+//         before.nextElementSibling.style.maxHeight = null;   // 기존에 펼쳐진 내용 접고
+//         before.classList.remove("active");                  // 버튼 비활성화
+//     }
+//     element.classList.toggle("active");         // 활성화 여부 toggle
+//
+//     const content = element.nextElementSibling;
+//     if (content.style.maxHeight != 0) {         // 버튼 다음 요소가 펼쳐져 있으면
+//         content.style.maxHeight = null;         // 접기
+//     } else {
+//         content.style.maxHeight = content.scrollHeight + "px";  // 접혀있는 경우 펼치기
+//     }
+// }
+
+
+function Payment() {
+
+    /**
+     * 결제 추가
+     */
+
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const startDate = searchParams.get('sDate');
+    const endDate = searchParams.get('eDate');
+    const count = searchParams.get('count');
+    const childCount = searchParams.get('childCount')
+    const personnel = searchParams.get('total')
+    const hotelName = searchParams.get('hotelName');
+    const roomCode = searchParams.get('roomCode');
+    const roomCost = searchParams.get('roomCost');
+    const reservationTime = searchParams.get('reservationTime');
+
+    useEffect(() => {
+        const jquery = document.createElement("script");
+        jquery.src = "https://code.jquery.com/jquery-1.12.4.min.js";
+        const iamport = document.createElement("script");
+        iamport.src = "https://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
+        document.head.appendChild(jquery);
+        document.head.appendChild(iamport);
+        return () => {
+            document.head.removeChild(jquery); document.head.removeChild(iamport);
+        }
+    }, []);
+
+
+    const onClickPayment = () => {
+        /* 1. 가맹점 식별하기 */
+        const { IMP } = window;
+        IMP.init('imp73778403');
+
+        /* 2. 결제 데이터 정의하기 */
+        const data = {
+            pg: 'html5_inicis',                           // PG사
+            pay_method: 'card',                           // 결제수단
+            merchant_uid: `${new Date().getTime()}`,   // 주문번호
+            amount: 100,                                 // 결제금액
+            name: '결제 테스트',                  // 주문명
+            buyer_name: `${name}`,                           // 구매자 이름
+            buyer_tel: `${num}`,                     // 구매자 전화번호
+            buyer_email: `${email}`,               // 구매자 이메일
+        };
+
+        /* 4. 결제 창 호출하기 */
+        IMP.request_pay(data, callback);
     }
-    element.classList.toggle("active");         // 활성화 여부 toggle
 
-    const content = element.nextElementSibling;
-    if (content.style.maxHeight != 0) {         // 버튼 다음 요소가 펼쳐져 있으면
-        content.style.maxHeight = null;         // 접기
-    } else {
-        content.style.maxHeight = content.scrollHeight + "px";  // 접혀있는 경우 펼치기
+    /* 3. 콜백 함수 정의하기 */
+    function callback(response) {
+        const {
+            success,
+            merchant_uid,
+            error_msg,
+        } = response;
+
+        if (success) {
+            axios({
+                url: "{서버의 결제 정보를 받는 endpoint}", // 예: https://www.myservice.com/payments/complete
+                method: "post",
+                headers: { "Content-Type": "application/json" },
+                data: {
+                    reservationNum: merchant_uid,
+                    // const startDate,
+                    // const endDate,
+                    // const count,
+                    // const childCount,
+                    // const personnel,
+                    // const hotelName,
+                    // const roomCode,
+                    // const roomCost,
+                    // const reservationTime,
+                }
+            }).then((data) => {
+                // 서버 결제 API 성공시 로직
+            })
+            alert('결제 성공');
+
+        } else {
+            alert(`결제 실패: ${error_msg}`);
+        }
     }
-}
 
-function ReservationPageDetail2() {
+
+
+    ///////////////////////////////////////
 
 
     const [name, setName] = React.useState("")
@@ -69,9 +158,6 @@ function ReservationPageDetail2() {
     }, [num]);
     return (
         <div>
-            <div>
-                <RoutesLayout/>
-            </div>
             <p className={"pt-5 pb-5"}></p>
             {/*main*/}
             <div className={"container"}>
@@ -80,8 +166,8 @@ function ReservationPageDetail2() {
                     <section>
                         <nav>
                             <ol className="cd-multi-steps text-top">
-                                <li className="visited"><a href="#0">Cart</a></li>
-                                <li className="visited"><a href="#0">Billing</a></li>
+                                <li className="visited"><a href="frontend/src/payment/Payment#!">Cart</a></li>
+                                <li className="visited"><a href="frontend/src/payment/Payment#!">Billing</a></li>
                                 <li className="current"><em>Delivery</em></li>
                                 <li><em>Review</em></li>
                             </ol>
@@ -111,7 +197,7 @@ function ReservationPageDetail2() {
                                         <th className={"first"}><em className={"ast"}>*</em> 이름</th>
                                         <td className="first ">
                                             <div>
-                                                <input type={"text"} className={"id"}
+                                                <input type={"text"} className={"id"} value={name} onChange={onNameHandler}
                                                        autoComplete={"off"}/>
                                                 {/*<span className="idConfirm"><a href="javascript:checkDuplicateLognId()">아이디 중복확인</a></span>*/}
 
@@ -126,7 +212,7 @@ function ReservationPageDetail2() {
                                         <td className="first">
                                             <div className={"row"}>
                                                 <div className={"col"}>
-                                                    <input type={"email"}/>
+                                                    <input type={"email"} value={email} onChange={onEmailHandler}/>
 
                                                 </div>
 
@@ -159,7 +245,7 @@ function ReservationPageDetail2() {
                                 </colgroup>
                                 <div>
                                     <h5>결제 하기</h5>
-                                    <button> 결제 하기</button>
+                                    <button onClick={onClickPayment}> 결제 하기</button>
                                 </div>
 
                                 </tbody>
@@ -169,7 +255,6 @@ function ReservationPageDetail2() {
                             <br/>
                             <div className={"row"}>
                                 <h5>주의사항</h5>
-                                <button type="button" className="collapsible" onClick="collapse(this);">제목 1</button>
                                 <div className={"tableTypeA col "}>
                                     <h6>호텔 이용안내</h6>
                                     <ul className={"Pont"}>
@@ -192,7 +277,7 @@ function ReservationPageDetail2() {
                                 </div>
                                 <div className={"tableTypeA col "}>
                                     <h6>부대시설 이용안내</h6>
-                                    <ul className={""}>
+                                    <ul>
                                         <li>체련장(Gym), 및 수영장, 실내 사우나(유료 시설)는 매월 3번째 수요일 정기 휴무입니다.</li>
                                         <li>체련장은 만 16세 이상, 실내 사우나는 만 13세 이상부터 이용 가능합니다.</li>
                                         <li>실내 수영장은 성인 고객 전용 시설로, 만 13세 미만 고객은 주말 및 공휴일에 한해 성인 보호자의 보호 하에 이용 가능합니다.</li>
@@ -210,7 +295,6 @@ function ReservationPageDetail2() {
                             <br/>
                             <div>
                                 <h5>취소 및 환불규정</h5>
-                                <button type="button" className="collapsible" onClick="collapse(this);">제목 2</button>
                                 <div className={"tableTypeA"}>
                                     <h6>[취소/변경 및 노쇼(No-show) 안내]</h6>
                                     <p>숙박 예정일 1일 전 18시까지는 위약금 없이 취소 및 변경이 가능합니다.</p>
@@ -224,11 +308,8 @@ function ReservationPageDetail2() {
                     </div>
                 </div>
             </div>
-            <div>
-                <MainFooter/>
-            </div>
         </div>
     )
 }
 
-export default ReservationPageDetail2;
+export default Payment;
