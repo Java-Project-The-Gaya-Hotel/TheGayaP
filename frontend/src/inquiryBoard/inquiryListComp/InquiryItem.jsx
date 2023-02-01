@@ -12,7 +12,7 @@ function InquiryItem(props) {
     const [memberId, setMemberId] = useState();
 
     useEffect(() => {
-        const tokenJson = JSON.parse(localStorage.getItem("token"));
+        const tokenJson = JSON.parse(sessionStorage.getItem("token"));
         const acToken = tokenJson["accessToken"];
 
         axios.get("http://localhost:8080/members/access", {params: {accessToken:acToken}})

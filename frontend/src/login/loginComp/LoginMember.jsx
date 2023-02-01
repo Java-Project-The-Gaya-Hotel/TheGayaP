@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {el} from "date-fns/locale";
+import moment, {now} from "moment";
 
 
 function LoginMember(props) {
@@ -56,7 +57,8 @@ function LoginMember(props) {
             } else {
                 console.log(response.data);
                 alert(id + "님 환영합니다.")
-                localStorage.setItem("token", JSON.stringify(response.data));
+                sessionStorage.setItem("token", JSON.stringify(response.data));
+                sessionStorage.setItem("loginInfo", moment.now().toString())
             }
                 window.location.href="/";
 
@@ -77,13 +79,16 @@ function LoginMember(props) {
         }
     }
 
+
+    // 회원가입 버튼
     const goToSignup = () => {
         navi("/join");
     }
 
+
     const checkTokenValid = () => {
 
-        const tokenJson = JSON.parse(localStorage.getItem("token"));
+        const tokenJson = JSON.parse(sessionStorage.getItem("token"));
         const acToken = tokenJson["accessToken"];
         console.log(tokenJson);
 
@@ -98,16 +103,16 @@ function LoginMember(props) {
 
             try {
                 const response = await axios.post("http://localhost:8080/members/tokenvalid", tokenJson);
-                if (localStorage.getItem("token") != null) {
-                    localStorage.removeItem("token");
-                    localStorage.setItem("token", JSON.stringify(response.data));
+                if (sessionStorage.getItem("token") != null) {
+                    sessionStorage.removeItem("token");
+                    sessionStorage.setItem("token", JSON.stringify(response.data));
                 } else {
-                    localStorage.setItem("token", JSON.stringify(response.data));
+                    sessionStorage.setItem("token", JSON.stringify(response.data));
                 }
 
             } catch (e) {
                 console.log("로그인페이지로 보내기" + e);
-                localStorage.removeItem("token");
+                sessionStorage.removeItem("token");
                 navi("/login")
             }
 

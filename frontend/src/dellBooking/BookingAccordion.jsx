@@ -168,16 +168,16 @@ function BookingAccordion() {
         <div>
             <div className={"container"}>
                 <div className="wrapper">
-                    <ui className="mainMenu">
+                    <ul className="mainMenu">
                         <li className="item" id="account">
-                            <a href="../../../../../../Users/nokme/OneDrive/문서/카카오톡 받은 파일#account" className="btnAcc">호텔 선택</a>
+                            <a href="#account" className="btnAcc">호텔 선택</a>
                             <div className="subMenu">
                                 <div className={"container"}>
                                     <div className={"row justify-content-center"}>
                                         {
                                             hotelNameList.map((item, idx) => {
                                                     return (
-                                                        <input type={"button"} style={styles.inputBox} className={"text-center form-control rounded-0 m-3"} value={item} readOnly={true} onClick={onBtnClick}/>
+                                                        <input key={idx} type={"button"} style={styles.inputBox} className={"text-center form-control rounded-0 m-3"} value={item} readOnly={true} onClick={onBtnClick}/>
                                                     );
                                                 }
                                             )
@@ -187,7 +187,7 @@ function BookingAccordion() {
                             </div>
                         </li>
                         <li className="item" id="about">
-                            <a href="../../../../../../Users/nokme/OneDrive/문서/카카오톡 받은 파일#about" className="btnAcc">투숙 기간</a>
+                            <a href="#about" className="btnAcc">투숙 기간</a>
                             <div className="subMenu">
                                 <div className={"container p-5 text-center"}>
                                     <div className={"row"}>
@@ -236,7 +236,7 @@ function BookingAccordion() {
                             </div>
                         </li>
                         <li className="item" id="support">
-                            <a href="../../../../../../Users/nokme/OneDrive/문서/카카오톡 받은 파일#support" className="btnAcc">인원
+                            <a href="#support" className="btnAcc">인원
                                 <div className={"row d-flex text-end"}>
                                     <div className={"col"}>성인 : {count} </div>
                                     <div className={"col"}>어린이 : {childCount}</div>
@@ -272,7 +272,7 @@ function BookingAccordion() {
                                 </div>
                             </div>
                         </li>
-                    </ui>
+                    </ul>
                     <hr className={"border-0"}/>
 
                     <ul className={""}>

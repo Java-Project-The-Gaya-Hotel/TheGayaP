@@ -4,7 +4,7 @@ import MainLogo from "../mainImg/headerTitle.svg"
 import "./dellmainCss/LayoutCss.css"
 import Menucon from "../mainImg/icons8-key.svg"
 import MainFooter from "./MainFooter";
-import login from "../login/Login";
+import {LoginCheck} from "../login/LoginBoolean";
 
 const styles = {
     TitleImgSize: {
@@ -22,32 +22,20 @@ const styles = {
 
 function RoutesLayout(props) {
 
-    const [isLogin, setIsLogin] = useState(false);
 
     useEffect(() => {
-        let login ;
+        LoginCheck();
 
-        if (localStorage.getItem("token") != null) {
-            login = true;
-        } else {
-            login = false
-        }
-        setIsLogin(login);
-
-    },[])
+    }, [])
 
     const logout = () => {
-        if(window.confirm("로그아웃 하시겠습니까?")){
-            localStorage.removeItem("token");
-            window.location.href="/";
+        if (window.confirm("로그아웃 하시겠습니까?")) {
+            sessionStorage.removeItem("token");
+            sessionStorage.removeItem("loginInfo");
+            window.location.href = "/";
         }
 
     }
-
-    useEffect(()=>{
-        console.log("토큰 정보")
-    },[]);
-
 
     return (
         <div>
@@ -56,7 +44,8 @@ function RoutesLayout(props) {
                     <div style={styles.LiFont}>
                         <ul className={"row row-cols-auto justify-content-end text-center px-5 pt-2"}>
                             <li className={"col"}>{
-                                isLogin ? <div onClick={logout}>Log out</div> : <Link to={"/login"}>login</Link>
+                                sessionStorage.getItem("loginInfo") != null ? <div onClick={logout}>Log out</div> :
+                                    <Link to={"/login"}>login</Link>
                             }</li>
                             <li className={"col"}><Link to={"/join"}>Join Us</Link></li>
                             <li className={"col"}><Link to={"/mypage"}>My Page</Link></li>
