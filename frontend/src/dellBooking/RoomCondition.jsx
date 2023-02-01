@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import BeingImg from "../mainImg/pexels-castorly-stock-3761182.jpg";
 import Collapse from "react-bootstrap/Collapse";
 import Button from "react-bootstrap/Button";
 import {useLocation, useNavigate, useNavigation} from "react-router-dom";
@@ -79,9 +78,9 @@ function RoomCondition(props) {
 
         <div>
 
-            <h5 className={"p-2"}>{data.roomName}</h5>
+            <h5 className={"p-2 fw-bold"}>{data.roomName}</h5>
             <div className={"row text-center align-items-center"}>
-                <div className={"col"}><img src={BeingImg}/></div>
+                <div className={"col"}><img src={"https://source.unsplash.com/random/?hotelroom"}/></div>
                 <div className={"col"}></div>
                 <div className={"col"}></div>
                 <div className={"col"}><Button onClick={() => setCOpen(!cOpen)} aria-controls="example-collapse-text" aria-expanded={cOpen}>click</Button>

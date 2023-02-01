@@ -1,7 +1,5 @@
 import React from "react";
 import "../dellBooking/dellBookingCss/BreadCrumb.css"
-import 'animate.css'
-
 
 
 
@@ -11,7 +9,7 @@ function BookingBreadCrumb() {
         <div>
             <p className={"pt-4 pb-4"}></p>
 
-            <div className={"pt-4 pb-4 mt-5 mb-5 animate__animated animate__fadeInDown"}>
+            <div className={"pt-4 pb-4 mt-5 mb-5"}>
                 <section>
                     <nav>
                         <ol className="cd-multi-steps text-top">
@@ -28,4 +26,5 @@ function BookingBreadCrumb() {
         </div>
     )
 }
+
 export default BookingBreadCrumb

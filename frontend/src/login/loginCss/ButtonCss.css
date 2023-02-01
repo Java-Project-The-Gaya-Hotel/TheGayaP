@@ -1,0 +1,38 @@
+.custom-btn {
+    font-size: 18px;
+    width: 130px;
+    height: 60px;
+    padding: 10px;
+    border: 1px solid #000;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+}
+.btn-Login {
+    background: #000;
+    color: #fff;
+    z-index: 1;
+}
+.btn-Login:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 100%;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    background: #ffffff;
+    transition: all 0.3s ease;
+}
+.btn-Login:hover {
+    color: #000;
+}
+.btn-Login:hover:after {
+    left: 0;
+    width: 100%;
+}
+.btn-Login:active {
+    top: 2px;
+}

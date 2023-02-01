@@ -19,11 +19,11 @@ function MainFooter() {
                     <div className="footer-top">
                         <div className="row align-items-center">
                             <div className="col-md-6 col-lg-3 about-footer">
-                                <div><a href = ""><img style={styles.footerTitleImg} src={footerTitle}/></a></div>
+                                <div><Link to={"/"}><img style={styles.footerTitleImg} src={footerTitle}/></Link></div>
                             </div>
 
                             <div className="col-md-6 col-lg-2 page-more-info">
-                                <div className="footer-title">cd
+                                <div className="footer-title">
                                     <h4>Links</h4>
                                 </div>
                                 <ul>

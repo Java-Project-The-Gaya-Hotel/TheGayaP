@@ -4,13 +4,31 @@ import MainFooter from "../dellMain/MainFooter";
 import "../dellBooking/dellBookingCss/BreadCrumb.css"
 // import 'animate.css'
 import BookingAccordion from "./BookingAccordion";
+import styled from "styled-components";
 
+
+const CrumbAni = styled.div`
+animation:fadeInUp;
+animation-duration:0.8s;
+`;
+
+const H2Text = styled.div`
+animation:fadeInUp;
+animation-duration:1s;
+`;
+
+const BookAccodion = styled.div`
+animation:fadeInUp;
+animation-duration:1.5s;
+`
 
 function BookingPage() {
+
+
     return (
         <div>
 
-            <div className={"pt-2 pb-4  mb-5 animate__animated animate__fadeInDown"}>
+            <CrumbAni className={"pt-2 pb-4  mb-5"}>
                 <section>
                     <nav>
                         <ol className="cd-multi-steps text-top">
@@ -23,16 +41,17 @@ function BookingPage() {
                         </ol>
                     </nav>
                 </section>
-            </div>
+            </CrumbAni>
 
-            <h2 className={"text-center fw-bold pb-5"}> 예약 Page</h2>
+            <H2Text>
+                <h2 className={"text-center fw-bold pb-5"}> 예약 Page</h2>
+            </H2Text>
 
-            <div>
+
+            <BookAccodion>
                 {/*예약 메뉴 Line */}
-
                 <BookingAccordion/>
-            </div>
-
+            </BookAccodion>
 
 
         </div>)

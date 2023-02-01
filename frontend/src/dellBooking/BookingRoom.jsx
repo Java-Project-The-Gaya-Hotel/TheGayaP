@@ -77,13 +77,13 @@ function BookingRoom() {
                     </nav>
                 </section>
 
-                <div>
-                    <hr/>
-                    <div className={"container text-center"}>
-                        선택한 조건라인
-                    </div>
-                    <hr/>
-                </div>
+                {/*<div>*/}
+                {/*    <hr/>*/}
+                {/*    <div className={"container text-center"}>*/}
+                {/*        선택한 조건라인*/}
+                {/*    </div>*/}
+                {/*    <hr/>*/}
+                {/*</div>*/}
 
                 <div className={"container pt-5 pb-5"} id={"navLikBtnColor"}>
                     <nav>
@@ -92,9 +92,9 @@ function BookingRoom() {
                             {/*<button className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">일반 객실</button>*/}
                         </nav>
 
-                        <div className={"p-3 border border-1 m-3"}>
-                            정렬 기능
-                        </div>
+                        {/*<div className={"p-3 border border-1 m-3"}>*/}
+                        {/*    정렬 기능*/}
+                        {/*</div>*/}
 
                     </nav>
                     <hr className={"m-4 border-0"}/>
@@ -108,7 +108,7 @@ function BookingRoom() {
                             <div>
                                 <div className={"container"}>
                                     <hr className={"border-0"}/>
-                                    <h2>Room Condition</h2>
+                                    <h2 className={"fw-bold"}>Room Condition</h2>
                                     <hr className={"border-0"}/>
 
                                     {/* 객실 묶음 */}
