@@ -1,6 +1,7 @@
 package com.gaya.thegayap.service;
 
 import com.gaya.thegayap.dto.JeongCustomerDto;
+import com.gaya.thegayap.dto.JeongHotelDto;
 import com.gaya.thegayap.dto.JeongMemberDto;
 import com.gaya.thegayap.dto.JeongResvDto;
 
@@ -18,4 +19,6 @@ public interface JeongService {
     JeongMemberDto loginCheck(JeongMemberDto member) throws Exception;
 
     String findId(String memberName, String memberEmail) throws Exception;
+
+    List<JeongHotelDto> hotelList() throws Exception;
 }

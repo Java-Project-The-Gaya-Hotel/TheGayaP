@@ -7,10 +7,10 @@ import styled from 'styled-components'
 import "../dellMain/dellmainCss/BtnDateChoose.css"
 
 //stay, hotel component 명명 위해 나눠둠.
-const hotelArea = styled.div`
+const HotelArea = styled.div`
     margin : 1px;
     `
-const stayArea = styled.div`
+const StayArea = styled.div`
     margin : 1px;
     `
 
@@ -26,9 +26,9 @@ function RoomCondition(props) {
 
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    const count = searchParams.get('count');
+    const adultCount = searchParams.get('adultCount');
     const childCount = searchParams.get('childCount')
-    const personnel = searchParams.get('total')
+    const totalCount = searchParams.get('total')
     const hotelName = searchParams.get('hotelName');
     let startDate = searchParams.get('sDate');
     let endDate = searchParams.get('eDate');
@@ -41,7 +41,7 @@ function RoomCondition(props) {
     const dateA = new Date(startDate);
     const dateB = new Date(endDate);
     const diffCount = dateB.getTime() - dateA.getTime();
-    const reservationTime = diffCount / (24 * 60 * 60 * 1000);
+    const nights = diffCount / (24 * 60 * 60 * 1000);
 
 // -------------------------------------------------------------
 
@@ -57,7 +57,7 @@ function RoomCondition(props) {
     }
 // -------------------------------------------------------------
     const [allShowCost, setShowCost] = useState()
-    const costSum = (chooseRoomCost * count) * reservationTime
+    const costSum = (chooseRoomCost * adultCount) * nights
 
     const inputClickE = () => {
         setShowCost(costSum)
@@ -66,7 +66,7 @@ function RoomCondition(props) {
 
     const clickNextE = () => {
         if (chooseRoomCost !== "") {
-            navigate(`/nextreserv?sDate=${startDate}&eDate=${endDate}&count=${count}&childCount=${childCount}&total=${personnel}&hotelName=${hotelName}&roomCode=${roomCode}&roomCost=${chooseRoomCost}&reservationTime=${reservationTime}&costSum=${costSum}`, {replace: true});
+            navigate(`/nextreserv?sDate=${startDate}&eDate=${endDate}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}&roomCode=${roomCode}&roomCost=${chooseRoomCost}&nights=${nights}&costSum=${costSum}`, {replace: true});
         } else {
             Swal.fire('사용하실 방을 선택해 주세요 ');
         }
@@ -95,7 +95,7 @@ function RoomCondition(props) {
 
                     {
                         codeCall === true ?
-                            <hotelArea id={"hotel"} className={"container"}>
+                            <HotelArea id={"hotel"} className={"container"}>
                                 <div className={"p-3"}>
                                     <h5 className={"p-2"}>{data.roomName}</h5>
                                     <div className={"text-center align-items-center row "}>
@@ -108,12 +108,12 @@ function RoomCondition(props) {
                                     </div>
                                 </div>
                                 <hr/>
-                            </hotelArea>
+                            </HotelArea>
 
 
                             :
 
-                            <stayArea id={"stay"} className={"container"}>
+                            <StayArea id={"stay"} className={"container"}>
                                 <div className={"container p-3"}>
                                     <h5 className={"p-2"}>{data.roomName}</h5>
                                     <div className={"text-center align-items-center row px-5 py-3"}>
@@ -134,7 +134,7 @@ function RoomCondition(props) {
                                     </div>
                                 </div>
                                 <hr/>
-                            </stayArea>
+                            </StayArea>
                     }
                 </div>
             </Collapse>

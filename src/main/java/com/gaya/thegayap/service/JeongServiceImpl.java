@@ -1,9 +1,6 @@
 package com.gaya.thegayap.service;
 
-import com.gaya.thegayap.dto.JeongCustomerDto;
-import com.gaya.thegayap.dto.JeongMemberDto;
-import com.gaya.thegayap.dto.JeongResvDto;
-import com.gaya.thegayap.dto.SinDto;
+import com.gaya.thegayap.dto.*;
 import com.gaya.thegayap.mapper.JeongMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,6 +60,11 @@ public class JeongServiceImpl implements JeongService{
     @Override
     public String findId(String memberName, String memberEmail) throws Exception {
         return jeongMapper.findId(memberName, memberEmail);
+    }
+
+    @Override
+    public List<JeongHotelDto> hotelList() throws Exception {
+        return jeongMapper.hotelList();
     }
 
 

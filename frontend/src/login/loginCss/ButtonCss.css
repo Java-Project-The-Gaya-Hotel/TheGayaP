@@ -13,7 +13,7 @@
 .btn-Login {
     background: #000;
     color: #fff;
-    z-index: 1;
+    z-index: 0;
 }
 .btn-Login:after {
     position: absolute;

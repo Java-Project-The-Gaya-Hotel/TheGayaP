@@ -30,10 +30,10 @@ function BookingAccordion() {
     //use location으로 가져 온 주소 값 설정
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    const [count, setCount] = useState(1); // 성인
-    const [personnel, setPersonnel] = useState(0) //총 토탈
-    const [childCount, setChildCount] = useState(0); //아이
-    const [hotelNameList, setHotelNameList] = useState([])
+    const [adultCount, setAdultCount] = useState(1); // 성인
+    const [childCount, setChildCount] = useState(0); // 아이
+    const [totalCount, setTotalCount] = useState(1) //총 인원 수
+    const [hotelList, setHotelList] = useState([]);
     const [hotelName, setHotelName] = useState("");
     const getSDate = searchParams.get('sDate');
     const getEDate = searchParams.get('eDate');
@@ -54,9 +54,6 @@ function BookingAccordion() {
         setStartDate(new Date(now()));}
         }
 
-
-
-
     , [])
 
 
@@ -70,13 +67,12 @@ function BookingAccordion() {
     // hotel List 가져오기
     //axios input button roop connection
     useEffect(() => {
-        axios.get("http://10.100.204.69:8080/gaya/hotelname")
+        axios.get("http://localhost:8080/gaya/hotelList")
             .then((req) => {
-                const {data} = req
-                setHotelNameList(data);
+                setHotelList(req.data);
             })
-            .catch(e=>{
-                console.log("err>>" + e);
+            .catch((err) => {
+                console.log("데이터 전송 실패" + err);
             })
     }, [])
 
@@ -92,8 +88,7 @@ function BookingAccordion() {
 
     const navigate = useNavigate();
     const clickE = () => {
-        navigate(`/reservroom?sDate=${startDate}&eDate=${endDate}&count=${count}&childCount=${childCount}&total=${personnel}&hotelName=${hotelName}`, {replace: true})
-    };
+        navigate(`/reservroom?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}`, {replace: true})};
 
 // 뒤로가기 클릭 시 이전 페이지가 아닌 메인으로 돌아가게 만듬. 기본 값 : false
 
@@ -101,7 +96,7 @@ function BookingAccordion() {
 
     const plusBtn = () => {
 
-        let adult = count;
+        let adult = adultCount;
         let totalP;
 
         adult++
@@ -115,8 +110,8 @@ function BookingAccordion() {
                 footer: '<a href=""> 고객문의 안내는 여기로 </a>'
             })
         } else {
-            setCount(adult);
-            setPersonnel(totalP);
+            setAdultCount(adult);
+            setTotalCount(totalP);
 
         }
 
@@ -124,15 +119,15 @@ function BookingAccordion() {
 
     const minusBtn = () => {
 
-        let adult = count;
+        let adult = adultCount;
 
         adult--
 
         if (adult < 1) {
-            setCount(1);
+            setAdultCount(1);
         } else {
 
-            setCount(adult);
+            setAdultCount(adult);
         }
 
     }
@@ -142,7 +137,7 @@ function BookingAccordion() {
         let totalP;
 
         child++
-        totalP = count + child;
+        totalP = adultCount + child;
         if (totalP > 4) {
             Swal.fire({
                 icon: 'info',
@@ -152,7 +147,7 @@ function BookingAccordion() {
             })
         } else {
             setChildCount(child);
-            setPersonnel(totalP);
+            setTotalCount(totalP);
         }
     }
 
@@ -180,10 +175,9 @@ function BookingAccordion() {
                             <div className="subMenu">
                                 <div className={"container"}>
                                     <div className={"row justify-content-center"}>
-                                        {
-                                            hotelNameList.map((item, idx) => {
+                                        {hotelList.map((item, index) => {
                                                     return (
-                                                        <input type={"button"} style={styles.inputBox} className={"text-center form-control rounded-0 m-3"} value={item} readOnly={true} onClick={onBtnClick}/>
+                                                        <input key={index} type={"button"} style={styles.inputBox} className={"text-center form-control rounded-0 m-3"} value={item.hotelName} readOnly={true} onClick={onBtnClick}/>
                                                     );
                                                 }
                                             )
@@ -246,7 +240,7 @@ function BookingAccordion() {
                         <li className="item" id="support">
                             <a href="#support" className="btnAcc">인원
                                 <div className={"row d-flex text-end"}>
-                                    <div className={"col"}>성인 : {count} </div>
+                                    <div className={"col"}>성인 : {adultCount} </div>
                                     <div className={"col"}>어린이 : {childCount}</div>
                                 </div>
                             </a>
@@ -259,7 +253,7 @@ function BookingAccordion() {
                                             <div className={"col"}>
                                                 <button className={"btn btn-outline-dark rounded-0 fw-bold"} onClick={minusBtn}>-</button>
                                             </div>
-                                            <div className={"col fw-bold"} style={styles.textBoxt}><h4 className={"m-0"}>성인 : {count}</h4></div>
+                                            <div className={"col fw-bold"} style={styles.textBoxt}><h4 className={"m-0"}>성인 : {adultCount}</h4></div>
                                             <div className={"col"}>
                                                 <button className={"btn btn-outline-dark rounded-0"} onClick={plusBtn}>+</button>
                                             </div>
@@ -278,9 +272,6 @@ function BookingAccordion() {
                                         </div>
                                     </div>
                                 </div>
-
-
-
                             </div>
                         </li>
                     </ul>
