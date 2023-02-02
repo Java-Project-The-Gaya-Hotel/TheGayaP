@@ -9,7 +9,7 @@ import {SessionCheck} from "../functiontocheck/FunctionToCheck";
 
 const styles = {
     TitleImgSize: {
-        width: "500px",
+        width: "300px",
         height: "40px"
     },
     HrHidden: {
@@ -71,36 +71,31 @@ function RoutesLayout(props) {
                         </ul>
                     </div>
                     <hr style={styles.HrHidden}/>
-                    <div className="text-center border-bottom border-opacity-25 pb-2">
+                    <div className="text-center border-bottom border-opacity-25 pb-3">
                         <img style={styles.TitleImgSize} src={MainLogo} alt="" className="invert"/>
                     </div>
                 </nav>
                 <div className="navbar-expand-md">
-                    <div className="navbar-dark text-center my-2">
-                        <button className="navbar-toggler w-75" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
-                                aria-expanded="false"
+                    <div className="navbar-dark text-center">
+                        <button className="navbar-toggler w-75" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
                                 aria-label="Toggle navigation">
                             {/*<span className="navbar-toggler-icon"></span> <span className="align-middle">Menu</span>*/}
-                            <span><img src={Menucon}/> </span> <span
-                            className="align-middle text-dark fw-bold">Menu</span>
+                            <span><img src={Menucon}/> </span> <span className="align-middle text-dark fw-bold">Menu</span>
                         </button>
                     </div>
                     <div className="text-center mt-3 collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav mx-auto fw-bold">
                             <li className="nav-item">
-                                <Link to={"/"} className="nav-link active" aria-current="page"
-                                      onClick={sessionValidCheck}>Home</Link>
+                                <Link to={"/"} className="nav-link active" aria-current="page">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to={"/reservation"} className="nav-link"
-                                      onClick={sessionValidCheck}>Booking</Link>
+                                <Link to={"/reservation"} className="nav-link">Booking</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to={"/welcome"} className="nav-link" onClick={sessionValidCheck}>About Us</Link>
+                                <Link to={"/welcome"} className="nav-link">About Us</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to={"/qa"} className="nav-link" onClick={sessionValidCheck}>Menu 3</Link>
+                                <Link to={"/qa"} className="nav-link">Helpdesk</Link>
                             </li>
                         </ul>
                     </div>

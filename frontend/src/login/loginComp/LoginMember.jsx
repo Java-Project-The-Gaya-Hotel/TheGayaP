@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import moment from "moment";
+import "../loginCss/ButtonCss.css"
 
 // 회원 로그인
 function LoginMember(props) {
@@ -98,7 +99,7 @@ function LoginMember(props) {
 
     return (
         <div>
-            <div className={"bg-opacity-25 bg-dark p-0 "}>
+            <div className={"border border-1 border-top-0 border-dark"}>
                 {/*버튼 그룹으로 회원 비회원 분리*/}
                 <div className={"container-fluid p-5"}>
                     <div className={"d-grid justify-content-center"}>
@@ -106,19 +107,13 @@ function LoginMember(props) {
                             <div className={"row mt-2"}>
                                 <div className={'col-10'}>
                                     {/*아이디*/}
-                                    <input type={"text"} className={"col-11"} placeholder={"아이디 or 회원 번호"}
-                                           onChange={onChangeMemberId
-                                           }/>
+                                    <input type={"text"} className={"col-11"} placeholder={"아이디 or 회원 번호"} onChange={onChangeMemberId}/>
                                     {/*비밀번호*/}
-                                    <input type={"text"} className={"col-11"} placeholder={"비밀번호"}
-                                           onChange={onChangeMemberPw
-                                           }/>
+                                    <input type={"text"} className={"col-11"} placeholder={"비밀번호"} onChange={onChangeMemberPw}/>
                                 </div>
                                 <div className={'col-2 p-0 d-flex row'}>
                                     {/*로그인 버튼*/}
-                                    <button className={"btn btn-secondary btn-lg p-0"}
-                                            style={{borderRadius: 0}} onClick={loginUser}>로그인
-                                    </button>
+                                    <button className={"custom-btn btn-Login"} style={{borderRadius: 0}} onClick={loginUser}>로그인</button>
                                 </div>
                             </div>
                             {/*아이디 저장*/}
@@ -128,20 +123,14 @@ function LoginMember(props) {
                             </div>
                         </div>
                         {/*회원가입 및 아이디 비밀번호 찾기*/}
-                        <div className={"d-flex"}>
-                            <button className={"btn btn-dark p-1"} style={{borderRadius: 0}} onClick={goToSignup}>가야 리워즈
-                                가입
-                            </button>
-                            <button className={"btn btn-secondary mx-2 p-1"} style={{borderRadius: 0}}>가야 리워즈 번호 또는 아이디
-                                찾기
-                            </button>
-                            <button className={"btn btn-secondary p-1"} style={{borderRadius: 0}}>비밀번호 찾기</button>
+                        <div className={"d-flex justify-content-center"}>
+                            <button className={"btn btn-dark p-1"} style={{borderRadius: 0}}>가야 리워즈 가입</button>
+                            <button className={"btn btn-outline-dark mx-2 p-1"} style={{borderRadius: 0}}>가야 리워즈 번호 또는 아이디 찾기</button>
+                            <button className={"btn btn-outline-dark p-1"} style={{borderRadius: 0}}>비밀번호 찾기</button>
                         </div>
+                        <div className={"small p-2"}>이메일, 연락처 등의 정보가 변경되면 웹사이트에서 회원정보를 수정해주시기 바랍니다.</div>
                     </div>
                 </div>
-            </div>
-            <div className={"bg-opacity-10 bg-dark text-center mt-3"}>
-                <p className={"text-center mx-2 my-2 py-2"}>이메일, 연락처 등의 정보가 변경되면 웹사이트에서 회원정보를 수정해주시기 바랍니다.</p>
             </div>
         </div>
     );

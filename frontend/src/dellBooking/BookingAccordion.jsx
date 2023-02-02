@@ -1,20 +1,26 @@
 import React, {forwardRef, useEffect, useState} from "react";
 import {useLocation, useNavigate} from 'react-router-dom';
 import DatePicker from "react-datepicker";
-import {getYear, getMonth, addDays} from "date-fns";
+import {addDays} from "date-fns";
 import {ko} from "date-fns/esm/locale";
 import axios from "axios";
-import "../dellBooking/dellBookingCss/formCss.css"
 import "../dellMain/dellmainCss/BtnDateChoose.css"
 import "../dellBooking/dellBookingCss/AccoCss.css"
 import data from "bootstrap/js/src/dom/data";
 import Swal from "sweetalert2";
 import {now} from "moment";
+import styled from "styled-components";
 
 const styles = {
     inputBox: {
         width: "190px",
         height: "45px",
+    },
+    textBoxt: {
+        width: "100px"
+    },
+    inPaddingX:{
+        padding:"0px 300px 0px 300px"
     }
 }
 
@@ -38,13 +44,20 @@ function BookingAccordion() {
     const [endDate, setEndDate] = useState(new Date());
 
     useEffect(() => {
-        const testStart = new Date(getSDate)
-        setStartDate(testStart);
 
-        const testEnd = new Date(getEDate)
-        setEndDate(testEnd);
+        if (getSDate != null){
+            const testStart = new Date(getSDate);
+            setStartDate(testStart);
+            const testEnd = new Date(getEDate);
+            setEndDate(testEnd);
+        }else {
+        setStartDate(new Date(now()));}
+        }
 
-    }, [])
+
+
+
+    , [])
 
 
     const onChange = (dates) => {
@@ -62,7 +75,7 @@ function BookingAccordion() {
                 const {data} = req
                 setHotelNameList(data);
             })
-            .catch(e => {
+            .catch(e=>{
                 console.log("err>>" + e);
             })
     }, [])
@@ -71,13 +84,6 @@ function BookingAccordion() {
     const onBtnClick = e => {
         setHotelName(e.target.value);
     };
-
-// datepicker header css에 사용할 변수
-//     const _ = require('lodash');
-//     const years = _.range(2023, getYear(new Date()) + 2, 1);
-//     //공식 문서대로 사용하면 오류나기때문에 수정함.
-//     const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
-
 
     const CustomInput = forwardRef(({value, onClick}, ref) => (
         <button className="btn btn-outline-secondary" onClick={onClick} ref={ref}>
@@ -167,7 +173,8 @@ function BookingAccordion() {
         <div>
             <div className={"container"}>
                 <div className="wrapper">
-                    <ul className="mainMenu">
+
+                    <ul className="mainMenu pb-5">
                         <li className="item" id="account">
                             <a href="#account" className="btnAcc">호텔 선택</a>
                             <div className="subMenu">
@@ -176,7 +183,7 @@ function BookingAccordion() {
                                         {
                                             hotelNameList.map((item, idx) => {
                                                     return (
-                                                        <input key={idx} type={"button"} style={styles.inputBox} className={"text-center form-control rounded-0 m-3"} value={item} readOnly={true} onClick={onBtnClick}/>
+                                                        <input type={"button"} style={styles.inputBox} className={"text-center form-control rounded-0 m-3"} value={item} readOnly={true} onClick={onBtnClick}/>
                                                     );
                                                 }
                                             )
@@ -226,7 +233,8 @@ function BookingAccordion() {
                                             endDate={endDate}
                                             selectsRange
                                             minDate={new Date(now())}
-                                            maxDate={addDays(startDate, 29)}                                            locale={ko}
+                                            maxDate={addDays(startDate, 29)}
+                                            locale={ko}
                                             monthsShown={2}
                                             inline
                                         />
@@ -234,6 +242,7 @@ function BookingAccordion() {
                                 </div>
                             </div>
                         </li>
+
                         <li className="item" id="support">
                             <a href="#support" className="btnAcc">인원
                                 <div className={"row d-flex text-end"}>
@@ -243,48 +252,55 @@ function BookingAccordion() {
                             </a>
                             <div className="subMenu">
 
-                                <div className={"container"}>
-                                    <div className={"row"}>
-                                        <button className={"col-auto"} onClick={minusBtn}>
-                                            인원수 감소
-                                        </button>
-                                        <div className={"col-auto"}>
-                                            <h4>어른 : {count}</h4>
+                                <div className={"container text-center"}>
 
+                                    <div className={"container"} style={styles.inPaddingX}>
+                                        <div className={"row m-5 align-items-center"}>
+                                            <div className={"col"}>
+                                                <button className={"btn btn-outline-dark rounded-0 fw-bold"} onClick={minusBtn}>-</button>
+                                            </div>
+                                            <div className={"col fw-bold"} style={styles.textBoxt}><h4 className={"m-0"}>성인 : {count}</h4></div>
+                                            <div className={"col"}>
+                                                <button className={"btn btn-outline-dark rounded-0"} onClick={plusBtn}>+</button>
+                                            </div>
                                         </div>
-                                        <button className={"col-auto"} onClick={plusBtn}>
-                                            인원수 증가
-                                        </button>
                                     </div>
 
-                                    <div className={"row"}>
-                                        <button className={"col-auto"} onClick={cdMinusBtn}>
-                                            인원수 감소
-                                        </button>
-                                        <div className={"col-auto"}>
-                                            <h4>아이 : {childCount}</h4>
+                                    <div className={"container"} style={styles.inPaddingX}>
+                                        <div className={"row m-5 align-items-center"}>
+                                            <div className={"col"}>
+                                                <button className={"btn btn-outline-dark rounded-0"} onClick={cdMinusBtn}>-</button>
+                                            </div>
+                                            <div className={"col"}><h4 className={"m-0"}>어린이 : {childCount}</h4></div>
+                                            <div className={"col"}>
+                                                <button className={"btn btn-outline-dark rounded-0"} onClick={cdPlusBtn}>+</button>
+                                            </div>
                                         </div>
-                                        <button className={"col-auto"} onClick={cdPlusBtn}>
-                                            인원수 증가
-                                        </button>
                                     </div>
                                 </div>
+
+
+
                             </div>
                         </li>
                     </ul>
-                    <hr className={"border-0"}/>
 
-                    <ul className={""}>
-                        <li>요금에는 10% 부가가치세가 부과됩니다.</li>
-                        <li>2인 1실 기준</li>
-                        <li>체크인 시 등록카드 작성 및 투숙객 본인 확인을 위해 본인 사진이 포함된 신분증을 반드시 제시해 주시기 바랍니다.</li>
-                        <li>13세 이하 어린이는 객실 인원 추가 요금을 받지 않습니다.</li>
-                        <li>37개월 미만 유아는 조식이 무료입니다.</li>
-                        <li>안내견을 제외한 애완견 등 동물 입장은 불가합니다.</li>
-                        <li>부모를 동반하지 않은 만 19세 미만 미성년자는 투숙할 수 없습니다. (청소년 보호법 30조/58조)</li>
-                        <li>상기 요금은 할인 요금이며, 중복 할인은 적용되지 않습니다.</li>
-                        <li>자세한 객실안내는 02-2230-0700로 문의 바랍니다.</li>
-                    </ul>
+                    <hr className={"border-1 p-2"}/>
+
+                    <div className={"container p-5"}>
+                        <div>
+                            <h5>예약 시 주의 사항</h5>
+                        </div>
+                        <div className={"p-3"}>
+                            <p>
+                                2인 1실 기준, 요금에는 10% 부가가치세가 부과됩니다. 상기 요금은 할인 요금이며, 중복 할인은 적용되지 않습니다.<br/>
+                                13세 이하 어린이는 객실 인원 추가 요금을 받지 않으며 37개월 미만 유아는 조식이 무료입니다.<br/>
+                                저희 The Gaya Hotel은 안내견을 제외한 반려동물은 입장은 불가하오니 양해부탁드립니다. <br/>
+                                부모를 동반하지 않은 만 19세 미만 미성년자는 " 청소년 보호법 30조/58조" 로 인하여 투숙할 수 없으며 체크인 및 <br/>
+                                객실 입장 시 등록카드 작성 및 투숙객 본인 확인을 위해 본인 사진이 포함된 신분증을 반드시 제시해 주시길 바랍니다.<br/>
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
                 <div className={"d-flex justify-content-center p-5"}>

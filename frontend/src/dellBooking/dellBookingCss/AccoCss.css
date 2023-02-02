@@ -85,4 +85,5 @@
 }
 .item:target .subMenu{
     max-height: 200em;
+    max-width: 80em;
 }

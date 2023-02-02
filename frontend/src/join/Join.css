@@ -54,65 +54,17 @@
     width: 130px;
 }
 
-/*.contain {*/
-/*    padding: 65px 0 0 0;*/
-/*}*/
-
-/*.contain .container {*/
-/*    width: 1200px;*/
-/*    min-height: 500px;*/
-/*    margin: auto;*/
-/*    zoom: 1;*/
-/*    margin: 0 auto 100px auto;*/
-/*}*/
-
-/*.contain .container:after {*/
-/*    clear: both;*/
-/*    content: "";*/
-/*    display: block;*/
-/*    font-size: 0;*/
-/*    height: 0;*/
-/*    line-height: 0;*/
-/*    visibility: hidden*/
-/*}*/
-
-/*.contain .btn {*/
-/*    margin-top: 10px;*/
-
-/*}*/
-
 .tableTypeB .number {
     size: 30px;
 }
 
-/*//////////////////////////////////Join3.css//////////////////////////////////////////////////*/
-/*.titTypeA {*/
-/*    height: 26px;*/
-/*    padding: 0px 0 0 0;*/
-/*    margin: 0 0 10px 0;*/
-/*}*/
-
-/*.titTypeA .tit {*/
-/*    float: left;*/
-/*    background:  no-repeat 0 1px;*/
-/*    padding: 0 0 0 25px;*/
-/*    line-height: 22px;*/
-/*    font-size: 16px;*/
-/*    font-weight: bold;*/
-/*}*/
-
-/*.titTypeA .btnPack {*/
-/*    color: #898989;*/
-/*    padding: 0px 0 0 0;*/
-/*    float: right;*/
-/*}*/
 
 
 .tableTypeA {
-    margin: 20px 0px 0px 0px;
+    /*margin: 20px 0px 0px 0px;*/
     border: none;
     width: 100%;
-    border-top: #cdcbbe solid 1px;
+    /*border-top: #cdcbbe solid 1px;*/
     border-collapse: collapse;
     table-layout: fixed;
 }
@@ -123,7 +75,7 @@
     padding: 7px;
     text-align: left;
     line-height: 22px;
-    border-bottom: #eceae1 solid 1px;
+    /*border-bottom: #eceae1 solid 1px;*/
     color: #333333;
 }
 
@@ -154,4 +106,62 @@
 .tableTypeC th {
     color: rgb(66 66 66);
     background: #ffffff;
+}
+.Text {
+    text-align: end;
+}
+
+.Img {
+
+    width: 866px;
+    height: 40px;
+}
+
+
+.tableTypeB {
+    margin: 20px 0px 0px 0px;
+    border: none;
+    width: 100%;
+    border-top: #cdcbbe solid 1px;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.tableTypeB th,
+.tableTypeB td {
+    border: none;
+    padding: 7px ;
+    text-align: left;
+    border-bottom: #eceae1 solid 1px;
+    color: #333333;
+}
+
+.tableTypeB th {
+    color: rgb(66 66 66);
+    background: #ffffff;
+}
+
+
+
+.tableTypeB .last th, .tableTypeB .last td {
+    border-bottom: #cdcbbe solid 1px;
+}
+
+.tableTypeB .bdBot {
+    border-bottom: #cdcbbe solid 1px !important;
+}
+
+.ast {
+    color: #F33;
+}
+
+
+.id{
+    width: 130px;
+}
+
+
+
+.tableTypeB .number {
+    size: 30px;
 }

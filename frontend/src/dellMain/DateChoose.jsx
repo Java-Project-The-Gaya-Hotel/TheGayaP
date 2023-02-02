@@ -9,8 +9,6 @@ import "../dellMain/dellmainCss/DatePickerCustomCss.css"
 //button component
 
 
-
-
 function DateChoose() {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
@@ -82,7 +80,7 @@ function DateChoose() {
         }
 
         return (
-            <div>
+            <div className={"container col"}>
                 <button onClick={minusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> - </button>
                 <span className={"p-2"}> {count} </span>
                 <button onClick={plusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> + </button>
@@ -104,15 +102,10 @@ function DateChoose() {
     return (
         <div className={"container justify-content-center align-items-baseline"}>
             <div className={"row align-items-center p-3"}>
-                <div className={"col"}>
-                    <h5 className={"fw-bolder"}> 객실 조회 </h5>
-                </div>
-
-
 
                 <div className={"col"}>
-                    <div className={"container p-0 m-0"}>
-                        <dt className={"p-1"}>Check In / Check Out</dt>
+                    <div className={"container row p-0 m-0"}>
+                        <dt className={"col p-3 fw-bold"}>Check In | Check Out</dt>
                         <dd>
                             <MainDatePicker/>
                         </dd>
@@ -120,8 +113,8 @@ function DateChoose() {
                 </div>
 
                 <div className={"col"}>
-                    <div className={"container p-0 m-0"}>
-                        <dt className={"p-1"}> 인원</dt>
+                    <div className={"container row p-0 m-0"}>
+                        <dt className={"col p-3"}> 인원</dt>
                         <dd>
                             <MainCounter/>
                         </dd>

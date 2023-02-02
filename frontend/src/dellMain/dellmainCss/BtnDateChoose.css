@@ -52,7 +52,7 @@
 
 .btnDate:hover:after {
     transform-origin: bottom center;
-    transform: skewY(9.3deg) scaleY(2);
+    transform: skewY(2deg) scaleY(2);
 }
 
 .btnDate:hover span:last-child {

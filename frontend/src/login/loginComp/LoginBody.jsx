@@ -20,10 +20,8 @@ function LoginBody() {
         <div>
             <div className={"btn-group container p-0"} role={"group"} aria-label={"LoginGroup"}>
                 {/*버튼 그룹으로 회원 비회원 분리*/}
-                <button type={"button"} className={"btn btn-outline-secondary py-3 fw-bold"}
-                        style={styles.border} onClick={()=>setIsMember(true)}>회원
-                </button>
-                <button type={"button"} className={"btn btn-outline-secondary fw-bold"} style={styles.border} onClick={()=>setIsMember(false)}>비회원
+                <button type={"button"} className={"btn btn-outline-dark py-3 fw-bold"} style={styles.border} onClick={()=>setIsMember(true)}>회원</button>
+                <button type={"button"} className={"btn btn-outline-dark fw-bold"} style={styles.border} onClick={()=>setIsMember(false)}>비회원
                 </button>
             </div>
             {
