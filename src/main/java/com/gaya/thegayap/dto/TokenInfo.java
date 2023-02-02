@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * JWT TOKEN Dto
+ */
 @Builder
 @Data
 @AllArgsConstructor

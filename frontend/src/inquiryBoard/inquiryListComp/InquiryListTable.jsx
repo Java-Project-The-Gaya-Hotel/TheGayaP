@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import InquiryPagination from "./InquiryPageNation";
 import {GetMemberIdByToken} from "../../functiontocheck/FunctionToCheck";
 
+// 문의 게시글 테이블
 function InquiryListTable(props) {
     const [QAData, setQAData] = useState([]);
     const [memberId, setMemberId] = useState("");
@@ -13,13 +14,17 @@ function InquiryListTable(props) {
     const offset = (page - 1) * limit;
     const navi = useNavigate();
 
+    // 테이블 불러올때 발동
     useEffect(() => {
 
+        // 세션 스토리지에 JWT 토큰이 null이 아닐시
         if (sessionStorage.getItem("token") != null) {
+            // 유저의 아이디를 불러오는 함수 발동후 set
             GetMemberIdByToken().then(response => {
                 setMemberId(response.data);
             })
         }
+        // 문의글 리스트를 가져오는 axios
         const getQaData = async () => {
             const response = await axios.get("http://localhost:8080/gaya/inquirylist")
 
@@ -31,6 +36,7 @@ function InquiryListTable(props) {
 
     }, []);
 
+    // 문의글 작성페이지로 네비게이트
     const goWrite = () => {
         navi("/qa/write")
     }

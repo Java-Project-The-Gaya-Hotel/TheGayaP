@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+// 문의 게시글 페이지네이션
 function InquiryPagination({ total, limit, page, setPage }) {
     const numPages = Math.ceil(total / limit);
 

@@ -3,6 +3,7 @@ import {Link, Outlet} from "react-router-dom";
 import {GetMemberIdByToken} from "../functiontocheck/FunctionToCheck";
 
 
+// 호텔 소개 네비게이션
 function InquiryMain() {
     // const [componentName, setComponentName] = useState("info");
     //

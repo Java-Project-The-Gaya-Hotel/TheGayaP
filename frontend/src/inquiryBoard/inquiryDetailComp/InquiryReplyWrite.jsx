@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 
-
+//게시글 작성 페이지
 function InquiryReplyWrite(props) {
     const [userName, setUserName] = useState("suppoter")
     const [contents, setContents] = useState("");

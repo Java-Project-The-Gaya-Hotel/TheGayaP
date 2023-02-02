@@ -21,6 +21,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+/**
+ * 토큰을 생성하고 복호화하여 검증하는 클래스
+ */
 @Slf4j
 @Component
 public class JwtTokenProvider {

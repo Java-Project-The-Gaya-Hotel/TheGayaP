@@ -10,6 +10,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * 유저 로그인 검사를 하는 클래스
+ */
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -34,6 +37,11 @@ public class MemberService {
         return tokenInfo;
     }
 
+    /**
+     * 토큰의 유효성을 검사하고 재생성을 위한 메서드
+     * @param token
+     * @return 재생성된 토큰 반환
+     */
     public TokenInfo validate(TokenInfo token) {
 
         if (jwtTokenProvider.validateToken(token.getRefreshToken())){

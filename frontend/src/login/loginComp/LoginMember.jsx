@@ -3,7 +3,7 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import moment from "moment";
 
-
+// 회원 로그인
 function LoginMember(props) {
 
     // // 종율씨 코드
@@ -48,6 +48,7 @@ function LoginMember(props) {
     // 로그인 버튼 클릭시 발동하는 함수
     const login = async (id, pw) => {
         try {
+            // 로그인 정보 보내는 axios
             const response = await axios.post("http://localhost:8080/members/login", {
                 memberId: id,
                 memberPw: pw

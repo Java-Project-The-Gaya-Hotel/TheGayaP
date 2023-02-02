@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {AuthorityCheck, GetMemberIdByToken} from "../../functiontocheck/FunctionToCheck";
 
-
+//문의 게시글의 정보를 가진 컴포넌트
 function InquiryItem(props) {
 
     const [goNum, setGoNum] = useState();
@@ -12,7 +12,9 @@ function InquiryItem(props) {
     const [inquiryId, setInquiryId] = useState();
     const [memberId, setMemberId] = useState(props.memberId);
 
+    // 문의글들이 불러와질때
     useEffect(() => {
+        // hidden 속성에 문의글과 유저아이디의 이름이 맞지않을시 비밀글 처리
         if (props.data.inquiryHidden === "Y" && inquiryId !== memberId) {
             setTitle("비밀글입니다.");
         } else {
@@ -28,17 +30,18 @@ function InquiryItem(props) {
 
     const navi = useNavigate();
 
+    // 문의 글을 클릭했을시 발동
     const onClickHandler = () => {
-//     컴포넌트를 하나 더만들어서 idx를 넘겨서 그 페이지가 보이게하기
-//     쿼리스트링을 쓰기 주소값으로 url?페이지=goIdx
-        // 세션 스토리지의 토큰이 null이 아닐시
 
+        // 비밀글은 열람 불가
         if (title === "비밀글입니다.") {
             alert("비밀글은 볼수없습니다.")
         } else {
+            // 현재 가진 토큰이 만료인지 확인 만료일시
             if (AuthorityCheck() === false) {
                 alert("토큰 만료.")
                 navi("/login")
+            //     만료가 아니면 상세글 페이지로 이동
             } else {
                 navi(`/qa/list/detail?idx=${goNum}&title=${title}&status=${status}`);
             }

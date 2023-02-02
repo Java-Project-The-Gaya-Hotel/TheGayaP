@@ -3,6 +3,7 @@ package com.gaya.thegayap.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+// 방 입력 임시 dto
 @Getter
 @Setter
 public class SinDto2 {

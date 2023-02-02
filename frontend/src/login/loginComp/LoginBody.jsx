@@ -10,6 +10,7 @@ const styles={
     }
 }
 
+// 회원 비회원의 컴포넌트를 가진 컴포넌트
 function LoginBody() {
 
     const [isMember, setIsMember] = useState(true);

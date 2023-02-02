@@ -9,6 +9,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+/**
+ * 실제 user 테이블
+ */
 @Getter
 @Builder
 @NoArgsConstructor

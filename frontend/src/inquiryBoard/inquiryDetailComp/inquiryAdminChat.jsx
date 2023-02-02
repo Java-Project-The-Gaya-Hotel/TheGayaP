@@ -1,6 +1,6 @@
 import React from "react";
 
-
+// 관리자 채팅 박스
 function InquiryAdminChat(props) {
     return (
         <div>

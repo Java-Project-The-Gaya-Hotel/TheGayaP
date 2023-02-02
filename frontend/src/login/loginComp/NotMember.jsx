@@ -1,5 +1,6 @@
 import React from "react";
 
+// 비회원 예약찾기
 function NotMember(props){
     return(
         <div>

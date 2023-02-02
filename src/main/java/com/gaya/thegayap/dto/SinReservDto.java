@@ -2,6 +2,9 @@ package com.gaya.thegayap.dto;
 
 import lombok.*;
 
+/**
+ * 방 예약 dto
+ */
 @Builder
 @Getter
 @AllArgsConstructor

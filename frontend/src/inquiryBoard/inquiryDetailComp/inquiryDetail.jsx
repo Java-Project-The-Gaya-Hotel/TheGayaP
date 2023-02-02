@@ -4,8 +4,10 @@ import InquiryAdminChat from "./inquiryAdminChat";
 import InquiryReplyWrite from "./InquiryReplyWrite";
 import {useSearchParams} from "react-router-dom";
 import axios from "axios";
+import {SessionCheck} from "../../functiontocheck/FunctionToCheck";
 
 
+// 문의 상세 글 함수
 function InquiryDetail() {
 
 
@@ -13,10 +15,13 @@ function InquiryDetail() {
 
     const [qaDetailData, setQaDetailData] = useState([]);
 
-
+    // 글 상세 페이지 들어올시 발동
     useEffect(() => {
+        // 세션이 유효한지 확인
+        SessionCheck();
 
         if (sessionStorage.getItem("loginInfo") != null) {
+            // 상세 답글 을 가져오는 axios
             const getData = async () => {
                 const data = await axios.get("http://localhost:8080/gaya/qa/detail", {
                     params: {
@@ -31,12 +36,7 @@ function InquiryDetail() {
                 })
             }
             getData();
-        } else{
-            alert("로그인이 만료됐습니다.");
-            window.location.href="/";
         }
-
-
 
     }, [])
 

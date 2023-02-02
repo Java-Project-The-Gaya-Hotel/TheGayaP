@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+/**
+ * 인증을 위한 Auth테이블
+ */
 @Getter
 @Builder
 @NoArgsConstructor
