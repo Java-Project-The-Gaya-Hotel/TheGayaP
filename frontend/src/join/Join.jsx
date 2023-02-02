@@ -86,7 +86,7 @@ function Join(props) {
             alert('공백만 입력되었습니다.');
         }
     }
-s
+
 
 
     
