@@ -1,37 +1,51 @@
 import React, {useEffect} from "react";
 
 
+
 const {kakao} = window;
 
 function IntroPageJeju() {
 
     useEffect(() => {
-        const container = document.getElementById('map');// 지도를 표시할 div
-        const option = {
-            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨
-        };
 
-// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-        const map = new kakao.maps.Map(container, option);
+        mapScript();
     }, [])
-    // 마커가 표시될 위치입니다
-    const markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-// 마커를 생성합니다
-    const marker = new kakao.maps.Marker({
-        position: markerPosition
-    });
+
+    const mapScript = () => {
+        let container = document.getElementById("map");
+        let options = {
+            center: new kakao.maps.LatLng(35.156024, 129.059484),
+            level: 2,
+        };
+        //map
+        const map = new kakao.maps.Map(container, options);
+
+        //마커가 표시 될 위치
+        let markerPosition = new kakao.maps.LatLng(
+            35.156024,
+            129.059484
+        );
+
+        // 마커를 생성
+        let marker = new kakao.maps.Marker({
+            position: markerPosition,
+        });
+
+        // 마커를 지도 위에 표시
+        marker.setMap(map);
+    };
+
 
     return (
         <div>
             <div>
                 <h4>제주 가야호텔</h4>
-                <div id={"map"} style={{width: '500px', height: '300px'}}></div>
-
+                <div id={"map"} style={{width: '500px', height: '300px'}} ></div>
             </div>
         </div>
 
-    )
-}
+
+        )
+    }
 
 export default IntroPageJeju;

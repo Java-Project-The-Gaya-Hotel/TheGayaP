@@ -13,13 +13,12 @@ function Join(props) {
     const [pw, setPw] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
 
-    // function checkSpace(str) {
-    //   if(str.search(/\s/) != -1) {
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-    // }
+    const [idMes, setIdMes] = useState("")
+    const [emailMes, setEmailMes] = useState("")
+    const [nameMes, setNameMes] = useState("")
+    const [numberMes, setNumberMes] = useState("")
+    const [pwMes, setPwMes] = useState("")
+    const [confirmPasswordMes, setConfirmPasswordMes] = useState("")
 
     const data = {
         memberName: name,
@@ -40,6 +39,7 @@ function Join(props) {
 
     const onNumberHandler = (e) => {
         setNumber(e.target.value)
+
     }
     const onEmailHandler = (e) => {
         setEmail(e.target.value)
@@ -76,18 +76,26 @@ function Join(props) {
         })
 
     }
-    //아이디 공백 체크
-    const handleIds = () => {
-        let str = "...";
+    const joinBtn = () => {
+        if (id && name && email && number && pw && confirmPassword) {
+            alert('회원 가입 완료');
+        } else {
+            if (!id) {
+                setIdMes("아이디을(를)  입력해주세요");
+            }   if (!email) {
+                setEmailMes("이메일을(를) 입력해주세요");
+            }   if (!pw) {
+                setPwMes("비밀번호을(를)  입력해주세요");
+            }if (!confirmPassword) {
+                setConfirmPasswordMes("중복 비밀번호을(를)  입력해주세요");
+            }if (!name) {
+                setNameMes("이름을(를) 입력해주세요");
+            }if (!number) {
+                setNumberMes("전화번호을(를) 입력해주세요");
+            }
 
-//공백만 입력된 경우
-        let blank_pattern = /^\s+|\s+$/g;
-        if(str.replace(blank_pattern, '' ) == "" ){
-            alert('공백만 입력되었습니다.');
         }
     }
-
-
 
     
 // 아이디 중복체크
@@ -126,7 +134,11 @@ const handleEmailCheck = (e) => {
         console.log(`데이터 전송 실패 ${err}`)
     })
 }
-
+    // const autoHyphen2 = (target) => {
+    //     target.value = target.value
+    //         .replace(/[^0-9]/g, '')
+    //         .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+    // }
 const handlePress = (e) => {
     const regex = /^[0-9\b -]{0,13}$/;
     if (regex.test(e.target.value)) {
@@ -135,11 +147,14 @@ const handlePress = (e) => {
 }
 
 useEffect(() => {
+
+
+
     if (number.length === 10) {
-        setNumber(number.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
+        setNumber(number.replace(/^(\d{2,3})(\d{3,4})(\d{4})/, '$1-$2-$3'));
     }
     if (number.length === 13) {
-        setNumber(number.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
+        setNumber(number.replace(/-/g, '').replace(/^(\d{0,3})(\d{0,4})(\d{0,4})/, '$1-$2-$3'));
     }
 }, [number]);
 
@@ -171,16 +186,17 @@ return (
                         <tbody>
                         <tr className={"first"}>
                             <th className={"first"}><em className={"ast"}>*</em> 아이디</th>
+
                             <td>
                                 <div className="first ">
-                                    <input type={"text"} value={id} onChange={onIdHandler} onClick={handleIds}
+                                    <input type={"text"} value={id} onChange={onIdHandler}
                                            className={"id"}
                                            autoComplete={"off"}/>
                                     <button onClick={handleIdCheck} className={"btn btn-primary"}>
                                         아이디중복
                                     </button>
                                     {/*<span className="idConfirm"><a href="javascript:checkDuplicateLognId()">아이디 중복확인</a></span>*/}
-                                    <span className="msgCheck msgCheck2"> 5~12자  이내 영문 또는 /숫자 조합</span>
+                                    <span>{idMes}</span>
                                 </div>
                             </td>
 
@@ -198,33 +214,34 @@ return (
                                         <button onClick={handleEmailCheck} className={"btn btn-primary"}>
                                             이메일 중복
                                         </button>
+                                        <span>{emailMes}</span>
                                         <div className={"text"}>
 
                                         </div>
 
-                                        {/*</div>*/}
-                                        {/*<div className={"col"}>*/}
-                                        {/*  <div className="selector disabled col">*/}
-                                        {/*    /!*<select className="form-select form-select-sm">*!/*/}
-                                        {/*    /!*  <option value="">직접입력</option>*!/*/}
-                                        {/*    */}
-                                        {/*    /!*  <option value="naver.com" title="naver.com">naver.com</option>*!/*/}
-                                        {/*    */}
-                                        {/*    /!*  <option value="hanmail.net" title="hanmail.net">hanmail.net</option>*!/*/}
-                                        {/*    */}
-                                        {/*    /!*  <option value="nate.com" title="nate.com">nate.com</option>*!/*/}
-                                        {/*    */}
-                                        {/*    /!*  <option value="gmail.com" title="gmail.com">gmail.com</option>*!/*/}
-                                        {/*    */}
-                                        {/*    /!*  <option value="hotmail.com" title="hotmail.com">hotmail.com</option>*!/*/}
-                                        {/*    */}
-                                        {/*    /!*  <option value="yahoo.co.kr" title="yahoo.co.kr">yahoo.co.kr</option>*!/*/}
-                                        {/*    */}
-                                        {/*    /!*</select>*!/*/}
 
-                                        {/*  </div>*/}
-                                        {/*<Join3Detail/>*/}
-                                    </div>
+                                    </div>   {/*</div>*/}
+                                    {/*<div className={"col"}>*/}
+                                    {/*  <div className="selector disabled col">*/}
+                                    {/*    /!*<select className="form-select form-select-sm">*!/*/}
+                                    {/*    /!*  <option value="">직접입력</option>*!/*/}
+                                    {/*    */}
+                                    {/*    /!*  <option value="naver.com" title="naver.com">naver.com</option>*!/*/}
+                                    {/*    */}
+                                    {/*    /!*  <option value="hanmail.net" title="hanmail.net">hanmail.net</option>*!/*/}
+                                    {/*    */}
+                                    {/*    /!*  <option value="nate.com" title="nate.com">nate.com</option>*!/*/}
+                                    {/*    */}
+                                    {/*    /!*  <option value="gmail.com" title="gmail.com">gmail.com</option>*!/*/}
+                                    {/*    */}
+                                    {/*    /!*  <option value="hotmail.com" title="hotmail.com">hotmail.com</option>*!/*/}
+                                    {/*    */}
+                                    {/*    /!*  <option value="yahoo.co.kr" title="yahoo.co.kr">yahoo.co.kr</option>*!/*/}
+                                    {/*    */}
+                                    {/*    /!*</select>*!/*/}
+
+                                    {/*  </div>*/}
+
                                 </div>
 
                             </td>
@@ -245,12 +262,14 @@ return (
                             <th><em className={"ast"}>*</em> 비밀번호</th>
                             <td>
                                 <input type={"password"} value={pw} onChange={onPasswordHandler}/>
+                                <span>{pwMes}</span>
                             </td>
 
                             <th><em className={"ast"}>*</em> 비밀번호 확인</th>
                             <td>
                                 <input type={"password"} value={confirmPassword}
                                        onChange={onConfirmPasswordHandler}/>
+                                <span className={"ast"}> {confirmPasswordMes}</span>
                             </td>
 
                         </tr>
@@ -270,7 +289,7 @@ return (
                                     <div className={"col"}>
                                         <input type={"text"} value={name} onChange={onNameHandler}/>
                                     </div>
-
+                                        <span>{nameMes}</span>
                                 </div>
                             </td>
 
@@ -288,15 +307,16 @@ return (
                             <td className="first">
                                 <div className={"ms-sm-2"}>
                                     <div className="selector disabled row  ">
-                                        <select className="col-sm-1">
-                                            <option value="+82" title="+82">+82</option>
-                                            <option value="+82" title="+82">+82</option>
-                                            <option value="+82" title="+82">+82</option>
-                                            <option value="+82" title="+82">+82</option>
-                                            <option value="+82" title="+82">+82</option>
-                                            <option value="+82" title="+82">+82</option>
+                                        <select className="col-2">
+                                            <option value="+82" title="+82">+82 한국</option>
+                                            <option value="+1" title="+1">+1 미국</option>
+                                            <option value="+44" title="+44">+44 영국</option>
+                                            <option value="+49" title="+49">+49 독일</option>
+                                            <option value="+81" title="+81">+81 일본</option>
+                                            <option value="+84" title="+84">+84 중국</option>
                                         </select>
-                                        <input className={"col-2"} value={number} onChange={onNumberHandler}/>
+                                        <input className={"col-2"} type={"text"} maxLength={13} value={number} onChange={onNumberHandler}/>
+                                        <span>{numberMes}</span>
 
                                     </div>
                                     <div className={"col"}>
@@ -312,12 +332,10 @@ return (
                         </tr>
                         </tbody>
                     </table>
-                    {/*<Join3/>*/}
-                    {/*<Join2/>*/}
 
                 </div>
 
-                <button formAction={""} className={"btn btn-primary"}>
+                <button formAction={""} className={"btn btn-primary"} onClick={joinBtn}>
                     회원 가입
                 </button>
 
