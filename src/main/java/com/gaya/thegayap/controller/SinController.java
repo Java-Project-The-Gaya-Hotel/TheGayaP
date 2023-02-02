@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -198,10 +201,6 @@ public class SinController {
             return "데이터 입력 실패";
         }
     }
-
-
-
-
 
 
 

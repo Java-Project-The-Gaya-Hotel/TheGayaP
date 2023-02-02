@@ -14,16 +14,17 @@ function InquiryItem(props) {
 
     // 문의글들이 불러와질때
     useEffect(() => {
+        setGoNum(props.data.inquiryNum);
+        setStatus(props.data.inquiryStatus);
+        setInquiryId(props.data.inquiryUserName);
         // hidden 속성에 문의글과 유저아이디의 이름이 맞지않을시 비밀글 처리
-        if (props.data.inquiryHidden === "Y" && inquiryId !== memberId) {
+        if (props.data.inquiryHidden === "Y" && props.data.inquiryUserName !== memberId) {
             setTitle("비밀글입니다.");
         } else {
             setTitle(props.data.inquiryTitle);
 
         }
-        setGoNum(props.data.inquiryNum);
-        setStatus(props.data.inquiryStatus);
-        setInquiryId(props.data.inquiryUserName);
+
 
     }, []);
 
@@ -37,11 +38,17 @@ function InquiryItem(props) {
         if (title === "비밀글입니다.") {
             alert("비밀글은 볼수없습니다.")
         } else {
-            // 현재 가진 토큰이 만료인지 확인 만료일시
-            if (AuthorityCheck() === false) {
-                alert("토큰 만료.")
-                navi("/login")
-            //     만료가 아니면 상세글 페이지로 이동
+            if (props.data.inquiryHidden === "Y") {
+                if (sessionStorage.getItem("token") != null) {
+                    // 현재 가진 토큰이 만료인지 확인 만료일시
+                    if (AuthorityCheck() === false) {
+                        alert("토큰 만료.")
+                        navi("/login")
+                        //     만료가 아니면 상세글 페이지로 이동
+                    } else {
+                        navi(`/qa/list/detail?idx=${goNum}&title=${title}&status=${status}`);
+                    }
+                }
             } else {
                 navi(`/qa/list/detail?idx=${goNum}&title=${title}&status=${status}`);
             }
