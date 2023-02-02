@@ -105,7 +105,7 @@ function LoginMember(props) {
                         </div>
                         {/*회원가입 및 아이디 비밀번호 찾기*/}
                         <div className={"d-flex"}>
-                            <button className={"btn btn-dark p-1"} style={{borderRadius: 0}} onClick={checkTokenValid}>가야 리워즈 가입</button>
+                            <button className={"btn btn-dark p-1"} style={{borderRadius: 0}} onClick={goToSignup}>가야 리워즈 가입</button>
                             <button onClick={() => setFindId(!findId)} className={"btn btn-secondary mx-2 p-1"} style={{borderRadius: 0}}>가야 리워즈 번호 또는 아이디
                                 찾기
                             </button>
@@ -117,6 +117,9 @@ function LoginMember(props) {
                         <div className={"small p-2"}>이메일, 연락처 등의 정보가 변경되면 웹사이트에서 회원정보를 수정해주시기 바랍니다.</div>
                     </div>
                 </div>
+            </div>
+            <div className={"bg-opacity-10 bg-dark text-center mt-3"}>
+                <p className={"text-center mx-2 my-2 py-2"}>이메일, 연락처 등의 정보가 변경되면 웹사이트에서 회원정보를 수정해주시기 바랍니다.</p>
             </div>
         </div>
     );
