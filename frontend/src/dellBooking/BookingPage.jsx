@@ -32,12 +32,10 @@ function BookingPage() {
                 <section>
                     <nav>
                         <ol className="cd-multi-steps text-top">
-                            {/*<li className="visited"><a>01</a></li>*/}
-                            {/*<li className="current"><em>02</em></li>*/}
                             <li className={"current fw-bold"}><a> Reservation Condition </a></li>
-                            <li><em>02</em></li>
-                            <li><em>03</em></li>
-                            <li><em>04</em></li>
+                            <li><em>Room Condition</em></li>
+                            <li><em>Find Room </em></li>
+                            <li><em>Payment Information</em></li>
                         </ol>
                     </nav>
                 </section>

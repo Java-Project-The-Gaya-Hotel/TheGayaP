@@ -72,7 +72,7 @@ function BookingRoom() {
                             <li className={"visited fw-lighter"}><em> Booking Condition </em></li>
                             <li className={"visited fw-lighter"}><a> Room Condition</a></li>
                             <li className={"current fw-bold"}><a> Find Room </a></li>
-                            <li><em>04</em></li>
+                            <li><em>Payment Information</em></li>
                         </ol>
                     </nav>
                 </section>
@@ -91,10 +91,6 @@ function BookingRoom() {
                             <button className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">회원 전용 객실</button>
                             {/*<button className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">일반 객실</button>*/}
                         </nav>
-
-                        {/*<div className={"p-3 border border-1 m-3"}>*/}
-                        {/*    정렬 기능*/}
-                        {/*</div>*/}
 
                     </nav>
                     <hr className={"m-4 border-0"}/>

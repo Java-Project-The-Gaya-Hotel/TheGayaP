@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react";
 import Collapse from "react-bootstrap/Collapse";
-import Button from "react-bootstrap/Button";
 import {useLocation, useNavigate, useNavigation} from "react-router-dom";
 import Swal from "sweetalert2";
 import 'animate.css';
 import styled from 'styled-components'
-
+import "../dellMain/dellmainCss/BtnDateChoose.css"
 
 //stay, hotel component 명명 위해 나눠둠.
 const hotelArea = styled.div`
@@ -80,11 +79,11 @@ function RoomCondition(props) {
 
             <h5 className={"p-2 fw-bold"}>{data.roomName}</h5>
             <div className={"row text-center align-items-center"}>
-                <div className={"col"}><img src={"https://source.unsplash.com/random/?hotelroom"}/></div>
+                <div className={"col"}><img src={"https://source.unsplash.com/random/300x300/?hotelroom"}/></div>
                 <div className={"col"}></div>
                 <div className={"col"}></div>
-                <div className={"col"}><Button onClick={() => setCOpen(!cOpen)} aria-controls="example-collapse-text" aria-expanded={cOpen}>click</Button>
-
+                <div className={"col"}>
+                <button className={"btnDate"} role={"button"} onClick={() => setCOpen(!cOpen)} aria-controls="example-collapse-text" aria-expanded={cOpen}><span className="text">객실 찾기</span> Find Room </button>
                 </div>
             </div>
 
@@ -99,13 +98,13 @@ function RoomCondition(props) {
                             <hotelArea id={"hotel"} className={"container"}>
                                 <div className={"p-3"}>
                                     <h5 className={"p-2"}>{data.roomName}</h5>
-                                    <div className={"text-center align-items-center row"}>
+                                    <div className={"text-center align-items-center row "}>
                                         <div className="form-check form-check-inline col">
                                             <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" onClick={clickRoomCost1}/>
                                             <label className="form-check-label" htmlFor="inlineRadio1">Twin</label>
                                             <dd className={"col"}>{data.roomTwinCost}</dd>
                                         </div>
-                                        <button onClick={clickNextE}>ok</button>
+                                        <button className={"btnDate"} onClick={clickNextE}>ok</button>
                                     </div>
                                 </div>
                                 <hr/>
@@ -115,22 +114,23 @@ function RoomCondition(props) {
                             :
 
                             <stayArea id={"stay"} className={"container"}>
-                                <div className={"p-3"}>
+                                <div className={"container p-3"}>
                                     <h5 className={"p-2"}>{data.roomName}</h5>
-                                    <div className={"text-center align-items-center row"}>
+                                    <div className={"text-center align-items-center row px-5 py-3"}>
                                         <div className="form-check form-check-inline col">
                                             <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" onClick={clickRoomCost1}/>
                                             <label className="form-check-label" htmlFor="inlineRadio1">Twin</label>
-                                            <dd className={"col"}>{data.roomTwinCost}</dd>
+                                            <div className={"col"}>{data.roomTwinCost}</div>
 
                                         </div>
+
                                         <div className="form-check form-check-inline col">
                                             <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" onClick={clickRoomCost2}/>
                                             <label className="form-check-label" htmlFor="inlineRadio2">Family</label>
-                                            <dd className={"col"}>{data.roomFamilyCost}</dd>
-
+                                            <div className={"col"}>{data.roomFamilyCost}</div>
                                         </div>
-                                        <button onClick={clickNextE}>ok</button>
+
+                                        <button className={"col btnDate"} onClick={clickNextE}><span>예약하기</span>Payment</button>
                                     </div>
                                 </div>
                                 <hr/>
