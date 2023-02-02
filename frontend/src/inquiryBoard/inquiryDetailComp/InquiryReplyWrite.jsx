@@ -28,7 +28,7 @@ function InquiryReplyWrite(props) {
         axios.post("http://localhost:8080/gaya/qa/reply/insert", body)
             .then(req => {
                 console.log(req);
-            }).catch(e => {cd
+            }).catch(e => {
             console.log(e);
         })
 
