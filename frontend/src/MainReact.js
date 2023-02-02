@@ -14,6 +14,10 @@ import InquiryListTable from "./inquiryBoard/inquiryListComp/InquiryListTable";
 import InquiryWrite from "./inquiryBoard/InquiryWriteComp/InquiryWrite";
 import InquiryDetail from "./inquiryBoard/inquiryDetailComp/inquiryDetail";
 import MypageTest from "./test/MypageTest";
+import IntroPageSeoul from "./dellIntro/introSeoul/IntroPageSeoul";
+import IntroPageJeju from "./dellIntro/introJeju/introPageJeju";
+import IntroPageStay from "./dellIntro/introStay/introPageStay";
+import IntroPageMain from "./dellIntro/introMain/IntroPageMain";
 
 
 function MainReact(props) {
@@ -24,7 +28,12 @@ function MainReact(props) {
                     <Route path={"/"} element={<RoutesLayout/>}>
                         <Route index element={<MainPage/>}/>
                         <Route path={"/reservation"} element={<BookingPage/>}/>
-                        <Route path={"/welcome"} element={<IntroPage/>}/>
+                        <Route path={"/welcome"} element={<IntroPage/>}>
+                            <Route index element={<IntroPageMain/>}/>
+                            <Route path={"seoul"} element={<IntroPageSeoul/>}/>
+                            <Route path={"jeju"} element={<IntroPageJeju/>}/>
+                            <Route path={"stay"} element={<IntroPageStay/>}/>
+                        </Route>
                         <Route path={"/reservroom"} element={<BookingRoom/>}/>
                         <Route path={"/menu1"} element={<BeingPage/>}/>
                         <Route path={"/login"} element={<Login/>}/>
