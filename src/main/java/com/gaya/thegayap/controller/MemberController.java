@@ -40,13 +40,13 @@ public class MemberController {
     }
 
 
-    @PostMapping("/test")
+    @GetMapping("/actokencheck")
     public String test() {
         return "success";
     }
 
 
-    @PostMapping("/tokenvalid")
+    @PostMapping("/refreshtokencheck")
     public TokenInfo validToken(@RequestBody TokenInfo token) {
 
         try {

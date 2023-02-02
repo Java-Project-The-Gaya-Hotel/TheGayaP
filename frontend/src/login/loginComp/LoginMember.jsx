@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import moment from "moment";
-import {CheckTokenValid} from "../../jwtAccess/CheckTokenVaild";
 
 
 function LoginMember(props) {
@@ -46,41 +45,7 @@ function LoginMember(props) {
     const navi = useNavigate();
 
 
-    const CheckTokenValid = () => {
-
-        const tokenJson = JSON.parse(sessionStorage.getItem("token"));
-        const acToken = tokenJson["accessToken"];
-        console.log(tokenJson);
-
-        axios.post("http://localhost:8080/members/test", null, {
-                headers: {
-                    Authorization: `Bearer ${acToken}`
-                }
-            }
-        ).then(() => {
-
-        }).catch(async () => {
-
-            try {
-                const response = await axios.post("http://localhost:8080/members/tokenvalid", tokenJson);
-                if (sessionStorage.getItem("token") != null) {
-                    sessionStorage.removeItem("token");
-                    sessionStorage.setItem("token", JSON.stringify(response.data));
-                } else {
-                    sessionStorage.setItem("token", JSON.stringify(response.data));
-                }
-
-            } catch (e) {
-                console.log("로그인페이지로 보내기" + e);
-                sessionStorage.removeItem("token");
-                navi("/login")
-            }
-
-        })
-
-    }
-
-
+    // 로그인 버튼 클릭시 발동하는 함수
     const login = async (id, pw) => {
         try {
             const response = await axios.post("http://localhost:8080/members/login", {
@@ -90,12 +55,12 @@ function LoginMember(props) {
             if (response.data === "") {
                 alert("아이디 혹은 비밀번호가 틀렸습니다.")
             } else {
-                console.log(response.data);
+                // console.log(response.data);
                 alert(id + "님 환영합니다.")
                 sessionStorage.setItem("token", JSON.stringify(response.data));
                 sessionStorage.setItem("loginInfo", moment.now().toString())
+                window.location.href = "/";
             }
-            window.location.href = "/";
 
         } catch (err) {
             console.log(err)
@@ -166,8 +131,7 @@ function LoginMember(props) {
                             <button className={"btn btn-dark p-1"} style={{borderRadius: 0}} onClick={goToSignup}>가야 리워즈
                                 가입
                             </button>
-                            <button className={"btn btn-secondary mx-2 p-1"} style={{borderRadius: 0}}
-                                    onClick={CheckTokenValid}>가야 리워즈 번호 또는 아이디
+                            <button className={"btn btn-secondary mx-2 p-1"} style={{borderRadius: 0}}>가야 리워즈 번호 또는 아이디
                                 찾기
                             </button>
                             <button className={"btn btn-secondary p-1"} style={{borderRadius: 0}}>비밀번호 찾기</button>

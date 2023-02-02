@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import InquiryListTable from "./InquiryListTable";
-import {Link} from "react-router-dom";
+import {GetMemberIdByToken} from "../../functiontocheck/FunctionToCheck";
 
 
 function InquiryList() {

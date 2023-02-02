@@ -61,7 +61,6 @@ function BookingAccordion() {
             .then((req) => {
                 const {data} = req
                 setHotelNameList(data);
-                console.log(data)
             })
             .catch(e => {
                 console.log("err>>" + e);

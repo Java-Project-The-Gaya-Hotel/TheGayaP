@@ -3,11 +3,11 @@ import axios from "axios";
 import InquiryItem from "./InquiryItem";
 import {useNavigate} from "react-router-dom";
 import InquiryPagination from "./InquiryPageNation";
-import {CheckTokenValid} from "../../jwtAccess/CheckTokenVaild";
-import {LoginCheck} from "../../login/LoginBoolean";
+import {GetMemberIdByToken} from "../../functiontocheck/FunctionToCheck";
 
 function InquiryListTable(props) {
     const [QAData, setQAData] = useState([]);
+    const [memberId, setMemberId] = useState("");
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const offset = (page - 1) * limit;
@@ -15,17 +15,18 @@ function InquiryListTable(props) {
 
     useEffect(() => {
 
-        LoginCheck();
+        if (sessionStorage.getItem("token") != null) {
+            GetMemberIdByToken().then(response => {
+                setMemberId(response.data);
+            })
+        }
+        const getQaData = async () => {
+            const response = await axios.get("http://localhost:8080/gaya/inquirylist")
 
-            const getQaData = async () => {
-                const response = await axios.get("http://localhost:8080/gaya/inquirylist")
-
-                const data = response.data;
-                setQAData(data);
-            }
-            getQaData();
-
-
+            const data = response.data;
+            setQAData(data);
+        }
+        getQaData();
 
 
     }, []);
@@ -46,7 +47,7 @@ function InquiryListTable(props) {
                 <select
                     type="number"
                     value={limit}
-                    onChange={({ target: { value } }) => setLimit(Number(value))}
+                    onChange={({target: {value}}) => setLimit(Number(value))}
                 >
                     <option value="10">10</option>
                     <option value="12">12</option>
@@ -71,7 +72,7 @@ function InquiryListTable(props) {
                         <tbody>
                         {
                             QAData.slice(offset, offset + limit).map((item, idx) => {
-                                return <InquiryItem key={idx} data={item}/>
+                                return <InquiryItem key={idx} data={item} memberId={memberId}/>
                             })
                         }
                         </tbody>

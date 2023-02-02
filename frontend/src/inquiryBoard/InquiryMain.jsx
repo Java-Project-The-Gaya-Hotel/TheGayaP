@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Link, Outlet} from "react-router-dom";
+import {GetMemberIdByToken} from "../functiontocheck/FunctionToCheck";
 
 
 function InquiryMain() {
@@ -16,6 +17,7 @@ function InquiryMain() {
     // }else if(componentName === "write"){
     //     Comp = <InquiryWrite/>
     // }
+
 
     return (
         <div className={"container"}>

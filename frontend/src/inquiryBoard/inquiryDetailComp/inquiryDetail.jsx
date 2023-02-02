@@ -15,20 +15,27 @@ function InquiryDetail() {
 
 
     useEffect(() => {
-        const getData = async () => {
-            const data = await axios.get("http://localhost:8080/gaya/qa/detail", {
-                params: {
-                    idx: userParam.get('idx'),
-                }
-            }).then(req => {
-               const {data} = req
-                setQaDetailData(data);
-               console.log(data);
-            }).catch(err=>{
-                console.log(err);
-            })
+
+        if (sessionStorage.getItem("loginInfo") != null) {
+            const getData = async () => {
+                const data = await axios.get("http://localhost:8080/gaya/qa/detail", {
+                    params: {
+                        idx: userParam.get('idx'),
+                    }
+                }).then(req => {
+                    const {data} = req
+                    setQaDetailData(data);
+                    console.log(data);
+                }).catch(err => {
+                    console.log(err);
+                })
+            }
+            getData();
+        } else{
+            alert("로그인이 만료됐습니다.");
+            window.location.href="/";
         }
-        getData();
+
 
 
     }, [])
@@ -55,8 +62,9 @@ function InquiryDetail() {
                 {/* 전체 채팅 박스*/}
                 <div id={"chat"} className={"text-center d-grid col-10 "}>
                     {
-                        qaDetailData.map((item,idx)=>{
-                          return   (item.answerIsAdmin === "N" ? <InquiryUserChat data={item} key={idx}/> : <InquiryAdminChat data={item} key={idx}/>)
+                        qaDetailData.map((item, idx) => {
+                            return (item.answerIsAdmin === "N" ? <InquiryUserChat data={item} key={idx}/> :
+                                <InquiryAdminChat data={item} key={idx}/>)
                         })
                     }
                 </div>

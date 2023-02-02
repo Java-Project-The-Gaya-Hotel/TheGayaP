@@ -4,7 +4,6 @@ import DateChoose from "./DateChoose";
 import MainExtra from "./MainExtra";
 // import 'animate.css'
 import styled from "styled-components";
-import {LoginCheck} from "../login/LoginBoolean";
 
 const MainCaroselDiv = styled.div`
 animation:fadeInDownBig;
@@ -23,9 +22,6 @@ animation-duration:2s;
 
 function MainPage(props) {
 
-    useEffect(()=>{
-        LoginCheck();
-    },[])
 
     return (
         <div>

@@ -4,7 +4,8 @@ import MainLogo from "../mainImg/headerTitle.svg"
 import "./dellmainCss/LayoutCss.css"
 import Menucon from "../mainImg/icons8-key.svg"
 import MainFooter from "./MainFooter";
-import {LoginCheck} from "../login/LoginBoolean";
+import {SessionCheck} from "../functiontocheck/FunctionToCheck";
+
 
 const styles = {
     TitleImgSize: {
@@ -22,11 +23,25 @@ const styles = {
 
 function RoutesLayout(props) {
 
+    // const [sessionValid, setSessionValid] = useState(false);
+    //
+    // useEffect(()=>{
+    //     SessionCheck();
+    // },[sessionValid])
 
     useEffect(() => {
-        LoginCheck();
-
+        SessionCheck();
     }, [])
+
+    const sessionValidCheck = () => {
+        if (sessionStorage.getItem("loginInfo") != null) {
+            SessionCheck();
+        }
+        // if(SessionCheck()){
+        //     setSessionValid(true);
+        // }
+        //     setSessionValid(false);
+    }
 
     const logout = () => {
         if (window.confirm("로그아웃 하시겠습니까?")) {
@@ -44,11 +59,15 @@ function RoutesLayout(props) {
                     <div style={styles.LiFont}>
                         <ul className={"row row-cols-auto justify-content-end text-center px-5 pt-2"}>
                             <li className={"col"}>{
-                                sessionStorage.getItem("loginInfo") != null ? <div onClick={logout}>Log out</div> :
+                                sessionStorage.getItem("loginInfo") ? <div onClick={logout}>Log out</div> :
                                     <Link to={"/login"}>login</Link>
                             }</li>
-                            <li className={"col"}><Link to={"/join"}>Join Us</Link></li>
-                            <li className={"col"}><Link to={"/mypage"}>My Page</Link></li>
+                            <li className={"col"}>{
+                                sessionStorage.getItem("loginInfo") != null ? null : <Link to={"/join"}>Join Us</Link>
+                            }</li>
+                            <li className={"col"}>{
+                                sessionStorage.getItem("loginInfo") != null ?
+                                    <Link to={"/mypage"}>My Page</Link> : null}  </li>
                         </ul>
                     </div>
                     <hr style={styles.HrHidden}/>
@@ -70,16 +89,18 @@ function RoutesLayout(props) {
                     <div className="text-center mt-3 collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav mx-auto fw-bold">
                             <li className="nav-item">
-                                <Link to={"/"} className="nav-link active" aria-current="page">Home</Link>
+                                <Link to={"/"} className="nav-link active" aria-current="page"
+                                      onClick={sessionValidCheck}>Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to={"/reservation"} className="nav-link">Booking</Link>
+                                <Link to={"/reservation"} className="nav-link"
+                                      onClick={sessionValidCheck}>Booking</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to={"/welcome"} className="nav-link">About Us</Link>
+                                <Link to={"/welcome"} className="nav-link" onClick={sessionValidCheck}>About Us</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to={"/qa"} className="nav-link">Menu 3</Link>
+                                <Link to={"/qa"} className="nav-link" onClick={sessionValidCheck}>Menu 3</Link>
                             </li>
                         </ul>
                     </div>
