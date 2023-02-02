@@ -14,13 +14,6 @@ import InquiryListTable from "./inquiryBoard/inquiryListComp/InquiryListTable";
 import InquiryWrite from "./inquiryBoard/InquiryWriteComp/InquiryWrite";
 import InquiryDetail from "./inquiryBoard/inquiryDetailComp/inquiryDetail";
 import MypageTest from "./test/MypageTest";
-import ReservationPageDetail2 from "./skyReservation/ReservationPageDetail2";
-import {Component} from "react";
-import IntroPageSeoul from "./dellIntro/introSeoul/IntroPageSeoul";
-import IntroPageMain from "./dellIntro/introMain/IntroPageMain";
-import IntroPageJeju from "./dellIntro/introJeju/introPageJeju";
-import IntroPageStay from "./dellIntro/introStay/introPageStay";
-
 
 
 function MainReact(props) {
@@ -31,17 +24,11 @@ function MainReact(props) {
                     <Route path={"/"} element={<RoutesLayout/>}>
                         <Route index element={<MainPage/>}/>
                         <Route path={"/reservation"} element={<BookingPage/>}/>
-                        <Route path={"/welcome"} element={<IntroPage/>}>
-                            <Route index element={<IntroPageMain/>}/>
-                            <Route path={"seoul"} element={<IntroPageSeoul/>}/>
-                            <Route path={"jeju"} element={<IntroPageJeju/>}/>
-                            <Route path={"stay"} element={<IntroPageStay/>}/>
-                        </Route>
+                        <Route path={"/welcome"} element={<IntroPage/>}/>
                         <Route path={"/reservroom"} element={<BookingRoom/>}/>
                         <Route path={"/menu1"} element={<BeingPage/>}/>
                         <Route path={"/login"} element={<Login/>}/>
                         <Route path={"/join"} element={<Join/>}/>
-                        <Route path={"/nextreserv"} element={<ReservationPageDetail2/>}/>
                         <Route path={"/qa"} element={<InquiryMain/>}>
                             <Route index element={<InquiryHotelInfo/>}/>
                             <Route path={"list"} element={<InquiryListTable/>}/>

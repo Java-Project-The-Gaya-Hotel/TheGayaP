@@ -13,7 +13,7 @@ const styles = {
 function MainFooter() {
     return (
         <div>
-            <footer>
+            <footer className={"fixed-bottom"}>
                 <div className="container">
                     <div className="footer-top">
                         <div className="row">
