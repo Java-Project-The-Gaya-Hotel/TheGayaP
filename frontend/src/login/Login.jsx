@@ -3,17 +3,18 @@ import LoginBody from "./loginComp/LoginBody";
 import 'animate.css'
 import styled from "styled-components";
 
-const CompHead=styled.div`
+const CompHead = styled.div`
 font-size: 19px
 `;
-const CompAni=styled.div`
-
+const CompAni = styled.div`
+animation:fadeIn; 
+animation-duration: 1s;
 `
 
 function Login() {
 
     return (
-        <div className={"container mt-5 py-4"}>
+        <CompAni className={"container mt-5 py-4"}>
             <div className={"grid justify-content-center col-md-6 mx-auto"}>
                 {/* 환영 문구 */}
                 <div className={"text-center"}>
@@ -23,9 +24,11 @@ function Login() {
                     </div>
                 </div>
                 <LoginBody/>
-
             </div>
-        </div>
+            <div className={"container text-center"}>
+                <figcaption className={"fw-bold p-2"}> 호텔가야의 회원이 되시면 다양한 호텔의 정보 및 서비스 혜택을 받으실 수 있습니다.</figcaption>
+            </div>
+        </CompAni>
     );
 }
 

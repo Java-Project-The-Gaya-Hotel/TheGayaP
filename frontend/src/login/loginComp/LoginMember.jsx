@@ -138,11 +138,6 @@ function LoginMember(props) {
                     </div>
                 </div>
             </div>
-
-            <div className={"container text-center"}>
-                <figcaption className={"fw-bold p-2"}> 호텔가야의 회원이 되시면 다양한 호텔의 정보 및 서비스 혜택을 받으실 수 있습니다.</figcaption>
-            </div>
-
         </div>
     );
 }

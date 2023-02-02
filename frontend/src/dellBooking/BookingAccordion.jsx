@@ -278,8 +278,10 @@ function BookingAccordion() {
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
+
+
+
                             </div>
                         </li>
                     </ul>
