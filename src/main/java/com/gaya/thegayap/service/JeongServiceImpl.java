@@ -60,5 +60,10 @@ public class JeongServiceImpl implements JeongService{
         return memberDto;
     }
 
+    @Override
+    public String findId(String memberName, String memberEmail) throws Exception {
+        return jeongMapper.findId(memberName, memberEmail);
+    }
+
 
 }

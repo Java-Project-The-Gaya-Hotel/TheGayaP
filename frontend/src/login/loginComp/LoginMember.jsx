@@ -1,42 +1,21 @@
 import React, {useState} from "react";
 import axios from "axios";
+import Modal from "./Modal"
+import FindId from "./FindId";
 
 
 function LoginMember(props) {
 
-    // // 종율씨 코드
-    // const [id, setId] = useState("")
-    // const [pw, setPw] = useState("")
-    //
-    //
-    // const loginData = {
-    //     memberId: id,
-    //     memberPw: pw
-    // };
-    //
-    // const submitLogin = (e) => {
-    //     e.preventDefault(); //리프레시 방지-> 방지해야 이 아래 라인의 코드들 실행 가능
-    //
-    //     axios.post("http://localhost:8080/login/check",loginData)
-    //       .then((req) => {
-    //           console.log("데이터 전송 성공")
-    //           ;
-    //           if (req.data === 0) {
-    //               alert("아이디와 비밀번호를 다시 확인해주세요.");
-    //           }
-    //           else {
-    //               window.location.href="/";
-    //               alert(req.data.memberName + "님 반갑습니다.");
-    //           }
-    //
-    //
-    //       }).catch(err => {
-    //         console.log(`데이터 전송 실패 ${err}`)
-    //     })
-    //
-    // }
+    /**
+     * 정종율
+     * id 찾기 모달
+     */
+    const [findId, setFindId] = useState(false);
 
-    //
+
+
+////////////////////////////////////////////////////
+
 
     //신현섭 코드
     const [memberId, setMemberId] = useState("");
@@ -139,9 +118,12 @@ function LoginMember(props) {
                         {/*회원가입 및 아이디 비밀번호 찾기*/}
                         <div className={"d-flex"}>
                             <button className={"btn btn-dark p-1"} style={{borderRadius: 0}} onClick={checkTokenValid}>가야 리워즈 가입</button>
-                            <button className={"btn btn-secondary mx-2 p-1"} style={{borderRadius: 0}}>가야 리워즈 번호 또는 아이디
+                            <button onClick={() => setFindId(!findId)} className={"btn btn-secondary mx-2 p-1"} style={{borderRadius: 0}}>가야 리워즈 번호 또는 아이디
                                 찾기
                             </button>
+                            {findId && (
+                              <Modal closeModal={() => setFindId(!findId)}><FindId/></Modal>
+                            )}
                             <button className={"btn btn-secondary p-1"} style={{borderRadius: 0}}>비밀번호 찾기</button>
                         </div>
                     </div>
