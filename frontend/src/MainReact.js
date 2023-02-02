@@ -18,6 +18,11 @@ import IntroPageSeoul from "./dellIntro/introSeoul/IntroPageSeoul";
 import IntroPageJeju from "./dellIntro/introJeju/introPageJeju";
 import IntroPageStay from "./dellIntro/introStay/introPageStay";
 import IntroPageMain from "./dellIntro/introMain/IntroPageMain";
+import MyBookingSchedule from "./dellMypage/MyBookingSchedule";
+import MyProfile from "./dellMypage/MyProfile";
+import MypageMain from "./dellMypage/MypageMain";
+import MypageNav from "./dellMypage/MypageNav";
+import ReservationPageDetail2 from "./skyReservation/ReservationPageDetail2";
 
 
 function MainReact(props) {
