@@ -25,4 +25,6 @@ public interface JeongMapper {
     void updateProfile(JeongMemberDto member) throws Exception;
 
     JeongMemberDto loginCheck(JeongMemberDto member) throws Exception;
+
+    String findId(String memberName, String memberEmail) throws Exception;
 }

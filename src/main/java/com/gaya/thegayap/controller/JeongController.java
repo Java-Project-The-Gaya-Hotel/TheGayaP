@@ -121,8 +121,15 @@ public class JeongController {
         }
         else {return 0;}
 
+    }
 
+    // 아이디 찾기
+    @GetMapping("/login/findId")
+    public String findId(@RequestParam("memberName") String memberName, @RequestParam("memberEmail") String memberEmail) throws Exception {
 
+        System.out.println(memberEmail);
+        String result = jeongService.findId(memberName, memberEmail);
+        return result;
     }
 
 }
