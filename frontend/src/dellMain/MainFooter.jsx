@@ -53,25 +53,28 @@ function MainFooter() {
                                         <li><a href="" target="_blank"><i className="fab fa-linkedin-in"></i></a></li>
                                     </ul>
                                 </div>
-                                <table className="table">
+                                <table className="table ">
                                     <tbody>
-                                    <div className={"m-3"}></div>
-                                    <tr>
-                                        <td><i className="far fa-clock"></i>The Gaya Hotel</td>
-                                        <td>051-2222-3333</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i className="far fa-clock"></i>The Gaya Stay</td>
-                                        <td>051-0000-1111</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i className="far fa-clock"></i>Service center</td>
-                                        <td>051-5555-0111</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i className="far fa-clock"></i></td>
-                                        <td><small>Service Open Till 12:00am</small></td>
-                                    </tr>
+
+                                        <tr>
+                                            <td><i className="far fa-clock"></i>The Gaya Hotel</td>
+                                            <td>051-2222-3333</td>
+                                        </tr>
+                                        <tr>
+                                            <td><i className="far fa-clock"></i>The Gaya Stay</td>
+                                            <td>051-0000-1111</td>
+                                        </tr>
+                                        <tr>
+                                            <td><i className="far fa-clock"></i>Service center</td>
+                                            <td>051-5555-0111</td>
+                                        </tr>
+                                        <tr>
+                                            <td><i className="far fa-clock"></i></td>
+                                            <td><small>Service Open Till 12:00am</small></td>
+                                        </tr>
+
+
+
                                     </tbody>
                                 </table>
 
