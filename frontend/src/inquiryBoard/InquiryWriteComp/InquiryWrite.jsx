@@ -1,8 +1,9 @@
 // InquiryWrite.jsx
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import "./InquiryWrite.css";
 import MainFooter from "../../dellMain/MainFooter";
+import {SessionCheck} from "../../functiontocheck/FunctionToCheck";
 
 function InquiryWrite() {
 
@@ -15,6 +16,21 @@ function InquiryWrite() {
     const [userTel, setUserTel] = useState("");
     const [password, setPassword] = useState("");
     const [hidden, setHidden] = useState("");
+
+
+
+
+
+    // 문의 작성 페이지 진입시 발동
+    useEffect(()=>{
+        SessionCheck();
+
+
+    },[])
+
+
+
+
 
 
     const data =

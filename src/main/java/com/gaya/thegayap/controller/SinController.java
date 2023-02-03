@@ -31,13 +31,6 @@ public class SinController {
     }
 
 
-    //    호텔 이름 가져오기
-    @GetMapping("/hotelname")
-    public List<String> getHotel() {
-        List<String> hotelName = sinService.getHotelName();
-
-        return hotelName;
-    }
 
     //    문의 게시판 글 리스트 가져오기
     @GetMapping("/inquirylist")
@@ -50,6 +43,17 @@ public class SinController {
 
     //임시 db 입력 코드 종료
 
+
+    /**
+     * 호텔 이름 가져오는 메서드
+     * @return
+     */
+    @GetMapping("/hotelname")
+    public List<String> getHotel() {
+        List<String> hotelName = sinService.getHotelName();
+
+        return hotelName;
+    }
 
     /**
      * 체크인 체크아웃 날짜를 받아 해당 날짜에 미예약 방 리스트를 뿌려주는 컨트롤러

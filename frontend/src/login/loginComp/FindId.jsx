@@ -28,7 +28,7 @@ function FindId(props) {
         console.log("데이터 전송 성공")
         setMemberId(req.data);
         setIsFind(false);
-        if (memberId === "") {
+        if (req.data === "") {
           setIsMemberId(false);
         }
         console.log(memberId);

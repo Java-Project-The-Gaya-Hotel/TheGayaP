@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import moment from "moment";
 import "../loginCss/ButtonCss.css"
 import Modal from "./Modal"
 import FindId from "./FindId";
+import {useCookies} from "react-cookie";
 
 // 회원 로그인
 function LoginMember(props) {
@@ -16,7 +17,6 @@ function LoginMember(props) {
     const [findId, setFindId] = useState(false);
 
 
-
 ////////////////////////////////////////////////////
 
 
@@ -24,8 +24,29 @@ function LoginMember(props) {
     //신현섭 코드
     const [memberId, setMemberId] = useState("");
     const [memberPw, setMemberPw] = useState("");
+    const [isRemember, setIsRemember] = useState(false);
+    const [cookies, setCookie, removeCookie] = useCookies(['rememberId']);
     const navi = useNavigate();
 
+
+    // 아이디 저장용 코드
+    useEffect(() => {
+        if (cookies.rememberId !== undefined) {
+            setMemberId(cookies.rememberId);
+            setIsRemember(true);
+        }
+    }, []);
+
+    const handleOnChangeRemember = (e) => {
+        setIsRemember(e.target.checked);
+        if (e.target.checked) {
+            if (memberId !== "" || memberId !== null) {
+                setCookie('rememberId', memberId, {maxAge: 2000});
+            }
+        } else {
+            removeCookie('rememberId');
+        }
+    }
 
     // 로그인 버튼 클릭시 발동하는 함수
     const login = async (id, pw) => {
@@ -43,6 +64,11 @@ function LoginMember(props) {
                 sessionStorage.setItem("token", JSON.stringify(response.data));
                 sessionStorage.setItem("loginInfo", moment.now().toString())
                 window.location.href = "/";
+                if (isRemember) {
+                    setCookie('rememberId', memberId, {maxAge: 2000});
+                } else {
+                    removeCookie('rememberId');
+                }
             }
 
         } catch (err) {
@@ -88,25 +114,32 @@ function LoginMember(props) {
                             <div className={"row mt-2"}>
                                 <div className={'col-10'}>
                                     {/*아이디*/}
-                                    <input type={"text"} className={"col-11"} placeholder={"아이디 or 회원 번호"} onChange={onChangeMemberId}/>
+                                    <input type={"text"} className={"col-11"} value={memberId}
+                                           placeholder={"아이디 or 회원 번호"} onChange={onChangeMemberId}/>
                                     {/*비밀번호*/}
-                                    <input type={"text"} className={"col-11"} placeholder={"비밀번호"} onChange={onChangeMemberPw}/>
+                                    <input type={"password"} className={"col-11"} placeholder={"비밀번호"}
+                                           onChange={onChangeMemberPw}/>
                                 </div>
                                 <div className={'col-2 p-0 d-flex row'}>
                                     {/*로그인 버튼*/}
-                                    <button className={"custom-btn btn-Login"} style={{borderRadius: 0}} onClick={loginUser}>로그인</button>
+                                    <button className={"custom-btn btn-Login"} style={{borderRadius: 0}}
+                                            onClick={loginUser}>로그인
+                                    </button>
                                 </div>
                             </div>
                             {/*아이디 저장*/}
                             <div className={"d-flex my-2"}>
-                                <input type={"checkbox"}/>
+                                <input type={"checkbox"} checked={isRemember} onChange={handleOnChangeRemember}/>
                                 <label className={"ms-2"}>가야 리워즈 번호 또는 아이디 저장</label>
                             </div>
                         </div>
                         {/*회원가입 및 아이디 비밀번호 찾기*/}
                         <div className={"d-flex"}>
-                            <button className={"btn btn-dark p-1"} style={{borderRadius: 0}} onClick={goToSignup}>가야 리워즈 가입</button>
-                            <button onClick={() => setFindId(!findId)} className={"btn btn-secondary mx-2 p-1"} style={{borderRadius: 0}}>가야 리워즈 번호 또는 아이디
+                            <button className={"btn btn-dark p-1"} style={{borderRadius: 0}} onClick={goToSignup}>가야 리워즈
+                                가입
+                            </button>
+                            <button onClick={() => setFindId(!findId)} className={"btn btn-secondary mx-2 p-1"}
+                                    style={{borderRadius: 0}}>가야 리워즈 번호 또는 아이디
                                 찾기
                             </button>
                             {findId && (

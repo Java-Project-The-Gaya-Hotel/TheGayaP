@@ -5,20 +5,20 @@ import axios, {request} from "axios";
 
 function Join(props) {
 
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [number, setNumber] = useState("")
-    const [birth, setBirth] = useState("")
-    const [id, setId] = useState("")
-    const [pw, setPw] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [number, setNumber] = useState("");
+    const [birth, setBirth] = useState("");
+    const [id, setId] = useState("");
+    const [pw, setPw] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
-    const [idMes, setIdMes] = useState("")
-    const [emailMes, setEmailMes] = useState("")
-    const [nameMes, setNameMes] = useState("")
-    const [numberMes, setNumberMes] = useState("")
-    const [pwMes, setPwMes] = useState("")
-    const [confirmPasswordMes, setConfirmPasswordMes] = useState("")
+    const [idMes, setIdMes] = useState("");
+    const [emailMes, setEmailMes] = useState("");
+    const [nameMes, setNameMes] = useState("");
+    const [numberMes, setNumberMes] = useState("");
+    const [pwMes, setPwMes] = useState("");
+    const [confirmPasswordMes, setConfirmPasswordMes] = useState("");
 
     const data = {
         memberName: name,
