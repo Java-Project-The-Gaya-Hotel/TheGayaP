@@ -249,7 +249,8 @@ function Join(props) {
                                             <option value="+49" title="+49">+49 독일</option>
                                             <option value="+81" title="+81">+81 일본</option>
                                             <option value="+84" title="+84">+84 중국</option>
-                                        </select></td>
+                                        </select>
+                                    </td>
                                     <td><input className={"col-2"} type={"text"} maxLength={13} value={number} onChange={onNumberHandler}/></td>
                                     <td><span>{numberMes}</span></td>
                                 </tr>
