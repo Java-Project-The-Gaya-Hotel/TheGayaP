@@ -16,9 +16,9 @@ function BookingRoom() {
     //주소 값 받아오기
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    const count = searchParams.get('count');
+    const adultCount = searchParams.get('adultCount');
     const childCount = searchParams.get('childCount')
-    const personnel = searchParams.get('total')
+    const totalCount = searchParams.get('total')
     const hotelName = searchParams.get('hotelName');
     const [hotelRoomList, setHotelRoomList] = useState([]);
     let startDate = searchParams.get('sDate');
@@ -39,9 +39,9 @@ function BookingRoom() {
                 hotelName: hotelName,
                 sDate: startDate,
                 eDate: endDate,
-                count: count,
+                count: adultCount,
                 childCount:childCount,
-                total:personnel,
+                total:totalCount,
                 roomCode:roomCode
 
             }
@@ -112,9 +112,9 @@ function BookingRoom() {
 
 
                                     {
-                                        hotelRoomList.map((room) => {
+                                        hotelRoomList.map((room, index) => {
                                             return (
-                                                <div>
+                                                <div key={index}>
                                                     <RoomCondition value={room}/>
                                                 </div>
                                             )

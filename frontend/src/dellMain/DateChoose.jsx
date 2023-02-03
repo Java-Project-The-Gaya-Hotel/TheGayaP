@@ -90,7 +90,7 @@ function DateChoose() {
 
 
     const SendReservationInfo = () => {
-        Navigate(`/reservation?sDate=${startDate}&eDate=${endDate}&people=${count}`);
+        Navigate(`/reservation?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&people=${count}`);
         // Navigate('/reservation',
         //     {state: {
         //             startDate: startDate,

@@ -1,9 +1,6 @@
 package com.gaya.thegayap.mapper;
 
-import com.gaya.thegayap.dto.JeongCustomerDto;
-import com.gaya.thegayap.dto.JeongMemberDto;
-import com.gaya.thegayap.dto.JeongResvDto;
-import com.gaya.thegayap.dto.SinDto;
+import com.gaya.thegayap.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -27,4 +24,6 @@ public interface JeongMapper {
     JeongMemberDto loginCheck(JeongMemberDto member) throws Exception;
 
     String findId(String memberName, String memberEmail) throws Exception;
+
+    List<JeongHotelDto> hotelList() throws Exception;
 }

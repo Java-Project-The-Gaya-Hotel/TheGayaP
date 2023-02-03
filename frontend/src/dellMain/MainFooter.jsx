@@ -45,8 +45,8 @@ function MainFooter() {
                             </div>
 
                             <div className="col-md-6 col-lg-4 open-hours">
-                                <div className="footer-title">
-                                    <h4>Contect</h4>
+                                <div className="footer-title mb-5">
+                                    <h4>Contact</h4>
                                     <ul className="footer-social">
                                         <li><a href="" target="_blank"><i className="fab fa-facebook-f"></i></a></li>
                                         <li><a href="" target="_blank"><i className="fab fa-instagram"></i></a></li>

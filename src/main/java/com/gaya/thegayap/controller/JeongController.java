@@ -3,6 +3,7 @@ package com.gaya.thegayap.controller;
 
 import com.gaya.thegayap.configuration.SecurityConfig;
 import com.gaya.thegayap.dto.JeongCustomerDto;
+import com.gaya.thegayap.dto.JeongHotelDto;
 import com.gaya.thegayap.dto.JeongMemberDto;
 import com.gaya.thegayap.dto.JeongResvDto;
 import com.gaya.thegayap.service.JeongService;
@@ -130,6 +131,13 @@ public class JeongController {
         System.out.println(memberEmail);
         String result = jeongService.findId(memberName, memberEmail);
         return result;
+    }
+
+    @GetMapping("/gaya/hotelList")
+    public Object getHotelList() throws Exception {
+        List<JeongHotelDto> hotelDto = jeongService.hotelList();
+
+        return hotelDto;
     }
 
 }

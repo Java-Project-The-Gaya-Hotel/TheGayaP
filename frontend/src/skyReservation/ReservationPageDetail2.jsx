@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
@@ -22,14 +22,14 @@ animation-duration:3s;
 
 function collapse(element) {
     const before = document.getElementsByClassName("active")[0];               // 기존에 활성화된 버튼
-    if (before && document.getElementsByClassName("active")[0] != element) {  // 자신 이외에 이미 활성화된 버튼이 있으면
+    if (before && document.getElementsByClassName("active")[0] !== element) {  // 자신 이외에 이미 활성화된 버튼이 있으면
         before.nextElementSibling.style.maxHeight = null;   // 기존에 펼쳐진 내용 접고
         before.classList.remove("active");                  // 버튼 비활성화
     }
     element.classList.toggle("active");         // 활성화 여부 toggle
 
     const content = element.nextElementSibling;
-    if (content.style.maxHeight != 0) {         // 버튼 다음 요소가 펼쳐져 있으면
+    if (content.style.maxHeight !== 0) {         // 버튼 다음 요소가 펼쳐져 있으면
         content.style.maxHeight = null;         // 접기
     } else {
         content.style.maxHeight = content.scrollHeight + "px";  // 접혀있는 경우 펼치기
@@ -37,6 +37,90 @@ function collapse(element) {
 }
 
 function ReservationPageDetail2() {
+
+    //////////////////////////////////////////////
+    // 결제 추가
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const startDate = searchParams.get('sDate');
+    const endDate = searchParams.get('eDate');
+    const adultCount = searchParams.get('adultCount');
+    const childCount = searchParams.get('childCount')
+    const totalCount = searchParams.get('total')
+    const hotelName = searchParams.get('hotelName');
+    const roomCode = searchParams.get('roomCode');
+    const roomCost = searchParams.get('roomCost');
+    const nights = searchParams.get('nights');
+
+    useEffect(() => {
+        const jquery = document.createElement("script");
+        jquery.src = "https://code.jquery.com/jquery-1.12.4.min.js";
+        const iamport = document.createElement("script");
+        iamport.src = "https://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
+        document.head.appendChild(jquery);
+        document.head.appendChild(iamport);
+        return () => {
+            document.head.removeChild(jquery); document.head.removeChild(iamport);
+        }
+    }, []);
+
+
+    const onClickPayment = () => {
+        /* 1. 가맹점 식별하기 */
+        const { IMP } = window;
+        IMP.init('imp73778403');
+
+        /* 2. 결제 데이터 정의하기 */
+        const data = {
+            pg: 'html5_inicis',                           // PG사
+            pay_method: 'card',                           // 결제수단
+            merchant_uid: `${new Date().getTime()}`,   // 주문번호
+            amount: 100,                                 // 결제금액
+            name: '결제 테스트',                  // 주문명
+            buyer_name: `${name}`,                           // 구매자 이름
+            buyer_tel: `${num}`,                     // 구매자 전화번호
+            buyer_email: `${email}`,               // 구매자 이메일
+        };
+
+        /* 4. 결제 창 호출하기 */
+        IMP.request_pay(data, callback);
+    }
+
+    /* 3. 콜백 함수 정의하기 */
+    function callback(response) {
+        const {
+            success,
+            merchant_uid,
+            error_msg,
+        } = response;
+
+        if (success) {
+            axios.post("http://localhost:8080/gaya/bookRoom",
+                {
+                    reservationNum: merchant_uid,
+                    hotelName: hotelName,
+                    roomCode: roomCode,
+                    customerName: name,
+                    checkIn: startDate,
+                    checkOut: endDate,
+                    nights: nights,
+                    reservationPeople: totalCount,
+                    totalCost: roomCost
+                })
+                .then((req) => {
+                    alert('결제 성공');
+                    console.log("결제 성공");
+                    window.location.href = "/";
+                }).catch(err => {
+                console.log(`데이터 전송 실패 ${err}`)
+            })
+
+        } else {
+            alert(`결제 실패: ${error_msg}`);
+        }
+    }
+
+        /////////////////////////////////////////////////////////
 
     const style = {
         boxSize: {
@@ -47,50 +131,21 @@ function ReservationPageDetail2() {
         }
     }
 
-    //주소 값 가져오기 --------------------------------------
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-    // const hotelName = searchParams.get('hotelName');
-    let startDate = searchParams.get('sDate');
-    let endDate = searchParams.get('eDate');
-    const count = searchParams.get('count');
-    const childCount = searchParams.get('childCount')
-    const personnel = searchParams.get('total')
-    const roomCode = searchParams.get('roomCode')
-    const reservationTime = searchParams.get('reservationTime');
-    const costSum = searchParams.get('costSum');
 
-
-    //-------------------------------------------------------
-
-    const [name, setName] = React.useState("")
-    const [email, setEmail] = React.useState("")
-    const [num, setNum] = React.useState("")
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [num, setNum] = useState("");
 
     const onNumHandler = (event) => {
-        setNum(event.currentTarget.value)
+        setNum(event.target.value)
     }
     const onNameHandler = (event) => {
-        setName(event.currentTarget.value)
+        setName(event.target.value)
     }
     const onEmailHandler = (event) => {
-        setEmail(event.currentTarget.value)
+        setEmail(event.target.value)
     }
 
-
-    const onSubmitHandler = (event) => {
-        event.preventDefault();
-
-        axios.get("http://localhost:8080/gaya/sendUser", {
-            params: {
-                Email: email,
-            }
-        }).then((req) => {
-            console.log("데이터 전송에 성공했습니다.")
-        }).catch((err) => {
-            console.log(err + "데이터 전송에 실패한 코드")
-        })
-    }
 
     const handlePress = (e) => {
         const regex = /^[0-9\b -]{0,13}$/;
@@ -113,7 +168,6 @@ function ReservationPageDetail2() {
         <div>
             {/*main*/}
             <div className={"container"}>
-
                 {/*breadcrumb*/}
                 <CrumbAni>
                     <section>
@@ -146,18 +200,20 @@ function ReservationPageDetail2() {
                                     <table className={"table table-hover m-0"}>
 
                                         <thead className={"container"}>
-                                        <th colSpan={4} className={"fw-bold h4 p-2"}>기본 정보</th>
+                                        <tr>
+                                            <th colSpan={4} className={"fw-bold h4 p-2"} style={{borderBottom: "none"}}>기본 정보</th>
+                                        </tr>
                                         </thead>
 
                                         <tbody className={"container"}>
 
                                         <tr>
                                             <td><em className="ast">*</em> 이름 :</td>
-                                            <td><input style={style.boxSize} type={"text"} className={"id"} autoComplete={"off"} placeholder={"Please Input Your Name"}/></td>
+                                            <td><input onChange={onNameHandler} style={style.boxSize} type={"text"} className={"id"} autoComplete={"off"} placeholder={"Please Input Your Name"}/></td>
                                         </tr>
                                         <tr>
                                             <td><em className="ast">*</em> 이메일 :</td>
-                                            <td><input style={style.boxSize} type={"email"} placeholder={"Please Input Your Email"}/></td>
+                                            <td><input onChange={onEmailHandler} style={style.boxSize} type={"email"} placeholder={"Please Input Your Email"}/></td>
                                         </tr>
 
                                         <tr>
@@ -175,7 +231,7 @@ function ReservationPageDetail2() {
 
                                 <div className={"container col text-center"}>
                                     <div className={"m-4 fw-bold h5"}>결제 하기</div>
-                                    <button className={"btnDate"} role={"button"}><span className="text">결제하기</span>Payment</button>
+                                    <button onClick={onClickPayment} className={"btnDate"} role={"button"}><span className="text">결제하기</span>Payment</button>
                                 </div>
                             </div>
 
