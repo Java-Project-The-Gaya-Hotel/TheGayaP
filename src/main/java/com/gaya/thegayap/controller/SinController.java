@@ -73,7 +73,7 @@ public class SinController {
 //            String eDate = "2023-02-05";
 
             List<SinRoomDto> ableRoomList = sinService.checkRoomList(hotelName, sDate, eDate);
-
+            System.out.println(sDate);
             return ableRoomList;
 
         } catch (Exception e) {

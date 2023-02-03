@@ -70,6 +70,12 @@
         insert into reservation_table values (#{reservationNum},#{hotelNum},#{roomCode},#{customerName},#{customerId},#{checkIn},#{checkOut},NOW(),#{nights},#{breakfastAdultNum},#{breakfastChildNum},#{reservationPeople},#{totalCost},#{reservationRequest})
     </insert>
 
+<!--    예약 고객테이블 DB 입력-->
+    <insert id="insertCustomer" parameterType="com.gaya.thegayap.dto.SinReservDto">
+        INSERT INTO customer_table
+        VALUES (#{reservationNum}, #{customerId},#{customerName},#{customerEmail},#{customerTel},#{earnedPoints},#{usedPoints})
+    </insert>
+
 <!--    문의 게시글 -->
     <select id="getQAList" resultType="com.gaya.thegayap.dto.SinInquiryDto">
         select *

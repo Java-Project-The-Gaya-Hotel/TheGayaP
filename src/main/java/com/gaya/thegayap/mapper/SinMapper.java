@@ -20,6 +20,9 @@ public interface SinMapper {
 
     void reservationRoom(SinReservDto sinReservDto);
 
+    void insertCustomer(SinReservDto sinReservDto);
+
+
     List<SinInquiryDto> getQAList();
 
     List<String> getHotelName();
@@ -37,4 +40,5 @@ public interface SinMapper {
     List<SinRoomDto> checkBookOverlap(SinReservDto build);
 
     SInRoomCostDto getRoomAndMealCost(String roomCode);
+
 }

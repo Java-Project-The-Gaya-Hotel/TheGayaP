@@ -128,11 +128,11 @@ public class JeongController {
     @GetMapping("/login/findId")
     public String findId(@RequestParam("memberName") String memberName, @RequestParam("memberEmail") String memberEmail) throws Exception {
 
-        System.out.println(memberEmail);
         String result = jeongService.findId(memberName, memberEmail);
         return result;
     }
 
+    // 호텔리스트 불러오기
     @GetMapping("/gaya/hotelList")
     public Object getHotelList() throws Exception {
         List<JeongHotelDto> hotelDto = jeongService.hotelList();

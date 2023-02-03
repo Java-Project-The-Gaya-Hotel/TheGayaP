@@ -42,6 +42,13 @@ function BookingAccordion() {
     // datepicker 변수 / datepicker data 가져와 연동
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    ////
+
+    const [showDate, setShowDate] = useState(false);
+    const [checkIn, setCheckIn] = useState("");
+    const [checkOut, setCheckOut] = useState("");
+    const [nights, setNights] = useState(0);
+
 
     useEffect(() => {
 
@@ -50,18 +57,32 @@ function BookingAccordion() {
             setStartDate(testStart);
             const testEnd = new Date(getEDate);
             setEndDate(testEnd);
-        }else {
-        setStartDate(new Date(now()));}
-        }
+        }else setStartDate(new Date(now()));
 
-    , [])
+    }, [])
+
+    useEffect(() => {
+
+        if (startDate !== null && endDate !== null) {
+            if (endDate > startDate) {
+                setShowDate(true);
+                const dateA = new Date(startDate);
+                const dateB = new Date(endDate);
+                const diffCount = dateB.getTime() - dateA.getTime();
+                const arrDayStr = ['일','월','화','수','목','금','토'];
+                setNights(diffCount / (24 * 60 * 60 * 1000));
+                setCheckIn(startDate.toLocaleDateString() + " " + arrDayStr[startDate.getDay()]);
+                setCheckOut(endDate.toLocaleDateString() + " " + arrDayStr[endDate.getDay()]);
+            }
+        }
+    }, [endDate])
 
 
     const onChange = (dates) => {
         const [start, end] = dates;
         setStartDate(start);
         setEndDate(end);
-    };
+    }
 
 
     // hotel List 가져오기
@@ -170,7 +191,10 @@ function BookingAccordion() {
 
                     <ul className="mainMenu pb-5">
                         <li className="item" id="account">
-                            <a href="#account" className="btnAcc">호텔 선택</a>
+                            <div className={"justify-content-between d-flex"}>
+                                <a href={"#account"} className="btnAcc">호텔 선택</a>
+                                <p className={"my-auto pe-3"}>{hotelName}</p>
+                            </div>
                             <div className="subMenu">
                                 <div className={"container"}>
                                     <div className={"row justify-content-center"}>
@@ -186,7 +210,16 @@ function BookingAccordion() {
                             </div>
                         </li>
                         <li className="item" id="about">
-                            <a href="#about" className="btnAcc">투숙 기간</a>
+                            <div className={"justify-content-between d-flex"}>
+                                <a href={"#about"} className="btnAcc">투숙 기간</a>
+                                {showDate &&
+                                    <div className={"my-auto pe-3"}>
+                                        <span>{checkIn} - {checkOut}</span>
+                                        <span className={"mx-3"} style={{color: "lightgray"}}>|</span>
+                                        <span>{nights}박</span>
+                                    </div>
+                                }
+                            </div>
                             <div className="subMenu">
                                 <div className={"container p-5 text-center"}>
                                     <div className={"row"}>
@@ -214,12 +247,11 @@ function BookingAccordion() {
                         </li>
 
                         <li className="item" id="support">
-                            <a href="#support" className="btnAcc">인원
-                                <div className={"row d-flex text-end"}>
-                                    <div className={"col"}>성인 : {adultCount} </div>
-                                    <div className={"col"}>어린이 : {childCount}</div>
-                                </div>
-                            </a>
+                            <a href={"#support"} className="btnAcc">인원</a>
+                            <div className={"row d-flex text-end"}>
+                                <div className={"col"}>성인 : {adultCount} </div>
+                                <div className={"col"}>어린이 : {childCount}</div>
+                            </div>
                             <div className="subMenu">
 
                                 <div className={"container row align-items-center"}>

@@ -210,7 +210,7 @@ public class SinServiceImpl implements SinService {
      */
     @Override
     public void reservationRoom(SinReservDto sinReservDto) {
-
+        sinMapper.insertCustomer(sinReservDto);
         sinMapper.reservationRoom(sinReservDto);
     }
 
