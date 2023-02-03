@@ -34,7 +34,7 @@ function BookingRoom() {
 
 
     useEffect(() => {
-        axios.get("http://10.100.204.69:8080/gaya/roomlist", {
+        axios.get("http://localhost:8080/gaya/roomlist", {
             params: {
                 hotelName: hotelName,
                 sDate: startDate,

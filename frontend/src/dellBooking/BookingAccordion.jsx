@@ -19,8 +19,8 @@ const styles = {
     textBoxt: {
         width: "100px"
     },
-    inPaddingX:{
-        padding:"0px 300px 0px 300px"
+    inPaddingX: {
+        padding: "0px 300px 0px 300px"
     }
 }
 
@@ -45,19 +45,18 @@ function BookingAccordion() {
 
     useEffect(() => {
 
-        if (getSDate != null){
-            const testStart = new Date(getSDate);
-            setStartDate(testStart);
-            const testEnd = new Date(getEDate);
-            setEndDate(testEnd);
-        }else {
-        setStartDate(new Date(now()));}
+            if (getSDate != null) {
+                const testStart = new Date(getSDate);
+                setStartDate(testStart);
+                const testEnd = new Date(getEDate);
+                setEndDate(testEnd);
+            } else {
+                setStartDate(new Date(now()));
+            }
         }
 
 
-
-
-    , [])
+        , [])
 
 
     const onChange = (dates) => {
@@ -70,12 +69,12 @@ function BookingAccordion() {
     // hotel List 가져오기
     //axios input button roop connection
     useEffect(() => {
-        axios.get("http://10.100.204.69:8080/gaya/hotelname")
+        axios.get("http://localhost:8080/gaya/hotelname")
             .then((req) => {
                 const {data} = req
                 setHotelNameList(data);
             })
-            .catch(e=>{
+            .catch(e => {
                 console.log("err>>" + e);
             })
     }, [])
@@ -111,8 +110,7 @@ function BookingAccordion() {
             Swal.fire({
                 icon: 'info',
                 title: '확인해주세요!',
-                text: ' 총 인원 수는 4명까지 선택할 수 있습니다. ',
-                footer: '<a href=""> 고객문의 안내는 여기로 </a>'
+                text: ' 총 인원 수는 4명까지 선택할 수 있습니다. '
             })
         } else {
             setCount(adult);
@@ -197,47 +195,24 @@ function BookingAccordion() {
                             <div className="subMenu">
                                 <div className={"container p-5 text-center"}>
                                     <div className={"row"}>
-                                        {/*<div className={"col"}>*/}
-                                        {/*    <DatePicker*/}
-                                        {/*        dateFormat="yyyy-MM-dd"*/}
-                                        {/*        selected={startDate}*/}
-                                        {/*        onChange={(date) => setStartDate(date)}*/}
-                                        {/*        selectsStart*/}
-                                        {/*        startDate={startDate}*/}
-                                        {/*        endDate={endDate}*/}
-                                        {/*        minDate={new Date()}*/}
-                                        {/*        locale={ko}*/}
-                                        {/*        customInput={<CustomInput/>}*/}
-                                        {/*        inline*/}
-                                        {/*    />*/}
-                                        {/*</div>*/}
-                                        {/*<div className={"col"}>*/}
-                                        {/*    <DatePicker*/}
-                                        {/*        dateFormat="yyyy-MM-dd"*/}
-                                        {/*        selected={endDate}*/}
-                                        {/*        onChange={(date) => setEndDate(date)}*/}
-                                        {/*        selectsEnd*/}
-                                        {/*        startDate={startDate}*/}
-                                        {/*        endDate={endDate}*/}
-                                        {/*        minDate={new Date()}*/}
-                                        {/*        locale={ko}*/}
-                                        {/*        customInput={<CustomInput/>}*/}
-                                        {/*        inline*/}
-                                        {/*    />*/}
-                                        {/*</div>*/}
-                                        <DatePicker
-                                            dateFormat={"yyyy-MM-dd"}
-                                            selected={startDate}
-                                            onChange={onChange}
-                                            startDate={startDate}
-                                            endDate={endDate}
-                                            selectsRange
-                                            minDate={new Date(now())}
-                                            maxDate={addDays(startDate, 29)}
-                                            locale={ko}
-                                            monthsShown={2}
-                                            inline
-                                        />
+                                        <div className={"col-10"}>
+                                            <DatePicker
+                                                dateFormat={"yyyy-MM-dd"}
+                                                selected={startDate}
+                                                onChange={onChange}
+                                                startDate={startDate}
+                                                endDate={endDate}
+                                                selectsRange
+                                                minDate={new Date(now())}
+                                                maxDate={addDays(startDate, 29)}
+                                                locale={ko}
+                                                monthsShown={2}
+                                                inline
+                                            />
+                                        </div>
+                                        <div className={"col-2"}>
+                                            <div></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -252,55 +227,59 @@ function BookingAccordion() {
                             </a>
                             <div className="subMenu">
 
-                                <div className={"container text-center"}>
+                                <div className={"container row align-items-center"}>
 
-                                    <div className={"container"} style={styles.inPaddingX}>
-                                        <div className={"row m-5 align-items-center"}>
-                                            <div className={"col"}>
-                                                <button className={"btn btn-outline-dark rounded-0 fw-bold"} onClick={minusBtn}>-</button>
+                                    <div className={"container text-center col"}>
+
+                                        <div className={"col"}>
+                                            <div className={"container"}>
+                                                <div className={"row m-5 align-items-center"}>
+                                                    <div className={"col"}>
+                                                        <button className={"btn btn-outline-dark rounded-0 fw-bold"} onClick={minusBtn}>-</button>
+                                                    </div>
+                                                    <div className={"col fw-bold"}><h4 className={"m-0"}>성인 : {count}</h4></div>
+                                                    <div className={"col"}>
+                                                        <button className={"btn btn-outline-dark rounded-0"} onClick={plusBtn}>+</button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className={"col fw-bold"} style={styles.textBoxt}><h4 className={"m-0"}>성인 : {count}</h4></div>
-                                            <div className={"col"}>
-                                                <button className={"btn btn-outline-dark rounded-0"} onClick={plusBtn}>+</button>
+
+                                            <div className={"container"}>
+                                                <div className={"row m-5 align-items-center"}>
+                                                    <div className={"col"}>
+                                                        <button className={"btn btn-outline-dark rounded-0"} onClick={cdMinusBtn}>-</button>
+                                                    </div>
+                                                    <div className={"col"}><h4 className={"m-0"}>어린이 : {childCount}</h4></div>
+                                                    <div className={"col"}>
+                                                        <button className={"btn btn-outline-dark rounded-0"} onClick={cdPlusBtn}>+</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className={"container"} style={styles.inPaddingX}>
-                                        <div className={"row m-5 align-items-center"}>
-                                            <div className={"col"}>
-                                                <button className={"btn btn-outline-dark rounded-0"} onClick={cdMinusBtn}>-</button>
-                                            </div>
-                                            <div className={"col"}><h4 className={"m-0"}>어린이 : {childCount}</h4></div>
-                                            <div className={"col"}>
-                                                <button className={"btn btn-outline-dark rounded-0"} onClick={cdPlusBtn}>+</button>
-                                            </div>
+                                    <div className={"container p-5 col"}>
+                                        <div>
+                                            <h5>예약 시 주의 사항</h5>
+                                        </div>
+                                        <div className={"p-3"}>
+                                            <p>
+                                                2인 1실 기준, 요금에는 10% 부가가치세가 부과됩니다. 상기 요금은 할인 요금이며, 중복 할인은 적용되지 않습니다.<br/>
+                                                13세 이하 어린이는 객실 인원 추가 요금을 받지 않으며 37개월 미만 유아는 조식이 무료입니다.<br/>
+                                                저희 The Gaya Hotel은 안내견을 제외한 반려동물은 입장은 불가하오니 양해부탁드립니다. <br/>
+                                                부모를 동반하지 않은 만 19세 미만 미성년자는 " 청소년 보호법 30조/58조" 로 인하여 투숙할 수 없으며 체크인 및 <br/>
+                                                객실 입장 시 등록카드 작성 및 투숙객 본인 확인을 위해 본인 사진이 포함된 신분증을 반드시 제시해 주시길 바랍니다.<br/>
+                                            </p>
                                         </div>
                                     </div>
+
                                 </div>
-
-
-
                             </div>
                         </li>
                     </ul>
 
                     <hr className={"border-1 p-2"}/>
 
-                    <div className={"container p-5"}>
-                        <div>
-                            <h5>예약 시 주의 사항</h5>
-                        </div>
-                        <div className={"p-3"}>
-                            <p>
-                                2인 1실 기준, 요금에는 10% 부가가치세가 부과됩니다. 상기 요금은 할인 요금이며, 중복 할인은 적용되지 않습니다.<br/>
-                                13세 이하 어린이는 객실 인원 추가 요금을 받지 않으며 37개월 미만 유아는 조식이 무료입니다.<br/>
-                                저희 The Gaya Hotel은 안내견을 제외한 반려동물은 입장은 불가하오니 양해부탁드립니다. <br/>
-                                부모를 동반하지 않은 만 19세 미만 미성년자는 " 청소년 보호법 30조/58조" 로 인하여 투숙할 수 없으며 체크인 및 <br/>
-                                객실 입장 시 등록카드 작성 및 투숙객 본인 확인을 위해 본인 사진이 포함된 신분증을 반드시 제시해 주시길 바랍니다.<br/>
-                            </p>
-                        </div>
-                    </div>
                 </div>
 
                 <div className={"d-flex justify-content-center p-5"}>

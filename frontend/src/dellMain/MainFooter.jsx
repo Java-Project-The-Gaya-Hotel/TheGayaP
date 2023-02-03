@@ -55,7 +55,6 @@ function MainFooter() {
                                 </div>
                                 <table className="table">
                                     <tbody>
-                                    <div className={"m-3"}></div>
                                     <tr>
                                         <td><i className="far fa-clock"></i>The Gaya Hotel</td>
                                         <td>051-2222-3333</td>

@@ -13,6 +13,11 @@ const hotelArea = styled.div`
 const stayArea = styled.div`
     margin : 1px;
     `
+const styles = {
+    formCheck: {
+        float: "none"
+    }
+}
 
 
 function RoomCondition(props) {
@@ -83,7 +88,7 @@ function RoomCondition(props) {
                 <div className={"col"}></div>
                 <div className={"col"}></div>
                 <div className={"col"}>
-                <button className={"btnDate"} role={"button"} onClick={() => setCOpen(!cOpen)} aria-controls="example-collapse-text" aria-expanded={cOpen}><span className="text">객실 찾기</span> Find Room </button>
+                    <button className={"btnDate"} role={"button"} onClick={() => setCOpen(!cOpen)} aria-controls="example-collapse-text" aria-expanded={cOpen}><span className="text">객실 찾기</span> Find Room</button>
                 </div>
             </div>
 
@@ -98,13 +103,27 @@ function RoomCondition(props) {
                             <hotelArea id={"hotel"} className={"container"}>
                                 <div className={"p-3"}>
                                     <h5 className={"p-2"}>{data.roomName}</h5>
-                                    <div className={"text-center align-items-center row "}>
-                                        <div className="form-check form-check-inline col">
-                                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" onClick={clickRoomCost1}/>
-                                            <label className="form-check-label" htmlFor="inlineRadio1">Twin</label>
-                                            <dd className={"col"}>{data.roomTwinCost}</dd>
+                                    <div className={"text-center align-items-center"}>
+                                        <div className={"container p-4"}>
+                                            <div className={"row"}>
+                                                <div className={"col"}>
+                                                    <input className="form-check-input mx-4" type="radio" name="inlineRadioOptions" id="inlineRadio1" onClick={clickRoomCost1}/>
+                                                    <label className="form-check-label" htmlFor="inlineRadio1">Twin</label>
+                                                </div>
+                                                <div className={"col p-0"}>{data.roomTwinCost}</div>
+                                            </div>
                                         </div>
-                                        <button className={"btnDate"} onClick={clickNextE}>ok</button>
+
+                                        <div className={"container p-4"}>
+                                            <div className={"row"}>
+                                                <div className={"col"}>
+                                                    <input className="form-check-input mx-4" type="radio" name="inlineRadioOptions" id="inlineRadio1" onClick={clickRoomCost1}/>
+                                                    <label className="form-check-label" htmlFor="inlineRadio1">Double</label>
+                                                </div>
+                                                <div className={"col p-0"}>{data.roomTwinCost}</div>
+                                            </div>
+                                        </div>
+                                        <button className={"col btnDate"} onClick={clickNextE}><span>예약하기</span>Payment</button>
                                     </div>
                                 </div>
                                 <hr/>
@@ -116,20 +135,26 @@ function RoomCondition(props) {
                             <stayArea id={"stay"} className={"container"}>
                                 <div className={"container p-3"}>
                                     <h5 className={"p-2"}>{data.roomName}</h5>
-                                    <div className={"text-center align-items-center row px-5 py-3"}>
-                                        <div className="form-check form-check-inline col">
-                                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" onClick={clickRoomCost1}/>
-                                            <label className="form-check-label" htmlFor="inlineRadio1">Twin</label>
-                                            <div className={"col"}>{data.roomTwinCost}</div>
-
+                                    <div className={"text-center align-items-center px-5 py-3"}>
+                                        <div className={"container p-4"}>
+                                            <div className={"row"}>
+                                                <div className={"col"}>
+                                                    <input className="form-check-input mx-4" type="radio" name="inlineRadioOptions" id="inlineRadio1" onClick={clickRoomCost1}/>
+                                                    <label className="form-check-label" htmlFor="inlineRadio1">Twin</label>
+                                                </div>
+                                                <div className={"col p-0"}>{data.roomTwinCost}</div>
+                                            </div>
                                         </div>
 
-                                        <div className="form-check form-check-inline col">
-                                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" onClick={clickRoomCost2}/>
-                                            <label className="form-check-label" htmlFor="inlineRadio2">Family</label>
-                                            <div className={"col"}>{data.roomFamilyCost}</div>
+                                        <div className={"container p-4"}>
+                                            <div className={"row"}>
+                                                <div className={"col"}>
+                                                    <input className="form-check-input mx-4" type="radio" name="inlineRadioOptions" id="inlineRadio1" onClick={clickRoomCost2}/>
+                                                    <label className="form-check-label" htmlFor="inlineRadio1">Family</label>
+                                                </div>
+                                                <div className={"col p-0"}>{data.roomFamilyCost}</div>
+                                            </div>
                                         </div>
-
                                         <button className={"col btnDate"} onClick={clickNextE}><span>예약하기</span>Payment</button>
                                     </div>
                                 </div>
