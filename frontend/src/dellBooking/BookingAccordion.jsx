@@ -38,10 +38,9 @@ function BookingAccordion() {
     const getSDate = searchParams.get('sDate');
     const getEDate = searchParams.get('eDate');
 
-
-    // datepicker 변수 / datepicker data 가져와 연동
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+
 
     useEffect(() => {
 
@@ -54,6 +53,8 @@ function BookingAccordion() {
         setStartDate(new Date(now()));}
         }
 
+
+
     , [])
 
 
@@ -62,6 +63,9 @@ function BookingAccordion() {
         setStartDate(start);
         setEndDate(end);
     };
+
+
+    // -----------------date picker type convert--------------------
 
 
     // hotel List 가져오기
@@ -206,7 +210,8 @@ function BookingAccordion() {
                                             />
                                         </div>
                                         <div className={"col-2"}>
-                                            <div></div>
+                                            <div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
