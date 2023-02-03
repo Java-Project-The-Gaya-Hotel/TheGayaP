@@ -1,10 +1,6 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Link, Outlet} from "react-router-dom";
-import InquiryHotelInfo from "./InquiryHotelInfo/InquiryHotelInfo";
-import InquiryList from "./inquiryListComp/InquiryList";
-import InquiryWrite from "./InquiryWriteComp/InquiryWrite";
 import "./InquiryMain.css"
-
 
 
 const styles={

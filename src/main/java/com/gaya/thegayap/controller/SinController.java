@@ -60,11 +60,11 @@ public class SinController {
      * @param hotelName 호텔이름
      * @param sDate 체크인 날짜
      * @param eDate 체크아웃 날짜
-     * @param count 인원 수
+     * @param adultCount 인원 수
      * @return
      */
     @GetMapping("/roomlist")
-    public List<SinRoomDto> roomList(@RequestParam("hotelName") String hotelName, @RequestParam("sDate") String sDate, @RequestParam("eDate") String eDate, @RequestParam("count") String count) {
+    public List<SinRoomDto> roomList(@RequestParam("hotelName") String hotelName, @RequestParam("sDate") String sDate, @RequestParam("eDate") String eDate, @RequestParam("adultCount") int adultCount) {
 //        어떠한 정보들이 넘어오겠는가
 //        예약하려는 호텔/ 체크인시간/ 체크아웃시간/ 몇박/ 인원수
 
@@ -76,7 +76,7 @@ public class SinController {
 //            String sDate = "2023-01-31";
 //            String eDate = "2023-02-05";
 
-            List<SinRoomDto> ableRoomList = sinService.checkRoomList(hotelName, sDate, eDate);
+            List<SinRoomDto> ableRoomList = sinService.checkRoomList(hotelName, sDate, eDate,adultCount);
 
             return ableRoomList;
 

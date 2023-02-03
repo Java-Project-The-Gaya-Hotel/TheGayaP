@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
-import styled from 'styled-components'
 import RoomCondition from "./RoomCondition";
 import "../dellMain/dellmainCss/BtnDateChoose.css"
 import "./dellBookingCss/NavColor.css"
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 
@@ -21,28 +20,27 @@ function BookingRoom() {
     const totalCount = searchParams.get('total')
     const hotelName = searchParams.get('hotelName');
     const [hotelRoomList, setHotelRoomList] = useState([]);
-    let startDate = searchParams.get('sDate');
-    let endDate = searchParams.get('eDate');
-    const [roomCode , setRoomCode] =useState([]);
+    const startDate = searchParams.get('sDate');
+    const endDate = searchParams.get('eDate');
 
-    startDate = moment().format('YYYY-MM-DD')
-    endDate = moment().format('YYYY-MM-DD')
+
 
 
     //date moment 설정하기
 
 
-
+    // 받아온 정보들로 axios 통신하여 예약이 중첩되지 않은 방을 가져오는 코드
     useEffect(() => {
+
+
+
+
         axios.get("http://localhost:8080/gaya/roomlist", {
             params: {
-                hotelName: hotelName,
-                sDate: startDate,
-                eDate: endDate,
-                count: adultCount,
-                childCount:childCount,
-                total:totalCount,
-                roomCode:roomCode
+                hotelName: searchParams.get('hotelName'),
+                sDate: searchParams.get('sDate'),
+                eDate: searchParams.get('eDate'),
+                adultCount:searchParams.get('adultCount'),
 
             }
         })

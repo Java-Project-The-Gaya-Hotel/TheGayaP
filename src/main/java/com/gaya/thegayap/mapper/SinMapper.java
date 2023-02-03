@@ -4,6 +4,7 @@ import com.gaya.thegayap.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface SinMapper {
@@ -30,11 +31,11 @@ public interface SinMapper {
 
     void insertReply(SinAnswerChatDto sinAnswerChatDto);
 
-    List<SinRoomDto> getHotelRoomList(int hotelNum);
+    List<SinRoomDto> getHotelRoomList(SinFilterRoomDto sinFilterRoomDto);
 
     List<SinRoomDto> getStayRoomList(int hotelNum);
 
-    List<SinRoomDto> checkBookOverlap(SinReservDto build);
+    List<SinRoomDto> checkBookOverlap(SinFilterRoomDto sinFilterRoomDto);
 
     SInRoomCostDto getRoomAndMealCost(String roomCode);
 }

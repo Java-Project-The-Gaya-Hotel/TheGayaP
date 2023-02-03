@@ -6,10 +6,8 @@ import {ko} from "date-fns/esm/locale";
 import axios from "axios";
 import "../dellMain/dellmainCss/BtnDateChoose.css"
 import "../dellBooking/dellBookingCss/AccoCss.css"
-import data from "bootstrap/js/src/dom/data";
 import Swal from "sweetalert2";
 import {now} from "moment";
-import styled from "styled-components";
 
 const styles = {
     inputBox: {
@@ -92,7 +90,26 @@ function BookingAccordion() {
 
     const navigate = useNavigate();
     const clickE = () => {
-        navigate(`/reservroom?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}`, {replace: true})};
+        // navigate(`/reservroom?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}`)
+
+        axios.get("http://localhost:8080/gaya/roomlist", {
+            params: {
+                hotelName: "서울가야호텔",
+                sDate: "2023-02-15",
+                eDate: "2023-02-17",
+                adultCount: 3,
+
+            }
+        })
+            .then((req) => {
+                const {data} = req
+                console.log(data)
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    };
+
 
 // 뒤로가기 클릭 시 이전 페이지가 아닌 메인으로 돌아가게 만듬. 기본 값 : false
 
@@ -203,7 +220,7 @@ function BookingAccordion() {
                                                 endDate={endDate}
                                                 selectsRange
                                                 minDate={new Date(now())}
-                                                maxDate={addDays(startDate, 29)}
+                                                maxDate={addDays(startDate,29)}
                                                 locale={ko}
                                                 monthsShown={2}
                                                 inline
