@@ -121,18 +121,6 @@ function ReservationPageDetail2() {
     }
 
         /////////////////////////////////////////////////////////
-    const test = () => {
-        console.log(
-            {hotelName: hotelName,
-                roomCode: roomCode,
-                customerName: name,
-                checkIn: startDate,
-                checkOut: endDate,
-                nights: nights,
-                reservationPeople: totalCount,
-                totalCost: roomCost}
-        )
-    }
 
     const style = {
         boxSize: {
@@ -180,7 +168,6 @@ function ReservationPageDetail2() {
         <div>
             {/*main*/}
             <div className={"container"}>
-            <button onClick={test}>테스트</button>
                 {/*breadcrumb*/}
                 <CrumbAni>
                     <section>

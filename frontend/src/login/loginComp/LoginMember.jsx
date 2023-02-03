@@ -110,7 +110,7 @@ function LoginMember(props) {
                                 찾기
                             </button>
                             {findId && (
-                              <Modal closeModal={() => setFindId(!findId)}><FindId/></Modal>
+                              <Modal closeModal={() => setFindId(!findId)}><FindId closeModal={() => setFindId(!findId)}/></Modal>
                             )}
                             <button className={"btn btn-secondary p-1"} style={{borderRadius: 0}}>비밀번호 찾기</button>
                         </div>

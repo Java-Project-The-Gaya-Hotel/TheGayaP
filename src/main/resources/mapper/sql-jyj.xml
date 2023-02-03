@@ -96,4 +96,6 @@
         WHERE member_email = #{memberEmail} AND member_name = #{memberName}
     </select>
 
+<!--    예약 찾기 -->
+
 </mapper>

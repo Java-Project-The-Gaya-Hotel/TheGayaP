@@ -15,7 +15,7 @@ function Modal(props) {
       <div className={"modalBody"}>
         <div>
           <div className={"mb-4"}>
-            <h4>아이디 찾기</h4>
+            <h4><span></span>찾기</h4>
             <button id={"modalCloseBtn"} onClick={closeModal}>
               ✖
             </button>

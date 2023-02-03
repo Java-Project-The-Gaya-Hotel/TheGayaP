@@ -11,6 +11,12 @@ function FindId(props) {
   const [memberId, setMemberId] = useState("");
 
   const [isFind, setIsFind] = useState(true);
+  const [isMemberId, setIsMemberId] = useState(true);
+
+  function closeModal() {
+    props.closeModal();
+  }
+
 
   const findIdBtn = () => {
     axios.get("http://localhost:8080/login/findId",
@@ -20,9 +26,13 @@ function FindId(props) {
 
       .then((req) => {
         console.log("데이터 전송 성공")
-        console.log(req.data);
         setMemberId(req.data);
         setIsFind(false);
+        if (memberId === "") {
+          setIsMemberId(false);
+        }
+        console.log(memberId);
+
       }).catch(err => {
       console.log(`데이터 전송 실패 ${err}`)
     })
@@ -43,8 +53,16 @@ function FindId(props) {
           <button className={"btn btn-primary mt-4"} onClick={findIdBtn}>확인</button>
         </div> :
         <div>
-          <p>{name} 님의 ID</p>
-          <p>[{memberId}]</p>
+          { isMemberId ?
+            <div>
+              <p>{name} 님의 ID</p>
+              <p>[{memberId}]</p>
+            </div> :
+            <div className={"mt-5"}>
+              <p>{email} 로 가입된 아이디가 존재하지 않습니다.</p>
+            </div>
+          }
+          <button onClick={closeModal} className={"btn btn-primary mt-4"}>확인</button>
         </div>
       }
     </div>

@@ -1,7 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
+import Modal from "./Modal";
+import FindResv from "./FindResv";
 
 // 비회원 예약찾기
 function NotMember(props){
+
+    const [findResv, setFindResv] = useState(false);
+
+
     return(
         <div>
             <div className={"border border-1 border-top-0 border-dark "}>
@@ -19,7 +25,10 @@ function NotMember(props){
 
                                 <div className={'col-4 p-0 d-flex row'}>
                                     {/*로그인 버튼*/}
-                                    <button className={"custom-btn btn-Login fw-bolder"}>예약 찾기</button>
+                                    <button onClick={() => setFindResv(!findResv)} className={"custom-btn btn-Login fw-bolder"}>예약 찾기</button>
+                                    {findResv && (
+                                      <Modal closeModal={() => setFindResv(!findResv)}><FindResv closeModal={() => setFindResv(!findResv)}/></Modal>
+                                    )}
                                 </div>
                             </div>
                         </div>
