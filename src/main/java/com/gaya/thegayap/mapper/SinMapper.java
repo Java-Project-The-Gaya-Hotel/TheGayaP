@@ -35,7 +35,7 @@ public interface SinMapper {
 
     List<SinRoomDto> getStayRoomList(int hotelNum);
 
-    List<SinRoomDto> checkBookOverlap(SinFilterRoomDto sinFilterRoomDto);
+    List<SinRoomDto> checkBookOverlap();
 
     SInRoomCostDto getRoomAndMealCost(String roomCode);
 }

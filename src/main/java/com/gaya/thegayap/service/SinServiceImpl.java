@@ -183,8 +183,9 @@ public class SinServiceImpl implements SinService {
             }
 
 
-            reservationList = sinMapper.checkBookOverlap(SinFilterRoomDto.builder().hotelNum(hotelNum).checkIn(sDate).checkOut(eDate).adultCount(adultCount).build());
+            reservationList = sinMapper.checkBookOverlap();
 
+            System.out.println(reservationList);
 
             for (SinRoomDto sinRoomDto : roomList) {
                 roomMap.put(sinRoomDto.getRoomCode(), sinRoomDto);
@@ -194,7 +195,7 @@ public class SinServiceImpl implements SinService {
             if (reservationList != null) {
                 for (SinRoomDto sinRoomDto : reservationList) {
 //            동일한 코드가 있을시 dto를 null 처리
-                    roomMap.put(sinRoomDto.getRoomCode(), null);
+                    roomMap.put(sinRoomDto.getReservationRoomCode(), null);
                 }
             }
 
