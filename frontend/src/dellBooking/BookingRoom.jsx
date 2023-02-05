@@ -37,7 +37,7 @@ function BookingRoom() {
 
         axios.get("http://localhost:8080/gaya/roomlist", {
             params: {
-                hotelName: searchParams.get('hotelName'),
+                hotelNum: searchParams.get('hotelNum'),
                 sDate: searchParams.get('sDate'),
                 eDate: searchParams.get('eDate'),
                 adultCount:searchParams.get('adultCount'),

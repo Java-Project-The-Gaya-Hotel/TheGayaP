@@ -147,14 +147,14 @@ public class SinServiceImpl implements SinService {
     /**
      * 예약된 방을 필터하여 방의 리스트를 보냄
      *
-     * @param hotelName  호텔 이름
+     * @param hotelNum  호텔 DB번호
      * @param sDate      체크인 날짜
      * @param eDate      체크아웃 날짜
      * @param adultCount 어른 인원수
      * @return
      */
     @Override
-    public List<SinRoomDto> checkRoomList(String hotelName, String sDate, String eDate, int adultCount) {
+    public List<SinRoomDto> checkRoomList(int hotelNum, String sDate, String eDate, int adultCount) {
 
         //  전체 방 리스트
         List<SinRoomDto> roomList;
@@ -168,8 +168,6 @@ public class SinServiceImpl implements SinService {
         //      필터링 할 Map
         Map<String, SinRoomDto> roomMap = new HashMap<>();
 
-        //  호텔 이름으로 호텔 번호 불러오기
-        int hotelNum = sinMapper.getHotelNum(hotelName);
 
 
 

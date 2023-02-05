@@ -21,10 +21,9 @@ public class SinReservDto {
     private int nights;
     private int breakfastAdultNum;
     private int breakfastChildNum;
-
-
     private int reservationPeople;
     private String reservationRequest;
+    private String totalCost;
 
 
 }
