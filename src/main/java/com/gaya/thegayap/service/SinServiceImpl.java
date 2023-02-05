@@ -183,7 +183,7 @@ public class SinServiceImpl implements SinService {
             }
 
 
-            reservationList = sinMapper.checkBookOverlap();
+            reservationList = sinMapper.checkBookOverlap(SinFilterRoomDto.builder().hotelNum(hotelNum).checkIn(sDate).checkOut(eDate).adultCount(adultCount).build());
 
             System.out.println(reservationList);
 

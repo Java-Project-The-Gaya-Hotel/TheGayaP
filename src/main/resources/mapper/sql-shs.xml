@@ -56,13 +56,25 @@
 
     <!--    예약 중복 확인-->
     <select id="checkBookOverlap"  resultType="com.gaya.thegayap.dto.SinRoomDto">
-        select rt.reservation_room_code
-        from reservation_table as rt
-                 left join hotel_room_table as ht
-                           on rt.reservation_room_code = ht.room_code
-        where ht.room_hotel_num = 1
-          and ht.room_max_adult >= 3
-          and reservation_check_out > '2023-02-16'  and '2023-02-17' > reservation_check_in;
+
+        <choose>
+            <when test="hotelNum.equals(1)||hotelNum.equals(16)">
+                select rt.reservation_room_code
+                from reservation_table as rt
+                left join hotel_room_table as ht
+                on rt.reservation_room_code = ht.room_code
+                where ht.room_hotel_num = #{hotelNum}
+                and ht.room_max_adult >= #{adultCount}
+                and reservation_check_out > #{checkIn} and #{checkOut} > reservation_check_in;
+            </when>
+            <otherwise>
+                select reservation_room_code
+                from reservation_table
+                where reservation_hotel_num = #{hotelNum}
+                and reservation_check_out > #{checkIn} and #{checkOut} > reservation_check_in;
+            </otherwise>
+
+        </choose>
     </select>
 
     <!--    호텔 이름으로 호텔 번호 불러오기-->

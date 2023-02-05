@@ -90,24 +90,8 @@ function BookingAccordion() {
 
     const navigate = useNavigate();
     const clickE = () => {
-        // navigate(`/reservroom?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}`)
+        navigate(`/reservroom?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}`)
 
-        axios.get("http://localhost:8080/gaya/roomlist", {
-            params: {
-                hotelName: "서울가야호텔",
-                sDate: "2023-02-15",
-                eDate: "2023-02-17",
-                adultCount: 3,
-
-            }
-        })
-            .then((req) => {
-                const {data} = req
-                console.log(data)
-            })
-            .catch(e => {
-                console.log(e)
-            })
     };
 
 
