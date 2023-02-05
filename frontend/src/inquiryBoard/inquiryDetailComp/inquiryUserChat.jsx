@@ -3,19 +3,22 @@ import React from "react";
 function InquiryUserChat(props) {
 
     return (
-        <div>
+        <div className={"container"}>
             {/*유저 채팅박스*/}
-            <div id={"user_chat_box"} className={"col-4 text-start"}>
+            <div id={"user_chat_box"} className={"col-5 text-start"}>
                 <div className={"chat_box_for_user mt-3"}>
-                    <div>
-                        <strong className={"chat_name me-1"}>{props.data.answerUserName}</strong>
-                        <span className={"chat_date"}>{props.data.answerCreateDate}</span>
+
+                    <div className={"container row justify-content-around align-content-center m-0 p-0"}>
+                        <div className={"chat_name fw-bold h5 col"}>{props.data.answerUserName}</div>
+                        <span className={"chat_date col small fw-lighter"}>{props.data.answerCreateDate}</span>
                     </div>
-                    <div className={"chat_text-box bg-info form-control p-3"}>
+
+                    <div className={"m-2 p-2 chat_text-box form-control  border border-1 border-dark"}>
                         <div className={"chat_box"}>
-                            <p className={"chat_text"}>{props.data.answerContents}</p>
+                            <div className={"chat_text"}>{props.data.answerContents}</div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

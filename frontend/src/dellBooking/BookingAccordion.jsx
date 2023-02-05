@@ -146,7 +146,6 @@ function BookingAccordion() {
                 icon: 'info',
                 title: '확인해주세요!',
                 text: ' 총 인원 수는 4명까지 선택할 수 있습니다. ',
-                footer: '<a href=""> 고객문의 안내는 여기로 </a>'
             })
         } else {
             setChildCount(child);

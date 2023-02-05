@@ -57,7 +57,7 @@ function RoutesLayout(props) {
                 <nav role="navigation">
                     <div style={styles.LiFont}>
                         <ul className={"row row-cols-auto justify-content-end text-center px-5 pt-2"}>
-                            <li className={"col"}>{sessionStorage.getItem("loginInfo") ? <Link onClick={logout}>Log out</Link> : <Link to={"/login"}>login</Link>}</li>
+                            <li className={"col"}>{sessionStorage.getItem("loginInfo") ? <Link to={"/"} onClick={logout}>Log out</Link> : <Link to={"/login"}>login</Link>}</li>
                             <li className={"col"}>{sessionStorage.getItem("loginInfo") != null ? null : <Link to={"/join"}>Join Us</Link>}</li>
                             <li className={"col"}>{sessionStorage.getItem("loginInfo") != null ? <Link to={"/mypage"}>My Page</Link> : null}  </li>
                         </ul>

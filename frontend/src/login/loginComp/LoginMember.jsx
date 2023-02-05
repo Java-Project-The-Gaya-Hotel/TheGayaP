@@ -114,16 +114,13 @@ function LoginMember(props) {
                             <div className={"row mt-2"}>
                                 <div className={'col-10'}>
                                     {/*아이디*/}
-                                    <input type={"text"} className={"col-11"} value={memberId}
-                                           placeholder={"아이디 or 회원 번호"} onChange={onChangeMemberId}/>
+                                    <input type={"text"} className={"col-11"} value={memberId} placeholder={"아이디 or 회원 번호"} onChange={onChangeMemberId}/>
                                     {/*비밀번호*/}
-                                    <input type={"password"} className={"col-11"} placeholder={"비밀번호"}
-                                           onChange={onChangeMemberPw}/>
+                                    <input type={"password"} className={"col-11"} placeholder={"비밀번호"} onChange={onChangeMemberPw}/>
                                 </div>
                                 <div className={'col-2 p-0 d-flex row'}>
                                     {/*로그인 버튼*/}
-                                    <button className={"custom-btn btn-Login"} style={{borderRadius: 0}}
-                                            onClick={loginUser}>로그인
+                                    <button className={"custom-btn btn-Login"} style={{borderRadius: 0}} onClick={loginUser}>로그인
                                     </button>
                                 </div>
                             </div>

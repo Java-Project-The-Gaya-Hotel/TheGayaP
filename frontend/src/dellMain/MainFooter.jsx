@@ -24,12 +24,12 @@ function MainFooter() {
 
                             <div className="col-md-6 col-lg-2 page-more-info">
                                 <div className="footer-title">
-                                    <h4>Links</h4>
+                                    <h4>Reference</h4>
                                 </div>
                                 <ul>
-                                    <li><Link to={"/reservation"}>Reservation</Link></li>
-                                    <li><Link to={"/reservation"}>Reservation</Link></li>
-                                    <li><Link to={"/reservation"}>Reservation</Link></li>
+                                    <li><a href={"https://www.shillahotels.com/index.do"} target={"_blank"}>The SHILLA </a></li>
+                                    <li><a href={"https://www.josunhotel.com/intro.do"} target={"_blank"}>Josun Hotel </a></li>
+                                    <li><Link to={"https://www.google.com/"} target={"_blank"}>Google</Link></li>
                                 </ul>
                             </div>
 

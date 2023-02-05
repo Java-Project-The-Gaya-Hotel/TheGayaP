@@ -1,8 +1,13 @@
 import React from "react";
 
-function IntroPageMain(){
-    return(
-      <h3 className={"text-opacity-25"}>개요</h3>
+function IntroPageMain() {
+    return (
+        <div>
+            <div>
+                개요
+            </div>
+        </div>
     )
 }
+
 export default IntroPageMain;

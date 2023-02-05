@@ -3,8 +3,26 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {AuthorityCheck, GetMemberIdByToken} from "../../functiontocheck/FunctionToCheck";
 
+
+const styles1 = {
+    fontText:{
+        color:"rgb(219,0,0)"
+    }
+}
+const styles2 = {
+    fontText:{
+        color:"rgb(0,0,0)"
+    }
+}
+
+
+
 //문의 게시글의 정보를 가진 컴포넌트
 function InquiryItem(props) {
+    // const styleColor = () =>{
+    //     if(props.data.inquiryStatus === "Y"){
+    //
+    //     }}
 
     const [goNum, setGoNum] = useState();
     const [title, setTitle] = useState();
@@ -60,7 +78,7 @@ function InquiryItem(props) {
 
         <tr key={props.data.inquiryNum} onClick={onClickHandler} style={{cursor: "pointer"}}>
             <td>{props.data.inquiryHotelName}</td>
-            <td>{title}</td>
+            <td colSpan={2}>{title}</td>
             <td>{inquiryId}</td>
             <td>{props.data.inquiryCreateDate}</td>
             <td>{props.data.inquiryStatus}</td>

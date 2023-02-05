@@ -42,34 +42,46 @@ function InquiryDetail() {
 
 
     return (
-        <div className={"container min-vh-100 vw-50"}>
-            <div className={"row"}>
+        <div className={"container min-vh-100 "}>
+            <div className={"row my-4"}>
 
                 {/*고객 문의 헤더*/}
-                <div className={"d-grid inquiry_header col-10 "}>
-                    <div className={"border-bottom"}>
-                        <h1>고객 문의</h1>
-                    </div>
-                    <div className={"inquiry_status"}>
-                        <p>현재 답변 단계 = {userParam.get('status')}</p>
-                    </div>
-                    {/*고객이 작성한 제목*/}
-                    <div className={"inquiry_title"}>
-                        <p className={"border-bottom"}>문의 제목 = {userParam.get('title')}</p>
-                    </div>
-                </div>
+                <div className={"container inquiry_header mb-4"}>
+                    <h3 className={"fw-bold m-3"}> 고객 문의 </h3>
 
-                {/* 전체 채팅 박스*/}
-                <div id={"chat"} className={"text-center d-grid col-10 "}>
-                    {
-                        qaDetailData.map((item, idx) => {
-                            return (item.answerIsAdmin === "N" ? <InquiryUserChat data={item} key={idx}/> :
-                                <InquiryAdminChat data={item} key={idx}/>)
-                        })
-                    }
+                    {/*고객 문의 status*/}
+                    <div className={"container p-3"}>
+                        <div className={"mx-5 px-5"}>
+                            <table className={"table text-center"}>
+                                <thead className={"table-bordered border-dark"}>
+                                <tr>
+                                    <th>현재 답변 단계</th>
+                                    <th>문의 제목</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{userParam.get('status')}</td>
+                                    <td>{userParam.get('title')}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                <InquiryReplyWrite qaNum={userParam.get('idx')}/>
+                <hr/>
+                {/* 전체 채팅 박스*/}
+                <div className={"container"}>
+                    <div id={"chat"} className={"text-center"}>
+                        {
+                            qaDetailData.map((item, idx) => {
+                                return (item.answerIsAdmin === "N" ? <InquiryUserChat data={item} key={idx}/> : <InquiryAdminChat data={item} key={idx}/>)
+                            })
+                        }
+                    </div>
+                </div>
             </div>
+            <InquiryReplyWrite qaNum={userParam.get('idx')}/>
         </div>
     );
 }

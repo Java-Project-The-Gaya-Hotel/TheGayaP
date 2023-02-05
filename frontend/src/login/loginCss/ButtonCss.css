@@ -10,6 +10,30 @@
     position: relative;
     display: inline-block;
 }
+.custom-btn2 {
+    font-size: 18px;
+    width: 130px;
+    height: 45px;
+    padding: 10px;
+    border: 1px solid #000;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+}
+.custom-btnLR {
+    font-size: 18px;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+}
+
 .btn-Login {
     background: #000;
     color: #fff;
@@ -35,4 +59,47 @@
 }
 .btn-Login:active {
     top: 2px;
+}
+
+.custBtn {
+    position: relative;
+    color: #000;
+    z-index: 2;
+    line-height: 40px;
+    padding: 0;
+}
+.custBtn:hover{
+    border: none;
+}
+.custBtn:before,
+.custBtn:after {
+    position: absolute;
+    content: "";
+    width: 0%;
+    height: 0%;
+    border: 2px solid;
+    z-index: -1;
+    transition: all 0.3s ease;
+}
+.custBtn:before {
+    top: 0;
+    left: 0;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+    border-top-color: #000;
+    border-left-color: #000;
+}
+.custBtn:after{
+    bottom: 0;
+    right: 0;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-bottom-color: #000;
+    border-right-color: #000;
+}
+.custBtn:hover:before,
+.custBtn:hover:after {
+    border-color: #000;
+    height: 100%;
+    width: 100%;
 }

@@ -5,8 +5,18 @@ import {useNavigate} from "react-router-dom";
 import InquiryPagination from "./InquiryPageNation";
 import {GetMemberIdByToken} from "../../functiontocheck/FunctionToCheck";
 
+// - Page 기능 List
+// 문의 게시판 테이블
+// 테이블 보여지는 개수
+// 페이지네이션
+// 글 작성하기
+
+
+
 // 문의 게시글 테이블
 function InquiryListTable(props) {
+
+
     const [QAData, setQAData] = useState([]);
     const [memberId, setMemberId] = useState("");
     const [limit, setLimit] = useState(10);
@@ -42,60 +52,57 @@ function InquiryListTable(props) {
     }
 
     return (
+
         <div>
+            <div className={"container"}>
+                <div className={"row justify-content-center p-5"}>
+                    <div className="card text-center col-md-11 p-0 border-dark">
+                        <div className="card-header h4 border-dark bg-white"> 고객 문의 게시판</div>
+                        <div className="card-body container">
+                            <h5 className="card-title m-3">고객 문의</h5>
+                            <div className={"container p-3"}>
+                                <table className={'table table-hover text-center'}>
+                                    <thead className={"border-dark table-dark"}>
+                                    <tr>
+                                        <th>문의 호텔</th>
+                                        <th colSpan={2}>문의 제목</th>
+                                        <th>문의 고객명</th>
+                                        <th>문의 날짜</th>
+                                        <th>문의 상태</th>
+                                    </tr>
+                                    </thead>
 
-            <div className={"text-center border-bottom"}>
-                <h1>고객 문의 게시판</h1>
-            </div>
+                                    <tbody>
+                                    {
+                                        QAData.slice(offset, offset + limit).map((item, idx) => {
+                                            return <InquiryItem key={idx} data={item} memberId={memberId}/>
+                                        })
+                                    }
+                                    </tbody>
+                                </table>
 
-            <label>
-                페이지 당 표시할 게시물 수:&nbsp;
-                <select
-                    type="number"
-                    value={limit}
-                    onChange={({target: {value}}) => setLimit(Number(value))}
-                >
-                    <option value="10">10</option>
-                    <option value="12">12</option>
-                    <option value="20">20</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select>
-            </label>
+                                <label>
+                                    페이지 당 표시할 게시물 수:&nbsp;
+                                    <select type="number" value={limit} onChange={({target: {value}}) => setLimit(Number(value))}>
+                                        <option value="10">10</option>
+                                        <option value="12">12</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </label>
+                                <div className={"d-flex justify-content-end"}>
+                                    <button className={"custom-btn2 custBtn"} onClick={goWrite}>문의 작성</button>
+                                </div>
+                            </div>
+                        </div>
 
-            <div className={"row"}>
-                <div className={"col-md-10 m-1"}>
-                    <table className={'table table-striped table-hover text-center'}>
-                        <thead>
-                        <tr>
-                            <th width={"15%"}>문의 호텔</th>
-                            <th width={"40%"}>문의 제목</th>
-                            <th width={"15%"}>문의 고객명</th>
-                            <th width={"20%"}>문의 날짜</th>
-                            <th width={"10%"}>문의 상태</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            QAData.slice(offset, offset + limit).map((item, idx) => {
-                                return <InquiryItem key={idx} data={item} memberId={memberId}/>
-                            })
-                        }
-                        </tbody>
-                    </table>
+                        <div className="card-footer text-muted border-dark bg-white">
+                            <InquiryPagination total={QAData.length} limit={limit} page={page} setPage={setPage}/>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className={"d-flex justify-content-end col-10"}>
-                <button onClick={goWrite}>문의 작성</button>
-            </div>
-            <footer>
-                <InquiryPagination
-                    total={QAData.length}
-                    limit={limit}
-                    page={page}
-                    setPage={setPage}
-                />
-            </footer>
         </div>
 
     );
