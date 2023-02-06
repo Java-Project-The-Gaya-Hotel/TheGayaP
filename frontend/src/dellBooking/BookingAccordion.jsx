@@ -260,11 +260,14 @@ function BookingAccordion() {
                         </li>
 
                         <li className="item" id="support">
-                            <a href={"#support"} className="btnAcc">인원</a>
-                            <div className={"row d-flex text-end"}>
-                                <div className={"col"}>성인 : {adultCount} </div>
-                                <div className={"col"}>어린이 : {childCount}</div>
+                            <div className={"justify-content-between d-flex"}>
+                                <a href={"#support"} className="btnAcc">인원</a>
+                                <div className={"my-auto"}>
+                                    <span className={"pe-3"}>성인 : {adultCount} </span>
+                                    <span className={"pe-3"}>어린이 : {childCount} </span>
+                                </div>
                             </div>
+
                             <div className="subMenu">
 
                                 <div className={"container row align-items-center"}>
@@ -296,7 +299,7 @@ function BookingAccordion() {
                                                                 onClick={cdMinusBtn}>-
                                                         </button>
                                                     </div>
-                                                    <div className={"col"}><h4 className={"m-0"}>어린이 : {childCount}</h4>
+                                                    <div className={"col p-0"}><h4 className={"m-0"}>어린이 : {childCount}</h4>
                                                     </div>
                                                     <div className={"col"}>
                                                         <button className={"btn btn-outline-dark rounded-0"}

@@ -1,8 +1,6 @@
 import React, {useState} from "react";
 import LoginMember from "./LoginMember";
 import NotMember from "./NotMember";
-import loginMember from "./LoginMember";
-import notMember from "./NotMember";
 
 const styles={
     border:{

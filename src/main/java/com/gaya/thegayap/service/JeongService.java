@@ -20,4 +20,6 @@ public interface JeongService {
     List<JeongHotelDto> hotelList() throws Exception;
 
     void insertInquiry(SinInquiryDto inquiryDto) throws Exception;
+
+    List<JeongResvDto> notMemberResv(String customerName, int reservationNum) throws Exception;
 }

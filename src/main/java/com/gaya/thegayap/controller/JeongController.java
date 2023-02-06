@@ -1,7 +1,6 @@
 package com.gaya.thegayap.controller;
 
 
-import com.gaya.thegayap.configuration.SecurityConfig;
 import com.gaya.thegayap.dto.*;
 import com.gaya.thegayap.service.JeongService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,7 +128,23 @@ public class JeongController {
         return result;
     }
 
-    // 호텔리스트 불러오기
+    /**
+     * 고객이름과 예약번호로 예약 정보를 조회하는 컨트롤러
+     * @param customerName 고객이름
+     * @param reservationNum 예약번호
+     * @return 예약 정보
+     * @throws Exception
+     */
+    @GetMapping("/login/findResv")
+    public Object notMemberResvList(@RequestParam("customerName") String customerName, @RequestParam("reservationNum") int reservationNum) throws Exception {
+        List<JeongResvDto> notMemberResvList = jeongService.notMemberResv(customerName, reservationNum);
+
+        if (notMemberResvList.isEmpty()) return 0;
+
+        return notMemberResvList;
+    }
+
+//     호텔리스트 불러오기
     @GetMapping("/gaya/hotelList")
     public Object getHotelList() throws Exception {
         List<JeongHotelDto> hotelDto = jeongService.hotelList();

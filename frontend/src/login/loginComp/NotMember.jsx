@@ -6,38 +6,35 @@ import axios from "axios";
 // 비회원 예약찾기
 function NotMember(props){
 
+    const [resvList, setResvList] = useState([]);
     const [findResv, setFindResv] = useState(false);
-    const [customerInfo, setCustomerInfo] = useState("");
-    const [customerEmail, setCustomerEmail] = useState("");
-    const [customerTel, setCustomerTel] = useState("");
+    const [customerName, setCustomerName] = useState("");
+    const [reservationNum, setReservationNum] = useState("");
 
     const customerNameHandler = (e) => {
-        setCustomerInfo(e.target.value);
+        setCustomerName(e.target.value);
     }
 
-    const customerEmailHandler = (e) => {
-        setCustomerEmail(e.target.value);
+    const reservationNumHandler = (e) => {
+        setReservationNum(e.target.value);
     }
 
     const resvBtn = () =>{
-        setFindResv(!findResv)
+
         axios.get("http://localhost:8080/login/findResv", {params:
             {
-                customerName: customerInfo,
-                reservationNum: customerInfo,
-                customerEmail: customerEmail,
-                customerTel: customerTel
+                customerName: customerName,
+                reservationNum: reservationNum,
             }})
             .then((req) => {
                 console.log("데이터 전송 성공");
                 console.log(req.data);
-                // setMemberId(req.data);
-                // setIsFind(false);
-                // if (req.data === "") {
-                //     setIsMemberId(false);
-                // }
-                //
-                // console.log(memberId);
+                if(req.data === 0) alert('조회된 예약정보가 없습니다.');
+                else {
+                    setResvList(req.data[0]);
+                    setFindResv(!findResv);
+                }
+
 
             }).catch(err => {
                 console.log(`데이터 전송 실패 ${err}`)
@@ -53,17 +50,19 @@ function NotMember(props){
                             <div className={"row justify-content-center align-items-center"}>
                                 <h3 className={"text-center pb-4 fw-bolder"}>예약 찾기</h3>
                                 <div className={'col-8 mx-2'}>
-                                    {/* 예약 번호 or 이름 */}
-                                    <input onChange={customerNameHandler} type={"text"} className={"col-11 mb-3"} placeholder={"예약번호 or 이름"}/>
-                                    {/* 이메일 */}
-                                    <input onChange={customerEmailHandler} type={"text"} className={"col-11"} placeholder={"이메일"}/>
+                                    {/* 예약 번호 */}
+                                    <input onChange={reservationNumHandler} type={"text"} className={"col-11 mb-3"} placeholder={"예약번호"}/>
+                                    {/* 이름 */}
+                                    <input onChange={customerNameHandler} type={"text"} className={"col-11"} placeholder={"이름"}/>
                                 </div>
 
                                 <div className={'col-4 p-0 d-flex row'}>
                                     {/*로그인 버튼*/}
                                     <button onClick={resvBtn} className={"custom-btn btn-Login fw-bolder"}>예약 찾기</button>
                                     {findResv && (
-                                      <Modal closeModal={() => setFindResv(!findResv)}><FindResv closeModal={() => setFindResv(!findResv)}/></Modal>
+                                        <Modal closeModal={() => setFindResv(!findResv)}>
+                                            <FindResv closeModal={() => setFindResv(!findResv)} resvList={resvList}/>
+                                        </Modal>
                                     )}
                                 </div>
                             </div>

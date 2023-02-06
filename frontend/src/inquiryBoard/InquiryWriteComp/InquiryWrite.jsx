@@ -2,10 +2,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import "./InquiryWrite.css";
-import MainFooter from "../../dellMain/MainFooter";
-import {SessionCheck} from "../../functiontocheck/FunctionToCheck";
-import InquiryItem from "../inquiryListComp/InquiryItem";
-import InquiryPagination from "../inquiryListComp/InquiryPageNation";
 import {Link} from "react-router-dom";
 
 function InquiryWrite() {
