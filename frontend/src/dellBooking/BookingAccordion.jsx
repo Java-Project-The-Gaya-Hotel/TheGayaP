@@ -220,8 +220,8 @@ function BookingAccordion() {
                         <li className="item" id="support">
                             <a href="#support" className="btnAcc">인원
                                 <div className={"row d-flex text-end"}>
-                                    <div className={"col"}>성인 : {adultCount} </div>
-                                    <div className={"col"}>어린이 : {childCount}</div>
+                                    <div className={"col h5 fw-bold"}>성인 : {adultCount} </div>
+                                    <div className={"col h5 fw-bold"}>어린이 : {childCount}</div>
                                 </div>
                             </a>
                             <div className="subMenu">

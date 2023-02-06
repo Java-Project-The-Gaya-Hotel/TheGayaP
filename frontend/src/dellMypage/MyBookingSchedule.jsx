@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from "react-router-dom";
+import {AuthorityCheck, GetMemberIdByToken, SessionCheck} from "../functiontocheck/FunctionToCheck";
+import axios from "axios";
 
 const styles = {
     cardBox: {
@@ -7,15 +10,40 @@ const styles = {
 }
 
 function MyBookingSchedule() {
+    const [customerId , setCustomerId]=useState("");
+
+    const navi=useNavigate();
+
+    useEffect(()=>{
+        SessionCheck();
+        if (AuthorityCheck() === false) {
+            alert("토큰 만료.")
+            navi("/login")
+        } else {
+            GetMemberIdByToken().then(response => {
+                setCustomerId(response.data)
+                axios.get(
+                    "http://localhost:8080/mypage/reservationinfo",
+                    {params:{
+                            customerId :response.data,
+                        }}
+                ).then(response => {
+                    console.log(response.data);
+
+                })
+            })
+        }
+
+    },[])
+
     return (
         <div>
             <div className={"container"}>
                 <div className={"row justify-content-center p-5"}>
                     <div className="card text-center col-md-11 p-0 border-dark">
-                        <div className="card-header border-dark bg-white"> ~ 님 | No. ~</div>
+                        <div className="card-header border-dark bg-white"> {customerId} </div>
                         <div className="card-body" style={styles.cardBox}>
                             <h5 className="card-title">예약 확인</h5>
-                            {/*<div  className="card-text"></div>*/}
                             <div className={"container p-3"}>
 
                                 <table className={"table table-hover"}>
