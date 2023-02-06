@@ -38,7 +38,13 @@ function InquiryWrite() {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        console.log(data);
+        axios.post("http://localhost:8080/join/insert", data)
+            .then((req) => {
+                console.log("데이터 전송 성공")
+                console.log(data);
+            }).catch(err => {
+            console.log(`데이터 전송 실패 ${err}`)
+        })
 
     };
 
@@ -58,7 +64,7 @@ function InquiryWrite() {
                 </div>
 
                 {/* 문의 작성 페이지 */}
-                <div className={"w-50 mt-5"}>
+                <div className={"w-75 mt-5"}>
                     <form onSubmit={submitHandler}>
 
                         {/* 문의 내용 */}
