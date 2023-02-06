@@ -67,5 +67,10 @@ public class JeongServiceImpl implements JeongService{
         return jeongMapper.hotelList();
     }
 
+    @Override
+    public void insertInquiry(SinInquiryDto inquiryDto) throws Exception {
+        jeongMapper.insertInquiry(inquiryDto);
+    }
+
 
 }

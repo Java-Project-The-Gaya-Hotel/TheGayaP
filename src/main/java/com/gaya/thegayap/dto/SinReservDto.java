@@ -15,6 +15,12 @@ public class SinReservDto {
     private String roomCode;
     private String customerName;
     private String customerId;
+
+    private String customerEmail;
+    private String customerTel;
+    private String earnedPoints;
+    private String usedPoints;
+
     private String  checkIn;
     private String  checkOut;
     private String  reservationTime;
@@ -24,6 +30,8 @@ public class SinReservDto {
     private int reservationPeople;
     private String reservationRequest;
     private String totalCost;
+
+
 
 
 }

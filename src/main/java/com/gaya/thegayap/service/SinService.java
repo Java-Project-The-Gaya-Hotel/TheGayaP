@@ -15,6 +15,7 @@ public interface SinService {
 
     void reservationRoom(SinReservDto sinReservDto);
 
+
     List<SinInquiryDto> getQAList();
 
     List<String> getHotelName();

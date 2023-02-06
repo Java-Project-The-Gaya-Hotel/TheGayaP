@@ -16,9 +16,11 @@ public interface SinMapper {
 
 //
     int checkCodeOverlap(String code);
-    int getHotelNum(String hotelName);
 
     void reservationRoom(SinReservDto sinReservDto);
+
+    void insertCustomer(SinReservDto sinReservDto);
+
 
     List<SinInquiryDto> getQAList();
 

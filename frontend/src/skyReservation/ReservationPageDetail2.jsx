@@ -130,6 +130,8 @@ function ReservationPageDetail2() {
                     hotelNum: hotelNum,
                     roomCode: roomCode,
                     customerName: name,
+                    customerEmail: email,
+                    customerTel: num,
                     checkIn: startDate,
                     checkOut: endDate,
                     nights: nights,

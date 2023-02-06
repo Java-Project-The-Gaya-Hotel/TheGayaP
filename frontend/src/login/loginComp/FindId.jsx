@@ -25,12 +25,14 @@ function FindId(props) {
       })
 
       .then((req) => {
-        console.log("데이터 전송 성공")
+        console.log("데이터 전송 성공");
+        console.log(req.data);
         setMemberId(req.data);
         setIsFind(false);
         if (req.data === "") {
           setIsMemberId(false);
         }
+
         console.log(memberId);
 
       }).catch(err => {
@@ -42,6 +44,7 @@ function FindId(props) {
     <div>
       {isFind ?
         <div>
+          <h4 className={"mb-4"}>아이디 찾기</h4>
           <div className={"row mb-3 me-4"}>
             <label className={"form-label col-sm-3 my-auto"} htmlFor={"name"}><b>이름</b></label>
             <input className={"form-control col-sm"} type={"text"} id={"name"} onChange={(e) => {setName(e.target.value)}}/>

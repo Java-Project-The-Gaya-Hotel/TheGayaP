@@ -11,7 +11,7 @@ function FindResv(props) {
 
   return (
     <div>
-
+      <h4 className={"mb-4"}>예약 찾기</h4>
 
       <button onClick={closeModal} className={"btn btn-primary mt-4"}>확인</button>
     </div>

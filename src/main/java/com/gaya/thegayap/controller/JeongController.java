@@ -2,10 +2,7 @@ package com.gaya.thegayap.controller;
 
 
 import com.gaya.thegayap.configuration.SecurityConfig;
-import com.gaya.thegayap.dto.JeongCustomerDto;
-import com.gaya.thegayap.dto.JeongHotelDto;
-import com.gaya.thegayap.dto.JeongMemberDto;
-import com.gaya.thegayap.dto.JeongResvDto;
+import com.gaya.thegayap.dto.*;
 import com.gaya.thegayap.service.JeongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -128,16 +125,24 @@ public class JeongController {
     @GetMapping("/login/findId")
     public String findId(@RequestParam("memberName") String memberName, @RequestParam("memberEmail") String memberEmail) throws Exception {
 
-        System.out.println(memberEmail);
         String result = jeongService.findId(memberName, memberEmail);
         return result;
     }
 
+    // 호텔리스트 불러오기
     @GetMapping("/gaya/hotelList")
     public Object getHotelList() throws Exception {
         List<JeongHotelDto> hotelDto = jeongService.hotelList();
 
         return hotelDto;
+    }
+
+//    문의
+    // 문의 작성
+    @PostMapping("/qa/write")
+    public void writeInquiry(@RequestBody SinInquiryDto inquiryDto) throws Exception {
+
+        jeongService.insertInquiry(inquiryDto);
     }
 
 }

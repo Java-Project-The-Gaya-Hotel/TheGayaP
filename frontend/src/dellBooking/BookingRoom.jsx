@@ -56,10 +56,6 @@ function BookingRoom() {
     }, [])
 
 
-
-
-
-
     return (
         <div>
             {/*Bread crumb*/}

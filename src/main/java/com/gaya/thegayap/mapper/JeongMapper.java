@@ -26,4 +26,6 @@ public interface JeongMapper {
     String findId(String memberName, String memberEmail) throws Exception;
 
     List<JeongHotelDto> hotelList() throws Exception;
+
+    void insertInquiry(SinInquiryDto inquiryDto) throws Exception;
 }
