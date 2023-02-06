@@ -48,6 +48,7 @@ function ReservationPageDetail2() {
     const childCount = searchParams.get('childCount')
     const totalCount = searchParams.get('total')
     const hotelName = searchParams.get('hotelName');
+    const hotelNum = searchParams.get('hotelNum');
     const roomCode = searchParams.get('roomCode');
     const roomCost = searchParams.get('roomCost');
     const nights = searchParams.get('nights');
@@ -95,10 +96,10 @@ function ReservationPageDetail2() {
         } = response;
 
         if (success) {
-            axios.post("http://localhost:8080/gaya/bookRoom",
+            axios.post("http://localhost:8080/gaya/bookroom",
                 {
                     reservationNum: merchant_uid,
-                    hotelName: hotelName,
+                    hotelNum: hotelNum,
                     roomCode: roomCode,
                     customerName: name,
                     checkIn: startDate,
@@ -162,6 +163,30 @@ function ReservationPageDetail2() {
             setNum(num.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
         }
     }, [num]);
+
+    const reservButton = ()=>{
+        const userPayInfo = {
+            reservationNum: new Date().getTime(),
+            hotelNum: Number(hotelNum),
+            roomCode: roomCode,
+            customerName: name,
+            checkIn: startDate,
+            checkOut: endDate,
+            nights: Number(nights),
+            reservationPeople: Number(totalCount),
+            totalCost: roomCost
+        }
+        console.log(userPayInfo);
+        axios.post("http://localhost:8080/gaya/bookroom",
+            userPayInfo)
+            .then((req) => {
+                alert('결제 성공');
+                console.log("결제 성공");
+                // window.location.href = "/";
+            }).catch(err => {
+            console.log(`데이터 전송 실패 ${err}`)
+        })
+    }
 
 
     return (
@@ -232,6 +257,7 @@ function ReservationPageDetail2() {
                                 <div className={"container col text-center"}>
                                     <div className={"m-4 fw-bold h5"}>결제 하기</div>
                                     <button onClick={onClickPayment} className={"btnDate"} role={"button"}><span className="text">결제하기</span>Payment</button>
+                                    <button onClick={reservButton}>임시 버튼</button>
                                 </div>
                             </div>
 

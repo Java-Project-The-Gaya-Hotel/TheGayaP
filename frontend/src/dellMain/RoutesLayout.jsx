@@ -5,6 +5,7 @@ import "./dellmainCss/LayoutCss.css"
 import Menucon from "../mainImg/icons8-key.svg"
 import MainFooter from "./MainFooter";
 import {SessionCheck} from "../functiontocheck/FunctionToCheck";
+import Swal from "sweetalert2";
 
 
 const styles = {
@@ -43,12 +44,38 @@ function RoutesLayout(props) {
         //     setSessionValid(false);
     }
 
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
+
+
     const logout = () => {
-        if (window.confirm("로그아웃 하시겠습니까?")) {
-            sessionStorage.removeItem("token");
-            sessionStorage.removeItem("loginInfo");
-            window.location.href = "/";
-        }
+
+        swalWithBootstrapButtons.fire({
+            title: '로그아웃 하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                sessionStorage.removeItem("token");
+                sessionStorage.removeItem("loginInfo");
+
+                swalWithBootstrapButtons.fire(
+                    `로그아웃 되었습니다.`
+                ).then(result => {
+                    if (result.isConfirmed) window.location.href = "/";
+                })
+            }
+        })
+
     }
 
     return (
@@ -57,9 +84,12 @@ function RoutesLayout(props) {
                 <nav role="navigation">
                     <div style={styles.LiFont}>
                         <ul className={"row row-cols-auto justify-content-end text-center px-5 pt-2"}>
-                            <li className={"col"}>{sessionStorage.getItem("loginInfo") ? <Link to={"/"} onClick={logout}>Log out</Link> : <Link to={"/login"}>login</Link>}</li>
-                            <li className={"col"}>{sessionStorage.getItem("loginInfo") != null ? null : <Link to={"/join"}>Join Us</Link>}</li>
-                            <li className={"col"}>{sessionStorage.getItem("loginInfo") != null ? <Link to={"/mypage"}>My Page</Link> : null}  </li>
+                            <li className={"col"}>{sessionStorage.getItem("loginInfo") ?
+                                <Link to={"/"} onClick={logout}>Log out</Link> : <Link to={"/login"}>login</Link>}</li>
+                            <li className={"col"}>{sessionStorage.getItem("loginInfo") != null ? null :
+                                <Link to={"/join"}>Join Us</Link>}</li>
+                            <li className={"col"}>{sessionStorage.getItem("loginInfo") != null ?
+                                <Link to={"/mypage"}>My Page</Link> : null}  </li>
                         </ul>
                     </div>
                     <hr style={styles.HrHidden}/>
@@ -69,10 +99,13 @@ function RoutesLayout(props) {
                 </nav>
                 <div className="navbar-expand-md">
                     <div className="navbar-dark text-center">
-                        <button className="navbar-toggler w-75" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                        <button className="navbar-toggler w-75" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                                aria-expanded="false"
                                 aria-label="Toggle navigation">
                             {/*<span className="navbar-toggler-icon"></span> <span className="align-middle">Menu</span>*/}
-                            <span><img src={Menucon}/> </span> <span className="align-middle text-dark fw-bold">Menu</span>
+                            <span><img src={Menucon}/> </span> <span
+                            className="align-middle text-dark fw-bold">Menu</span>
                         </button>
                     </div>
                     <div className="text-center mt-3 collapse navbar-collapse" id="navbarNavDropdown">

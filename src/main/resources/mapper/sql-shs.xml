@@ -9,7 +9,7 @@
 <mapper namespace="com.gaya.thegayap.mapper.SinMapper">
 
 
-<!--    임시코드 시작-->
+    <!--    임시코드 시작-->
     <insert id="insertHotel" parameterType="com.gaya.thegayap.dto.SinDto">
         insert into hotel_table(hotel_name, hotel_addr, hotel_tel, hotel_meal_adult, hotel_meal_child)
         values (#{hotelName}, #{hotelAddr}, #{hotelTel}, #{hotelMealAdult}, #{hotelMealChild});
@@ -18,100 +18,124 @@
     <insert id="insertRoom" parameterType="com.gaya.thegayap.dto.SinDto2">
 
 
-
-        insert into hotel_room_table(room_hotel_idx, room_name, room_twin_cost, room_twin_weekend, room_code, room_max_adult)
-        values (#{roomHotelIdx}, #{roomName}, #{roomTwinCost}, #{roomTwinWeekend},#{roomCode}, #{roomMaxAdult});
+        insert into hotel_room_table(room_hotel_idx, room_name, room_twin_cost, room_twin_weekend, room_code,
+                                     room_max_adult)
+        values (#{roomHotelIdx}, #{roomName}, #{roomTwinCost}, #{roomTwinWeekend}, #{roomCode}, #{roomMaxAdult});
 
 
     </insert>
 
-<!--    임시코드 종료-->
+    <!--    임시코드 종료-->
 
-<!--    roomCode 중복확인-->
+    <!--    roomCode 중복확인-->
     <select id="checkCodeOverlap" parameterType="String" resultType="int">
 
 
-                select count(*) from hotel_room_table where room_code = #{code};
+        select count(*)
+        from hotel_room_table
+        where room_code = #{code};
 
     </select>
 
 
-<!--    호텔에 방 리스트-->
-    <select id="getHotelRoomList" parameterType="int" resultType="com.gaya.thegayap.dto.SinRoomDto">
+    <!--    호텔에 방 리스트-->
+    <select id="getHotelRoomList" parameterType="com.gaya.thegayap.dto.SinFilterRoomDto" resultType="com.gaya.thegayap.dto.SinRoomDto">
         SELECT *
         FROM hotel_room_table
         where room_hotel_num = #{hotelNum}
+          and room_max_adult >= #{adultCount}
     </select>
 
 
-<!--   스테이에 방 리스트 -->
+    <!--   스테이에 방 리스트 -->
     <select id="getStayRoomList" parameterType="int" resultType="com.gaya.thegayap.dto.SinRoomDto">
         SELECT *
         FROM stay_room_table
         where room_hotel_num = #{hotelNum}
     </select>
 
-<!--    예약 중복 확인-->
-    <select id="checkBookOverlap" parameterType="com.gaya.thegayap.dto.SinReservDto" resultType="com.gaya.thegayap.dto.SinRoomDto">
-        select reservation_room_code
-        from reservation_table
-        where reservation_hotel_num = #{hotelNum}
-        and reservation_check_out > #{checkIn} and #{checkOut} > reservation_check_in
+    <!--    예약 중복 확인-->
+    <select id="checkBookOverlap"  resultType="com.gaya.thegayap.dto.SinRoomDto">
+
+        <choose>
+            <when test="hotelNum.equals(1)||hotelNum.equals(16)">
+                select rt.reservation_room_code
+                from reservation_table as rt
+                left join hotel_room_table as ht
+                on rt.reservation_room_code = ht.room_code
+                where ht.room_hotel_num = #{hotelNum}
+                and ht.room_max_adult >= #{adultCount}
+                and reservation_check_out > #{checkIn} and #{checkOut} > reservation_check_in;
+            </when>
+            <otherwise>
+                select reservation_room_code
+                from reservation_table
+                where reservation_hotel_num = #{hotelNum}
+                and reservation_check_out > #{checkIn} and #{checkOut} > reservation_check_in;
+            </otherwise>
+
+        </choose>
     </select>
 
-<!--    호텔 이름으로 호텔 번호 불러오기-->
+    <!--    호텔 이름으로 호텔 번호 불러오기-->
     <select id="getHotelNum" parameterType="String" resultType="int">
-        select hotel_num from hotel_table
+        select hotel_num
+        from hotel_table
         where hotel_name = #{hotelName};
     </select>
 
-<!--    예약 DB 입력-->
+    <!--    예약 DB 입력-->
     <insert id="reservationRoom" parameterType="com.gaya.thegayap.dto.SinReservDto">
-        insert into reservation_table values (#{reservationNum},#{hotelNum},#{roomCode},#{customerName},#{customerId},#{checkIn},#{checkOut},NOW(),#{nights},#{breakfastAdultNum},#{breakfastChildNum},#{reservationPeople},#{totalCost},#{reservationRequest})
+        insert into reservation_table
+        values (#{reservationNum}, #{hotelNum}, #{roomCode}, #{customerName}, #{customerId}, #{checkIn}, #{checkOut},
+                NOW(), #{nights}, #{breakfastAdultNum}, #{breakfastChildNum}, #{reservationPeople}, #{totalCost},
+                #{reservationRequest})
     </insert>
 
-<!--    문의 게시글 -->
+    <!--    문의 게시글 -->
     <select id="getQAList" resultType="com.gaya.thegayap.dto.SinInquiryDto">
         select *
         from inquiry_table
-        where inquiry_deleted_yn ='N'
+        where inquiry_deleted_yn = 'N'
     </select>
-<!-- 전체 호텔 이름-->
+    <!-- 전체 호텔 이름-->
     <select id="getHotelName" resultType="String">
         select hotel_name
         from hotel_table
         where 1 = 1
     </select>
-<!-- 문의 답글 불러오기 -->
+    <!-- 문의 답글 불러오기 -->
     <select id="getAnswerList" parameterType="int" resultType="com.gaya.thegayap.dto.SinAnswerChatDto">
         select *
         from answer_table
         where answer_inquiry_num = #{idx}
     </select>
-<!-- 답글 DB 입력-->
+    <!-- 답글 DB 입력-->
     <insert id="insertReply" parameterType="com.gaya.thegayap.dto.SinAnswerChatDto">
-        insert into answer_table(answer_inquiry_num, answer_contents, answer_create_date, answer_user_name, answer_is_admin)
-        values (#{answerInquiryNum},#{answerContents},now(),#{answerUserName},#{answerIsAdmin});
+        insert into answer_table(answer_inquiry_num, answer_contents, answer_create_date, answer_user_name,
+                                 answer_is_admin)
+        values (#{answerInquiryNum}, #{answerContents}, now(), #{answerUserName}, #{answerIsAdmin});
     </insert>
 
-<!-- 방의 가격과 조식 가격 불러오기-->
+    <!-- 방의 가격과 조식 가격 불러오기-->
     <select id="getRoomAndMealCost" parameterType="String" resultType="com.gaya.thegayap.dto.SInRoomCostDto">
 
-<if test='roomCode.contains("stay")'>
-    SELECT ht.hotel_meal_adult, ht.hotel_meal_child, srt.room_twin_cost, srt.room_twin_weekend, srt.room_family_cost, srt.room_family_weekend
-    from stay_room_table as srt
-    left join hotel_table as ht
-    on srt.room_hotel_num = ht.hotel_num
-    where srt.room_code = #{roomCode}
-</if>
+        <if test='roomCode.contains("stay")'>
+            SELECT ht.hotel_meal_adult, ht.hotel_meal_child, srt.room_twin_cost, srt.room_twin_weekend,
+            srt.room_family_cost, srt.room_family_weekend
+            from stay_room_table as srt
+            left join hotel_table as ht
+            on srt.room_hotel_num = ht.hotel_num
+            where srt.room_code = #{roomCode}
+        </if>
 
-<if test='roomCode.contains("hotel")'>
-    SELECT ht.hotel_meal_adult, ht.hotel_meal_child, hrt.room_twin_cost, hrt.room_twin_weekend
-    from hotel_room_table as hrt
-    left join hotel_table as ht
-    on hrt.room_hotel_num = ht.hotel_num
-    where hrt.room_code = #{roomCode}
-</if>
+        <if test='roomCode.contains("hotel")'>
+            SELECT ht.hotel_meal_adult, ht.hotel_meal_child, hrt.room_twin_cost, hrt.room_twin_weekend
+            from hotel_room_table as hrt
+            left join hotel_table as ht
+            on hrt.room_hotel_num = ht.hotel_num
+            where hrt.room_code = #{roomCode}
+        </if>
 
     </select>
 

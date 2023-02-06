@@ -35,6 +35,7 @@ function RoomCondition(props) {
     const childCount = searchParams.get('childCount')
     const totalCount = searchParams.get('total')
     const hotelName = searchParams.get('hotelName');
+    const hotelNum = searchParams.get('hotelNum')
     let startDate = searchParams.get('sDate');
     let endDate = searchParams.get('eDate');
 
@@ -71,7 +72,7 @@ function RoomCondition(props) {
 
     const clickNextE = () => {
         if (chooseRoomCost !== "") {
-            navigate(`/nextreserv?sDate=${startDate}&eDate=${endDate}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}&roomCode=${roomCode}&roomCost=${chooseRoomCost}&nights=${nights}&costSum=${costSum}`, {replace: true});
+            navigate(`/nextreserv?sDate=${startDate}&eDate=${endDate}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}&hotelNum=${hotelNum}&roomCode=${roomCode}&roomCost=${chooseRoomCost}&nights=${nights}&costSum=${costSum}`, {replace: true});
         } else {
             Swal.fire('사용하실 방을 선택해 주세요 ');
         }

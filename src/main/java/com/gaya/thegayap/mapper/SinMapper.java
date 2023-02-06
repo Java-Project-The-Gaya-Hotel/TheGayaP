@@ -30,11 +30,11 @@ public interface SinMapper {
 
     void insertReply(SinAnswerChatDto sinAnswerChatDto);
 
-    List<SinRoomDto> getHotelRoomList(int hotelNum);
+    List<SinRoomDto> getHotelRoomList(SinFilterRoomDto sinFilterRoomDto);
 
     List<SinRoomDto> getStayRoomList(int hotelNum);
 
-    List<SinRoomDto> checkBookOverlap(SinReservDto build);
+    List<SinRoomDto> checkBookOverlap(SinFilterRoomDto build);
 
     SInRoomCostDto getRoomAndMealCost(String roomCode);
 }

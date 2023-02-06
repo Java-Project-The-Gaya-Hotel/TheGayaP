@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import "./Join.css"
-import axios, {request} from "axios";
+import axios from "axios";
 
 
 function Join(props) {

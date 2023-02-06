@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
-import {AuthorityCheck, GetMemberIdByToken} from "../../functiontocheck/FunctionToCheck";
+import {AuthorityCheck} from "../../functiontocheck/FunctionToCheck";
 
 
 const styles1 = {

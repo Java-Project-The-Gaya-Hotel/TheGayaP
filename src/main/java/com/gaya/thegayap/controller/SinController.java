@@ -57,14 +57,14 @@ public class SinController {
 
     /**
      * 체크인 체크아웃 날짜를 받아 해당 날짜에 미예약 방 리스트를 뿌려주는 컨트롤러
-     * @param hotelName 호텔이름
+     * @param hotelNum 호텔의 DB번호
      * @param sDate 체크인 날짜
      * @param eDate 체크아웃 날짜
-     * @param count 인원 수
+     * @param adultCount 인원 수
      * @return
      */
     @GetMapping("/roomlist")
-    public List<SinRoomDto> roomList(@RequestParam("hotelName") String hotelName, @RequestParam("sDate") String sDate, @RequestParam("eDate") String eDate, @RequestParam("count") String count) {
+    public List<SinRoomDto> roomList(@RequestParam("hotelNum") int hotelNum, @RequestParam("sDate") String sDate, @RequestParam("eDate") String eDate, @RequestParam("adultCount") int adultCount) {
 //        어떠한 정보들이 넘어오겠는가
 //        예약하려는 호텔/ 체크인시간/ 체크아웃시간/ 몇박/ 인원수
 
@@ -76,7 +76,7 @@ public class SinController {
 //            String sDate = "2023-01-31";
 //            String eDate = "2023-02-05";
 
-            List<SinRoomDto> ableRoomList = sinService.checkRoomList(hotelName, sDate, eDate);
+            List<SinRoomDto> ableRoomList = sinService.checkRoomList(hotelNum, sDate, eDate,adultCount);
 
             return ableRoomList;
 
@@ -101,7 +101,7 @@ public class SinController {
      * @param //roomCode  방의 코드
      * @return SInRoomCostDto 타입으로 리턴
      */
-    @GetMapping("/checkCost")
+    @GetMapping("/checkcost")
     public SInRoomCostDto getRoomCost(){
 
         String roomCode="stay-v09vu";
@@ -110,7 +110,7 @@ public class SinController {
 
 
     // 방 예약 코드
-    @PostMapping("/bookRoom")
+    @PostMapping("/bookroom")
     public void bookRoom(@RequestBody SinReservDto sinReservDto) {
 
 //        DB에 필요한 정보
@@ -132,7 +132,7 @@ public class SinController {
 
 //        변수 지정
 
-
+//
 //        long reservationNum = System.currentTimeMillis();
 //        int hotelNum = 1;
 //        String roomCode = "hotel-cKHEX";

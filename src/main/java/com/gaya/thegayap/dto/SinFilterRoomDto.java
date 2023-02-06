@@ -1,6 +1,7 @@
 package com.gaya.thegayap.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,11 +11,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class SinFilterRoomDto {
 
 
-    private String hotelName;
-    private String sDate;
-    private String eDate;
-    private String count;
+    private int hotelNum;
+    private String checkIn;
+    private String checkOut;
+
+    private int adultCount;
+
 }
