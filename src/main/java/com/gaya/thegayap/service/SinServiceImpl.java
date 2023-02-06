@@ -183,7 +183,7 @@ public class SinServiceImpl implements SinService {
 
             reservationList = sinMapper.checkBookOverlap(SinFilterRoomDto.builder().hotelNum(hotelNum).checkIn(sDate).checkOut(eDate).adultCount(adultCount).build());
 
-            System.out.println(reservationList);
+//            System.out.println(reservationList);
 
             for (SinRoomDto sinRoomDto : roomList) {
                 roomMap.put(sinRoomDto.getRoomCode(), sinRoomDto);
@@ -278,15 +278,15 @@ public class SinServiceImpl implements SinService {
 
     /**
      * roomCode를 받아 그 방의 호텔 조식과 방의 가격을 보내는 서비스
-     * @param roomCode
+     * @param hotelNum
      * @return SInRoomCostDto
      */
     @Override
-    public SInRoomCostDto getRoomCost(String roomCode) {
+    public MealCostDto getMealCost(int hotelNum) {
 
 
 
-        return sinMapper.getRoomAndMealCost(roomCode);
+        return sinMapper.getMealCost(hotelNum);
     }
 
 

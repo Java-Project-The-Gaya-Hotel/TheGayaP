@@ -55,21 +55,20 @@ function RoutesLayout(props) {
 
 
     const logout = () => {
-
-        swalWithBootstrapButtons.fire({
+        Swal.fire({
             title: '로그아웃 하시겠습니까?',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: '확인',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '네',
             cancelButtonText: '취소',
-            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                 sessionStorage.removeItem("token");
                 sessionStorage.removeItem("loginInfo");
-
-                swalWithBootstrapButtons.fire(
-                    `로그아웃 되었습니다.`
+                Swal.fire(
+                    '로그아웃 되었습니다.'
                 ).then(result => {
                     if (result.isConfirmed) window.location.href = "/";
                 })

@@ -117,25 +117,30 @@
         values (#{answerInquiryNum}, #{answerContents}, now(), #{answerUserName}, #{answerIsAdmin});
     </insert>
 
-    <!-- 방의 가격과 조식 가격 불러오기-->
-    <select id="getRoomAndMealCost" parameterType="String" resultType="com.gaya.thegayap.dto.SInRoomCostDto">
+    <!-- 호텔 조식 가격 불러오기-->
+    <select id="getRoomAndMealCost" parameterType="int" resultType="com.gaya.thegayap.dto.MealCostDto">
 
-        <if test='roomCode.contains("stay")'>
-            SELECT ht.hotel_meal_adult, ht.hotel_meal_child, srt.room_twin_cost, srt.room_twin_weekend,
-            srt.room_family_cost, srt.room_family_weekend
-            from stay_room_table as srt
-            left join hotel_table as ht
-            on srt.room_hotel_num = ht.hotel_num
-            where srt.room_code = #{roomCode}
-        </if>
+        <!--        <if test='roomCode.contains("stay")'>-->
+        <!--            SELECT ht.hotel_meal_adult, ht.hotel_meal_child, srt.room_twin_cost, srt.room_twin_weekend,-->
+        <!--            srt.room_family_cost, srt.room_family_weekend-->
+        <!--            from stay_room_table as srt-->
+        <!--            left join hotel_table as ht-->
+        <!--            on srt.room_hotel_num = ht.hotel_num-->
+        <!--            where srt.room_code = #{roomCode}-->
+        <!--        </if>-->
 
-        <if test='roomCode.contains("hotel")'>
-            SELECT ht.hotel_meal_adult, ht.hotel_meal_child, hrt.room_twin_cost, hrt.room_twin_weekend
-            from hotel_room_table as hrt
-            left join hotel_table as ht
-            on hrt.room_hotel_num = ht.hotel_num
-            where hrt.room_code = #{roomCode}
-        </if>
+        <!--        <if test='roomCode.contains("hotel")'>-->
+        <!--            SELECT ht.hotel_meal_adult, ht.hotel_meal_child, hrt.room_twin_cost, hrt.room_twin_weekend-->
+        <!--            from hotel_room_table as hrt-->
+        <!--            left join hotel_table as ht-->
+        <!--            on hrt.room_hotel_num = ht.hotel_num-->
+        <!--            where hrt.room_code = #{roomCode}-->
+        <!--        </if>-->
+
+
+        select hotel_meal_adult,hotel_meal_child
+        from hotel_table
+        where hotel_num = #{hotelNum}
 
     </select>
 

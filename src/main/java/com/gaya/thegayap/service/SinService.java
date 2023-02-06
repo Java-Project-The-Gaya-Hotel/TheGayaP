@@ -25,5 +25,5 @@ public interface SinService {
 
     void insertReply(SinAnswerChatDto sinAnswerChatDto);
 
-    SInRoomCostDto getRoomCost(String roomCode);
+    MealCostDto getMealCost(int roomCode);
 }

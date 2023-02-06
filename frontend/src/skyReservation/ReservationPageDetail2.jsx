@@ -2,21 +2,22 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 
 
 const CrumbAni = styled.div`
-animation:fadeInUp;
-animation-duration:1s;
+  animation: fadeInUp;
+  animation-duration: 1s;
 `;
 
 const FormBox = styled.div`
-animation:fadeInUp;
-animation-duration:2s;
+  animation: fadeInUp;
+  animation-duration: 2s;
 `;
 
 const Information = styled.div`
-animation:fadeInUp;
-animation-duration:3s;
+  animation: fadeInUp;
+  animation-duration: 3s;
 `;
 
 
@@ -45,15 +46,36 @@ function ReservationPageDetail2() {
     const startDate = searchParams.get('sDate');
     const endDate = searchParams.get('eDate');
     const adultCount = searchParams.get('adultCount');
-    const childCount = searchParams.get('childCount')
+    const childCount = searchParams.get('childCount');
     const totalCount = searchParams.get('total')
     const hotelName = searchParams.get('hotelName');
     const hotelNum = searchParams.get('hotelNum');
     const roomCode = searchParams.get('roomCode');
-    const roomCost = searchParams.get('roomCost');
+    const costSum = searchParams.get('costSum')
     const nights = searchParams.get('nights');
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [num, setNum] = useState("");
+    const [totalCostSum, setTotalCostSum] = useState("");
+    const [costComma, setConstComma] = useState("");
+    const [adultMeal, setAdultMeal] = useState(0);
+    const [childMeal, setChildMeal] = useState(0);
+
+    const rcd = searchParams.get('rcd');
 
     useEffect(() => {
+        console.log(rcd);
+
+        axios.get("http://localhost:8080/gaya/checkmealcost",{params:{
+            hotelNum:searchParams.get('hotelNum'),
+            }})
+            .then((response) => {
+                console.log(response.data);
+            }).catch(e => {
+            console.log(e);
+        })
+
+        setTotalCostSum(costSum);
         const jquery = document.createElement("script");
         jquery.src = "https://code.jquery.com/jquery-1.12.4.min.js";
         const iamport = document.createElement("script");
@@ -61,14 +83,20 @@ function ReservationPageDetail2() {
         document.head.appendChild(jquery);
         document.head.appendChild(iamport);
         return () => {
-            document.head.removeChild(jquery); document.head.removeChild(iamport);
+            document.head.removeChild(jquery);
+            document.head.removeChild(iamport);
         }
     }, []);
+
+    useEffect(() => {
+        setConstComma(totalCostSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+
+    }, [totalCostSum])
 
 
     const onClickPayment = () => {
         /* 1. 가맹점 식별하기 */
-        const { IMP } = window;
+        const {IMP} = window;
         IMP.init('imp73778403');
 
         /* 2. 결제 데이터 정의하기 */
@@ -106,7 +134,7 @@ function ReservationPageDetail2() {
                     checkOut: endDate,
                     nights: nights,
                     reservationPeople: totalCount,
-                    totalCost: roomCost
+                    totalCost: totalCostSum,
                 })
                 .then((req) => {
                     alert('결제 성공');
@@ -121,7 +149,7 @@ function ReservationPageDetail2() {
         }
     }
 
-        /////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////
 
     const style = {
         boxSize: {
@@ -132,10 +160,6 @@ function ReservationPageDetail2() {
         }
     }
 
-
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [num, setNum] = useState("");
 
     const onNumHandler = (event) => {
         setNum(event.target.value)
@@ -164,7 +188,12 @@ function ReservationPageDetail2() {
         }
     }, [num]);
 
-    const reservButton = ()=>{
+    // 조식 변경에 따른 총 가격 변경 useEffect
+    useEffect(() => {
+        setTotalCostSum(costSum);
+    }, [childMeal, adultMeal])
+
+    const reservButton = () => {
         const userPayInfo = {
             reservationNum: new Date().getTime(),
             hotelNum: Number(hotelNum),
@@ -174,7 +203,7 @@ function ReservationPageDetail2() {
             checkOut: endDate,
             nights: Number(nights),
             reservationPeople: Number(totalCount),
-            totalCost: roomCost
+            totalCost: totalCostSum
         }
         console.log(userPayInfo);
         axios.post("http://localhost:8080/gaya/bookroom",
@@ -188,6 +217,70 @@ function ReservationPageDetail2() {
         })
     }
 
+    const plusBtn = () => {
+
+        let adult = adultCount;
+        let adultM = adultMeal;
+
+        adultM++
+
+
+        if (adult < adultM) {
+            Swal.fire({
+                icon: 'info',
+                title: '확인해주세요!',
+                text: ' 예약한 인원수 만큼 조식 선택이 가능합니다. '
+            })
+        } else {
+            setAdultMeal(adultM);
+        }
+
+    }
+
+    const minusBtn = () => {
+
+        let adultM = adultMeal;
+
+        adultM--
+
+        if (adultM < 0) {
+            setAdultMeal(0);
+        } else {
+
+            setAdultMeal(adultM);
+        }
+
+    }
+
+    const cdPlusBtn = () => {
+        let child = childCount;
+        let childM = childMeal;
+
+        child++
+
+        if (childM > child) {
+            Swal.fire({
+                icon: 'info',
+                title: '확인해주세요!',
+                text: ' 예약한 인원수 만큼 조식 선택이 가능합니다 ',
+            })
+        } else {
+            setChildMeal(childM);
+        }
+    }
+
+    const cdMinusBtn = () => {
+        let childM = childMeal;
+
+        childM--
+
+        if (childM < 0) {
+            setChildMeal(0);
+        } else {
+
+            setChildMeal(childM);
+        }
+    }
 
     return (
         <div>
@@ -221,12 +314,14 @@ function ReservationPageDetail2() {
                             {/* 테이블 구역 */}
                             <hr className={"mb-4"}/>
                             <div className={"container row justify-content-center align-items-center m-3"}>
-                                <div className={"container col"}>
+                                <div className={"container col-6"}>
                                     <table className={"table table-hover m-0"}>
 
                                         <thead className={"container"}>
                                         <tr>
-                                            <th colSpan={4} className={"fw-bold h4 p-2"} style={{borderBottom: "none"}}>기본 정보</th>
+                                            <th colSpan={4} className={"fw-bold h4 p-2"}
+                                                style={{borderBottom: "none"}}>기본 정보
+                                            </th>
                                         </tr>
                                         </thead>
 
@@ -234,11 +329,14 @@ function ReservationPageDetail2() {
 
                                         <tr>
                                             <td><em className="ast">*</em> 이름 :</td>
-                                            <td><input onChange={onNameHandler} style={style.boxSize} type={"text"} className={"id"} autoComplete={"off"} placeholder={"Please Input Your Name"}/></td>
+                                            <td><input onChange={onNameHandler} style={style.boxSize} type={"text"}
+                                                       className={"id"} autoComplete={"off"}
+                                                       placeholder={"Please Input Your Name"}/></td>
                                         </tr>
                                         <tr>
                                             <td><em className="ast">*</em> 이메일 :</td>
-                                            <td><input onChange={onEmailHandler} style={style.boxSize} type={"email"} placeholder={"Please Input Your Email"}/></td>
+                                            <td><input onChange={onEmailHandler} style={style.boxSize} type={"email"}
+                                                       placeholder={"Please Input Your Email"}/></td>
                                         </tr>
 
                                         <tr>
@@ -247,7 +345,67 @@ function ReservationPageDetail2() {
                                                 <select>
                                                     <option value="+82" title="+82">+82</option>
                                                 </select>
-                                                <input style={style.boxSizePh} className={"mx-2"} value={num} placeholder={"Please Input Your Phone Number"} onChange={onNumHandler}/></td>
+                                                <input style={style.boxSizePh} className={"mx-2"} value={num}
+                                                       placeholder={"Please Input Your Phone Number"}
+                                                       onChange={onNumHandler}/></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div className={"row m-5 align-items-center"}>
+                                        <div className={"col"}>
+                                            <button className={"btn btn-outline-dark rounded-0 fw-bold"}
+                                                    onClick={minusBtn}>-
+                                            </button>
+                                        </div>
+                                        <div className={"col fw-bold"}><h4 className={"m-0"}>성인
+                                            : {adultMeal}</h4></div>
+                                        <div className={"col"}>
+                                            <button className={"btn btn-outline-dark rounded-0"}
+                                                    onClick={plusBtn}>+
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className={"col"}>
+                                        <button className={"btn btn-outline-dark rounded-0"}
+                                                onClick={cdMinusBtn}>-
+                                        </button>
+                                    </div>
+                                    <div className={"col"}><h4 className={"m-0"}>어린이 : {childCount}</h4>
+                                    </div>
+                                    <div className={"col"}>
+                                        <button className={"btn btn-outline-dark rounded-0"}
+                                                onClick={cdPlusBtn}>+
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <div className={"col-6"}>
+                                    <table className={"table table-hover m-0"}>
+                                        <thead className={"container"}>
+                                        <tr>
+                                            <th colSpan={4} className={"fw-bold h4 p-2"}
+                                                style={{borderBottom: "none"}}>예약 정보
+                                            </th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody className={"container"}>
+
+                                        <tr>
+                                            <td> 예약할 호텔 :</td>
+                                            <td><span style={style.boxSize}/>{hotelName}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>체크인 :</td>
+                                            <td><span style={style.boxSize}/>{startDate}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>체크아웃 :</td>
+                                            <td><span style={style.boxSize}/>{endDate}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>총 금액 :</td>
+                                            <td><span style={style.boxSize}/>{costComma} 원</td>
                                         </tr>
 
                                         </tbody>
@@ -256,7 +414,9 @@ function ReservationPageDetail2() {
 
                                 <div className={"container col text-center"}>
                                     <div className={"m-4 fw-bold h5"}>결제 하기</div>
-                                    <button onClick={onClickPayment} className={"btnDate"} role={"button"}><span className="text">결제하기</span>Payment</button>
+                                    <button onClick={onClickPayment} className={"btnDate"} role={"button"}><span
+                                        className="text">결제하기</span>Payment
+                                    </button>
                                     <button onClick={reservButton}>임시 버튼</button>
                                 </div>
                             </div>

@@ -6,9 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -72,9 +69,6 @@ public class SinController {
 
         try {
 
-//            String hotelName = "서울가야호텔";
-//            String sDate = "2023-01-31";
-//            String eDate = "2023-02-05";
 
             List<SinRoomDto> ableRoomList = sinService.checkRoomList(hotelNum, sDate, eDate,adultCount);
 
@@ -95,17 +89,17 @@ public class SinController {
 
 
 
-//    @RequestParam("roomCode") String roomCode
-    /**
-     * 방 코드를 받아 가격 정보를 보내주는 컨트롤러
-     * @param //roomCode  방의 코드
-     * @return SInRoomCostDto 타입으로 리턴
-     */
-    @GetMapping("/checkcost")
-    public SInRoomCostDto getRoomCost(){
 
-        String roomCode="stay-v09vu";
-        return sinService.getRoomCost(roomCode);
+    /**
+     * 호텔 번호 코드를 받아 가격 정보를 보내주는 컨트롤러
+     * @param hotelNum  호텔 번호
+     * @return MealCostDto 타입으로 리턴
+     */
+    @GetMapping("/checkmealcost")
+    public MealCostDto getMealCost(@RequestParam ("hotelNum")int hotelNum){
+
+
+        return sinService.getMealCost(hotelNum);
     }
 
 

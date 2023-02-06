@@ -15,13 +15,13 @@ function BookingRoom() {
     //주소 값 받아오기
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    const adultCount = searchParams.get('adultCount');
-    const childCount = searchParams.get('childCount')
-    const totalCount = searchParams.get('total')
-    const hotelName = searchParams.get('hotelName');
+    // const adultCount = searchParams.get('adultCount');
+    // const childCount = searchParams.get('childCount')
+    // const totalCount = searchParams.get('total')
+    // const hotelName = searchParams.get('hotelName');
     const [hotelRoomList, setHotelRoomList] = useState([]);
-    const startDate = searchParams.get('sDate');
-    const endDate = searchParams.get('eDate');
+    // const startDate = searchParams.get('sDate');
+    // const endDate = searchParams.get('eDate');
 
 
 
