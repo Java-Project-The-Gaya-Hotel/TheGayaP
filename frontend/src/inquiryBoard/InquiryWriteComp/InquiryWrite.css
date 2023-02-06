@@ -1,10 +1,13 @@
-.inquiry .headline{
-    border-bottom: solid 3px darkgray;
-}
 
 .inquiry .required{
     color: red;
+    font-size: 12px;
+}
 
+.inquiry .validation{
+    color: red;
+    font-size: 12px;
+    position: absolute;
 }
 
 .inquiry label{

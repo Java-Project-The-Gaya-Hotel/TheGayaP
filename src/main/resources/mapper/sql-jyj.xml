@@ -96,6 +96,13 @@
         WHERE member_email = #{memberEmail} AND member_name = #{memberName}
     </select>
 
-<!--    예약 찾기 -->
-
+<!--    회원 테이블 추가 -->
+    <insert id="insertInquiry" parameterType="com.gaya.thegayap.dto.SinInquiryDto">
+        INSERT INTO
+            inquiry_table(inquiry_category, inquiry_hotel_name, inquiry_reservation_num, inquiry_title,
+                          inquiry_contents, inquiry_user_name, inquiry_user_email, inquiry_user_tel,
+                          inquiry_create_date, inquiry_password, inquiry_hidden)
+        VALUES (#{inquiryCategory}, #{inquiryHotelName}, #{inquiryReservationNum}, #{inquiryTitle}, #{inquiryContents},
+                #{inquiryUserName}, #{inquiryUserEmail}, #{inquiryUserTel}, NOW(), #{inquiryPassword}, #{inquiryHidden});
+    </insert>
 </mapper>
