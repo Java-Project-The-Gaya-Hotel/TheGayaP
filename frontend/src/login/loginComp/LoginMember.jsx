@@ -5,6 +5,8 @@ import moment from "moment";
 import "../loginCss/ButtonCss.css"
 import Modal from "./Modal"
 import FindId from "./FindId";
+import FindPw from "./FindPw";
+
 
 // 회원 로그인
 function LoginMember(props) {
@@ -14,6 +16,7 @@ function LoginMember(props) {
      * id 찾기 모달
      */
     const [findId, setFindId] = useState(false);
+    const [findPw, setFindPw] = useState(false);
 
 
 
@@ -112,9 +115,12 @@ function LoginMember(props) {
                             {findId && (
                               <Modal closeModal={() => setFindId(!findId)}><FindId closeModal={() => setFindId(!findId)}/></Modal>
                             )}
-                            <button className={"btn btn-secondary p-1"} style={{borderRadius: 0}}>비밀번호 찾기</button>
+                            <button onClick={() => setFindPw(!findPw)} className={"btn btn-secondary p-1"} style={{borderRadius: 0}}>비밀번호 찾기</button>
+                            {findId && (
+                            <Modal closeModal={() => setFindPw(!findPw)}><FindPw closeModal={() => setFindPw(!findPw)}/></Modal>
+                                )}
                         </div>
-                        <div className={"small p-2"}>이메일, 연락처 등의 정보가 변경되면 웹사이트에서 회원정보를 수정해주시기 바랍니다.</div>
+                        <div className={"small p-2"}>이메일, 연락처 등의 정보가 변경되면 웹사이트에서 회원정보를 수정해주시기 바랍니다.</div>ss
                     </div>
                 </div>
             </div>

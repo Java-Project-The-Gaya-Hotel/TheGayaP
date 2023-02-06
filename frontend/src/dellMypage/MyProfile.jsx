@@ -19,8 +19,8 @@ function MyProfile() {
                             <div>
                                 <table className={"table table-hover m-0"}>
                                     <thead className={"container"}>
-                                    <th></th>
-                                    <th></th>
+                                    {/*<th></th>*/}
+                                    {/*<th></th>*/}
                                     </thead>
 
                                     <tbody className={"container"}>

@@ -30,6 +30,7 @@ function Join(props) {
 
     //유효성 검사
     const [isName, setIsName] = useState(false)
+    const [isBirth, setIsBirth] = useState(false)
     const [isId, setIsId] = useState(false)
     const [isNumber, setIsNumber] = useState(false)
     const [isEmail, setIsEmail] = useState(false)
@@ -46,11 +47,22 @@ function Join(props) {
         memberBirth: birth,
     };
 
-    const onBirthHandler = (e) => {
+    useEffect(() => {
+        console.log(birth)
+    }, [])
+    const onBirthHandler =  useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setBirth(e.target.value)
-    }
 
-    const onNameHandler= useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        if(e.target.value == "" ){
+            setBirthMes('생년월일을 체크해 주세요.')
+            setIsBirth(false)
+        }else {
+            setBirthMes('')
+            setIsBirth(true)
+        }
+    },[])
+
+    const onNameHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const nameRegex =  /^(?=.*[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{2,5}$/
         const nameCurrent = e.target.value
         setName(nameCurrent)
@@ -148,7 +160,7 @@ function Join(props) {
 
         if (!emailRegExp.test(currentEmail)) {
 
-            setEmailMes("");
+            setEmailMes("이메일 형식으로 작성해주세요.");
             setIsEmail(false);
         } else {
             setEmailMes("");
@@ -156,34 +168,7 @@ function Join(props) {
         }
     };
 
-    const joinBtn = () => {
-        if (id && name && email && number && pw && confirmPassword) {
-            alert('회원 가입 완료');
-        } else {
-            if (!id) {
-                setIdMes("아이디을(를)  입력해주세요");
-            }
-            if (!email) {
-                setEmailMes("이메일을(를) 입력해주세요");
-            }
-            if (!pw) {
-                setPwMes("비밀번호을(를)  입력해주세요");
-            }
-            if (!confirmPassword) {
-                setConfirmPasswordMes("중복 비밀번호을(를)  입력해주세요");
-            }
-            if (!name) {
-                setNameMes("이름을(를) 입력해주세요");
-            }
-            if (!number) {
-                setNumberMes("전화번호을(를) 입력해주세요");
-            }
-            if(!birth){
-                setBirthMes("생일을(를) 체크해주세요")
-            }
 
-        }
-    }
 
 
 // 아이디 중복체크
@@ -359,8 +344,8 @@ function Join(props) {
 
                     </div>
                     <section>
-                        <button type={"submit"} onClick={joinBtn} className={"activation"} disabled={!(isEmail && isId &&
-                            isName && isNumber && isPassword && isConfirmPassword)}
+                        <button type={"submit"}  className={"activation"} disabled={!(isEmail && isId &&
+                            isName && isNumber && isPassword && isConfirmPassword && isBirth)}
                         >
                             다음
                         </button>
