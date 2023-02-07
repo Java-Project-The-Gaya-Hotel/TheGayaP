@@ -1,4 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from "react-router-dom";
+import {AuthorityCheck, GetMemberIdByToken, SessionCheck} from "../functiontocheck/FunctionToCheck";
+import axios from "axios";
+import MyprofileReWrite from "./MyProfileReWrite";
 
 
 const styles = {
@@ -8,42 +12,83 @@ const styles = {
 }
 
 function MyProfile() {
+
+    const [memberId, setMemberId] = useState("");
+    const [memberName, setMemberName] = useState("")
+    const [memberEmail, setMemberEmail] = useState("")
+    const [memberPh, setMemberPh] = useState("")
+    const navi = useNavigate();
+
+    useEffect(() => {
+        SessionCheck();
+        if (AuthorityCheck() === false) {
+            alert("토큰 만료.")
+            navi("/login")
+        } else {
+            GetMemberIdByToken().then(response => {
+                setMemberId(response.data)
+                axios.get(
+                    "http://localhost:8080/mypage/getUserInfo",
+                    {
+                        params: {
+                            memberId: response.data,
+                        }
+                    }
+                ).then(response => {
+                    setMemberId(response.data.memberId)
+                    setMemberName(response.data.memberName)
+                    setMemberEmail(response.data.memberEmail)
+                    setMemberPh(response.data.memberTel)
+
+                })
+            })
+        }
+
+    }, [])
+
+
     return (
         <div>
             <div className={"container"}>
                 <div className={"row justify-content-center p-5"}>
                     <div className="card text-center col-md-11 p-0 border-dark">
-                        <div className="card-header border-dark bg-white"> ~ 님 | No. ~</div>
+                        <div className="card-header border-dark bg-white"> {memberId} 의 회원 정보</div>
                         <div className="card-body" style={styles.cardBox}>
                             <h5 className="card-title">Profile</h5>
                             <div>
                                 <table className={"table table-hover m-0"}>
                                     <thead className={"container"}>
-                                    <th></th>
-                                    <th></th>
+
                                     </thead>
 
                                     <tbody className={"container"}>
 
                                     <tr>
-                                        <td> Name :</td>
-                                        <td><input/></td>
-                                    </tr>
-                                    <tr>
                                         <td> ID :</td>
-                                        <td><input/></td>
+                                        <td><input value={memberId} readOnly={true}/></td>
                                     </tr>
 
                                     <tr>
-                                        <td> PW :</td>
+                                        <td> Name :</td>
                                         <td>
-                                            <input /></td>
+                                            <input value={memberName} readOnly={true}/></td>
+                                    </tr>
+                                    <tr>
+                                        <td> E-Mail :</td>
+                                        <td>
+                                            <input value={memberEmail} readOnly={true}/></td>
+                                    </tr>
+                                    <tr>
+                                        <td> Ph :</td>
+                                        <td>
+                                            <input value={memberPh} readOnly={true}/></td>
                                     </tr>
                                     </tbody>
                                 </table>
-                                <div>
-                                    <button>수정</button>
+                                <div className={"p-5"}>
+                                    <button> 수정하기</button>
                                 </div>
+                                <MyprofileReWrite/>
                             </div>
                         </div>
                         <div className="card-footer text-muted border-dark bg-white">&nbsp;</div>
@@ -53,5 +98,6 @@ function MyProfile() {
         </div>
     )
 }
+
 
 export default MyProfile;

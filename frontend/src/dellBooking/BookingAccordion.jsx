@@ -28,14 +28,15 @@ function BookingAccordion() {
     //use location으로 가져 온 주소 값 설정
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    const [adultCount, setAdultCount] = useState(1); // 성인
-    const [childCount, setChildCount] = useState(0); // 아이
-    const [totalCount, setTotalCount] = useState(1) //총 인원 수
     const [hotelList, setHotelList] = useState([]);
     const [hotelName, setHotelName] = useState("");
     const [hotelNum, setHotelNum] = useState(0);
     const getSDate = searchParams.get('sDate');
     const getEDate = searchParams.get('eDate');
+    const getAdultCount = searchParams.get('getAdultCount');
+    const getChildCount = searchParams.get('getChildCount');
+    const getTotalCount = searchParams.get('getTotalCount');
+
 
 
     // datepicker 변수 / datepicker data 가져와 연동
@@ -49,20 +50,37 @@ function BookingAccordion() {
     const [nights, setNights] = useState(0);
 
 
+    const [adultCount, setAdultCount] = useState(1); // 성인
+    const [childCount, setChildCount] = useState(0); // 아이
+    const [totalCount, setTotalCount] = useState(1) //총 인원 수
 
     useEffect(() => {
+            if (getSDate != null) {
+                const testStart = new Date(getSDate);
+                setStartDate(testStart);
+                const testEnd = new Date(getEDate);
+                setEndDate(testEnd);
+            } else {
+                setStartDate(new Date(now()));
+            }
 
-        if (getSDate != null){
-            const testStart = new Date(getSDate);
-            setStartDate(testStart);
-            const testEnd = new Date(getEDate);
-            setEndDate(testEnd);
-        }else setStartDate(new Date(now()));
+            if (getAdultCount !=null){
+                setAdultCount(getAdultCount)
+                setChildCount(getChildCount)
+                setTotalCount(getTotalCount)
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: '선택 정보 로딩 실패',
+                    html: '정보를 가져오는데 실패하였습니다.<br/> 다시 입력해 주시길 바랍니다.',
+                })
 
-    }, [])
+            }
+        }
+        , [])
+
 
     useEffect(() => {
-
         if (startDate !== null && endDate !== null) {
             if (endDate > startDate) {
                 setShowDate(true);
@@ -260,11 +278,12 @@ function BookingAccordion() {
                         </li>
 
                         <li className="item" id="support">
-                            <a href={"#support"} className="btnAcc">인원</a>
-                            <div className={"row d-flex text-end"}>
-                                <div className={"col"}>성인 : {adultCount} </div>
-                                <div className={"col"}>어린이 : {childCount}</div>
-                            </div>
+                            <a href="#support" className="btnAcc">인원
+                                <div className={"row d-flex text-end"}>
+                                    <div className={"col h5 fw-bold"}>성인 : {adultCount} </div>
+                                    <div className={"col h5 fw-bold"}>어린이 : {childCount}</div>
+                                </div>
+                            </a>
                             <div className="subMenu">
 
                                 <div className={"container row align-items-center"}>

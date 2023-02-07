@@ -12,7 +12,9 @@ import "../dellMain/dellmainCss/DatePickerCustomCss.css"
 function DateChoose() {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    const [count, setCount] = useState(1);
+    const [adultCount, setAdultCount] = useState(1); // 성인
+    const [childCount, setChildCount] = useState(0); // 아이
+    const [totalCount, setTotalCount] = useState(1) //총 인원 수
     const Navigate = useNavigate();
 //date picker
 
@@ -62,35 +64,93 @@ function DateChoose() {
     const MainCounter = () => {
 
         const plusBtn = () => {
-            setCount(count + 1)
-            if (count >= 4) {
+
+            let adult = adultCount;
+            let totalP;
+
+            adult++
+            totalP = adult + childCount;
+
+            if (totalP > 4) {
                 Swal.fire({
                     icon: 'info',
                     title: '확인해주세요!',
-                    text: ' 인원 수는 4명까지 선택할 수 있습니다. ',
-                    footer: '<a href=""> 고객문의 안내는 여기로 </a>',
-                    confirmButtonText: 'OK',
-                    confirmButtonColor : 'rgb(0 0 0)'
-                });
-                setCount((count) => Math.max(4))
+                    text: ' 총 인원 수는 4명까지 선택할 수 있습니다. '
+                })
+            } else {
+                setAdultCount(adult);
+                setTotalCount(totalP);
+
             }
-        }
-        const minusBtn = () => {
-            setCount((count) => Math.max(-1, 1))
+
         }
 
+        const minusBtn = () => {
+
+            let adult = adultCount;
+
+            adult--
+
+            if (adult < 1) {
+                setAdultCount(1);
+            } else {
+
+                setAdultCount(adult);
+            }
+
+        }
+
+        const cdPlusBtn = () => {
+            let child = childCount;
+            let totalP;
+
+            child++
+            totalP = adultCount + child;
+            if (totalP > 4) {
+                Swal.fire({
+                    icon: 'info',
+                    title: '확인해주세요!',
+                    text: ' 총 인원 수는 4명까지 선택할 수 있습니다. ',
+                })
+            } else {
+                setChildCount(child);
+                setTotalCount(totalP);
+            }
+        }
+
+        const cdMinusBtn = () => {
+            let child = childCount;
+
+            child--
+            if (child < 0) {
+                setChildCount(0);
+            } else {
+
+                setChildCount(child);
+            }
+        }
         return (
-            <div className={"container col"}>
-                <button onClick={minusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> - </button>
-                <span className={"p-2"}> {count} </span>
-                <button onClick={plusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> + </button>
+            <div className={"row"}>
+                <div className={"col"}>
+                    <div className={"fw-bold"}>성인</div>
+                    <button onClick={minusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> -</button>
+                    <span className={"p-2"}>  {adultCount} </span>
+                    <button onClick={plusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> +</button>
+                </div>
+                <div className={"col"}>
+                    <div className={"fw-bold"}>어린이</div>
+                    <button onClick={cdMinusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> -</button>
+                    <span className={"p-2"}>  {childCount} </span>
+                    <button onClick={cdPlusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> +</button>
+                </div>
             </div>
         )
+
     }
 
 
     const SendReservationInfo = () => {
-        Navigate(`/reservation?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&people=${count}`);
+        Navigate(`/reservation?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&getAdultCount=${adultCount}&getChildCount=${childCount}&getTotal=${totalCount}`);
         // Navigate('/reservation',
         //     {state: {
         //             startDate: startDate,
@@ -114,7 +174,7 @@ function DateChoose() {
 
                 <div className={"col"}>
                     <div className={"container row p-0 m-0"}>
-                        <dt className={"col p-3"}> 인원</dt>
+                        <dt className={"col p-1 fw-bold"}> 인원</dt>
                         <dd>
                             <MainCounter/>
                         </dd>

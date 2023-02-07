@@ -84,13 +84,13 @@ function RoomCondition(props) {
         return result;
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         const checkAllDay = getDatesStartToLast(startDate, endDate);
         let checkWeekDay = 0;
         let checkWeekEnd = 0;
         let weekDayCost = 0;
         let weekEndCost = 0;
-        let overAdultLimit =0;
+        let overAdultLimit = 0;
         //     체크인 아웃 사이 날짜중 주말을 구함
         checkAllDay.forEach(day => {
             if (new Date(day).getDay() === 0 || new Date(day).getDay() === 6) {
@@ -107,13 +107,13 @@ function RoomCondition(props) {
         overAdultLimit = 20000 * (adultCount - 1);
         // 어른 인원수가 2명이상일시 2만원 추가요금 계산
         if (adultCount > 1) {
-            setCostSum(( weekDayCost + weekEndCost) + overAdultLimit);
+            setCostSum((weekDayCost + weekEndCost) + overAdultLimit);
         } else {
             setCostSum(weekDayCost + weekEndCost);
         }
 
         setRoomCostDetail(`주중 ${checkWeekDay} 박 요금 = ${weekDayCost} 주말 ${checkWeekEnd} 박 요금 = ${weekEndCost}`)
-    },[chooseRoomCost]);
+    }, [chooseRoomCost]);
 // -------------------------------------------------------------
 
 
@@ -159,11 +159,8 @@ function RoomCondition(props) {
                                         <div className={"container p-4"}>
                                             <div className={"row"}>
                                                 <div className={"col"}>
-                                                    <input className="form-check-input mx-4" type="radio"
-                                                           name="inlineRadioOptions" id="inlineRadio1"
-                                                           onClick={clickRoomCost1}/>
-                                                    <label className="form-check-label"
-                                                           htmlFor="inlineRadio1">Twin</label>
+                                                    <input className="form-check-input mx-4" type="radio" name="inlineRadioOptions" id="inlineRadio1" onClick={clickRoomCost1}/>
+                                                    <label className="form-check-label" htmlFor="inlineRadio1">Twin</label>
                                                 </div>
                                                 <div className={"col p-0"}>{data.roomTwinCost}</div>
                                             </div>
@@ -172,11 +169,8 @@ function RoomCondition(props) {
                                         <div className={"container p-4"}>
                                             <div className={"row"}>
                                                 <div className={"col"}>
-                                                    <input className="form-check-input mx-4" type="radio"
-                                                           name="inlineRadioOptions" id="inlineRadio1"
-                                                           onClick={clickRoomCost1}/>
-                                                    <label className="form-check-label"
-                                                           htmlFor="inlineRadio1">Double</label>
+                                                    <input className="form-check-input mx-4" type="radio" name="inlineRadioOptions" id="inlineRadio1" onClick={clickRoomCost1}/>
+                                                    <label className="form-check-label" htmlFor="inlineRadio1">Double</label>
                                                 </div>
                                                 <div className={"col p-0"}>{data.roomTwinCost}</div>
                                             </div>
@@ -198,11 +192,8 @@ function RoomCondition(props) {
                                         <div className={"container p-4"}>
                                             <div className={"row"}>
                                                 <div className={"col"}>
-                                                    <input className="form-check-input mx-4" type="radio"
-                                                           name="inlineRadioOptions" id="inlineRadio1"
-                                                           onClick={clickRoomCost1}/>
-                                                    <label className="form-check-label"
-                                                           htmlFor="inlineRadio1">Twin</label>
+                                                    <input className="form-check-input mx-4" type="radio" name="inlineRadioOptions" id="inlineRadio1" onClick={clickRoomCost1}/>
+                                                    <label className="form-check-label" htmlFor="inlineRadio1">Twin</label>
                                                 </div>
                                                 <div className={"col p-0"}>{data.roomTwinCost}</div>
                                             </div>
@@ -211,11 +202,8 @@ function RoomCondition(props) {
                                         <div className={"container p-4"}>
                                             <div className={"row"}>
                                                 <div className={"col"}>
-                                                    <input className="form-check-input mx-4" type="radio"
-                                                           name="inlineRadioOptions" id="inlineRadio1"
-                                                           onClick={clickRoomCost2}/>
-                                                    <label className="form-check-label"
-                                                           htmlFor="inlineRadio1">Family</label>
+                                                    <input className="form-check-input mx-4" type="radio" name="inlineRadioOptions" id="inlineRadio1" onClick={clickRoomCost2}/>
+                                                    <label className="form-check-label" htmlFor="inlineRadio1">Family</label>
                                                 </div>
                                                 <div className={"col p-0"}>{data.roomFamilyCost}</div>
                                             </div>
