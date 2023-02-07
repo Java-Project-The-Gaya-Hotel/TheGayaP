@@ -1,6 +1,5 @@
-import React, {useEffect} from "react";
+import React from "react";
 import InquiryListTable from "./InquiryListTable";
-import {GetMemberIdByToken} from "../../functiontocheck/FunctionToCheck";
 
 // 문의 게시글 페이지
 function InquiryList() {

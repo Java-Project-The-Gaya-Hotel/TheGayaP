@@ -14,14 +14,11 @@ function Modal(props) {
     <div className={"Modal"}>
       <div className={"modalBody"}>
         <div>
-          <div className={"mb-4"}>
-            <h4><span></span>찾기</h4>
-            <button id={"modalCloseBtn"} onClick={closeModal}>
-              ✖
-            </button>
-          </div>
-          {props.children}
+          <button id={"modalCloseBtn"} onClick={closeModal}>
+            ✖
+          </button>
         </div>
+        {props.children}
       </div>
     </div>
   );

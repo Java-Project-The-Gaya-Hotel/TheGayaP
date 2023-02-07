@@ -20,6 +20,9 @@ public class SinRoomDto {
     private int roomFamilyCost;
     private int roomFamilyWeekend;
     private String roomCode;
+    private String reservationRoomCode;
     private String roomInfo;
     private int roomMaxAdult;
+
+    private String roomImgUrl;
 }

@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/members/login").permitAll()
-                .antMatchers("/members/test").hasRole("USER")
+//                .antMatchers("/gaya/roomlist").hasAnyRole("USER")
 //                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
