@@ -23,10 +23,10 @@ function InquiryItem(props) {
     //
     //     }}
 
-    const [goNum, setGoNum] = useState();
-    const [title, setTitle] = useState();
-    const [status, setStatus] = useState();
-    const [inquiryId, setInquiryId] = useState();
+    const [goNum, setGoNum] = useState(0);
+    const [title, setTitle] = useState("");
+    const [status, setStatus] = useState("");
+    const [inquiryId, setInquiryId] = useState("");
     const [memberId, setMemberId] = useState(props.memberId);
 
     // 문의글들이 불러와질때
@@ -77,7 +77,7 @@ function InquiryItem(props) {
 
         <tr key={props.data.inquiryNum} onClick={onClickHandler} style={{cursor: "pointer"}}>
             <td>{props.data.inquiryHotelName}</td>
-            <td colSpan={2}>{title}</td>
+            <td className={"text-start"}>{title}</td>
             <td>{inquiryId}</td>
             <td>{props.data.inquiryCreateDate}</td>
             <td>{props.data.inquiryStatus}</td>

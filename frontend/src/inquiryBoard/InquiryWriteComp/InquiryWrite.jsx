@@ -18,7 +18,7 @@ function InquiryWrite() {
         userEmail: "",
         userTel: "",
         password:"",
-        hidden: "Y",
+        hidden: "",
     })
 
     const {
@@ -32,12 +32,20 @@ function InquiryWrite() {
         });
     };
 
+    const [isHidden, setIsHidden] = useState(false);
+
+    useEffect(() => {
+        if(hidden === "Y") setIsHidden(true);
+        else setIsHidden(false);
+    }, [hidden])
+
     // 유효성검사
     const [titleVld, setTitleVld] = useState("");
     const [contentsVld, setContentsVld] = useState("");
     const [userNameVld, setUserNameVld] = useState("");
     const [userEmailVld, setUserEmailVld] = useState("");
     const [userTelVld, setUserTelVld] = useState("");
+    const [hiddenVld, setHiddenVld] = useState("");
     const [passwordVld, setPasswordVld] = useState("");
 
     const inquiryData =
@@ -73,15 +81,22 @@ function InquiryWrite() {
         setUserEmailVld("");
         setUserTelVld("");
         setPasswordVld("");
+        setHiddenVld("");
 
-        if (title && contents && userName && userEmail && userTel && password) {
-            axios.post("http://localhost:8080/qa/write", inquiryData)
-                .then((req) => {
-                    console.log("데이터 전송 성공")
-                    console.log(inquiryData);
-                }).catch(err => {
-                console.log(`데이터 전송 실패 ${err}`)
-            })
+        if (title && contents && userName && userEmail && userTel && hidden) {
+            if(hidden === "Y" && !password){
+                setPasswordVld("비밀번호를 입력해주세요");
+            }
+            else {
+                axios.post("http://localhost:8080/qa/write", inquiryData)
+                    .then((req) => {
+                        console.log("데이터 전송 성공");
+                        console.log(inquiryData);
+                        window.location.href = "/qa/list";
+                    }).catch(err => {
+                    console.log(`데이터 전송 실패 ${err}`)
+                })
+            }
         } else {
             if (!title) {
                 setTitleVld("제목을 입력해주세요");
@@ -98,11 +113,10 @@ function InquiryWrite() {
             if (!userTel) {
                 setUserTelVld("전화번호를 입력해주세요");
             }
-            if (!password) {
-                setPasswordVld("비밀번호를 입력해주세요");
+            if (!hidden) {
+                setHiddenVld("공개 설정을 지정해주세요");
             }
         }
-
     };
 
 
@@ -115,7 +129,7 @@ function InquiryWrite() {
             <div>
                 <div className={"row justify-content-center p-5"}>
                     <div className={"card col-md-11 p-0 border-dark"}>
-                        <div className={"card-header border-dark bg-white h4 fw-bold"}>고객 문의</div>
+                        <div className={"card-header border-dark bg-white h4 fw-bold text-center"}>고객 문의</div>
                         <div className={"card-body"}>
                             <h5 className={"card-title text-center m-0"}> 문의 작성 </h5>
                             <div className={"text-end"}>
@@ -203,7 +217,7 @@ function InquiryWrite() {
                                     </div>
 
                                     {/*연락처*/}
-                                    <div className={"tel my-4"}>
+                                    <div className={"tel mt-4"}>
                                         <span className={"required"}>* </span>
                                         <label htmlFor={"userTel"} className={"form-label"}>연락처</label>
                                         <input type={"text"} className={"form-control"} name={"userTel"} placeholder={"- 를 제외한 숫자를 입력하세요"}
@@ -212,41 +226,47 @@ function InquiryWrite() {
                                     </div>
 
                                     {/*첨부파일*/}
-                                    <div className={"file my-4"}>
+                                    <div className={"file my-3"}>
                                         <span className={"required"}>&nbsp;&nbsp;</span>
                                         <label htmlFor={"inquiryUserTel"} className={"form-label"}>첨부파일</label>
                                         <input type={"file"} className={"form-control"} id={"files"} name={"files"}/>
                                     </div>
 
-                                    {/*비밀번호 */}
-                                    <div className={"password my-4 "}>
-                                        <span className={"required"}>* </span>
-                                        <label htmlFor={"password"} className={"form-label"}>글 비밀번호</label>
-                                        <input type={"password"} className={"form-control"} name={"password"} value={password} onChange={onChange}/>
-                                        <p className={"validation m-0"}>{passwordVld}</p>
-                                    </div>
-
                                     {/*공개설정*/}
-                                    <div className={"hidden my-4"}>
+                                    <div className={"hidden mt-4"}>
                                         <span className={"required"}>* </span>
                                         <label htmlFor={"inquiryHidden"} className={"form-label"}>문의 공개 설정</label>
-                                        <div className={"col-sm pt-2 gap-5"}>
-                                            <div className={"form-check form-check-inline"}>
-                                                <input className={"form-check-input"} type={"radio"} name={"hidden"} value={"Y"} onChange={onChange} checked={true}/>
-                                                <label className={"form-check-label"} htmlFor={"inlineRadio1"}>비공개</label>
-                                            </div>
+                                        <div className={"col-sm gap-5"}>
                                             <div className={"form-check form-check-inline"}>
                                                 <input className={"form-check-input"} type={"radio"} name={"hidden"} value={"N"} onChange={onChange}/>
                                                 <label className={"form-check-label"} htmlFor={"inlineRadio2"}>공개</label>
                                             </div>
+                                            <div className={"form-check form-check-inline"}>
+                                                <input className={"form-check-input"} type={"radio"} name={"hidden"} value={"Y"} onChange={onChange}/>
+                                                <label className={"form-check-label"} htmlFor={"inlineRadio1"}>비공개</label>
+                                            </div>
                                         </div>
+                                        <p className={"validation m-0"}>{hiddenVld}</p>
                                     </div>
+
+                                    {/*비밀번호 */}
+                                    {
+                                        isHidden
+                                        &&
+                                        <div className={"password my-3 "} >
+                                            <span className={"required"}>* </span>
+                                            <label htmlFor={"password"} className={"form-label"}>글 비밀번호</label>
+                                            <input type={"password"} className={"form-control"} name={"password"} value={password} onChange={onChange}/>
+                                            <p className={"validation m-0"}>{passwordVld}</p>
+                                        </div>
+                                    }
+
 
                                 </div>
 
                                 <div className={"d-flex justify-content-center gap-3 my-5"}>
                                     <button className={"custom-btn2 custBtn btn-lg col-sm-2"} onClick={submitHandler}>확인</button>
-                                    <button className={"custom-btn2 custBtn btn-lg col-sm-2"}>취소</button>
+                                    <button className={"custom-btn2 custBtn btn-lg col-sm-2"} onClick={() => {window.history.back()}}>취소</button>
                                 </div>
                             </div>
 

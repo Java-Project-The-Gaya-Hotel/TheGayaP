@@ -100,9 +100,12 @@
 
     <!--    문의 게시글 -->
     <select id="getQAList" resultType="com.gaya.thegayap.dto.SinInquiryDto">
-        select *
+        select replace(inquiry_user_name, substr(inquiry_user_name, 2), '**') AS inquiry_user_name,
+               DATE_FORMAT(inquiry_create_date, '%Y.%m.%d') AS inquiry_create_date,
+               inquiry_num, inquiry_category, inquiry_hotel_name, inquiry_reservation_num, inquiry_title, inquiry_contents, inquiry_user_email, inquiry_user_tel, inquiry_status, inquiry_password, inquiry_hidden
         from inquiry_table
         where inquiry_deleted_yn = 'N'
+        order by inquiry_num desc
     </select>
     <!-- 전체 호텔 이름-->
     <select id="getHotelName" resultType="String">
