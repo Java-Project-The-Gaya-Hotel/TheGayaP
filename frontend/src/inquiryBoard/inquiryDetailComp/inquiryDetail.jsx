@@ -20,7 +20,6 @@ function InquiryDetail() {
         // 세션이 유효한지 확인
         SessionCheck();
 
-        if (sessionStorage.getItem("loginInfo") != null) {
             // 상세 답글 을 가져오는 axios
             const getData = async () => {
                 const data = await axios.get("http://localhost:8080/gaya/qa/detail", {
@@ -30,13 +29,11 @@ function InquiryDetail() {
                 }).then(req => {
                     const {data} = req
                     setQaDetailData(data);
-                    console.log(data);
                 }).catch(err => {
                     console.log(err);
                 })
             }
             getData();
-        }
 
     }, [])
 
@@ -51,12 +48,16 @@ function InquiryDetail() {
 
                     {/*고객 문의 status*/}
                     <div className={"container p-3"}>
-                        <div className={"mx-5 px-5"}>
+                        <div>
                             <table className={"table text-center"}>
                                 <thead className={"table-bordered border-dark"}>
                                 <tr>
-                                    <th>현재 답변 단계</th>
-                                    <th>문의 제목</th>
+                                    <th>문의호텔</th>
+                                    <th>문의유형</th>
+                                    <th className={"col-sm-5"}>문의제목</th>
+                                    <th>작성자</th>
+                                    <th>작성일</th>
+                                    <th>답변상태</th>
                                 </tr>
                                 </thead>
                                 <tbody>

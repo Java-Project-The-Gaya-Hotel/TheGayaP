@@ -1,8 +1,5 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Link, Outlet} from "react-router-dom";
-import InquiryHotelInfo from "./InquiryHotelInfo/InquiryHotelInfo";
-import InquiryList from "./inquiryListComp/InquiryList";
-import InquiryWrite from "./InquiryWriteComp/InquiryWrite";
 import "./InquiryMain.css"
 
 
@@ -32,7 +29,7 @@ function InquiryMain() {
     return (
         <div className={"container"}>
             <div className={"row"}>
-                <div className={"col-3"}>
+                <div className={"col-2"}>
                     <nav>
                         <ul>
                             <h4>고객문의</h4>

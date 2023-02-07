@@ -18,10 +18,15 @@ const styles2 = {
 
 //문의 게시글의 정보를 가진 컴포넌트
 function InquiryItem(props) {
-    const [goNum, setGoNum] = useState();
-    const [title, setTitle] = useState();
-    const [status, setStatus] = useState();
-    const [inquiryId, setInquiryId] = useState();
+    // const styleColor = () =>{
+    //     if(props.data.inquiryStatus === "Y"){
+    //
+    //     }}
+
+    const [goNum, setGoNum] = useState(0);
+    const [title, setTitle] = useState("");
+    const [status, setStatus] = useState("");
+    const [inquiryId, setInquiryId] = useState("");
     const [memberId, setMemberId] = useState(props.memberId);
 
     // 문의글들이 불러와질때
@@ -29,15 +34,13 @@ function InquiryItem(props) {
         setGoNum(props.data.inquiryNum);
         setStatus(props.data.inquiryStatus);
         setInquiryId(props.data.inquiryUserName);
+        // hidden 속성에 문의글과 유저아이디의 이름이 맞지않을시 비밀글 처리
+        if (props.data.inquiryHidden === "Y" && props.data.inquiryUserName !== memberId) {
+            setTitle("비밀글입니다.");
+        } else {
             setTitle(props.data.inquiryTitle);
 
-        // // hidden 속성에 문의글과 유저아이디의 이름이 맞지않을시 비밀글 처리
-        // if (props.data.inquiryHidden === "Y" && props.data.inquiryUserName !== memberId) {
-        //     setTitle("비밀글입니다.");
-        // } else {
-        //     setTitle(props.data.inquiryTitle);
-        //
-        // }
+        }
 
 
     }, []);
@@ -74,7 +77,7 @@ function InquiryItem(props) {
 
         <tr key={props.data.inquiryNum} onClick={onClickHandler} style={{cursor: "pointer"}}>
             <td>{props.data.inquiryHotelName}</td>
-            <td colSpan={2}>{title}</td>
+            <td className={"text-start"}>{title}</td>
             <td>{inquiryId}</td>
             <td>{props.data.inquiryCreateDate}</td>
             <td>{props.data.inquiryStatus}</td>

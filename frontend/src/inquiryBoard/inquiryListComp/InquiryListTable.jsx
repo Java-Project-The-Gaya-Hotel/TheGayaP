@@ -54,19 +54,18 @@ function InquiryListTable(props) {
     return (
 
         <div>
-            <div className={"container"}>
+            <div className={"container"} style={{fontSize: 15}}>
                 <div className={"row justify-content-center p-5"}>
-                    <div className="card text-center col-md-11 p-0 border-dark">
+                    <div className="card text-center col-md-12 p-0 border-dark">
                         <div className="card-header h4 border-dark bg-white"> 고객 문의 게시판</div>
                         <div className="card-body container">
-                            <h5 className="card-title m-3">고객 문의</h5>
                             <div className={"container p-3"}>
                                 <table className={'table table-hover text-center'}>
                                     <thead className={"border-dark table-dark"}>
                                     <tr>
                                         <th>문의 호텔</th>
-                                        <th colSpan={2}>문의 제목</th>
-                                        <th>문의 고객명</th>
+                                        <th className={"col-sm-5"}>문의 제목</th>
+                                        <th>작성자</th>
                                         <th>문의 날짜</th>
                                         <th>문의 상태</th>
                                     </tr>

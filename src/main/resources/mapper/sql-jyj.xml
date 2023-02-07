@@ -96,6 +96,28 @@
         WHERE member_email = #{memberEmail} AND member_name = #{memberName}
     </select>
 
-<!--    예약 찾기 -->
+<!--    회원 테이블 추가 -->
+    <insert id="insertInquiry" parameterType="com.gaya.thegayap.dto.SinInquiryDto">
+        INSERT INTO
+            inquiry_table(inquiry_category, inquiry_hotel_name, inquiry_reservation_num, inquiry_title,
+                          inquiry_contents, inquiry_user_name, inquiry_user_email, inquiry_user_tel,
+                          inquiry_create_date, inquiry_password, inquiry_hidden)
+        VALUES (#{inquiryCategory}, #{inquiryHotelName}, #{inquiryReservationNum}, #{inquiryTitle}, #{inquiryContents},
+                #{inquiryUserName}, #{inquiryUserEmail}, #{inquiryUserTel}, NOW(), #{inquiryPassword}, #{inquiryHidden});
+    </insert>
+
+<!--    비회원 예약 조회 -->
+    <select id="notMemberResv" resultType="com.gaya.thegayap.dto.JeongResvDto">
+        SELECT resv.*, ht.hotel_name,
+               (CASE
+                    WHEN (resv.reservation_hotel_num=1 OR resv.reservation_hotel_num=16)
+                        THEN (SELECT hr.room_code FROM hotel_room_table AS hr WHERE hr.room_code = resv.reservation_room_code)
+                    ELSE (SELECT sr.room_code FROM stay_room_table AS sr WHERE sr.room_code = resv.reservation_room_code)
+                   END) AS room_code
+        FROM reservation_table AS resv
+                 JOIN hotel_table AS ht ON ht.hotel_num = resv.reservation_hotel_num
+        WHERE reservation_num = #{reservationNum} AND reservation_customer_name=#{customerName}
+        ORDER BY reservation_date DESC
+    </select>
 
 </mapper>
