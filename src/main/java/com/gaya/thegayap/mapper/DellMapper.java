@@ -10,7 +10,12 @@ import java.util.Map;
 
 @Mapper
 public interface DellMapper {
+
+
+    //My page Home Data 가져오기
     JeongMemberDto getUserInfo(String memberId);
 
-    List<SinReservDto> reservationinfo(Object customerId);
+    // 회원 예약 Table 가져오기
+    List<SinReservDto> reservationinfo(String customerId);
+
 }

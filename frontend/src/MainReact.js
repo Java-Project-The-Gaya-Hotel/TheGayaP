@@ -13,7 +13,6 @@ import InquiryHotelInfo from "./inquiryBoard/InquiryHotelInfo/InquiryHotelInfo";
 import InquiryListTable from "./inquiryBoard/inquiryListComp/InquiryListTable";
 import InquiryWrite from "./inquiryBoard/InquiryWriteComp/InquiryWrite";
 import InquiryDetail from "./inquiryBoard/inquiryDetailComp/inquiryDetail";
-import MypageTest from "./test/MypageTest";
 import IntroPageSeoul from "./dellIntro/introSeoul/IntroPageSeoul";
 import IntroPageJeju from "./dellIntro/introJeju/introPageJeju";
 import IntroPageStay from "./dellIntro/introStay/introPageStay";
@@ -23,6 +22,8 @@ import MyProfile from "./dellMypage/MyProfile";
 import MypageMain from "./dellMypage/MypageMain";
 import MypageNav from "./dellMypage/MypageNav";
 import ReservationPageDetail2 from "./skyReservation/ReservationPageDetail2";
+import MyPageMemberOff from "./dellMypage/MyPageMemberOff";
+
 
 
 function MainReact(props) {
@@ -54,6 +55,7 @@ function MainReact(props) {
                             <Route index element={<MypageMain/>}/>
                             <Route path={"myBookingSchedule"} element={<MyBookingSchedule/>}/>
                             <Route path={"profilesave"} element={<MyProfile/>}/>
+                            <Route path={"memberoff"} element={<MyPageMemberOff/>}/>
                         </Route>
 
                     </Route>

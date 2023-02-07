@@ -21,8 +21,8 @@ public class SinReservDto {
     private String reservationCheckOut;
     private String reservationDate;
     private int reservationNights;
-    private int breakfastAdultNum;
-    private int breakfastChildNum;
+    private int reservationMealAdult;
+    private int reservationMealChild;
     private int reservationPeople;
     private String reservationCost;
     private String reservationRequest;

@@ -10,11 +10,12 @@ const styles = {
 }
 
 function MyBookingSchedule() {
-    const [customerId , setCustomerId]=useState("");
+    const [customerId, setCustomerId] = useState("");
+    const [checkListTable, setCheckListTable] = useState([]);
 
-    const navi=useNavigate();
+    const navi = useNavigate();
 
-    useEffect(()=>{
+    useEffect(() => {
         SessionCheck();
         if (AuthorityCheck() === false) {
             alert("토큰 만료.")
@@ -24,49 +25,61 @@ function MyBookingSchedule() {
                 setCustomerId(response.data)
                 axios.get(
                     "http://localhost:8080/mypage/reservationinfo",
-                    {params:{
-                            customerId :response.data,
-                        }}
+                    {
+                        params: {
+                            customerId: response.data,
+                        }
+                    }
                 ).then(response => {
                     console.log(response.data);
+                    setCheckListTable(response.data)
 
                 })
             })
         }
 
-    },[])
+    }, [])
 
     return (
         <div>
             <div className={"container"}>
                 <div className={"row justify-content-center p-5"}>
                     <div className="card text-center col-md-11 p-0 border-dark">
-                        <div className="card-header border-dark bg-white"> {customerId} </div>
+                        <div className="card-header border-dark bg-white"> {customerId} 님의 예약 목록</div>
                         <div className="card-body" style={styles.cardBox}>
-                            <h5 className="card-title">예약 확인</h5>
                             <div className={"container p-3"}>
 
                                 <table className={"table table-hover"}>
                                     <thead>
-                                    <tr>
+                                    <tr className={"small "}>
                                         <th>예약 날짜</th>
                                         <th>예약 인원</th>
+                                        <th>예약 Room</th>
                                         <th>Check In</th>
                                         <th>Check Out</th>
                                         <th>결제 금액</th>
+                                        <th>예약 이름</th>
                                     </tr>
                                     </thead>
+
+
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td colSpan={5}>조회된 예약 없음.</td>
-                                    </tr>
+                                        {
+                                            checkListTable.map((response, index)=>{
+                                            return(
+                                                <tr className={"small"} key = {index}>
+                                                    <td>{response.reservationDate}</td>
+                                                    <td>{response.reservationPeople}</td>
+                                                    <td>{response.reservationRoomName}</td>
+                                                    <td>{response.reservationCheckIn}</td>
+                                                    <td>{response.reservationCheckOut}</td>
+                                                    <td>{response.reservationCost}</td>
+                                                    <td>{response.reservationCustomerName}</td>
+                                                </tr>
+                                            )
+
+                                        })}
+
                                     </tbody>
                                 </table>
 
