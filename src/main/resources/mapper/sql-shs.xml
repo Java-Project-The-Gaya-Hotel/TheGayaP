@@ -87,16 +87,16 @@
     <!--    예약 DB 입력-->
     <insert id="reservationRoom" parameterType="com.gaya.thegayap.dto.SinReservDto">
         insert into reservation_table
-        values (#{reservationNum}, #{hotelNum}, #{reservationRoomName}, #{roomCode}, #{customerName}, #{customerId},
-                #{checkIn}, #{checkOut},
-                NOW(), #{nights}, #{breakfastAdultNum}, #{breakfastChildNum}, #{reservationPeople}, #{totalCost},
+        values (#{reservationNum}, #{reservationHotelNum}, #{reservationRoomName}, #{reservationRoomCode}, #{customerName}, #{customerId},
+                #{reservationCheckIn}, #{reservationCheckOut},
+                NOW(), #{reservationNights}, #{reservationMealAdult}, #{reservationMealChild}, #{reservationPeople}, #{reservationCost},
                 #{reservationRequest})
     </insert>
 
     <!--    예약 고객테이블 DB 입력-->
     <insert id="insertCustomer" parameterType="com.gaya.thegayap.dto.SinReservDto">
         INSERT INTO customer_table
-        VALUES (#{reservationNum}, #{customerId},#{customerName},#{customerEmail},#{customerTel},#{earnedPoints},#{usedPoints})
+        VALUES (#{reservationNum}, #{customerId},#{customerName},#{customerEmail},#{customerTel},#{earnPoint})
     </insert>
 
     <!--    문의 게시글 -->
@@ -150,5 +150,11 @@
         where hotel_num = #{hotelNum}
 
     </select>
+
+    <update id="updateMemberPoint" parameterType="com.gaya.thegayap.dto.SinReservDto">
+        update member_table
+        set member_point = member_point + #{earnPoint}
+        where member_id = #{customerId};
+    </update>
 
 </mapper>

@@ -3,6 +3,7 @@ import axios from "axios";
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
 import Swal from "sweetalert2";
+import {GetMemberIdByToken} from "../functiontocheck/FunctionToCheck";
 
 
 const CrumbAni = styled.div`
@@ -58,15 +59,40 @@ function ReservationPageDetail2() {
     const [customerEmail, setCustomerEmail] = useState("");
     const [customerTel, setCustomerTel] = useState("");
     const [totalCostSum, setTotalCostSum] = useState("");
-    const [costComma, setConstComma] = useState("");
+    const [memberTotalCostSum, setMemberTotalCostSum] = useState("");
+    const [costComma, setCostComma] = useState("");
+    const [discountCostComma, setDiscountCostComma] = useState("");
     const [adultMealNum, setAdultMealNum] = useState(0);
     const [childMealNum, setChildMealNum] = useState(0);
     const [adultMealCost, setAdultMealCost] = useState(0);
     const [childMealCost, setChildMealCost] = useState(0);
     const [memberId, setMemberId] = useState("");
+    const [reservationRequest, setReservationRequest] = useState("");
+    const [memberTier, setMemberTier] = useState("");
 
 
     useEffect(() => {
+
+
+        if (sessionStorage.getItem("token") != null) {
+            GetMemberIdByToken().then(response => {
+                setMemberId(response.data);
+                axios.get("http://localhost:8080/gaya/userinfo", {
+                    params: {
+                        memberId: response.data,
+                    }
+                }).then(res => {
+                    const user = res.data;
+                    console.log(user);
+                    setCustomerName(user.memberName);
+                    setCustomerEmail(user.memberEmail);
+                    setCustomerTel(user.memberTel);
+                    setMemberTier(user.memberTier);
+                })
+            }).catch(e => {
+                setMemberId("");
+            })
+        }
 
 
         axios.get("http://localhost:8080/gaya/checkmealcost", {
@@ -95,7 +121,21 @@ function ReservationPageDetail2() {
     }, []);
 
     useEffect(() => {
-        setConstComma(totalCostSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+        let cost = Number(totalCostSum);
+        let discountCost;
+
+        setCostComma(cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+        if (memberTier == "gold") {
+            discountCost = cost * 0.9;
+        } else if (memberTier == "platinum") {
+            discountCost = cost * 0.85;
+        } else if (memberTier == "black") {
+            discountCost = cost * 0.8;
+        } else {
+            discountCost = cost * 0.95;
+        }
+        setMemberTotalCostSum(discountCost);
+        setDiscountCostComma(discountCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
 
     }, [totalCostSum])
 
@@ -134,7 +174,7 @@ function ReservationPageDetail2() {
                 {
                     reservationNum: merchant_uid,
                     reservationRoomName: roomName,
-                    reservatioHotelNum: hotelNum,
+                    reservationHotelNum: hotelNum,
                     roomCode: roomCode,
                     customerName: customerName,
                     customerId: memberId,
@@ -205,6 +245,16 @@ function ReservationPageDetail2() {
     }, [childMealNum, adultMealNum])
 
     const reservButton = () => {
+        let earnPoint;
+        let resultSum;
+        if (memberId !== "" || memberId != null) {
+            earnPoint = memberTotalCostSum * 0.01;
+            resultSum = memberTotalCostSum;
+        } else {
+            resultSum = totalCostSum;
+            earnPoint = 0;
+        }
+
         const userPayInfo = {
             reservationNum: new Date().getTime(),
             reservationHotelNum: Number(hotelNum),
@@ -214,13 +264,16 @@ function ReservationPageDetail2() {
             reservationCheckOut: endDate,
             reservationNights: Number(nights),
             reservationPeople: Number(totalCount),
-            reservationCost: totalCostSum,
-            breakfastAdultNum:adultMealNum,
-            breakfastChildNum:childMealNum,
+            reservationCost: resultSum,
+            reservationMealAdult: adultMealNum,
+            reservationMealChild: childMealNum,
             customerId: memberId,
             customerEmail: customerEmail,
             customerName: customerName,
-            customerTel:customerTel,
+            customerTel: customerTel,
+            earnPoint: earnPoint,
+            reservationRequest: reservationRequest,
+            memberTier: memberTier,
         }
         console.log(userPayInfo);
         axios.post("http://localhost:8080/gaya/bookroom",
@@ -348,12 +401,14 @@ function ReservationPageDetail2() {
                                             <td><em className="ast">*</em> 이름 :</td>
                                             <td><input onChange={onNameHandler} style={style.boxSize} type={"text"}
                                                        className={"id"} autoComplete={"off"}
-                                                       placeholder={"Please Input Your Name"}/></td>
+                                                       placeholder={"Please Input Your Name"} value={customerName}/>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td><em className="ast">*</em> 이메일 :</td>
                                             <td><input onChange={onEmailHandler} style={style.boxSize} type={"email"}
-                                                       placeholder={"Please Input Your Email"}/></td>
+                                                       placeholder={"Please Input Your Email"} value={customerEmail}/>
+                                            </td>
                                         </tr>
 
                                         <tr>
@@ -421,6 +476,10 @@ function ReservationPageDetail2() {
                                             <td><span style={style.boxSize}/>{hotelName}</td>
                                         </tr>
                                         <tr>
+                                            <td> 예약할 방 이름 :</td>
+                                            <td><span style={style.boxSize}/>{roomName}</td>
+                                        </tr>
+                                        <tr>
                                             <td>체크인 :</td>
                                             <td><span style={style.boxSize}/>{startDate}</td>
                                         </tr>
@@ -428,13 +487,29 @@ function ReservationPageDetail2() {
                                             <td>체크아웃 :</td>
                                             <td><span style={style.boxSize}/>{endDate}</td>
                                         </tr>
-                                        <tr>
-                                            <td>총 금액 :</td>
-                                            <td><span style={style.boxSize}/>{costComma} 원</td>
-                                        </tr>
+                                        {
+                                            memberId == "" ? <tr>
+                                                    <td>총 금액 :</td>
+                                                    <td><span style={style.boxSize}/>{costComma} 원</td>
+                                                </tr> :
+                                                <tr>
+                                                    <td>할인 전 금액 :</td>
+                                                    <td><span style={style.boxSize}/><s>{costComma} 원</s></td>
+                                                </tr>
+
+                                        }
+                                        {
+                                            memberId == "" ? null : <tr>
+                                                <td>할인 후 금액 :</td>
+                                                <td><span style={style.boxSize}/>{discountCostComma} 원</td>
+                                            </tr>
+                                        }
                                         <tr>
                                             <td>요청 사항 :</td>
-                                            <td><textarea></textarea></td>
+                                            <td><textarea onChange={(e) => {
+                                                setReservationRequest(e.target.value)
+                                            }
+                                            }></textarea></td>
                                         </tr>
                                         </tbody>
                                     </table>

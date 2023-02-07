@@ -39,4 +39,6 @@ public interface SinMapper {
     List<SinRoomDto> checkBookOverlap(SinFilterRoomDto build);
 
     MealCostDto getMealCost(int hotelNum);
+
+    void updateMemberPoint(SinReservDto sinReservDto);
 }

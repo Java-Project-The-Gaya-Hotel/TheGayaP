@@ -74,8 +74,8 @@ function InquiryListTable(props) {
 
                                     <tbody>
                                     {
-                                        QAData.slice(offset, offset + limit).map((item, idx) => {
-                                            return <InquiryItem key={idx} data={item} memberId={memberId}/>
+                                        QAData.slice(offset, offset + limit).map((item) => {
+                                            return <InquiryItem key={item.inquiryNum} data={item} memberId={memberId}/>
                                         })
                                     }
                                     </tbody>

@@ -141,13 +141,12 @@ public class SinServiceImpl implements SinService {
 //    }
 
 
-
     //    Map형식으로 필터
 
     /**
      * 예약된 방을 필터하여 방의 리스트를 보냄
      *
-     * @param hotelNum  호텔 DB번호
+     * @param hotelNum   호텔 DB번호
      * @param sDate      체크인 날짜
      * @param eDate      체크아웃 날짜
      * @param adultCount 어른 인원수
@@ -169,9 +168,7 @@ public class SinServiceImpl implements SinService {
         Map<String, SinRoomDto> roomMap = new HashMap<>();
 
 
-
-
-        try{
+        try {
             //        선택된 호텔의 방 리스트 가져오기
             if (hotelNum == 1 || hotelNum == 16) {
 //        DB에서 온 데이터를 넣음
@@ -202,29 +199,39 @@ public class SinServiceImpl implements SinService {
                     filterList.add(value);
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
 
 
         return filterList;
     }
 
 
-
     /**
      * 방을 예약하는 서비스
+     *
      * @param sinReservDto
      */
     @Override
     public void reservationRoom(SinReservDto sinReservDto) {
-        sinMapper.insertCustomer(sinReservDto);
-        sinMapper.reservationRoom(sinReservDto);
+        int memberP = sinReservDto.getEarnPoint();
+        try {
+
+            if (memberP != 0) {
+                sinMapper.updateMemberPoint(sinReservDto);
+            }
+
+            sinMapper.insertCustomer(sinReservDto);
+            sinMapper.reservationRoom(sinReservDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * 문의 게시글 리스트를 불러오는 서비스
+     *
      * @return List(SinInquiryDto)
      */
     @Override
@@ -240,6 +247,7 @@ public class SinServiceImpl implements SinService {
 
     /**
      * 호텔 이름 리스트를 불러오는 서비스
+     *
      * @return List(String)
      */
     @Override
@@ -251,6 +259,7 @@ public class SinServiceImpl implements SinService {
 
     /**
      * 임시 방 비교 서비스
+     *
      * @param roomCode 방 코드
      * @return SinRoomDto
      */
@@ -268,6 +277,7 @@ public class SinServiceImpl implements SinService {
 
     /**
      * 문의 답글을 DB에 넣는 서비스
+     *
      * @param sinAnswerChatDto
      */
     @Override
@@ -278,12 +288,12 @@ public class SinServiceImpl implements SinService {
 
     /**
      * roomCode를 받아 그 방의 호텔 조식과 방의 가격을 보내는 서비스
+     *
      * @param hotelNum
      * @return SInRoomCostDto
      */
     @Override
     public MealCostDto getMealCost(int hotelNum) {
-
 
 
         return sinMapper.getMealCost(hotelNum);
@@ -292,6 +302,7 @@ public class SinServiceImpl implements SinService {
 
     /**
      * roomCode 랜덤 생성 메서드
+     *
      * @return
      */
     public String roomCodeGenerate() {

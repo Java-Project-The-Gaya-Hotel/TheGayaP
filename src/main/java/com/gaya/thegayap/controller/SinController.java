@@ -1,6 +1,8 @@
 package com.gaya.thegayap.controller;
 
 import com.gaya.thegayap.dto.*;
+import com.gaya.thegayap.service.JeongService;
+import com.gaya.thegayap.service.JeongServiceImpl;
 import com.gaya.thegayap.service.SinService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,8 @@ public class SinController {
 
 
     private final SinService sinService;
+
+    private final JeongService jeongService;
 
 
     //임시 db 입력 코드 시작
@@ -181,6 +185,11 @@ public class SinController {
             e.printStackTrace();
             return "데이터 입력 실패";
         }
+    }
+
+    @GetMapping("/userinfo")
+    public JeongMemberDto getUserInfo(@RequestParam ("memberId")String memberId) throws Exception {
+        return jeongService.profile(memberId);
     }
 
 
