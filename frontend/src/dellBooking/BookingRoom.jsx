@@ -5,6 +5,7 @@ import "./dellBookingCss/NavColor.css"
 import {useLocation} from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
+import {AuthorityCheck} from "../functiontocheck/FunctionToCheck";
 
 
 function BookingRoom() {
@@ -32,16 +33,13 @@ function BookingRoom() {
     // 받아온 정보들로 axios 통신하여 예약이 중첩되지 않은 방을 가져오는 코드
     useEffect(() => {
 
-
-
-
         axios.get("http://localhost:8080/gaya/roomlist", {
+
             params: {
                 hotelNum: searchParams.get('hotelNum'),
                 sDate: searchParams.get('sDate'),
                 eDate: searchParams.get('eDate'),
                 adultCount:searchParams.get('adultCount'),
-
             }
         })
             .then((req) => {
@@ -52,6 +50,7 @@ function BookingRoom() {
             .catch(e => {
                 console.log(e)
             })
+
 
     }, [])
 

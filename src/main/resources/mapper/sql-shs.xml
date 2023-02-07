@@ -87,7 +87,8 @@
     <!--    예약 DB 입력-->
     <insert id="reservationRoom" parameterType="com.gaya.thegayap.dto.SinReservDto">
         insert into reservation_table
-        values (#{reservationNum}, #{hotelNum}, #{roomCode}, #{customerName}, #{customerId}, #{checkIn}, #{checkOut},
+        values (#{reservationNum}, #{hotelNum}, #{reservationRoomName}, #{roomCode}, #{customerName}, #{customerId},
+                #{checkIn}, #{checkOut},
                 NOW(), #{nights}, #{breakfastAdultNum}, #{breakfastChildNum}, #{reservationPeople}, #{totalCost},
                 #{reservationRequest})
     </insert>
@@ -124,7 +125,7 @@
     </insert>
 
     <!-- 호텔 조식 가격 불러오기-->
-    <select id="getRoomAndMealCost" parameterType="int" resultType="com.gaya.thegayap.dto.MealCostDto">
+    <select id="getMealCost" parameterType="int" resultType="com.gaya.thegayap.dto.MealCostDto">
 
         <!--        <if test='roomCode.contains("stay")'>-->
         <!--            SELECT ht.hotel_meal_adult, ht.hotel_meal_child, srt.room_twin_cost, srt.room_twin_weekend,-->

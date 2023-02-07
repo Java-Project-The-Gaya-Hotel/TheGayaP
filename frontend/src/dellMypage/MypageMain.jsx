@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import MypageNav from "./MypageNav";
 import {Outlet} from "react-router-dom";
 
@@ -9,7 +9,9 @@ const styles={
     }
 }
 
+
 function MypageMain() {
+    const memberId = useContext();
     return (
         <div>
             <div className={"container"}>

@@ -41,8 +41,10 @@ function RoomCondition(props) {
     const [costSum, setCostSum] = useState(0);
     const [weekDay, setWeekDay] = useState(0);
     const [weekEnd, setWeekEnd] = useState(0);
+    const [chooseRoomCost, setChooseRoomCost] = useState(0);
+    const [chooseRoomWeekendCost, setChooseRoomWeekendCost] = useState(0);
+    // 추후삭제
     const [roomCostDetail, setRoomCostDetail] = useState("");
-
 
     const roomCode = data.roomCode;
     const codeCall = roomCode.startsWith('hotel')
@@ -56,16 +58,30 @@ function RoomCondition(props) {
 
 // -------------------------------------------------------------
 
-    const [chooseRoomCost, setChooseRoomCost] = useState("");
     const navigate = useNavigate();
 
     const clickRoomCost1 = () => {
         setChooseRoomCost(data.roomTwinCost);
+        setChooseRoomWeekendCost(data.roomTwinWeekend)
 
     }
 
     const clickRoomCost2 = () => {
         setChooseRoomCost(data.roomFamilyCost);
+        setChooseRoomWeekendCost(data.roomFamilyWeekend);
+    }
+
+    // 주중 주말을 구하기 위한 체크인 체크아웃 모든 날짜 구하는 함수
+    function getDatesStartToLast(startDate, lastDate) {
+        var regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
+        if (!(regex.test(startDate) && regex.test(lastDate))) return "Not Date Format";
+        var result = [];
+        var curDate = new Date(startDate);
+        while (curDate <= new Date(lastDate)) {
+            result.push(curDate.toISOString().split("T")[0]);
+            curDate.setDate(curDate.getDate() + 1);
+        }
+        return result;
     }
 
     useEffect(()=>{
@@ -87,7 +103,7 @@ function RoomCondition(props) {
             setWeekEnd(checkWeekEnd);
         });
         weekDayCost = (chooseRoomCost * weekDay);
-        weekEndCost = (chooseRoomCost * weekEnd);
+        weekEndCost = (chooseRoomWeekendCost * weekEnd);
         overAdultLimit = 20000 * (adultCount - 1);
         // 어른 인원수가 2명이상일시 2만원 추가요금 계산
         if (adultCount > 1) {
@@ -101,27 +117,11 @@ function RoomCondition(props) {
 // -------------------------------------------------------------
 
 
-    // 주중 주말을 구하기 위한 체크인 체크아웃 모든 날짜 구하는 함수
-    function getDatesStartToLast(startDate, lastDate) {
-        var regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
-        if (!(regex.test(startDate) && regex.test(lastDate))) return "Not Date Format";
-        var result = [];
-        var curDate = new Date(startDate);
-        while (curDate <= new Date(lastDate)) {
-            result.push(curDate.toISOString().split("T")[0]);
-            curDate.setDate(curDate.getDate() + 1);
-        }
-        return result;
-    }
-
-
     // 예약하기를 눌렀을 때 발동
     const clickNextE = () => {
 
-
-
         if (chooseRoomCost !== "") {
-            navigate(`/nextreserv?sDate=${startDate}&eDate=${endDate}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}&hotelNum=${hotelNum}&roomCode=${roomCode}&nights=${nights}&costSum=${costSum}&rcd=${roomCostDetail}`, {replace: true});
+            navigate(`/nextreserv?sDate=${startDate}&eDate=${endDate}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}&hotelNum=${hotelNum}&roomCode=${roomCode}&nights=${nights}&costSum=${costSum}&roomName=${data.roomName}`, {replace: true});
         } else {
             Swal.fire('사용하실 방을 선택해 주세요 ');
         }
@@ -134,9 +134,8 @@ function RoomCondition(props) {
 
             <h5 className={"p-2 fw-bold"}>{data.roomName}</h5>
             <div className={"row text-center align-items-center"}>
-                <div className={"col"}><img src={"https://source.unsplash.com/random/300x300/?hotelroom"}/></div>
-                <div className={"col"}></div>
-                <div className={"col"}></div>
+                <div className={"col"}><img src={`${data.roomImgUrl}`}/></div>
+                <div className={"col"}><img src={`${data.roomInfo}`}/></div>
                 <div className={"col"}>
                     <button className={"btnDate"} role={"button"} onClick={() => setCOpen(!cOpen)}
                             aria-controls="example-collapse-text" aria-expanded={cOpen}><span

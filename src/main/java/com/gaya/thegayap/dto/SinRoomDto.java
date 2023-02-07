@@ -23,4 +23,6 @@ public class SinRoomDto {
     private String reservationRoomCode;
     private String roomInfo;
     private int roomMaxAdult;
+
+    private String roomImgUrl;
 }

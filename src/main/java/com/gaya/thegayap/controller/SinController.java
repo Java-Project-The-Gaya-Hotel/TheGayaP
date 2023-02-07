@@ -29,20 +29,16 @@ public class SinController {
 
 
 
-    //    문의 게시판 글 리스트 가져오기
-    @GetMapping("/inquirylist")
-    public List<SinInquiryDto> getQAList() {
 
-        List<SinInquiryDto> inquiryList = sinService.getQAList();
-
-        return inquiryList;
-    }
 
     //임시 db 입력 코드 종료
 
 
+
+
+
     /**
-     * 호텔 이름 가져오는 메서드
+     * 호텔 이름 가져오는 컨트롤러
      * @return
      */
     @GetMapping("/hotelname")
@@ -103,7 +99,10 @@ public class SinController {
     }
 
 
-    // 방 예약 코드
+    /**
+     * 방 예약 컨트롤러
+     * @param sinReservDto
+     */
     @PostMapping("/bookroom")
     public void bookRoom(@RequestBody SinReservDto sinReservDto) {
 
@@ -119,34 +118,6 @@ public class SinController {
 //        옵션사항: 회원일시 아이디/ 조식옵션/
 
 //        System.currentTimeMillis() = 예약 번호 생성을 위한 1/1000초 생성
-
-//        백엔드가 진행해야할 정보
-//        예약번호 생성
-
-
-//        변수 지정
-
-//
-//        long reservationNum = System.currentTimeMillis();
-//        int hotelNum = 1;
-//        String roomCode = "hotel-cKHEX";
-//        String customerName = "테스터1";
-//        String customerId = "test1";
-//        String checkIn = "2023-01-26";
-//        String checkOut = "2023-01-28";
-//        String reservationTime = "2023-01-04 22:23:00";
-//        int nights = 3;
-//        int breakfastAdultNum = 1;
-//        int breakfastChildNum = 1;
-//        int peopleAdultNum = 2;
-//        int peopleChildNum = 1;
-//        int reservationPeople = 3;
-//        int totalCost = 498550;
-//        String reservationRequest = "방 주세요";
-
-//        SinReservDto sinReservDto;
-
-//        sinReservDto = new SinReservDto(reservationNum, hotelNum, roomCode, customerName, customerId, checkIn, checkOut, reservationTime, nights, breakfastAdultNum, breakfastChildNum, peopleAdultNum, peopleChildNum, totalCost, reservationPeople, reservationRequest);
 
         sinService.reservationRoom(sinReservDto);
 
@@ -179,6 +150,18 @@ public class SinController {
         return sinAnswerChatList;
     }
 
+
+    /**
+     * 문의 게시판 리스트 가져오는 컨트롤러
+     * @return
+     */
+    @GetMapping("/inquirylist")
+    public List<SinInquiryDto> getQAList() {
+
+        List<SinInquiryDto> inquiryList = sinService.getQAList();
+
+        return inquiryList;
+    }
 
     //  QA 답글 Insert
 
