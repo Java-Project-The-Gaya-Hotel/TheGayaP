@@ -23,6 +23,7 @@ import MypageMain from "./dellMypage/MypageMain";
 import MypageNav from "./dellMypage/MypageNav";
 import ReservationPageDetail2 from "./skyReservation/ReservationPageDetail2";
 import MyPageMemberOff from "./dellMypage/MyPageMemberOff";
+import MypageTest from "./test/MypageTest";
 
 
 
@@ -57,6 +58,7 @@ function MainReact(props) {
                             <Route path={"profilesave"} element={<MyProfile/>}/>
                             <Route path={"memberoff"} element={<MyPageMemberOff/>}/>
                         </Route>
+                        <Route path={"/test"} element={<MypageTest/>}/>
 
                     </Route>
                 </Routes>

@@ -27,6 +27,7 @@ public class DellService {
     }
     //회원 정보 수정
     public JeongMemberDto memberSaveInfo(String memberId) {
-        return dellMapper.memberSaveInfo(memberId);
+//        return dellMapper.memberSaveInfo(memberId);
+        return null;
     }
 }
