@@ -220,8 +220,7 @@ function InquiryWrite() {
                                     <div className={"tel mt-4"}>
                                         <span className={"required"}>* </span>
                                         <label htmlFor={"userTel"} className={"form-label"}>연락처</label>
-                                        <input type={"text"} className={"form-control"} name={"userTel"} placeholder={"- 를 제외한 숫자를 입력하세요"}
-                                               onChange={onChange} value={userTel}/>
+                                        <input type={"text"} className={"form-control"} name={"userTel"} placeholder={"- 를 제외한 숫자를 입력하세요"} onChange={onChange} value={userTel}/>
                                         <p className={"validation m-0"}>{userTelVld}</p>
                                     </div>
 
