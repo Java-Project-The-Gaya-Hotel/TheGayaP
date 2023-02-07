@@ -37,7 +37,6 @@ function InquiryMain() {
                             <div className={"container my-3"}>
                                 <li><Link to={"/qa"}>Gaya Reward</Link></li>
                                 <li><Link to={"list"}>문의 목록</Link></li>
-                                <li><Link to={"write"}>문의 작성</Link></li>
                             </div>
                         </ul>
                     </nav>

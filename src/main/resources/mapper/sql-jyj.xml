@@ -120,4 +120,18 @@
         ORDER BY reservation_date DESC
     </select>
 
+<!--    문의작성 페이지 유저정보 불러오기-->
+    <select id="inquiryUserInfo" resultType="com.gaya.thegayap.dto.JeongMemberDto">
+        SELECT member_id, member_name, member_email, member_tel
+        FROM member_table
+        WHERE member_id = #{userName}
+    </select>
+
+<!--    문의 상세보기 -->
+    <select id="inquiryDetail" resultType="com.gaya.thegayap.dto.SinInquiryDto">
+        SELECT *
+        FROM inquiry_table
+        WHERE inquiry_num = #{idx}
+    </select>
+
 </mapper>

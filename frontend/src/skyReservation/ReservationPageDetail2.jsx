@@ -21,23 +21,6 @@ const Information = styled.div`
   animation-duration: 3s;
 `;
 
-
-function collapse(element) {
-    const before = document.getElementsByClassName("active")[0];               // 기존에 활성화된 버튼
-    if (before && document.getElementsByClassName("active")[0] !== element) {  // 자신 이외에 이미 활성화된 버튼이 있으면
-        before.nextElementSibling.style.maxHeight = null;   // 기존에 펼쳐진 내용 접고
-        before.classList.remove("active");                  // 버튼 비활성화
-    }
-    element.classList.toggle("active");         // 활성화 여부 toggle
-
-    const content = element.nextElementSibling;
-    if (content.style.maxHeight !== 0) {         // 버튼 다음 요소가 펼쳐져 있으면
-        content.style.maxHeight = null;         // 접기
-    } else {
-        content.style.maxHeight = content.scrollHeight + "px";  // 접혀있는 경우 펼치기
-    }
-}
-
 function ReservationPageDetail2() {
 
     //////////////////////////////////////////////
@@ -221,13 +204,6 @@ function ReservationPageDetail2() {
         setCustomerEmail(event.target.value)
     }
 
-
-    const handlePress = (e) => {
-        const regex = /^[0-9\b -]{0,13}$/;
-        if (regex.test(e.target.value)) {
-            setCustomerTel(e.target.value);
-        }
-    }
 
     useEffect(() => {
         if (customerTel.length === 10) {
@@ -488,7 +464,7 @@ function ReservationPageDetail2() {
                                             <td><span style={style.boxSize}/>{endDate}</td>
                                         </tr>
                                         {
-                                            memberId == "" ? <tr>
+                                            memberId === "" ? <tr>
                                                     <td>총 금액 :</td>
                                                     <td><span style={style.boxSize}/>{costComma} 원</td>
                                                 </tr> :
@@ -499,7 +475,7 @@ function ReservationPageDetail2() {
 
                                         }
                                         {
-                                            memberId == "" ? null : <tr>
+                                            memberId === "" ? null : <tr>
                                                 <td>할인 후 금액 :</td>
                                                 <td><span style={style.boxSize}/>{discountCostComma} 원</td>
                                             </tr>

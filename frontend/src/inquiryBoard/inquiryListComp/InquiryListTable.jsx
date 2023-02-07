@@ -48,7 +48,18 @@ function InquiryListTable(props) {
 
     // 문의글 작성페이지로 네비게이트
     const goWrite = () => {
-        navi("/qa/write")
+        if (sessionStorage.getItem("token") != null) {
+            // 유저의 아이디를 불러오는 함수 발동후 set
+            GetMemberIdByToken().then(response => {
+                setMemberId(response.data);
+            })
+            navi("/qa/write");
+        }
+        else {
+            alert('로그인이 필요한 서비스 입니다.');
+            navi("/login");
+        }
+
     }
 
     return (

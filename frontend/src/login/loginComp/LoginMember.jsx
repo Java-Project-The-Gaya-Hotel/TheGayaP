@@ -48,6 +48,13 @@ function LoginMember(props) {
         }
     }
 
+    const onKeyPress = (e) => {
+        if(e.key === 'Enter') {
+            loginUser();
+        }
+    }
+
+
     // 로그인 버튼 클릭시 발동하는 함수
     const login = async (id, pw) => {
         try {
@@ -116,7 +123,7 @@ function LoginMember(props) {
                                     {/*아이디*/}
                                     <input type={"text"} className={"col-11"} value={memberId} placeholder={"아이디 or 회원 번호"} onChange={onChangeMemberId}/>
                                     {/*비밀번호*/}
-                                    <input type={"password"} className={"col-11"} placeholder={"비밀번호"} onChange={onChangeMemberPw}/>
+                                    <input type={"password"} className={"col-11"} placeholder={"비밀번호"} onKeyPress={onKeyPress} onChange={onChangeMemberPw}/>
                                 </div>
                                 <div className={'col-2 p-0 d-flex row'}>
                                     {/*로그인 버튼*/}

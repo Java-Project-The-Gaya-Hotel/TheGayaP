@@ -3,10 +3,16 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import "./InquiryWrite.css";
 import {Link} from "react-router-dom";
+import {GetMemberIdByToken} from "../../functiontocheck/FunctionToCheck";
 
 function InquiryWrite() {
 
     const [hotelList, setHotelList] = useState([]);
+
+    const [userName, setUserName] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+    const [userTel, setUserTel] = useState("");
+
 
     const [inputs, setInputs] = useState({
         category: "객실/패키지",
@@ -14,15 +20,12 @@ function InquiryWrite() {
         title: "",
         contents: "",
         reservationNum: "",
-        userName: "",
-        userEmail: "",
-        userTel: "",
         password:"",
         hidden: "",
     })
 
     const {
-        category, hotelName, title, contents, reservationNum, userName, userEmail, userTel, password, hidden
+        category, hotelName, title, contents, reservationNum, password, hidden
     } = inputs;
 
     const onChange = e => {
@@ -63,14 +66,40 @@ function InquiryWrite() {
         };
 
     useEffect(() => {
-        axios.get("http://localhost:8080/gaya/hotelList")
-            .then((req) => {
-                setHotelList(req.data);
+        if (sessionStorage.getItem("token") != null) {
+            GetMemberIdByToken().then(response => {
+                axios.get("http://localhost:8080/qa/writeUser", { params: {userName: response.data}})
+                    .then((req) => {
+                        console.log("통신성공")
+                        console.log(req.data);
+                        setUserName(response.data);
+                        setUserEmail(req.data[0].memberEmail);
+                        setUserTel(req.data[0].memberTel);
+
+                    })
+                    .catch((err) => {
+                        console.log("데이터 전송 실패" + err);
+                    })
             })
-            .catch((err) => {
-                console.log("데이터 전송 실패" + err);
-            })
+
+            axios.get("http://localhost:8080/gaya/hotelList")
+                .then((req) => {
+                    setHotelList(req.data);
+                })
+                .catch((err) => {
+                    console.log("데이터 전송 실패" + err);
+                })
+        }
+        else {
+            alert('로그인이 필요한 서비스입니다.');
+            window.location.href = "/login";
+        }
+
     }, [])
+
+    useEffect(() => {
+
+    })
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -197,22 +226,18 @@ function InquiryWrite() {
                                     {/*이름*/}
                                     <div className={"name my-4"}>
                                         <span className={"required"}>* </span>
-                                        <label htmlFor={"userName"} className={"form-label"}>이름</label>
-                                        <input type={"text"} className={"form-control"} name={"userName"} value={userName} onChange={onChange}/>
+                                        <label htmlFor={"userName"} className={"form-label"}>아이디</label>
+                                        <input type={"text"} className={"form-control"} name={"userName"} value={userName} readOnly={true}
+                                               onChange={(e) => {setUserName(e.target.value)}}/>
                                         <p className={"validation m-0"}>{userNameVld}</p>
-                                    </div>
-
-                                    {/*예약번호*/}
-                                    <div className={"reservationNum my-4"}>
-                                        <label htmlFor={"reservationNum"} className={"form-label"}>예약번호</label>
-                                        <input type={"text"} className={"form-control"} name={"reservationNum"} value={reservationNum} onChange={onChange}/>
                                     </div>
 
                                     {/*이메일*/}
                                     <div className={"email my-4"}>
                                         <span className={"required"}>* </span>
                                         <label htmlFor={"userEmail"} className={"form-label"}>이메일</label>
-                                        <input type={"email"} className={"form-control"} name={"userEmail"} value={userEmail} onChange={onChange}/>
+                                        <input type={"email"} className={"form-control"} name={"userEmail"} value={userEmail}
+                                               onChange={(e) => {setUserEmail(e.target.value)}}/>
                                         <p className={"validation m-0"}>{userEmailVld}</p>
                                     </div>
 
@@ -221,10 +246,16 @@ function InquiryWrite() {
                                         <span className={"required"}>* </span>
                                         <label htmlFor={"userTel"} className={"form-label"}>연락처</label>
                                         <input type={"text"} className={"form-control"} name={"userTel"} placeholder={"- 를 제외한 숫자를 입력하세요"}
-                                               onChange={onChange} value={userTel}/>
+                                               onChange={(e) => {setUserTel(e.target.value)}} value={userTel}/>
                                         <p className={"validation m-0"}>{userTelVld}</p>
                                     </div>
 
+                                    {/*예약번호*/}
+                                    <div className={"reservationNum my-4"}>
+                                        <label htmlFor={"reservationNum"} className={"form-label"}>예약번호</label>
+                                        <input type={"text"} className={"form-control"} name={"reservationNum"} value={reservationNum} onChange={onChange}/>
+                                    </div>
+                                    
                                     {/*첨부파일*/}
                                     <div className={"file my-3"}>
                                         <span className={"required"}>&nbsp;&nbsp;</span>

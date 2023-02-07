@@ -25,14 +25,12 @@ function InquiryItem(props) {
 
     const [goNum, setGoNum] = useState(0);
     const [title, setTitle] = useState("");
-    const [status, setStatus] = useState("");
     const [inquiryId, setInquiryId] = useState("");
     const [memberId, setMemberId] = useState(props.memberId);
 
     // 문의글들이 불러와질때
     useEffect(() => {
         setGoNum(props.data.inquiryNum);
-        setStatus(props.data.inquiryStatus);
         setInquiryId(props.data.inquiryUserName);
         // hidden 속성에 문의글과 유저아이디의 이름이 맞지않을시 비밀글 처리
         if (props.data.inquiryHidden === "Y" && props.data.inquiryUserName !== memberId) {
@@ -63,11 +61,11 @@ function InquiryItem(props) {
                         navi("/login")
                         //     만료가 아니면 상세글 페이지로 이동
                     } else {
-                        navi(`/qa/list/detail?idx=${goNum}&title=${title}&status=${status}`);
+                        navi(`/qa/list/detail?idx=${goNum}`);
                     }
                 }
             } else {
-                navi(`/qa/list/detail?idx=${goNum}&title=${title}&status=${status}`);
+                navi(`/qa/list/detail?idx=${goNum}`);
             }
         }
     }

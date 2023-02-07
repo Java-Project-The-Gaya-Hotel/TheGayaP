@@ -160,4 +160,27 @@ public class JeongController {
         jeongService.insertInquiry(inquiryDto);
     }
 
+    
+    // 문의 작성 유저정보 불러오기
+    @GetMapping("/qa/writeUser")
+    public Object inquiryUser(@RequestParam("userName") String userName) throws Exception {
+        List<JeongMemberDto> userInfo = jeongService.inquiryUserInfo(userName);
+
+        return userInfo;
+    }
+
+
+    /**
+     * 문의 상세페이지 정보 불러오는 컨트롤러
+     * @param idx 글번호
+     * @return inquiryDto
+     * @throws Exception
+     */
+    @GetMapping("/qa/getDetail")
+    public Object inquiryDetail(@RequestParam("idx") int idx) throws Exception {
+        List<SinInquiryDto> inquiryDto = jeongService.inquiryDetail(idx);
+
+        return inquiryDto;
+    }
+
 }

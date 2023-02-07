@@ -77,5 +77,15 @@ public class JeongServiceImpl implements JeongService{
         return jeongMapper.notMemberResv(customerName, reservationNum);
     }
 
+    @Override
+    public List<JeongMemberDto> inquiryUserInfo(String userName) throws Exception {
+        return jeongMapper.inquiryUserInfo(userName);
+    }
+
+    @Override
+    public List<SinInquiryDto> inquiryDetail(int idx) throws Exception {
+        return jeongMapper.inquiryDetail(idx);
+    }
+
 
 }
