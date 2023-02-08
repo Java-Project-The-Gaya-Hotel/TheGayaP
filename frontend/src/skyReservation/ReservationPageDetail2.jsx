@@ -399,15 +399,12 @@ function ReservationPageDetail2() {
 
                                         <tr>
                                             <td><em className="ast">*</em> 이름 :</td>
-                                            <td><input onChange={onNameHandler} style={style.boxSize} type={"text"}
-                                                       className={"id"} autoComplete={"off"}
-                                                       placeholder={"Please Input Your Name"} value={customerName}/>
+                                            <td><input onChange={onNameHandler} style={style.boxSize} type={"text"} className={"id"} autoComplete={"off"} placeholder={"Please Input Your Name"} value={customerName}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><em className="ast">*</em> 이메일 :</td>
-                                            <td><input onChange={onEmailHandler} style={style.boxSize} type={"email"}
-                                                       placeholder={"Please Input Your Email"} value={customerEmail}/>
+                                            <td><input onChange={onEmailHandler} style={style.boxSize} type={"email"} placeholder={"Please Input Your Email"} value={customerEmail}/>
                                             </td>
                                         </tr>
 
@@ -417,45 +414,33 @@ function ReservationPageDetail2() {
                                                 <select>
                                                     <option value="+82" title="+82">+82</option>
                                                 </select>
-                                                <input style={style.boxSizePh} className={"mx-2"} value={customerTel}
-                                                       placeholder={"Please Input Your Phone Number"}
-                                                       onChange={onNumHandler}/></td>
+                                                <input style={style.boxSizePh} className={"mx-2"} value={customerTel} placeholder={"Please Input Your Phone Number"} onChange={onNumHandler}/></td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <div>
-                                        <div className={"row m-5 align-items-center"}>
-                                            <div className={"col"}>
-                                                <button className={"btn btn-outline-dark rounded-0 fw-bold"}
-                                                        onClick={minusBtn}>-
-                                                </button>
-                                            </div>
-                                            <div className={"col fw-bold"}><h4 className={"m-0"}>성인
-                                                : {adultMealNum}</h4></div>
-                                            <div className={"col"}>
-                                                <button className={"btn btn-outline-dark rounded-0"}
-                                                        onClick={plusBtn}>+
-                                                </button>
-                                            </div>
+
+
+
+
+                                    <div className={"container text-center my-3"}>
+                                        <div className={"col"}>
+                                            <div className={"fw-bold"}>성인</div>
+                                            <button onClick={minusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> -</button>
+                                            <span className={"p-2"}>  {adultMealNum} </span>
+                                            <button onClick={plusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> +</button>
                                         </div>
                                     </div>
-
                                     {
                                         childCount == 0 ? null :
-                                            <div className={"row m-5 align-items-center"}>
+                                            <div className={"container text-center my-3"}>
                                                 <div className={"col"}>
-                                                    <button className={"btn btn-outline-dark rounded-0"}
-                                                            onClick={cdMinusBtn}>-
-                                                    </button>
-                                                </div>
-                                                <div className={"col"}><h4 className={"m-0"}>어린이 : {childMealNum}</h4>
-                                                </div>
-                                                <div className={"col"}>
-                                                    <button className={"btn btn-outline-dark rounded-0"}
-                                                            onClick={cdPlusBtn}>+
-                                                    </button>
+                                                    <div className={"fw-bold"}>어린이</div>
+                                                    <button onClick={cdMinusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> -</button>
+                                                    <span className={"p-2"}>  {childMealNum} </span>
+                                                    <button onClick={cdPlusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> +</button>
                                                 </div>
                                             </div>
+
                                     }
                                 </div>
 

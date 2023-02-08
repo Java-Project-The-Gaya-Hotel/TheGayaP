@@ -18,4 +18,5 @@ public interface DellMapper {
     // 회원 예약 Table 가져오기
     List<SinReservDto> reservationinfo(String customerId);
 
+    void withdrawalMember(String memberId);
 }

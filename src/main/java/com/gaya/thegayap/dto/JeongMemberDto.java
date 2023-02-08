@@ -14,7 +14,7 @@ public class JeongMemberDto {
     private int memberPoint;
     private String memberTier;
     private String memberCreateDate;
-    private String withdrawalDate;
-    private String withdrawalYn;
+    private String memberDeleteDate;
+    private String memberDeletedlYn;
 
 }

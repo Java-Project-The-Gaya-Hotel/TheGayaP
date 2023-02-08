@@ -21,13 +21,13 @@ public class DellService {
     public JeongMemberDto getUserInfo(String memberId) {
         return dellMapper.getUserInfo(memberId);
     }
+
     // 회원 예약 Table 가져오기
     public List<SinReservDto> reservationinfo(String customerId) {
         return dellMapper.reservationinfo(customerId);
     }
-    //회원 정보 수정
-    public JeongMemberDto memberSaveInfo(String memberId) {
-//        return dellMapper.memberSaveInfo(memberId);
-        return null;
-    }
+
+
+
+    public void withdrawalMember(String memberId) {}
 }
