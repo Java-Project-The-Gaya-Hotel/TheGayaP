@@ -54,7 +54,7 @@ function Join(props) {
     const onBirthHandler =  useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setBirth(e.target.value)
 
-        if(e.target.value == "" ){
+        if(e.target.value === "" ){
             setBirthMes('생년월일을 체크해 주세요.')
             setIsBirth(false)
         }else {
@@ -69,7 +69,7 @@ function Join(props) {
         setName(nameCurrent)
 
         if (!nameRegex.test(nameCurrent)) {
-            setNameMes('한글로 2글자 이상 5글자 미만으로 입력해주세요.')
+            setNameMes('')
             setIsName(false)
         } else {
             setNameMes('')
@@ -78,15 +78,18 @@ function Join(props) {
     }, [])
 
     const onNumberHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setNumber(e.target.value)
-        if (e.target.value.length < 12 || e.target.value.length > 13){
+        const numberRegex = /^[0-9-]*$/;
+        const numberCurrent = e.target.value;
+        setNumber(numberCurrent);
+
+        if (!numberRegex.test(numberCurrent)){
             setNumberMes('올바른 전화번호를 입력해주세요')
             setIsNumber(false)
         }else {
             setNumberMes("")
             setIsNumber(true)
         }
-    }, [])
+    }, [number])
     // const onEmailHandler = (e) => {
     //     setEmail(e.target.value)
     // }
@@ -97,7 +100,7 @@ function Join(props) {
         setId(idCurrent)
 
         if (!idRegex.test(idCurrent)) {
-            setIdMes('숫자+영문자 조합으로 4자리 이상 입력해주세요!')
+            setIdMes('숫자+영문자 조합으로 4자리 이상 입력하세요')
             setIsId(false)
         } else {
             setIdMes('')
@@ -111,7 +114,7 @@ function Join(props) {
             setPw(passwordCurrent)
 
         if (!passwordRegex.test(passwordCurrent)) {
-            setPwMes('숫자+영문자 조합으로 6자리 이상 입력해주세요!')
+            setPwMes('숫자+영문자 조합으로 6자리 이상 입력하세요')
             setIsPassword(false)
         } else {
             setPwMes('')
@@ -124,10 +127,10 @@ function Join(props) {
             setConfirmPassword(passwordConfirmCurrent)
 
             if (pw === passwordConfirmCurrent) {
-                setConfirmPasswordMes('비밀번호를 똑같이 입력했어요 : )')
+                setConfirmPasswordMes('')
                 setIsConfirmPassword(true)
             } else {
-                setConfirmPasswordMes('비밀번호가 틀려요. 다시 확인해주세요')
+                setConfirmPasswordMes('비밀번호가 일치하지 않습니다.')
                 setIsConfirmPassword(false)
             }
         },
@@ -149,7 +152,7 @@ function Join(props) {
                 console.log("데이터 전송 성공")
                 console.log(data);
             }).catch(err => {
-            console.log(`데이터 전송 실패 ${err}`)
+            console.log(`데이터 전송 실패 $Z{err}`)
         })
 
     }
@@ -177,7 +180,7 @@ function Join(props) {
         e.preventDefault();
         console.log(id);
         if (!id) {
-            setIdMes("아이디을(를)  입력해주세요");
+            setIdMes("아이디를 입력해주세요");
         }else {
             axios.get("http://localhost:8080/join/idCheck",
                 {
@@ -207,7 +210,7 @@ function Join(props) {
         e.preventDefault();
         console.log(email);
         if (!email) {
-            setEmailMes("이메일을(를)  입력해주세요");
+            setEmailMes("이메일을 입력해주세요");
         }else {
             axios.get("http://localhost:8080/join/emailCheck",
                 {
@@ -255,45 +258,57 @@ function Join(props) {
 
                     <div className={"row"}>
                         <div className={"col"}>
-                            <table className={"table table-hover"}>
+                            <table className={"table"}>
                                 <thead>
                                 <tr>
-                                    <th colSpan={4}>기본 정보</th>
+                                    <th className={"col-sm-3"}>기본 정보</th>
+                                    <th className={"col-sm-5"}></th>
+                                    <th></th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
 
-                                <tr>
-                                    <td> ID :</td>
-                                    <td><input type={"text"} value={id}  className={"id"} onChange={onIdHandler} autoComplete={"off"}/></td>
+                                <tr style={{borderBottomStyle: "hidden"}}>
+                                    <td>아이디</td>
+                                    <td><input type={"text"} value={id}  className={"id form-control rounded-0"} onChange={onIdHandler} autoComplete={"off"}/></td>
                                     <td>
-                                        <button onClick={handleIdCheck} className={"btn btn-primary"}>아이디중복</button>
+                                        <button onClick={handleIdCheck} className={"btn btn-outline-dark rounded-0"}>중복확인</button>
                                     </td>
-                                    <td><span>{idMes}</span></td>
+                                </tr>
+                                <tr>
+                                    <td className={"validation p-0 ps-2 pb-1"} colSpan={4}>{idMes}</td>
                                 </tr>
 
-                                <tr>
-                                    <td> E-Mail :</td>
-                                    <td><input type={"email"} value={email} onChange={onChangeEmail}/></td>
+                                <tr style={{borderBottomStyle: "hidden"}}>
+                                    <td>이메일</td>
+                                    <td><input className={"form-control rounded-0"} type={"email"} value={email} onChange={onChangeEmail}/></td>
                                     <td>
-                                        <button onClick={handleEmailCheck} className={"btn btn-primary"}>이메일 중복</button>
+                                        <button onClick={handleEmailCheck} className={"btn btn-outline-dark rounded-0"}>중복확인</button>
                                     </td>
-                                    <td><span>{emailMes}</span></td>
                                 </tr>
-
-
                                 <tr>
-                                    <td> PW :</td>
-                                    <td><input type={"password"} value={pw} onChange={onPasswordHandler}/></td>
-                                    <td><span>{pwMes}</span></td>
+                                    <td className={"validation p-0 ps-2 pb-1"} colSpan={4}>{emailMes}</td>
                                 </tr>
 
-                                <tr>
-                                    <td> PW Check :</td>
-                                    <td><input type={"password"} value={confirmPassword} onChange={onConfirmPasswordHandler} /></td>
-                                    <td><span className={"ast"}> {confirmPasswordMes}</span></td>
+                                <tr style={{borderBottomStyle: "hidden"}}>
+                                    <td>비밀번호</td>
+                                    <td><input className={"form-control rounded-0"} type={"password"} value={pw} onChange={onPasswordHandler}/></td>
+                                    <td></td>
                                 </tr>
+                                <tr>
+                                    <td className={"validation p-0 ps-2 pb-1"} colSpan={4}>{pwMes}</td>
+                                </tr>
+
+                                <tr style={{borderBottomStyle: "hidden"}}>
+                                    <td>비밀번호 확인</td>
+                                    <td><input className={"form-control rounded-0"} type={"password"} value={confirmPassword} onChange={onConfirmPasswordHandler} /></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td className={"validation p-0 ps-2 pb-1"} colSpan={4}>{confirmPasswordMes}</td>
+                                </tr>
+
 
 
                                 </tbody>
@@ -302,55 +317,68 @@ function Join(props) {
 
 
                         <div className={"col"}>
-                            <table className={"table table-hover"}>
+                            <table className={"table"}>
                                 <thead>
                                 <tr>
-                                    <th colSpan={4}>고객정보</th>
+                                    <th className={"col-sm-3"}>고객 정보</th>
+                                    <th className={"col-sm-3"}></th>
+                                    <th className={"col-sm-4"}></th>
+                                    <th className={"col-sm"}></th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
-
+                                <tr style={{borderBottomStyle: "hidden"}}>
+                                    <td>성명</td>
+                                    <td colSpan={2}><input type={"text"} className={"form-control rounded-0 w-50"} value={name} onChange={onNameHandler}/></td>
+                                    <td></td>
+                                </tr>
                                 <tr>
-                                    <td> 성명 :</td>
-                                    <td colSpan={2}><input type={"text"} value={name} onChange={onNameHandler}/></td>
-                                    <td><span>{nameMes}</span></td>
+                                    <td className={"validation p-0 ps-2 pb-1"} colSpan={4}>{nameMes}</td>
+                                </tr>
+
+                                <tr style={{borderBottomStyle: "hidden"}}>
+                                    <td>생년월일</td>
+                                    <td colSpan={2}><input type={"date"} value={birth} onChange={onBirthHandler} className={"Birth form-control rounded-0 w-50"}/></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td className={"validation p-0 ps-2 pb-1"} colSpan={4}>{birthMes}</td>
                                 </tr>
 
 
-                                <tr>
-                                    <td> 생년월일 :</td>
-                                    <td colSpan={2}><input type={"date"} value={birth} onChange={onBirthHandler} className={"Birth"}/></td>
-                                    <td><span>{birthMes}</span></td>
-                                </tr>
-
-
-                                <tr>
-                                    <td> 연락처 :</td>
+                                <tr style={{borderBottomStyle: "hidden"}}>
+                                    <td>연락처</td>
                                     <td>
-                                        <select className="col-2">
+                                        <select className={"form-select rounded-0"}>
                                             <option value="+82" title="+82">+82 한국</option>
                                             <option value="+1" title="+1">+1 미국</option>
                                             <option value="+44" title="+44">+44 영국</option>
                                             <option value="+49" title="+49">+49 독일</option>
                                             <option value="+81" title="+81">+81 일본</option>
                                             <option value="+84" title="+84">+84 중국</option>
-                                        </select></td>
-                                    <td><input className={"col-6"} type={"text"} maxLength={13} onChange={onNumberHandler} value={number} /></td>
-                                    <td><span>{numberMes}</span></td>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input className={"form-control rounded-0"} type={"text"} maxLength={13} onChange={onNumberHandler} value={number} />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td className={"validation p-0 ps-2 pb-1"} colSpan={4}>{numberMes}</td>
                                 </tr>
                                 </tbody>
                             </table>
+                            <div className={"d-flex justify-content-end me-1"}>
+                                <button type={"submit"}  className={"activation btn btn-dark rounded-0"} disabled={!(isEmail && isId &&
+                                  isName && isNumber && isPassword && isConfirmPassword && isBirth)}
+                                >회원가입
+                                </button>
+                            </div>
                         </div>
 
                     </div>
-                    <section>
-                        <button type={"submit"}  className={"activation"} disabled={!(isEmail && isId &&
-                            isName && isNumber && isPassword && isConfirmPassword && isBirth)}
-                        >
-                            다음
-                        </button>
-                    </section>
+
                 </div>
 
             </form>
