@@ -61,8 +61,7 @@ function BookingRoom() {
                     <nav>
                         <ol className="cd-multi-steps text-top">
                             <li className={"visited fw-lighter"}><em> Booking Condition </em></li>
-                            <li className={"visited fw-lighter"}><a> Room Condition</a></li>
-                            <li className={"current fw-bold"}><a> Find Room </a></li>
+                            <li className={"current fw-bolder"}><a> Room Condition</a></li>
                             <li><em>Payment Information</em></li>
                         </ol>
                     </nav>
