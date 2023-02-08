@@ -20,14 +20,12 @@ function InquiryReplyWrite(props) {
         }else{
             setUserName(props.data.memberId);
         }
-        console.log(props.data);
 
 
     },[])
 
 
     const insertReply = () => {
-        console.log(userName);
 
         const body = {
 

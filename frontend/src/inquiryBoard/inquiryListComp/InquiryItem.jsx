@@ -36,7 +36,7 @@ function InquiryItem(props) {
         setInquiryId(props.data.inquiryUserName);
         // hidden 속성에 문의글과 유저아이디의 이름이 맞지않을시 비밀글 처리
         if (props.data.inquiryHidden === "Y" && props.data.inquiryUserName !== memberId) {
-            if (props.memberInfo.memberRole != "ADMIN") {
+            if (memberRole != "ADMIN") {
                 setTitle("비밀글입니다.");
             } else {
                 setTitle(props.data.inquiryTitle);

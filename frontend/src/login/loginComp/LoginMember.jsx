@@ -7,6 +7,7 @@ import Modal from "./Modal"
 import FindId from "./FindId";
 
 import {useCookies} from "react-cookie";
+import Swal from "sweetalert2";
 
 // 회원 로그인
 function LoginMember(props) {
@@ -59,7 +60,12 @@ function LoginMember(props) {
                 memberPw: pw
             })
             if (response.data === "") {
-                alert("아이디 혹은 비밀번호가 틀렸습니다.")
+                Swal.fire({
+                    icon: 'warning',
+                    title: '로그인 실패',
+                    text: ' 유효하지 않거나 없는 아이디,비밀번호 입니다. '
+                })
+                console.log(response.data)
             } else {
                 // console.log(response.data);
                 alert(id + "님 환영합니다.")

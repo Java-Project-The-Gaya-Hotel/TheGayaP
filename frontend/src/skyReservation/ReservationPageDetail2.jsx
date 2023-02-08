@@ -120,20 +120,22 @@ function ReservationPageDetail2() {
         }
     }, []);
 
+    // 멤버쉽에 따른 할인율 적용
     useEffect(() => {
         let cost = Number(totalCostSum);
         let discountCost;
 
         setCostComma(cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
         if (memberTier == "GOLD") {
-            discountCost = cost * 0.9;
+            discountCost = Math.floor(cost * 0.9);
         } else if (memberTier == "PLATINUM") {
-            discountCost = cost * 0.85;
+            discountCost = Math.floor(cost * 0.85);
         } else if (memberTier == "BLACK") {
-            discountCost = cost * 0.8;
+            discountCost = Math.floor(cost * 0.8);
         } else {
-            discountCost = cost * 0.95;
+            discountCost = Math.floor(cost * 0.95);
         }
+
         setMemberTotalCostSum(discountCost);
         setDiscountCostComma(discountCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
 
@@ -202,15 +204,26 @@ function ReservationPageDetail2() {
                     memberTier: memberTier,
                 })
                 .then((req) => {
-                    alert('결제 성공');
-                    console.log("결제 성공");
-                    window.location.href = "/";
+                    Swal.fire({
+                        icon: 'info',
+                        title: '결제 완료!',
+                        text: ' 예약이 완료 됐습니다. '
+                    }).then(result => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/";
+                        }
+                    })
+
                 }).catch(err => {
                 console.log(`데이터 전송 실패 ${err}`)
             })
 
         } else {
-            alert(`결제 실패: ${error_msg}`);
+            Swal.fire({
+                icon: 'warning',
+                title: '결제 실패!',
+                text: `결제 실패: ${error_msg}`
+            })
         }
     }
 
@@ -237,13 +250,6 @@ function ReservationPageDetail2() {
     }
 
 
-    const handlePress = (e) => {
-        const regex = /^[0-9\b -]{0,13}$/;
-        if (regex.test(e.target.value)) {
-            setCustomerTel(e.target.value);
-        }
-    }
-
     useEffect(() => {
         if (customerTel.length === 10) {
             setCustomerTel(customerTel.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
@@ -259,48 +265,6 @@ function ReservationPageDetail2() {
         setTotalCostSum((Number(costSum) + Number(adultMealCost * adultMealNum * nights) + Number(childMealCost * childMealNum * nights)).toString());
     }, [childMealNum, adultMealNum])
 
-    const reservButton = () => {
-        let earnPoint;
-        let resultSum;
-        if (memberId !== "" || memberId != null) {
-            earnPoint = memberTotalCostSum * 0.01;
-            resultSum = memberTotalCostSum;
-        } else {
-            resultSum = totalCostSum;
-            earnPoint = 0;
-        }
-
-        const userPayInfo = {
-            reservationNum: new Date().getTime(),
-            reservationHotelNum: Number(hotelNum),
-            reservationRoomName: roomName,
-            reservationRoomCode: roomCode,
-            reservationCheckIn: startDate,
-            reservationCheckOut: endDate,
-            reservationNights: Number(nights),
-            reservationPeople: Number(totalCount),
-            reservationCost: resultSum,
-            reservationMealAdult: adultMealNum,
-            reservationMealChild: childMealNum,
-            customerId: memberId,
-            customerEmail: customerEmail,
-            customerName: customerName,
-            customerTel: customerTel,
-            earnPoint: earnPoint,
-            reservationRequest: reservationRequest,
-            memberTier: memberTier,
-        }
-        console.log(userPayInfo);
-        axios.post("http://localhost:8080/gaya/bookroom",
-            userPayInfo)
-            .then((req) => {
-                alert('결제 성공');
-                console.log("결제 성공");
-                // window.location.href = "/";
-            }).catch(err => {
-            console.log(`데이터 전송 실패 ${err}`)
-        })
-    }
 
     const plusBtn = () => {
 
@@ -414,12 +378,15 @@ function ReservationPageDetail2() {
 
                                         <tr>
                                             <td><em className="ast">*</em> 이름 :</td>
-                                            <td><input onChange={onNameHandler} style={style.boxSize} type={"text"} className={"id"} autoComplete={"off"} placeholder={"Please Input Your Name"} value={customerName}/>
+                                            <td><input onChange={onNameHandler} style={style.boxSize} type={"text"}
+                                                       className={"id"} autoComplete={"off"}
+                                                       placeholder={"Please Input Your Name"} value={customerName}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><em className="ast">*</em> 이메일 :</td>
-                                            <td><input onChange={onEmailHandler} style={style.boxSize} type={"email"} placeholder={"Please Input Your Email"} value={customerEmail}/>
+                                            <td><input onChange={onEmailHandler} style={style.boxSize} type={"email"}
+                                                       placeholder={"Please Input Your Email"} value={customerEmail}/>
                                             </td>
                                         </tr>
 
@@ -429,34 +396,46 @@ function ReservationPageDetail2() {
                                                 <select>
                                                     <option value="+82" title="+82">+82</option>
                                                 </select>
-                                                <input style={style.boxSizePh} className={"mx-2"} value={customerTel} placeholder={"Please Input Your Phone Number"} onChange={onNumHandler}/></td>
+                                                <input style={style.boxSizePh} className={"mx-2"} value={customerTel}
+                                                       placeholder={"Please Input Your Phone Number"}
+                                                       onChange={onNumHandler}/></td>
                                         </tr>
                                         </tbody>
                                     </table>
 
 
-
-
-                                    <div className={"container text-center my-3"}>
-                                        <div className={"col"}>
-                                            <div className={"fw-bold"}>성인</div>
-                                            <button onClick={minusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> -</button>
-                                            <span className={"p-2"}>  {adultMealNum} </span>
-                                            <button onClick={plusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> +</button>
-                                        </div>
-                                    </div>
-                                    {
-                                        childCount == 0 ? null :
-                                            <div className={"container text-center my-3"}>
-                                                <div className={"col"}>
-                                                    <div className={"fw-bold"}>어린이</div>
-                                                    <button onClick={cdMinusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> -</button>
-                                                    <span className={"p-2"}>  {childMealNum} </span>
-                                                    <button onClick={cdPlusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> +</button>
-                                                </div>
+                                    <div className={"fw-bold h4 p-2"}>조식 인원 선택</div>
+                                    <div className={"d-flex"}>
+                                        <div className={"container text-center my-3"}>
+                                            <div className={""}>
+                                                <div className={"fw-bold"}>성인</div>
+                                                <button onClick={minusBtn}
+                                                        className={"btn btn-outline-dark rounded-0 btn-sm"}> -
+                                                </button>
+                                                <span className={"p-2 mx-3"}>  {adultMealNum} </span>
+                                                <button onClick={plusBtn}
+                                                        className={"btn btn-outline-dark rounded-0 btn-sm"}> +
+                                                </button>
                                             </div>
+                                        </div>
+                                        {
+                                            childCount == 0 ? null :
+                                                <div className={"container text-center my-3"}>
+                                                    <div className={""}>
+                                                        <div className={"fw-bold"}>어린이</div>
+                                                        <button onClick={cdMinusBtn}
+                                                                className={"btn btn-outline-dark rounded-0 btn-sm"}> -
+                                                        </button>
+                                                        <span className={"p-2 mx-3"}>  {childMealNum} </span>
+                                                        <button onClick={cdPlusBtn}
+                                                                className={"btn btn-outline-dark rounded-0 btn-sm"}> +
+                                                        </button>
+                                                    </div>
+                                                </div>
 
-                                    }
+                                        }
+
+                                    </div>
                                 </div>
 
                                 <div className={"col-6"}>
@@ -506,7 +485,8 @@ function ReservationPageDetail2() {
                                         }
                                         <tr>
                                             <td>요청 사항 :</td>
-                                            <td><textarea className={"form-control"} style={{height: 140}} placeholder={"요청사항을 적어주세요."} onChange={(e) => {
+                                            <td><textarea className={"form-control"} style={{height: 140}}
+                                                          placeholder={"요청사항을 적어주세요."} onChange={(e) => {
                                                 setReservationRequest(e.target.value)
                                             }
                                             }></textarea></td>
@@ -520,7 +500,6 @@ function ReservationPageDetail2() {
                                     <button onClick={onClickPayment} className={"btnDate"} role={"button"}><span
                                         className="text">결제하기</span>Payment
                                     </button>
-                                    <button onClick={reservButton}>임시 버튼</button>
                                 </div>
                             </div>
 
