@@ -69,12 +69,6 @@ function BookingAccordion() {
                 setChildCount(getChildCount);
                 setTotalCount(getTotalCount);
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: '선택 정보 로딩 실패',
-                    html: '정보를 가져오는데 실패하였습니다.<br/> 다시 입력해 주시길 바랍니다.',
-                })
-
             }
         }
         , [])

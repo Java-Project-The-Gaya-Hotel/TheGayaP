@@ -2,9 +2,10 @@ import React, {useEffect, useState} from "react";
 import InquiryUserChat from "./inquiryUserChat";
 import InquiryAdminChat from "./inquiryAdminChat";
 import InquiryReplyWrite from "./InquiryReplyWrite";
-import {useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import axios from "axios";
-import {SessionCheck} from "../../functiontocheck/FunctionToCheck";
+import {AuthorityCheck, GetMemberIdByToken, SessionCheck} from "../../functiontocheck/FunctionToCheck";
+import Swal from "sweetalert2";
 
 
 // 문의 상세 글 함수
@@ -14,26 +15,59 @@ function InquiryDetail() {
     const [userParam, setUserParam] = useSearchParams();
 
     const [qaDetailData, setQaDetailData] = useState([]);
+    const [memberInfo, setMemberInfo] = useState([]);
+    const navi = useNavigate();
 
     // 글 상세 페이지 들어올시 발동
     useEffect(() => {
         // 세션이 유효한지 확인
         SessionCheck();
 
-            // 상세 답글 을 가져오는 axios
-            const getData = async () => {
-                const data = await axios.get("http://localhost:8080/gaya/qa/detail", {
-                    params: {
-                        idx: userParam.get('idx'),
+        if (sessionStorage.getItem("token") != null) {
+            // 토큰 확인
+            if (AuthorityCheck() === false) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '토큰 만료',
+                    html: '토큰이 만료됐습니다. 재 로그인 해주세요',
+                }).then((result) => {
+                        if (result.isConfirmed) {
+                            navi("/login")
+                        }
                     }
-                }).then(req => {
-                    const {data} = req
-                    setQaDetailData(data);
-                }).catch(err => {
-                    console.log(err);
+                )
+
+            } else {
+                GetMemberIdByToken().then((response) => {
+                    axios.get(
+                        "http://localhost:8080/mypage/getUserInfo",
+                        {
+                            params: {
+                                memberId: response.data,
+                            }
+                        }
+                    ).then(response => {
+                            setMemberInfo(response.data);
+                        }
+                    )
                 })
             }
-            getData();
+        }
+
+        // 상세 답글 을 가져오는 axios
+        const getData = async () => {
+            const data = await axios.get("http://localhost:8080/gaya/qa/detail", {
+                params: {
+                    idx: userParam.get('idx'),
+                }
+            }).then(req => {
+                const {data} = req
+                setQaDetailData(data);
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+        getData();
 
     }, [])
 
@@ -76,13 +110,16 @@ function InquiryDetail() {
                     <div id={"chat"} className={"text-center"}>
                         {
                             qaDetailData.map((item, idx) => {
-                                return (item.answerIsAdmin === "N" ? <InquiryUserChat data={item} key={idx}/> : <InquiryAdminChat data={item} key={idx}/>)
+                                return (item.answerIsAdmin === "N" ? <InquiryUserChat data={item} key={idx}/> :
+                                    <InquiryAdminChat data={item} key={idx}/>)
                             })
                         }
                     </div>
                 </div>
             </div>
-            <InquiryReplyWrite qaNum={userParam.get('idx')}/>
+            {
+            memberInfo.length !== 0 ? <InquiryReplyWrite qaNum={userParam.get('idx')} data={memberInfo}/> : null
+        }
         </div>
     );
 }

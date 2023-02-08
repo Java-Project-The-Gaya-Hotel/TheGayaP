@@ -18,11 +18,20 @@ function InquiryListTable(props) {
 
 
     const [QAData, setQAData] = useState([]);
-    const [memberId, setMemberId] = useState("");
+    const [memberInfo, setMemberInfo] = useState([]);
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const offset = (page - 1) * limit;
     const navi = useNavigate();
+
+    // 문의글 리스트를 가져오는 axios 함수
+    const getQaData = async () => {
+        const response = await axios.get("http://localhost:8080/gaya/inquirylist")
+
+        const data = response.data;
+        setQAData(data);
+    }
+
 
     // 테이블 불러올때 발동
     useEffect(() => {
@@ -30,17 +39,23 @@ function InquiryListTable(props) {
         // 세션 스토리지에 JWT 토큰이 null이 아닐시
         if (sessionStorage.getItem("token") != null) {
             // 유저의 아이디를 불러오는 함수 발동후 set
-            GetMemberIdByToken().then(response => {
-                setMemberId(response.data);
+            GetMemberIdByToken().then((response) => {
+                axios.get(
+                    "http://localhost:8080/mypage/getUserInfo",
+                    {
+                        params: {
+                            memberId: response.data,
+                        }
+                    }
+                ).then(response => {
+                        setMemberInfo(response.data);
+                    }
+                )
             })
         }
-        // 문의글 리스트를 가져오는 axios
-        const getQaData = async () => {
-            const response = await axios.get("http://localhost:8080/gaya/inquirylist")
 
-            const data = response.data;
-            setQAData(data);
-        }
+
+
         getQaData();
 
 
@@ -74,7 +89,7 @@ function InquiryListTable(props) {
                                     <tbody>
                                     {
                                         QAData.slice(offset, offset + limit).map((item) => {
-                                            return <InquiryItem key={item.inquiryNum} data={item} memberId={memberId}/>
+                                            return <InquiryItem key={item.inquiryNum} data={item} memberInfo={memberInfo}/>
                                         })
                                     }
                                     </tbody>

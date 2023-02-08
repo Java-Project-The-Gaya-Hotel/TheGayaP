@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {AuthorityCheck, GetMemberIdByToken, SessionCheck} from "../functiontocheck/FunctionToCheck";
 import axios from "axios";
 import MyprofileReWrite from "./MyProfileReWrite";
+import Swal from "sweetalert2";
 
 
 const styles = {
@@ -22,8 +23,17 @@ function MyProfile() {
     useEffect(() => {
         SessionCheck();
         if (AuthorityCheck() === false) {
-            alert("토큰 만료.")
-            navi("/login")
+            Swal.fire({
+                icon: 'error',
+                title: '토큰 만료',
+                html: '토큰이 만료됐습니다. 재 로그인 해주세요',
+            }).then((result) => {
+                    if (result.isConfirmed) {
+                        navi("/login")
+                    }
+                }
+            )
+
         } else {
             GetMemberIdByToken().then(response => {
                 setMemberId(response.data)

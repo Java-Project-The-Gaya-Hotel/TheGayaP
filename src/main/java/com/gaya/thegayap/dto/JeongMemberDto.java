@@ -17,4 +17,6 @@ public class JeongMemberDto {
     private String withdrawalDate;
     private String withdrawalYn;
 
+    private String memberRole;
+
 }

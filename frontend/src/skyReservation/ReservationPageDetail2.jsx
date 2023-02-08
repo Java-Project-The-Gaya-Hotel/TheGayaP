@@ -125,11 +125,11 @@ function ReservationPageDetail2() {
         let discountCost;
 
         setCostComma(cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-        if (memberTier == "gold") {
+        if (memberTier == "GOLD") {
             discountCost = cost * 0.9;
-        } else if (memberTier == "platinum") {
+        } else if (memberTier == "PLATINUM") {
             discountCost = cost * 0.85;
-        } else if (memberTier == "black") {
+        } else if (memberTier == "BLACK") {
             discountCost = cost * 0.8;
         } else {
             discountCost = cost * 0.95;
