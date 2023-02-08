@@ -64,10 +64,10 @@ function BookingAccordion() {
                 setStartDate(new Date(now()));
             }
 
-            if (getAdultCount !=null){
-                setAdultCount(getAdultCount)
-                setChildCount(getChildCount)
-                setTotalCount(getTotalCount)
+            if (getAdultCount != null){
+                setAdultCount(getAdultCount);
+                setChildCount(getChildCount);
+                setTotalCount(getTotalCount);
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -134,7 +134,7 @@ function BookingAccordion() {
         if (hotelName != null && hotelName !== "") {
             navigate(`/reservroom?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}&hotelNum=${hotelNum}`)
         }else{
-            alert("호텔을 선택해 주세요.")
+            alert("호텔을 선택해 주세요.");
         }
 
     };

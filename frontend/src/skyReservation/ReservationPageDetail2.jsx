@@ -169,22 +169,37 @@ function ReservationPageDetail2() {
             error_msg,
         } = response;
 
+        let earnPoint;
+        let resultSum;
+        if (memberId !== "" || memberId != null) {
+            earnPoint = memberTotalCostSum * 0.01;
+            resultSum = memberTotalCostSum;
+        } else {
+            resultSum = totalCostSum;
+            earnPoint = 0;
+        }
+
         if (success) {
             axios.post("http://localhost:8080/gaya/bookroom",
                 {
                     reservationNum: merchant_uid,
+                    reservationHotelNum: Number(hotelNum),
                     reservationRoomName: roomName,
-                    reservationHotelNum: hotelNum,
-                    roomCode: roomCode,
-                    customerName: customerName,
+                    reservationRoomCode: roomCode,
+                    reservationCheckIn: startDate,
+                    reservationCheckOut: endDate,
+                    reservationNights: Number(nights),
+                    reservationPeople: Number(totalCount),
+                    reservationCost: resultSum,
+                    reservationMealAdult: adultMealNum,
+                    reservationMealChild: childMealNum,
                     customerId: memberId,
                     customerEmail: customerEmail,
+                    customerName: customerName,
                     customerTel: customerTel,
-                    checkIn: startDate,
-                    checkOut: endDate,
-                    nights: nights,
-                    reservationPeople: totalCount,
-                    totalCost: totalCostSum,
+                    earnPoint: earnPoint,
+                    reservationRequest: reservationRequest,
+                    memberTier: memberTier,
                 })
                 .then((req) => {
                     alert('결제 성공');
@@ -423,15 +438,14 @@ function ReservationPageDetail2() {
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <div>
-                                        <div className={"row m-5 align-items-center"}>
+                                    <div className={"mt-3 p-2"}><h4 className={"fw-bold"}>조식 인원 선택</h4></div>
+                                    <div className={"container px-5"}>
+                                        <div className={"row align-items-center "}>
                                             <div className={"col"}>
-                                                <button className={"btn btn-outline-dark rounded-0 fw-bold"}
-                                                        onClick={minusBtn}>-
-                                                </button>
+                                                <button className={"btn btn-outline-dark rounded-0 fw-bold"} onClick={minusBtn}>-</button>
                                             </div>
-                                            <div className={"col fw-bold"}><h4 className={"m-0"}>성인
-                                                : {adultMealNum}</h4></div>
+                                            <div className={"col fw-bold"}><h5 className={"m-0 text-center"}>성인
+                                                : {adultMealNum}</h5></div>
                                             <div className={"col"}>
                                                 <button className={"btn btn-outline-dark rounded-0"}
                                                         onClick={plusBtn}>+
@@ -506,7 +520,7 @@ function ReservationPageDetail2() {
                                         }
                                         <tr>
                                             <td>요청 사항 :</td>
-                                            <td><textarea onChange={(e) => {
+                                            <td><textarea className={"form-control"} style={{height: 140}} placeholder={"요청사항을 적어주세요."} onChange={(e) => {
                                                 setReservationRequest(e.target.value)
                                             }
                                             }></textarea></td>

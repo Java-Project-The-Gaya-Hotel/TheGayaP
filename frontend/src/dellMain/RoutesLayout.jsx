@@ -70,7 +70,9 @@ function RoutesLayout(props) {
                 Swal.fire(
                     '로그아웃 되었습니다.'
                 ).then(result => {
-                    if (result.isConfirmed) window.location.href = "/";
+                    if (result.isConfirmed) {
+                        window.location.href = "/";
+                    }
                 })
             }
         })
@@ -84,7 +86,7 @@ function RoutesLayout(props) {
                     <div style={styles.LiFont}>
                         <ul className={"row row-cols-auto justify-content-end text-center px-5 pt-2"}>
                             <li className={"col"}>{sessionStorage.getItem("loginInfo") ?
-                                <Link to={"/"} onClick={logout}>Log out</Link> : <Link to={"/login"}>login</Link>}</li>
+                                <Link to={"#"} onClick={logout}>Log out</Link> : <Link to={"/login"}>login</Link>}</li>
                             <li className={"col"}>{sessionStorage.getItem("loginInfo") != null ? null :
                                 <Link to={"/join"}>Join Us</Link>}</li>
                             <li className={"col"}>{sessionStorage.getItem("loginInfo") != null ?

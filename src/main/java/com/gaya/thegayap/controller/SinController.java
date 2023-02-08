@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -191,7 +192,5 @@ public class SinController {
     public JeongMemberDto getUserInfo(@RequestParam ("memberId")String memberId) throws Exception {
         return jeongService.profile(memberId);
     }
-
-
 
 }
