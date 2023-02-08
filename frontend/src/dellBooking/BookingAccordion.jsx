@@ -34,7 +34,7 @@ color:white;
 transition:0.5s
 }
 &:focus{
-color:dark;
+color:black;
 border:1px solid black;
 }
 

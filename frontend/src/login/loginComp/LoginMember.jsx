@@ -5,7 +5,6 @@ import moment from "moment";
 import "../loginCss/ButtonCss.css"
 import Modal from "./Modal"
 import FindId from "./FindId";
-import FindPw from "./FindPw";
 
 import {useCookies} from "react-cookie";
 
@@ -146,11 +145,11 @@ function LoginMember(props) {
                               <Modal closeModal={() => setFindId(!findId)}><FindId closeModal={() => setFindId(!findId)}/></Modal>
                             )}
                             <button onClick={() => setFindPw(!findPw)} className={"btn btn-secondary p-1"} style={{borderRadius: 0}}>비밀번호 찾기</button>
-                            {findId && (
-                            <Modal closeModal={() => setFindPw(!findPw)}><FindPw closeModal={() => setFindPw(!findPw)}/></Modal>
-                                )}
+                            {/*{findId && (*/}
+                            {/*<Modal closeModal={() => setFindPw(!findPw)}><FindPw closeModal={() => setFindPw(!findPw)}/></Modal>*/}
+                            {/*    )}*/}
                         </div>
-                        <div className={"small p-2"}>이메일, 연락처 등의 정보가 변경되면 웹사이트에서 회원정보를 수정해주시기 바랍니다.</div>ss
+                        <div className={"small p-2"}>이메일, 연락처 등의 정보가 변경되면 웹사이트에서 회원정보를 수정해주시기 바랍니다.</div>
                     </div>
                 </div>
             </div>
