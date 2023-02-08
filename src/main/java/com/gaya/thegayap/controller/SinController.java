@@ -2,14 +2,12 @@ package com.gaya.thegayap.controller;
 
 import com.gaya.thegayap.dto.*;
 import com.gaya.thegayap.service.JeongService;
-import com.gaya.thegayap.service.JeongServiceImpl;
 import com.gaya.thegayap.service.SinService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -189,7 +187,7 @@ public class SinController {
     }
 
     @GetMapping("/userinfo")
-    public JeongMemberDto getUserInfo(@RequestParam ("memberId")String memberId) throws Exception {
+    public MemberNonPasswordDto getUserInfo(@RequestParam ("memberId")String memberId) throws Exception {
         return jeongService.profile(memberId);
     }
 

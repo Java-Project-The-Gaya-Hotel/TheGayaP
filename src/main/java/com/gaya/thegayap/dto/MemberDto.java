@@ -1,13 +1,18 @@
 package com.gaya.thegayap.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-public class JeongMemberDto {
+@Getter
+@NoArgsConstructor
+@Setter
+public class MemberDto {
+
     private int memberNum;
     private String memberId;
-    private String memberPw;
     private String memberName;
+    private String memberPw;
     private String memberEmail;
     private String memberTel;
     private String memberBirth;

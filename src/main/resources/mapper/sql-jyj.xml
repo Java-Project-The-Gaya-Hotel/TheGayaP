@@ -4,20 +4,20 @@
 <mapper namespace="com.gaya.thegayap.mapper.JeongMapper">
 
 <!--    회원 테이블 추가 -->
-    <insert id="joinMember" parameterType="com.gaya.thegayap.dto.JeongMemberDto">
+    <insert id="joinMember" parameterType="com.gaya.thegayap.dto.MemberDto">
         insert into member_table(member_id, member_pw, member_name, member_email, member_tel, member_birth, member_create_date)
         values (#{memberId}, #{memberPw}, #{memberName}, #{memberEmail}, #{memberTel}, #{memberBirth}, NOW());
     </insert>
 
 <!--    아이디 중복 체크 -->
-    <select id="idCheck" parameterType="com.gaya.thegayap.dto.JeongMemberDto" resultType="int">
+    <select id="idCheck" parameterType="com.gaya.thegayap.dto.MemberNonPasswordDto" resultType="int">
         SELECT count(member_id)
         FROM member_table
         WHERE member_id=#{memberId}
     </select>
 
 <!--    이메일 중복 체크 -->
-    <select id="emailCheck" parameterType="com.gaya.thegayap.dto.JeongMemberDto" resultType="int">
+    <select id="emailCheck" parameterType="com.gaya.thegayap.dto.MemberNonPasswordDto" resultType="int">
         SELECT count(member_email)
         FROM member_table
         WHERE member_email=#{memberEmail}
@@ -38,7 +38,7 @@
     </select>
 
 <!--    내 등급, 포인트, 프로필 조회 -->
-    <select id="profile" resultType="com.gaya.thegayap.dto.JeongMemberDto">
+    <select id="profile" resultType="com.gaya.thegayap.dto.MemberNonPasswordDto">
         SELECT *
         FROM member_table
         WHERE member_id=#{memberId}
@@ -54,7 +54,7 @@
     </select>
 
 <!--    프로필 수정 -->
-    <update id="updateProfile" parameterType="com.gaya.thegayap.dto.JeongMemberDto">
+    <update id="updateProfile" parameterType="com.gaya.thegayap.dto.MemberNonPasswordDto">
         UPDATE member_table
         SET member_email = #{memberEmail},
             member_tel  = #{memberTel}
@@ -62,14 +62,14 @@
     </update>
 
 <!--    비밀번호 변경 -->
-    <update id="changePw" parameterType="com.gaya.thegayap.dto.JeongMemberDto">
+    <update id="changePw" parameterType="com.gaya.thegayap.dto.MemberDto">
         UPDATE member_table
         SET member_pw = #{memberPw}
         WHERE member_id  = #{memberId} AND member_pw = #{memberPw}
     </update>
 
 <!--    회원 탈퇴 -->
-    <update id="withdrawalMember" parameterType="com.gaya.thegayap.dto.JeongMemberDto">
+    <update id="withdrawalMember" parameterType="com.gaya.thegayap.dto.MemberNonPasswordDto">
         UPDATE member_table
         SET member_withdrawal_yn = 'Y'
         WHERE member_id = #{memberId}
@@ -82,15 +82,8 @@
         FROM hotel_table
     </select>
 
-<!--    로그인 체크 -->
-    <select id="loginCheck" resultType="com.gaya.thegayap.dto.JeongMemberDto" parameterType="String">
-        SELECT *
-        FROM member_table
-        WHERE member_id=#{memberId}
-    </select>
-
 <!--    아이디 찾기 -->
-    <select id="findId" parameterType="com.gaya.thegayap.dto.JeongMemberDto" resultType="String">
+    <select id="findId" parameterType="com.gaya.thegayap.dto.MemberNonPasswordDto" resultType="String">
         SELECT member_id
         FROM member_table
         WHERE member_email = #{memberEmail} AND member_name = #{memberName}
@@ -121,7 +114,7 @@
     </select>
 
 <!--    문의작성 페이지 유저정보 불러오기-->
-    <select id="inquiryUserInfo" resultType="com.gaya.thegayap.dto.JeongMemberDto">
+    <select id="inquiryUserInfo" resultType="com.gaya.thegayap.dto.MemberNonPasswordDto">
         SELECT member_id, member_name, member_email, member_tel
         FROM member_table
         WHERE member_id = #{userName}

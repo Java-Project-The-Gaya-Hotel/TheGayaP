@@ -9,7 +9,7 @@
 <mapper namespace="com.gaya.thegayap.mapper.DellMapper">
 
     <!-- My page Home Data 가져오기 -->
-    <select id="getUserInfo" parameterType="String" resultType="com.gaya.thegayap.dto.JeongMemberDto">
+    <select id="getUserInfo" parameterType="String" resultType="com.gaya.thegayap.dto.MemberNonPasswordDto">
         select *
         from member_table
         where member_id = #{memberId}

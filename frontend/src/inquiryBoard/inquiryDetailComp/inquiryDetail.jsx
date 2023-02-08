@@ -19,6 +19,7 @@ function InquiryDetail() {
     const navi = useNavigate();
 
     const [memberId, setMemberId] = useState("");
+    const [memberRole, setMemberRole] = useState("");
     const [inquiryCategory, setInquiryCategory] = useState("");
     const [hotelName, setHotelName] = useState("");
     const [inquiryTitle, setInquiryTitle] = useState("");
@@ -36,6 +37,8 @@ function InquiryDetail() {
         const syncMemberInfo = await axios.get("http://localhost:8080/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
         setMemberInfo(syncMemberInfo.data);
         setMemberId(memberInfo.memberId);
+        setMemberRole(memberInfo.memberRole);
+
 
     }
 
@@ -86,6 +89,7 @@ function InquiryDetail() {
             }
         }
                 getInquiryDetailData();
+        console.log(memberRole);
 
 
     }, [])
@@ -144,7 +148,7 @@ function InquiryDetail() {
                 </div>
             </div>
             {
-                memberInfo.length == 0 ? null : inquiryStatus == "답변완료" ?   null : inquiryUserName != memberId ? null:
+                memberInfo.length == 0 ? null : inquiryStatus == "답변완료" ?   null : inquiryUserName != memberId ? null: memberRole != "ADMIN" ? null:
                         <InquiryReplyWrite qaNum={userParam.get('idx')} data={memberInfo} status={inquiryStatus}/>
             }
         </div>
