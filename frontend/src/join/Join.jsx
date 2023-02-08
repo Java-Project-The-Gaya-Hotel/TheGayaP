@@ -336,6 +336,7 @@ function Join(props) {
                             </table>
                         </div>
 
+                        
                     </div>
                     <section>
                         <button type={"submit"} className={"activation"} disabled={!(isEmail && isId &&
