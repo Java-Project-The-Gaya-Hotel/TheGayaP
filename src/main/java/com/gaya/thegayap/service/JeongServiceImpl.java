@@ -83,7 +83,7 @@ public class JeongServiceImpl implements JeongService{
     }
 
     @Override
-    public List<SinInquiryDto> inquiryDetail(int idx) throws Exception {
+    public SinInquiryDto inquiryDetail(int idx) throws Exception {
         return jeongMapper.inquiryDetail(idx);
     }
 

@@ -25,5 +25,5 @@ public interface JeongService {
 
     List<JeongMemberDto> inquiryUserInfo(String userName) throws Exception;
 
-    List<SinInquiryDto> inquiryDetail(int idx) throws Exception;
+    SinInquiryDto inquiryDetail(int idx) throws Exception;
 }

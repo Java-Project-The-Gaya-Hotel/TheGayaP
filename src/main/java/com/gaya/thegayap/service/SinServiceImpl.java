@@ -282,7 +282,12 @@ public class SinServiceImpl implements SinService {
      */
     @Override
     public void insertReply(SinAnswerChatDto sinAnswerChatDto) {
-        sinMapper.insertReply(sinAnswerChatDto);
+        if (sinAnswerChatDto.getAnswerStatus() != null) {
+            sinMapper.updateInquiryStatus(sinAnswerChatDto);
+        }
+        if (sinAnswerChatDto.getAnswerContents() != null) {
+            sinMapper.insertReply(sinAnswerChatDto);
+        }
     }
 
 

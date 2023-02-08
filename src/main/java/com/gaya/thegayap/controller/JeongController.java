@@ -177,8 +177,8 @@ public class JeongController {
      * @throws Exception
      */
     @GetMapping("/qa/getDetail")
-    public Object inquiryDetail(@RequestParam("idx") int idx) throws Exception {
-        List<SinInquiryDto> inquiryDto = jeongService.inquiryDetail(idx);
+    public SinInquiryDto inquiryDetail(@RequestParam("idx") int idx) throws Exception {
+        SinInquiryDto inquiryDto = jeongService.inquiryDetail(idx);
 
         return inquiryDto;
     }

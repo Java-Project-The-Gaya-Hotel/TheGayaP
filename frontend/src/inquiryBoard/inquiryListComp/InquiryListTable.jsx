@@ -30,9 +30,11 @@ function InquiryListTable(props) {
             const syncMemberIdParam = syncMemberId.data
             const syncMemberInfo = await axios.get("http://localhost:8080/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
             setMemberInfo(syncMemberInfo.data);
+
         }
         const syncQA = await axios.get("http://localhost:8080/gaya/inquirylist");
         setQAData(syncQA.data);
+
 
     }
 
@@ -40,8 +42,8 @@ function InquiryListTable(props) {
     // 테이블 불러올때 발동
     useEffect(() => {
 
-        getMemberInfo();
 
+        getMemberInfo();
 
 
     }, []);
