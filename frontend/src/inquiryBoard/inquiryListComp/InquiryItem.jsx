@@ -76,7 +76,7 @@ function InquiryItem(props) {
         <tr key={props.data.inquiryNum} onClick={onClickHandler} style={{cursor: "pointer"}}>
             <td>{props.data.inquiryHotelName}</td>
             <td className={"text-start"}>{title}</td>
-            <td>{inquiryId}</td>
+            <td>{inquiryId.replace(inquiryId.substring(3), '***')}</td>
             <td>{props.data.inquiryCreateDate}</td>
             <td>{props.data.inquiryStatus}</td>
         </tr>
