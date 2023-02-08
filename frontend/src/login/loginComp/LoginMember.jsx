@@ -116,7 +116,7 @@ function LoginMember(props) {
                               <Modal closeModal={() => setFindId(!findId)}><FindId closeModal={() => setFindId(!findId)}/></Modal>
                             )}
                             <button onClick={() => setFindPw(!findPw)} className={"btn btn-secondary p-1"} style={{borderRadius: 0}}>비밀번호 찾기</button>
-                            {findId && (
+                            {findPw && (
                             <Modal closeModal={() => setFindPw(!findPw)}><FindPw closeModal={() => setFindPw(!findPw)}/></Modal>
                                 )}
                         </div>

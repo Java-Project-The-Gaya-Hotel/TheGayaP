@@ -2,11 +2,10 @@ import React, {useState, useEffect, useCallback} from "react";
 import "./Join.css"
 import axios, {request} from "axios";
 import button from "bootstrap/js/src/button";
+import {useNavigate} from "react-router-dom";
 
 
-function FootButton(props: { disabled: boolean, type: string, footButtonType: *, children: ReactNode }) {
-    return null;
-}
+
 
 function Join(props) {
 
@@ -48,7 +47,7 @@ function Join(props) {
     };
 
     useEffect(() => {
-        console.log(birth)
+
     }, [])
     const onBirthHandler =  useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setBirth(e.target.value)
@@ -144,10 +143,16 @@ function Join(props) {
         }   //여기서 걸리면 아래로 못감
 
         axios.post("http://localhost:8080/join/insert", data)
+            
             .then((req) => {
                 console.log("데이터 전송 성공")
                 console.log(data);
-            }).catch(err => {
+                alert("회원가입이 완료되었습니다.")
+
+                    
+
+            }).then(this.props.history.push("/login"))
+            .catch(err => {
             console.log(`데이터 전송 실패 ${err}`)
         })
 
@@ -167,9 +172,6 @@ function Join(props) {
             setIsEmail(true);
         }
     };
-
-
-
 
 // 아이디 중복체크
     const handleIdCheck = (e) => {
@@ -224,11 +226,7 @@ function Join(props) {
             })
         }
     }
-    // const autoHyphen2 = (target) => {
-    //     target.value = target.value
-    //         .replace(/[^0-9]/g, '')
-    //         .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
-    // }
+
     const handlePress = (e) => {
         const regex = /^[0-9\b -]{0,13}$/;
         if (regex.test(e.target.value)) {
@@ -246,6 +244,7 @@ function Join(props) {
             setNumber(number.replace(/-/g, '').replace(/^(\d{0,3})(\d{0,4})(\d{0,4})/, '$1-$2-$3'));
         }
     }, [number]);
+
 
     return (
         <div className={"contain"}>
@@ -344,10 +343,9 @@ function Join(props) {
 
                     </div>
                     <section>
-                        <button type={"submit"}  className={"activation"} disabled={!(isEmail && isId &&
-                            isName && isNumber && isPassword && isConfirmPassword && isBirth)}
-                        >
-                            다음
+                        <button type={"submit"} className={"activation"} disabled={!(isEmail && isId &&
+                            isName && isNumber && isPassword && isConfirmPassword && isBirth)} >
+                            회원가입
                         </button>
                     </section>
                 </div>
