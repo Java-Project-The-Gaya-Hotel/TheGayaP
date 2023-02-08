@@ -14,11 +14,13 @@ const styles = {
 
 function MyProfile() {
 
+    const [userData, setUserData] = useState([]);
     const [memberId, setMemberId] = useState("");
     const [memberName, setMemberName] = useState("")
     const [memberEmail, setMemberEmail] = useState("")
     const [memberPh, setMemberPh] = useState("")
     const navi = useNavigate();
+
 
     useEffect(() => {
         SessionCheck();
@@ -45,6 +47,9 @@ function MyProfile() {
                         }
                     }
                 ).then(response => {
+                    const data = response.data;
+
+                    setUserData(response.data)
                     setMemberId(response.data.memberId)
                     setMemberName(response.data.memberName)
                     setMemberEmail(response.data.memberEmail)
@@ -54,7 +59,21 @@ function MyProfile() {
             })
         }
 
-    }, [])
+    }, []);
+
+    const btnClick = () => {
+        axios.put(
+            "http://localhost:8080/mypage/updateProfile",
+            {
+                params: {
+                    memberId : memberId
+                }
+            }
+        ).then(response => {
+
+
+        })
+    }
 
 
     return (
@@ -86,19 +105,18 @@ function MyProfile() {
                                     <tr>
                                         <td> E-Mail :</td>
                                         <td>
-                                            <input value={memberEmail} readOnly={true}/></td>
+                                            <input value={memberEmail} onChange={(e)=>setMemberEmail(e.target.value)}/></td>
                                     </tr>
                                     <tr>
                                         <td> Ph :</td>
                                         <td>
-                                            <input value={memberPh} readOnly={true}/></td>
+                                            <input value={memberPh} onChange={(e)=>setMemberPh(e.target.value)}/></td>
                                     </tr>
                                     </tbody>
                                 </table>
                                 <div className={"p-5"}>
-                                    <button> 수정하기</button>
+                                    <button onClick={btnClick}> 수정하기 </button>
                                 </div>
-                                <MyprofileReWrite/>
                             </div>
                         </div>
                         <div className="card-footer text-muted border-dark bg-white">&nbsp;</div>

@@ -8,6 +8,7 @@ import "../dellMain/dellmainCss/BtnDateChoose.css"
 import "../dellBooking/dellBookingCss/AccoCss.css"
 import Swal from "sweetalert2";
 import {now} from "moment";
+import styled from "styled-components";
 
 const styles = {
     inputBox: {
@@ -19,9 +20,25 @@ const styles = {
     },
     inPaddingX: {
         padding: "0px 300px 0px 300px"
-    }
+    },
 }
 
+
+const InputBox = styled.input`
+width: 190px ;
+height: 45px;
+cursor: pointer;
+&:hover{
+background-color:black;
+color:white;
+transition:0.5s
+}
+&:focus{
+color:dark;
+border:1px solid black;
+}
+
+`
 
 function BookingAccordion() {
 
@@ -36,7 +53,6 @@ function BookingAccordion() {
     const getAdultCount = searchParams.get('getAdultCount');
     const getChildCount = searchParams.get('getChildCount');
     const getTotalCount = searchParams.get('getTotalCount');
-
 
 
     // datepicker 변수 / datepicker data 가져와 연동
@@ -81,14 +97,13 @@ function BookingAccordion() {
                 const dateA = new Date(startDate);
                 const dateB = new Date(endDate);
                 const diffCount = dateB.getTime() - dateA.getTime();
-                const arrDayStr = ['일','월','화','수','목','금','토'];
+                const arrDayStr = ['일', '월', '화', '수', '목', '금', '토'];
                 setNights(diffCount / (24 * 60 * 60 * 1000));
                 setCheckIn(startDate.toLocaleDateString() + " " + arrDayStr[startDate.getDay()]);
                 setCheckOut(endDate.toLocaleDateString() + " " + arrDayStr[endDate.getDay()]);
             }
         }
     }, [endDate])
-
 
 
     const onChange = (dates) => {
@@ -127,8 +142,8 @@ function BookingAccordion() {
     const clickE = () => {
         if (hotelName != null && hotelName !== "") {
             navigate(`/reservroom?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}&hotelNum=${hotelNum}`)
-        }else{
-            alert("호텔을 선택해 주세요.");
+        } else {
+            alert("호텔을 선택해 주세요.")
         }
 
     };
@@ -222,9 +237,8 @@ function BookingAccordion() {
                                     <div className={"row justify-content-center"}>
                                         {hotelList.map((item) => {
                                                 return (
-                                                    <input key={item.hotelNum} type={"button"} style={styles.inputBox}
-                                                           className={"text-center form-control rounded-0 m-3"}
-                                                           value={item.hotelName} name={item.hotelNum} readOnly={true} onClick={onBtnClick}/>
+                                                    <InputBox key={item.hotelNum}  className={"text-center form-control rounded-0 m-3"} value={item.hotelName} name={item.hotelNum} readOnly={true}
+                                                              onClick={onBtnClick}/>
                                                 );
                                             }
                                         )
