@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import 'animate.css';
 import styled from 'styled-components'
 import "../dellMain/dellmainCss/BtnDateChoose.css"
-import {forEach} from "react-bootstrap/ElementChildren";
 
 //stay, hotel component 명명 위해 나눠둠.
 const HotelArea = styled.div`
@@ -104,9 +103,9 @@ function RoomCondition(props) {
         });
         weekDayCost = (chooseRoomCost * weekDay);
         weekEndCost = (chooseRoomWeekendCost * weekEnd);
-        overAdultLimit = 20000 * (adultCount - 1);
+        overAdultLimit = 20000 * (adultCount - 2);
         // 어른 인원수가 2명이상일시 2만원 추가요금 계산
-        if (adultCount > 1) {
+        if (adultCount > 2) {
             setCostSum((weekDayCost + weekEndCost) + overAdultLimit);
         } else {
             setCostSum(weekDayCost + weekEndCost);

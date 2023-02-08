@@ -4,8 +4,6 @@ import "../dellMain/dellmainCss/BtnDateChoose.css"
 import "./dellBookingCss/NavColor.css"
 import {useLocation} from "react-router-dom";
 import axios from "axios";
-import moment from "moment";
-import {AuthorityCheck} from "../functiontocheck/FunctionToCheck";
 
 
 function BookingRoom() {

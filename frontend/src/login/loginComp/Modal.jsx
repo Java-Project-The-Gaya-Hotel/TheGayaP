@@ -1,7 +1,5 @@
 // Modal.js
-import React, {useState} from "react";
-import ModalStyle from "./ModalCss.css"
-import axios from "axios";
+import React from "react";
 
 
 function Modal(props) {

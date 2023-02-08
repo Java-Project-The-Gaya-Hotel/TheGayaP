@@ -103,20 +103,22 @@ function ReservationPageDetail2() {
         }
     }, []);
 
+    // 멤버쉽에 따른 할인율 적용
     useEffect(() => {
         let cost = Number(totalCostSum);
         let discountCost;
 
         setCostComma(cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-        if (memberTier == "gold") {
-            discountCost = cost * 0.9;
-        } else if (memberTier == "platinum") {
-            discountCost = cost * 0.85;
-        } else if (memberTier == "black") {
-            discountCost = cost * 0.8;
+        if (memberTier == "GOLD") {
+            discountCost = Math.floor(cost * 0.9);
+        } else if (memberTier == "PLATINUM") {
+            discountCost = Math.floor(cost * 0.85);
+        } else if (memberTier == "BLACK") {
+            discountCost = Math.floor(cost * 0.8);
         } else {
-            discountCost = cost * 0.95;
+            discountCost = Math.floor(cost * 0.95);
         }
+
         setMemberTotalCostSum(discountCost);
         setDiscountCostComma(discountCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
 
@@ -152,33 +154,59 @@ function ReservationPageDetail2() {
             error_msg,
         } = response;
 
+        let earnPoint;
+        let resultSum;
+        if (memberId !== "" || memberId != null) {
+            earnPoint = memberTotalCostSum * 0.01;
+            resultSum = memberTotalCostSum;
+        } else {
+            resultSum = totalCostSum;
+            earnPoint = 0;
+        }
+
         if (success) {
             axios.post("http://localhost:8080/gaya/bookroom",
                 {
                     reservationNum: merchant_uid,
+                    reservationHotelNum: Number(hotelNum),
                     reservationRoomName: roomName,
-                    reservationHotelNum: hotelNum,
-                    roomCode: roomCode,
-                    customerName: customerName,
+                    reservationRoomCode: roomCode,
+                    reservationCheckIn: startDate,
+                    reservationCheckOut: endDate,
+                    reservationNights: Number(nights),
+                    reservationPeople: Number(totalCount),
+                    reservationCost: resultSum,
+                    reservationMealAdult: adultMealNum,
+                    reservationMealChild: childMealNum,
                     customerId: memberId,
                     customerEmail: customerEmail,
+                    customerName: customerName,
                     customerTel: customerTel,
-                    checkIn: startDate,
-                    checkOut: endDate,
-                    nights: nights,
-                    reservationPeople: totalCount,
-                    totalCost: totalCostSum,
+                    earnPoint: earnPoint,
+                    reservationRequest: reservationRequest,
+                    memberTier: memberTier,
                 })
                 .then((req) => {
-                    alert('결제 성공');
-                    console.log("결제 성공");
-                    window.location.href = "/";
+                    Swal.fire({
+                        icon: 'info',
+                        title: '결제 완료!',
+                        text: ' 예약이 완료 됐습니다. '
+                    }).then(result => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/";
+                        }
+                    })
+
                 }).catch(err => {
                 console.log(`데이터 전송 실패 ${err}`)
             })
 
         } else {
-            alert(`결제 실패: ${error_msg}`);
+            Swal.fire({
+                icon: 'warning',
+                title: '결제 실패!',
+                text: `결제 실패: ${error_msg}`
+            })
         }
     }
 
@@ -220,48 +248,6 @@ function ReservationPageDetail2() {
         setTotalCostSum((Number(costSum) + Number(adultMealCost * adultMealNum * nights) + Number(childMealCost * childMealNum * nights)).toString());
     }, [childMealNum, adultMealNum])
 
-    const reservButton = () => {
-        let earnPoint;
-        let resultSum;
-        if (memberId !== "" || memberId != null) {
-            earnPoint = memberTotalCostSum * 0.01;
-            resultSum = memberTotalCostSum;
-        } else {
-            resultSum = totalCostSum;
-            earnPoint = 0;
-        }
-
-        const userPayInfo = {
-            reservationNum: new Date().getTime(),
-            reservationHotelNum: Number(hotelNum),
-            reservationRoomName: roomName,
-            reservationRoomCode: roomCode,
-            reservationCheckIn: startDate,
-            reservationCheckOut: endDate,
-            reservationNights: Number(nights),
-            reservationPeople: Number(totalCount),
-            reservationCost: resultSum,
-            reservationMealAdult: adultMealNum,
-            reservationMealChild: childMealNum,
-            customerId: memberId,
-            customerEmail: customerEmail,
-            customerName: customerName,
-            customerTel: customerTel,
-            earnPoint: earnPoint,
-            reservationRequest: reservationRequest,
-            memberTier: memberTier,
-        }
-        console.log(userPayInfo);
-        axios.post("http://localhost:8080/gaya/bookroom",
-            userPayInfo)
-            .then((req) => {
-                alert('결제 성공');
-                console.log("결제 성공");
-                // window.location.href = "/";
-            }).catch(err => {
-            console.log(`데이터 전송 실패 ${err}`)
-        })
-    }
 
     const plusBtn = () => {
 
@@ -399,40 +385,40 @@ function ReservationPageDetail2() {
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <div>
-                                        <div className={"row m-5 align-items-center"}>
-                                            <div className={"col"}>
-                                                <button className={"btn btn-outline-dark rounded-0 fw-bold"}
-                                                        onClick={minusBtn}>-
+
+
+                                    <div className={"fw-bold h4 p-2"}>조식 인원 선택</div>
+                                    <div className={"d-flex"}>
+                                        <div className={"container text-center my-3"}>
+                                            <div className={""}>
+                                                <div className={"fw-bold"}>성인</div>
+                                                <button onClick={minusBtn}
+                                                        className={"btn btn-outline-dark rounded-0 btn-sm"}> -
                                                 </button>
-                                            </div>
-                                            <div className={"col fw-bold"}><h4 className={"m-0"}>성인
-                                                : {adultMealNum}</h4></div>
-                                            <div className={"col"}>
-                                                <button className={"btn btn-outline-dark rounded-0"}
-                                                        onClick={plusBtn}>+
+                                                <span className={"p-2 mx-3"}>  {adultMealNum} </span>
+                                                <button onClick={plusBtn}
+                                                        className={"btn btn-outline-dark rounded-0 btn-sm"}> +
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
+                                        {
+                                            childCount == 0 ? null :
+                                                <div className={"container text-center my-3"}>
+                                                    <div className={""}>
+                                                        <div className={"fw-bold"}>어린이</div>
+                                                        <button onClick={cdMinusBtn}
+                                                                className={"btn btn-outline-dark rounded-0 btn-sm"}> -
+                                                        </button>
+                                                        <span className={"p-2 mx-3"}>  {childMealNum} </span>
+                                                        <button onClick={cdPlusBtn}
+                                                                className={"btn btn-outline-dark rounded-0 btn-sm"}> +
+                                                        </button>
+                                                    </div>
+                                                </div>
 
-                                    {
-                                        childCount == 0 ? null :
-                                            <div className={"row m-5 align-items-center"}>
-                                                <div className={"col"}>
-                                                    <button className={"btn btn-outline-dark rounded-0"}
-                                                            onClick={cdMinusBtn}>-
-                                                    </button>
-                                                </div>
-                                                <div className={"col"}><h4 className={"m-0"}>어린이 : {childMealNum}</h4>
-                                                </div>
-                                                <div className={"col"}>
-                                                    <button className={"btn btn-outline-dark rounded-0"}
-                                                            onClick={cdPlusBtn}>+
-                                                    </button>
-                                                </div>
-                                            </div>
-                                    }
+                                        }
+
+                                    </div>
                                 </div>
 
                                 <div className={"col-6"}>
@@ -482,7 +468,8 @@ function ReservationPageDetail2() {
                                         }
                                         <tr>
                                             <td>요청 사항 :</td>
-                                            <td><textarea onChange={(e) => {
+                                            <td><textarea className={"form-control"} style={{height: 140}}
+                                                          placeholder={"요청사항을 적어주세요."} onChange={(e) => {
                                                 setReservationRequest(e.target.value)
                                             }
                                             }></textarea></td>
@@ -496,7 +483,6 @@ function ReservationPageDetail2() {
                                     <button onClick={onClickPayment} className={"btnDate"} role={"button"}><span
                                         className="text">결제하기</span>Payment
                                     </button>
-                                    <button onClick={reservButton}>임시 버튼</button>
                                 </div>
                             </div>
 

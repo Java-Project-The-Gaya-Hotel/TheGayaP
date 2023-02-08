@@ -6,10 +6,7 @@ import com.gaya.thegayap.dto.JeongMemberDto;
 import com.gaya.thegayap.dto.SinReservDto;
 import com.gaya.thegayap.service.DellService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -35,6 +32,10 @@ public class DellController {
     @GetMapping("/reservationinfo")
     public List<SinReservDto> reservationinfo(@RequestParam ("customerId") String customerId){
         return dellService.reservationinfo(customerId);
+    }
+
+    @PutMapping("/withdrawalMember")
+    public void withdrawalMember(@RequestParam ("memberId") String memberId){
     }
 
 }

@@ -1,20 +1,31 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 
 //게시글 작성 페이지
 function InquiryReplyWrite(props) {
-    const [userName, setUserName] = useState("suppoter")
+    const [userName, setUserName] = useState("")
     const [contents, setContents] = useState("");
-    const [isAdmin, setIsAdmin] = useState("Y");
-    const [qaNum, setQaNum] = useState();
+    const [isAdmin, setIsAdmin] = useState("N");
+    const [qaNum, setQaNum] = useState(props.qaNum);
 
     const changeContents = (e) => {
         setContents(e.target.value);
     }
 
+
+    useEffect(()=>{
+        if (props.data.memberRole == "ADMIN"){
+            setUserName("suppoter");
+            setIsAdmin('Y');
+        }else{
+            setUserName(props.data.memberId);
+        }
+
+
+    },[])
+
+
     const insertReply = () => {
-        const qaNum = props.qaNum;
-        setQaNum(qaNum);
 
         const body = {
 

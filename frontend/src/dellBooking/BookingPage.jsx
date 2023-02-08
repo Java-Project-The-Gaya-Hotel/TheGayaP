@@ -1,6 +1,4 @@
 import React from "react";
-import RoutesLayout from "../dellMain/RoutesLayout";
-import MainFooter from "../dellMain/MainFooter";
 import "../dellBooking/dellBookingCss/BreadCrumb.css"
 // import 'animate.css'
 import BookingAccordion from "./BookingAccordion";

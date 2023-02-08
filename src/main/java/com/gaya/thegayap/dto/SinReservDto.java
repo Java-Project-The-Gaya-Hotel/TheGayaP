@@ -35,4 +35,5 @@ public class SinReservDto {
     private int earnPoint;
 
 
+
 }

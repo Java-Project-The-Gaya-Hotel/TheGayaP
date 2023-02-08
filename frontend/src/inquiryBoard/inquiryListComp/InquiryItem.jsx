@@ -4,16 +4,15 @@ import {AuthorityCheck} from "../../functiontocheck/FunctionToCheck";
 
 
 const styles1 = {
-    fontText:{
-        color:"rgb(219,0,0)"
+    fontText: {
+        color: "rgb(219,0,0)"
     }
 }
 const styles2 = {
-    fontText:{
-        color:"rgb(0,0,0)"
+    fontText: {
+        color: "rgb(0,0,0)"
     }
 }
-
 
 
 //문의 게시글의 정보를 가진 컴포넌트
@@ -26,7 +25,8 @@ function InquiryItem(props) {
     const [goNum, setGoNum] = useState(0);
     const [title, setTitle] = useState("");
     const [inquiryId, setInquiryId] = useState("");
-    const [memberId, setMemberId] = useState(props.memberId);
+    const [memberId, setMemberId] = useState(props.memberInfo.memberId);
+    const [memberRole, setMemberRole] = useState(props.memberInfo.memberRole)
 
     // 문의글들이 불러와질때
     useEffect(() => {
@@ -34,7 +34,11 @@ function InquiryItem(props) {
         setInquiryId(props.data.inquiryUserName);
         // hidden 속성에 문의글과 유저아이디의 이름이 맞지않을시 비밀글 처리
         if (props.data.inquiryHidden === "Y" && props.data.inquiryUserName !== memberId) {
-            setTitle("비밀글입니다.");
+            if (memberRole != "ADMIN") {
+                setTitle("비밀글입니다.");
+            } else {
+                setTitle(props.data.inquiryTitle);
+            }
         } else {
             setTitle(props.data.inquiryTitle);
 

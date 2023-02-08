@@ -97,10 +97,6 @@ function InquiryWrite() {
 
     }, [])
 
-    useEffect(() => {
-
-    })
-
     const submitHandler = (e) => {
         e.preventDefault();
 
@@ -254,7 +250,7 @@ function InquiryWrite() {
                                         <label htmlFor={"reservationNum"} className={"form-label"}>예약번호</label>
                                         <input type={"text"} className={"form-control"} name={"reservationNum"} value={reservationNum} onChange={onChange}/>
                                     </div>
-                                    
+
                                     {/*첨부파일*/}
                                     <div className={"file my-3"}>
                                         <span className={"required"}>&nbsp;&nbsp;</span>

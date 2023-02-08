@@ -8,6 +8,7 @@ import "../dellMain/dellmainCss/BtnDateChoose.css"
 import "../dellBooking/dellBookingCss/AccoCss.css"
 import Swal from "sweetalert2";
 import {now} from "moment";
+import styled from "styled-components";
 
 const styles = {
     inputBox: {
@@ -19,9 +20,25 @@ const styles = {
     },
     inPaddingX: {
         padding: "0px 300px 0px 300px"
-    }
+    },
 }
 
+
+const InputBox = styled.input`
+width: 190px ;
+height: 45px;
+cursor: pointer;
+&:hover{
+background-color:black;
+color:white;
+transition:0.5s
+}
+&:focus{
+color:black;
+border:1px solid black;
+}
+
+`
 
 function BookingAccordion() {
 
@@ -36,7 +53,6 @@ function BookingAccordion() {
     const getAdultCount = searchParams.get('getAdultCount');
     const getChildCount = searchParams.get('getChildCount');
     const getTotalCount = searchParams.get('getTotalCount');
-
 
 
     // datepicker 변수 / datepicker data 가져와 연동
@@ -64,17 +80,11 @@ function BookingAccordion() {
                 setStartDate(new Date(now()));
             }
 
-            if (getAdultCount !=null){
-                setAdultCount(getAdultCount)
-                setChildCount(getChildCount)
-                setTotalCount(getTotalCount)
+            if (getAdultCount != null){
+                setAdultCount(getAdultCount);
+                setChildCount(getChildCount);
+                setTotalCount(getTotalCount);
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: '선택 정보 로딩 실패',
-                    html: '정보를 가져오는데 실패하였습니다.<br/> 다시 입력해 주시길 바랍니다.',
-                })
-
             }
         }
         , [])
@@ -87,14 +97,13 @@ function BookingAccordion() {
                 const dateA = new Date(startDate);
                 const dateB = new Date(endDate);
                 const diffCount = dateB.getTime() - dateA.getTime();
-                const arrDayStr = ['일','월','화','수','목','금','토'];
+                const arrDayStr = ['일', '월', '화', '수', '목', '금', '토'];
                 setNights(diffCount / (24 * 60 * 60 * 1000));
                 setCheckIn(startDate.toLocaleDateString() + " " + arrDayStr[startDate.getDay()]);
                 setCheckOut(endDate.toLocaleDateString() + " " + arrDayStr[endDate.getDay()]);
             }
         }
     }, [endDate])
-
 
 
     const onChange = (dates) => {
@@ -133,7 +142,7 @@ function BookingAccordion() {
     const clickE = () => {
         if (hotelName != null && hotelName !== "") {
             navigate(`/reservroom?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}&hotelNum=${hotelNum}`)
-        }else{
+        } else {
             alert("호텔을 선택해 주세요.")
         }
 
@@ -228,9 +237,8 @@ function BookingAccordion() {
                                     <div className={"row justify-content-center"}>
                                         {hotelList.map((item) => {
                                                 return (
-                                                    <input key={item.hotelNum} type={"button"} style={styles.inputBox}
-                                                           className={"text-center form-control rounded-0 m-3"}
-                                                           value={item.hotelName} name={item.hotelNum} readOnly={true} onClick={onBtnClick}/>
+                                                    <InputBox key={item.hotelNum}  className={"text-center form-control rounded-0 m-3"} value={item.hotelName} name={item.hotelNum} readOnly={true}
+                                                              onClick={onBtnClick}/>
                                                 );
                                             }
                                         )
@@ -335,7 +343,7 @@ function BookingAccordion() {
                                         </div>
                                         <div className={"p-3"}>
                                             <p>
-                                                2인 1실 기준, 요금에는 10% 부가가치세가 부과됩니다. 상기 요금은 할인 요금이며, 중복 할인은 적용되지 않습니다.<br/>
+                                                <p className={"fw-bold"}>성인 2인 1실 기준 요금이며 성인 3인 부터 1인당 추가 요금 2만원이 발생합니다.<br/> 주말에는 평일 요금 대비 10% 가 증가 합니다.</p>
                                                 13세 이하 어린이는 객실 인원 추가 요금을 받지 않으며 37개월 미만 유아는 조식이 무료입니다.<br/>
                                                 저희 The Gaya Hotel은 안내견을 제외한 반려동물은 입장은 불가하오니 양해부탁드립니다. <br/>
                                                 부모를 동반하지 않은 만 19세 미만 미성년자는 " 청소년 보호법 30조/58조" 로 인하여 투숙할 수 없으며 체크인
