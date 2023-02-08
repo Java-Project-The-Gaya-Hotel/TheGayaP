@@ -25,27 +25,70 @@ function InquiryItem(props) {
     const [goNum, setGoNum] = useState(0);
     const [title, setTitle] = useState("");
     const [inquiryId, setInquiryId] = useState("");
+    const [memberData, setMemberData] = useState([]);
     const [memberId, setMemberId] = useState(props.memberInfo.memberId);
-    const [memberRole, setMemberRole] = useState(props.memberInfo.memberRole)
+    const [memberRole, setMemberRole] = useState(props.memberInfo.memberRole);
 
     // 문의글들이 불러와질때
     useEffect(() => {
+
+        // async function fetchData() {
+        //     const response = await fetch(props.memberInfo);
+        //     const data = await response
+        //     console.log(data);
+        //     // setMemberData(data);
+        //     // setMemberId(memberData.memberId);
+        //     // setMemberRole(memberData.memberRole);
+        // }
+        //
+        // fetchData();
+
+        setMemberId(props.memberInfo.memberId);
+        setMemberRole(props.memberInfo.memberRole);
         setGoNum(props.data.inquiryNum);
         setInquiryId(props.data.inquiryUserName);
-        // hidden 속성에 문의글과 유저아이디의 이름이 맞지않을시 비밀글 처리
-        if (props.data.inquiryHidden === "Y" && props.data.inquiryUserName !== memberId) {
-            if (memberRole != "ADMIN") {
-                setTitle("비밀글입니다.");
-            } else {
-                setTitle(props.data.inquiryTitle);
-            }
-        } else {
-            setTitle(props.data.inquiryTitle);
-
-        }
-
 
     }, []);
+
+
+    useEffect(() => {
+        if (memberId != null) {
+            // hidden 속성에 문의글과 유저아이디의 이름이 맞지않을시 비밀글 처리
+            if (props.data.inquiryHidden === "Y" && props.data.inquiryUserName !== memberId) {
+                if (memberRole != "ADMIN") {
+                    setTitle("비밀글입니다.");
+                } else {
+                    setTitle(props.data.inquiryTitle);
+                }
+            } else {
+                setTitle(props.data.inquiryTitle);
+
+            }
+
+        }else {
+            // window.location.reload();
+        }
+    }, [memberId])
+
+    useEffect(() => {
+        if (memberRole != null) {
+            // hidden 속성에 문의글과 유저아이디의 이름이 맞지않을시 비밀글 처리
+            if (props.data.inquiryHidden === "Y" && props.data.inquiryUserName !== memberId) {
+                if (memberRole != "ADMIN") {
+                    setTitle("비밀글입니다.");
+                } else {
+                    setTitle(props.data.inquiryTitle);
+                }
+            } else {
+                setTitle(props.data.inquiryTitle);
+
+            }
+
+        }else {
+            // window.location.reload();
+        }
+
+    }, [memberRole])
 
 
     const navi = useNavigate();
@@ -84,8 +127,6 @@ function InquiryItem(props) {
             <td>{props.data.inquiryCreateDate}</td>
             <td>{props.data.inquiryStatus}</td>
         </tr>
-
-
     );
 }
 

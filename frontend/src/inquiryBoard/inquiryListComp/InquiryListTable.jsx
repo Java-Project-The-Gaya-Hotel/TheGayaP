@@ -12,7 +12,6 @@ import {GetMemberIdByToken} from "../../functiontocheck/FunctionToCheck";
 // 글 작성하기
 
 
-
 // 문의 게시글 테이블
 function InquiryListTable(props) {
 
@@ -24,39 +23,25 @@ function InquiryListTable(props) {
     const offset = (page - 1) * limit;
     const navi = useNavigate();
 
-    // 문의글 리스트를 가져오는 axios 함수
-    const getQaData = async () => {
-        const response = await axios.get("http://localhost:8080/gaya/inquirylist")
+    // 문의글과 유저 정보를 가져오는 함수
+    const getMemberInfo = async () => {
+        if (sessionStorage.getItem("token") != null) {
+            const syncMemberId = await GetMemberIdByToken()
+            const syncMemberIdParam = syncMemberId.data
+            const syncMemberInfo = await axios.get("http://localhost:8080/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
+            setMemberInfo(syncMemberInfo.data);
+        }
+        const syncQA = await axios.get("http://localhost:8080/gaya/inquirylist");
+        setQAData(syncQA.data);
 
-        const data = response.data;
-        setQAData(data);
     }
 
 
     // 테이블 불러올때 발동
     useEffect(() => {
 
-        // 세션 스토리지에 JWT 토큰이 null이 아닐시
-        if (sessionStorage.getItem("token") != null) {
-            // 유저의 아이디를 불러오는 함수 발동후 set
-            GetMemberIdByToken().then((response) => {
-                axios.get(
-                    "http://localhost:8080/mypage/getUserInfo",
-                    {
-                        params: {
-                            memberId: response.data,
-                        }
-                    }
-                ).then(response => {
-                        setMemberInfo(response.data);
-                    }
-                )
-            })
-        }
+        getMemberInfo();
 
-
-
-        getQaData();
 
 
     }, []);
@@ -65,8 +50,7 @@ function InquiryListTable(props) {
     const goWrite = () => {
         if (sessionStorage.getItem("token") != null) {
             navi("/qa/write");
-        }
-        else {
+        } else {
             alert('로그인이 필요한 서비스 입니다.');
             navi("/login");
         }
@@ -96,7 +80,8 @@ function InquiryListTable(props) {
                                     <tbody>
                                     {
                                         QAData.slice(offset, offset + limit).map((item) => {
-                                            return <InquiryItem key={item.inquiryNum} data={item} memberInfo={memberInfo}/>
+                                            return <InquiryItem key={item.inquiryNum} data={item}
+                                                                memberInfo={memberInfo}/>
                                         })
                                     }
                                     </tbody>
@@ -104,7 +89,8 @@ function InquiryListTable(props) {
 
                                 <label>
                                     페이지 당 표시할 게시물 수:&nbsp;
-                                    <select type="number" value={limit} onChange={({target: {value}}) => setLimit(Number(value))}>
+                                    <select type="number" value={limit}
+                                            onChange={({target: {value}}) => setLimit(Number(value))}>
                                         <option value="10">10</option>
                                         <option value="12">12</option>
                                         <option value="20">20</option>
