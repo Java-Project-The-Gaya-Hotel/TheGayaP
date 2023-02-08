@@ -225,7 +225,6 @@ function InquiryWrite() {
                                 <div className={"container col"}>
                                     {/*이름*/}
                                     <div className={"name my-4"}>
-                                        <span className={"required"}>* </span>
                                         <label htmlFor={"userName"} className={"form-label"}>아이디</label>
                                         <input type={"text"} className={"form-control"} name={"userName"} value={userName} readOnly={true}
                                                onChange={(e) => {setUserName(e.target.value)}}/>
