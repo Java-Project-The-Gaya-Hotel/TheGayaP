@@ -8,7 +8,6 @@ import FindId from "./FindId";
 
 import {useCookies} from "react-cookie";
 import Swal from "sweetalert2";
-import FindPw from "./FindPw";
 
 // 회원 로그인
 function LoginMember(props) {

@@ -19,7 +19,7 @@ function FindId(props) {
   }
 
 
-  const findPwBtn = () => {
+  const findIdBtn = () => {
     axios.get("http://localhost:8080/login/findPw",
         {
           params: {memberName: name, memberEmail: email}
@@ -38,6 +38,8 @@ function FindId(props) {
       console.log(`데이터 전송 실패 ${err}`)
     })
   }
+
+
 
 
   return (
@@ -65,7 +67,7 @@ function FindId(props) {
               </div>
 
 
-              <button className={"btn btn-primary mt-3"} onClick={findPwBtn}>확인</button>
+              <button className={"btn btn-primary mt-3"} onClick={findIdBtn}>확인</button>
             </div> :
             <div>
               {isMemberPw ?
@@ -77,7 +79,7 @@ function FindId(props) {
                     <p>{email} 로 가입된 아이디가 존재하지 않습니다.</p>
                   </div>
               }
-              <button  onClick={findPwBtn} className={"btn btn-primary mt-4"}>확인</button>
+              <button onClick={closeModal} className={"btn btn-primary mt-4"}>확인</button>
             </div>
         }
       </div>
