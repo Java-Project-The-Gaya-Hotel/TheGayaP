@@ -2,39 +2,24 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
+import Swal from "sweetalert2";
+import {GetMemberIdByToken} from "../functiontocheck/FunctionToCheck";
 
 
 const CrumbAni = styled.div`
-animation:fadeInUp;
-animation-duration:1s;
+  animation: fadeInUp;
+  animation-duration: 1s;
 `;
 
 const FormBox = styled.div`
-animation:fadeInUp;
-animation-duration:2s;
+  animation: fadeInUp;
+  animation-duration: 2s;
 `;
 
 const Information = styled.div`
-animation:fadeInUp;
-animation-duration:3s;
+  animation: fadeInUp;
+  animation-duration: 3s;
 `;
-
-
-function collapse(element) {
-    const before = document.getElementsByClassName("active")[0];               // 기존에 활성화된 버튼
-    if (before && document.getElementsByClassName("active")[0] !== element) {  // 자신 이외에 이미 활성화된 버튼이 있으면
-        before.nextElementSibling.style.maxHeight = null;   // 기존에 펼쳐진 내용 접고
-        before.classList.remove("active");                  // 버튼 비활성화
-    }
-    element.classList.toggle("active");         // 활성화 여부 toggle
-
-    const content = element.nextElementSibling;
-    if (content.style.maxHeight !== 0) {         // 버튼 다음 요소가 펼쳐져 있으면
-        content.style.maxHeight = null;         // 접기
-    } else {
-        content.style.maxHeight = content.scrollHeight + "px";  // 접혀있는 경우 펼치기
-    }
-}
 
 function ReservationPageDetail2() {
 
@@ -45,14 +30,67 @@ function ReservationPageDetail2() {
     const startDate = searchParams.get('sDate');
     const endDate = searchParams.get('eDate');
     const adultCount = searchParams.get('adultCount');
-    const childCount = searchParams.get('childCount')
+    const childCount = searchParams.get('childCount');
     const totalCount = searchParams.get('total')
     const hotelName = searchParams.get('hotelName');
+    const hotelNum = searchParams.get('hotelNum');
     const roomCode = searchParams.get('roomCode');
-    const roomCost = searchParams.get('roomCost');
+    const costSum = searchParams.get('costSum')
     const nights = searchParams.get('nights');
+    const roomName = searchParams.get("roomName");
+    const [customerName, setCustomerName] = useState("");
+    const [customerEmail, setCustomerEmail] = useState("");
+    const [customerTel, setCustomerTel] = useState("");
+    const [totalCostSum, setTotalCostSum] = useState("");
+    const [memberTotalCostSum, setMemberTotalCostSum] = useState("");
+    const [costComma, setCostComma] = useState("");
+    const [discountCostComma, setDiscountCostComma] = useState("");
+    const [adultMealNum, setAdultMealNum] = useState(0);
+    const [childMealNum, setChildMealNum] = useState(0);
+    const [adultMealCost, setAdultMealCost] = useState(0);
+    const [childMealCost, setChildMealCost] = useState(0);
+    const [memberId, setMemberId] = useState("");
+    const [reservationRequest, setReservationRequest] = useState("");
+    const [memberTier, setMemberTier] = useState("");
+
 
     useEffect(() => {
+
+
+        if (sessionStorage.getItem("token") != null) {
+            GetMemberIdByToken().then(response => {
+                setMemberId(response.data);
+                axios.get("http://localhost:8080/gaya/userinfo", {
+                    params: {
+                        memberId: response.data,
+                    }
+                }).then(res => {
+                    const user = res.data;
+                    console.log(user);
+                    setCustomerName(user.memberName);
+                    setCustomerEmail(user.memberEmail);
+                    setCustomerTel(user.memberTel);
+                    setMemberTier(user.memberTier);
+                })
+            }).catch(e => {
+                setMemberId("");
+            })
+        }
+
+
+        axios.get("http://localhost:8080/gaya/checkmealcost", {
+            params: {
+                hotelNum: searchParams.get('hotelNum'),
+            }
+        })
+            .then((response) => {
+                setAdultMealCost(response.data.hotelMealAdult);
+                setChildMealCost(response.data.hotelMealChild);
+            }).catch(e => {
+            console.log(e);
+        })
+
+        setTotalCostSum(costSum);
         const jquery = document.createElement("script");
         jquery.src = "https://code.jquery.com/jquery-1.12.4.min.js";
         const iamport = document.createElement("script");
@@ -60,14 +98,36 @@ function ReservationPageDetail2() {
         document.head.appendChild(jquery);
         document.head.appendChild(iamport);
         return () => {
-            document.head.removeChild(jquery); document.head.removeChild(iamport);
+            document.head.removeChild(jquery);
+            document.head.removeChild(iamport);
         }
     }, []);
+
+    // 멤버쉽에 따른 할인율 적용
+    useEffect(() => {
+        let cost = Number(totalCostSum);
+        let discountCost;
+
+        setCostComma(cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+        if (memberTier == "GOLD") {
+            discountCost = Math.floor(cost * 0.9);
+        } else if (memberTier == "PLATINUM") {
+            discountCost = Math.floor(cost * 0.85);
+        } else if (memberTier == "BLACK") {
+            discountCost = Math.floor(cost * 0.8);
+        } else {
+            discountCost = Math.floor(cost * 0.95);
+        }
+
+        setMemberTotalCostSum(discountCost);
+        setDiscountCostComma(discountCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+
+    }, [totalCostSum])
 
 
     const onClickPayment = () => {
         /* 1. 가맹점 식별하기 */
-        const { IMP } = window;
+        const {IMP} = window;
         IMP.init('imp73778403');
 
         /* 2. 결제 데이터 정의하기 */
@@ -77,9 +137,9 @@ function ReservationPageDetail2() {
             merchant_uid: `${new Date().getTime()}`,   // 주문번호
             amount: 100,                                 // 결제금액
             name: '결제 테스트',                  // 주문명
-            buyer_name: `${name}`,                           // 구매자 이름
-            buyer_tel: `${num}`,                     // 구매자 전화번호
-            buyer_email: `${email}`,               // 구매자 이메일
+            buyer_name: `${customerName}`,                           // 구매자 이름
+            buyer_tel: `${customerTel}`,                     // 구매자 전화번호
+            buyer_email: `${customerEmail}`,               // 구매자 이메일
         };
 
         /* 4. 결제 창 호출하기 */
@@ -94,80 +154,179 @@ function ReservationPageDetail2() {
             error_msg,
         } = response;
 
+        let earnPoint;
+        let resultSum;
+        if (memberId !== "" || memberId != null) {
+            earnPoint = memberTotalCostSum * 0.01;
+            resultSum = memberTotalCostSum;
+        } else {
+            resultSum = totalCostSum;
+            earnPoint = 0;
+        }
+
         if (success) {
-            axios.post("http://localhost:8080/gaya/bookRoom",
+            axios.post("http://localhost:8080/gaya/bookroom",
                 {
                     reservationNum: merchant_uid,
-                    hotelName: hotelName,
-                    roomCode: roomCode,
-                    customerName: name,
-                    checkIn: startDate,
-                    checkOut: endDate,
-                    nights: nights,
-                    reservationPeople: totalCount,
-                    totalCost: roomCost
+                    reservationHotelNum: Number(hotelNum),
+                    reservationRoomName: roomName,
+                    reservationRoomCode: roomCode,
+                    reservationCheckIn: startDate,
+                    reservationCheckOut: endDate,
+                    reservationNights: Number(nights),
+                    reservationPeople: Number(totalCount),
+                    reservationCost: resultSum,
+                    reservationMealAdult: adultMealNum,
+                    reservationMealChild: childMealNum,
+                    customerId: memberId,
+                    customerEmail: customerEmail,
+                    customerName: customerName,
+                    customerTel: customerTel,
+                    earnPoint: earnPoint,
+                    reservationRequest: reservationRequest,
+                    memberTier: memberTier,
                 })
                 .then((req) => {
-                    alert('결제 성공');
-                    console.log("결제 성공");
-                    window.location.href = "/";
+                    Swal.fire({
+                        icon: 'info',
+                        title: '결제 완료!',
+                        text: ' 예약이 완료 됐습니다. '
+                    }).then(result => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/";
+                        }
+                    })
+
                 }).catch(err => {
                 console.log(`데이터 전송 실패 ${err}`)
             })
 
         } else {
-            alert(`결제 실패: ${error_msg}`);
+            Swal.fire({
+                icon: 'warning',
+                title: '결제 실패!',
+                text: `결제 실패: ${error_msg}`
+            })
         }
     }
 
-        /////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////
 
     const style = {
         boxSize: {
-            width: "300px"
+            width: "300px",
+            height: "30px"
         },
         boxSizePh: {
-            width: "238px"
+            width: "220px",
+            height: "30px"
+        },
+        selectSize:{
+            width: "50px",
+            height: "30px"
+        },
+        formBoxSize:{
+            width: "300px"
         }
     }
 
-
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [num, setNum] = useState("");
 
     const onNumHandler = (event) => {
-        setNum(event.target.value)
+        setCustomerTel(event.target.value)
     }
     const onNameHandler = (event) => {
-        setName(event.target.value)
+        setCustomerName(event.target.value)
     }
     const onEmailHandler = (event) => {
-        setEmail(event.target.value)
+        setCustomerEmail(event.target.value)
     }
 
-
-    const handlePress = (e) => {
-        const regex = /^[0-9\b -]{0,13}$/;
-        if (regex.test(e.target.value)) {
-            setNum(e.target.value);
-        }
-    }
 
     useEffect(() => {
-        if (num.length === 10) {
-            setNum(num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
+        if (customerTel.length === 10) {
+            setCustomerTel(customerTel.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
         }
-        if (num.length === 13) {
-            setNum(num.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
+        if (customerTel.length === 13) {
+            setCustomerTel(customerTel.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
         }
-    }, [num]);
+    }, [customerTel]);
 
+    // 조식 변경에 따른 총 가격 변경 useEffect
+    useEffect(() => {
+
+        setTotalCostSum((Number(costSum) + Number(adultMealCost * adultMealNum * nights) + Number(childMealCost * childMealNum * nights)).toString());
+    }, [childMealNum, adultMealNum])
+
+
+    const plusBtn = () => {
+
+        let adult = adultCount;
+        let adultM = adultMealNum;
+
+        adultM++
+
+
+        if (adult < adultM) {
+            Swal.fire({
+                icon: 'info',
+                title: '확인해주세요!',
+                text: ' 예약한 인원수 만큼 조식 선택이 가능합니다. '
+            })
+        } else {
+            setAdultMealNum(adultM);
+        }
+
+    }
+
+    const minusBtn = () => {
+
+        let adultM = adultMealNum;
+
+        adultM--
+
+        if (adultM < 0) {
+            setAdultMealNum(0);
+        } else {
+
+            setAdultMealNum(adultM);
+        }
+
+    }
+
+    const cdPlusBtn = () => {
+        let child = childCount;
+        let childM = childMealNum;
+
+        childM++
+
+        if (childM > child) {
+            Swal.fire({
+                icon: 'info',
+                title: '확인해주세요!',
+                text: ' 예약한 인원수 만큼 조식 선택이 가능합니다 ',
+            })
+        } else {
+            setChildMealNum(childM);
+        }
+    }
+
+    const cdMinusBtn = () => {
+        let childM = childMealNum;
+
+        childM--
+
+        if (childM < 0) {
+            setChildMealNum(0);
+        } else {
+
+            setChildMealNum(childM);
+        }
+    }
 
     return (
         <div>
             {/*main*/}
-            <div className={"container"}>
+            <div className={"container "}>
                 {/*breadcrumb*/}
                 <CrumbAni>
                     <section>
@@ -175,7 +334,6 @@ function ReservationPageDetail2() {
                             <ol className="cd-multi-steps text-top">
                                 <li className={"visited fw-lighter"}><em> Booking Condition </em></li>
                                 <li className={"visited fw-lighter"}><em> Room Condition</em></li>
-                                <li className={"visited fw-lighter"}><em> Find Room </em></li>
                                 <li className={"current fw-bold"}>
                                     <div> Payment Information</div>
                                 </li>
@@ -196,12 +354,14 @@ function ReservationPageDetail2() {
                             {/* 테이블 구역 */}
                             <hr className={"mb-4"}/>
                             <div className={"container row justify-content-center align-items-center m-3"}>
-                                <div className={"container col"}>
+                                <div className={"container col-6"}>
                                     <table className={"table table-hover m-0"}>
 
                                         <thead className={"container"}>
                                         <tr>
-                                            <th colSpan={4} className={"fw-bold h4 p-2"} style={{borderBottom: "none"}}>기본 정보</th>
+                                            <th colSpan={4} className={"fw-bold h4 p-2"}
+                                                style={{borderBottom: "none"}}>기본 정보
+                                            </th>
                                         </tr>
                                         </thead>
 
@@ -209,29 +369,122 @@ function ReservationPageDetail2() {
 
                                         <tr>
                                             <td><em className="ast">*</em> 이름 :</td>
-                                            <td><input onChange={onNameHandler} style={style.boxSize} type={"text"} className={"id"} autoComplete={"off"} placeholder={"Please Input Your Name"}/></td>
+                                            <td><input onChange={onNameHandler} style={style.boxSize} type={"text"} className={"id form-control rounded-0"} autoComplete={"off"} placeholder={"Please Input Your Name"} value={customerName}/>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td><em className="ast">*</em> 이메일 :</td>
-                                            <td><input onChange={onEmailHandler} style={style.boxSize} type={"email"} placeholder={"Please Input Your Email"}/></td>
+                                            <td><input onChange={onEmailHandler} style={style.boxSize} type={"email"} className={"form-control rounded-0"} placeholder={"Please Input Your Email"} value={customerEmail}/>
+                                            </td>
                                         </tr>
 
                                         <tr>
                                             <td><em className="ast">*</em> 전화번호 :</td>
-                                            <td>
-                                                <select>
+                                            <td><div className={"row"}>
+                                                <select className={"col-2 mx-2"}  >
                                                     <option value="+82" title="+82">+82</option>
                                                 </select>
-                                                <input style={style.boxSizePh} className={"mx-2"} value={num} placeholder={"Please Input Your Phone Number"} onChange={onNumHandler}/></td>
+                                                <input style={style.boxSizePh} className={"col-9 form-control rounded-0"} value={customerTel} placeholder={"Please Input Your Phone Number"} onChange={onNumHandler}/></div></td>
                                         </tr>
+                                        </tbody>
+                                    </table>
 
+
+                                    <div className={"fw-bold h4 p-2"}>조식 인원 선택</div>
+                                    <div className={"d-flex"}>
+                                        <div className={"container text-center my-3"}>
+                                            <div className={""}>
+                                                <div className={"fw-bold"}>성인</div>
+                                                <button onClick={minusBtn}
+                                                        className={"btn btn-outline-dark rounded-0 btn-sm"}> -
+                                                </button>
+                                                <span className={"p-2 mx-3"}>  {adultMealNum} </span>
+                                                <button onClick={plusBtn}
+                                                        className={"btn btn-outline-dark rounded-0 btn-sm"}> +
+                                                </button>
+                                            </div>
+                                        </div>
+                                        {
+                                            childCount == 0 ? null :
+                                                <div className={"container text-center my-3"}>
+                                                    <div className={""}>
+                                                        <div className={"fw-bold"}>어린이</div>
+                                                        <button onClick={cdMinusBtn}
+                                                                className={"btn btn-outline-dark rounded-0 btn-sm"}> -
+                                                        </button>
+                                                        <span className={"p-2 mx-3"}>  {childMealNum} </span>
+                                                        <button onClick={cdPlusBtn}
+                                                                className={"btn btn-outline-dark rounded-0 btn-sm"}> +
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                        }
+
+                                    </div>
+                                </div>
+
+                                <div className={"col-6"}>
+                                    <table className={"table table-hover m-0"}>
+                                        <thead className={"container"}>
+                                        <tr>
+                                            <th colSpan={4} className={"fw-bold h4 p-2"}
+                                                style={{borderBottom: "none"}}>예약 정보
+                                            </th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody className={"container"}>
+
+                                        <tr>
+                                            <td> 예약할 호텔 :</td>
+                                            <td><span style={style.boxSize}/>{hotelName}</td>
+                                        </tr>
+                                        <tr>
+                                            <td> 예약할 방 이름 :</td>
+                                            <td><span style={style.boxSize}/>{roomName}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>체크인 :</td>
+                                            <td><span style={style.boxSize}/>{startDate}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>체크아웃 :</td>
+                                            <td><span style={style.boxSize}/>{endDate}</td>
+                                        </tr>
+                                        {
+                                            memberId === "" ? <tr>
+                                                    <td>총 금액 :</td>
+                                                    <td><span style={style.boxSize}/>{costComma} 원</td>
+                                                </tr> :
+                                                <tr>
+                                                    <td>할인 전 금액 :</td>
+                                                    <td><span style={style.boxSize}/><s>{costComma} 원</s></td>
+                                                </tr>
+
+                                        }
+                                        {
+                                            memberId === "" ? null : <tr>
+                                                <td>할인 후 금액 :</td>
+                                                <td><span style={style.boxSize}/>{discountCostComma} 원</td>
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <td>요청 사항 :</td>
+                                            <td><textarea className={"form-control rounded-0 small"} style={style.boxSize}  onChange={(e) => {
+                                                setReservationRequest(e.target.value)
+                                            }
+                                            }></textarea></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
 
                                 <div className={"container col text-center"}>
                                     <div className={"m-4 fw-bold h5"}>결제 하기</div>
-                                    <button onClick={onClickPayment} className={"btnDate"} role={"button"}><span className="text">결제하기</span>Payment</button>
+                                    <button onClick={onClickPayment} className={"btnDate"} role={"button"}><span
+                                        className="text">결제하기</span>Payment
+                                    </button>
                                 </div>
                             </div>
 

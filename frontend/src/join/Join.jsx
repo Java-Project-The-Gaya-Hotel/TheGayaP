@@ -1,8 +1,9 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import "./Join.css"
-import axios, {request} from "axios";
+import axios from "axios";
 import button from "bootstrap/js/src/button";
 import {useNavigate} from "react-router-dom";
+import {ReactNode} from "react";
 
 
 
@@ -143,16 +144,10 @@ function Join(props) {
         }   //여기서 걸리면 아래로 못감
 
         axios.post("http://localhost:8080/join/insert", data)
-            
             .then((req) => {
                 console.log("데이터 전송 성공")
                 console.log(data);
-                alert("회원가입이 완료되었습니다.")
-
-                    
-
-            }).then(this.props.history.push("/login"))
-            .catch(err => {
+            }).catch(err => {
             console.log(`데이터 전송 실패 ${err}`)
         })
 

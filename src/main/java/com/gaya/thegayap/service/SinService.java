@@ -11,9 +11,10 @@ public interface SinService {
 
     void insertRoom(SinDto2 sinDto2);
 
-    List<SinRoomDto> checkRoomList(String hotelName, String checkIn, String checkOut);
+    List<SinRoomDto> checkRoomList(int hotelNum, String checkIn, String checkOut, int adultCount);
 
     void reservationRoom(SinReservDto sinReservDto);
+
 
     List<SinInquiryDto> getQAList();
 
@@ -25,5 +26,5 @@ public interface SinService {
 
     void insertReply(SinAnswerChatDto sinAnswerChatDto);
 
-    SInRoomCostDto getRoomCost(String roomCode);
+    MealCostDto getMealCost(int roomCode);
 }

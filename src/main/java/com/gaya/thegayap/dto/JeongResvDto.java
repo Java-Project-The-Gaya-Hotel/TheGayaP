@@ -9,15 +9,15 @@ public class JeongResvDto {
     private String roomCode;
     private String customerName;
     private String customerId;
-    private String checkIn;
-    private String checkOut;
-    private String reservationTime;
-    private int nights;
-    private int breakfastAdultNum;
-    private int breakfastChildNum;
-    private int peopleAdultNum;
-    private int peopleChildNum;
-    private int totalCost;
+    private String reservationCheckIn;
+    private String reservationCheckOut;
+    private String reservationDate;
+    private int reservationNights;
+    private int reservationMealAdult;
+    private int reservationMealChild;
+    private int reservationPeople;
+    private int reservationCost;
+    private int reservationRequest;
 
     private String hotelName;
 }

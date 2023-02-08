@@ -141,24 +141,25 @@ public class SinServiceImpl implements SinService {
 //    }
 
 
-
     //    Map형식으로 필터
 
     /**
      * 예약된 방을 필터하여 방의 리스트를 보냄
-     * @param hotelName 호텔 이름
-     * @param sDate 체크인 날짜
-     * @param eDate 체크아웃 날짜
+     *
+     * @param hotelNum   호텔 DB번호
+     * @param sDate      체크인 날짜
+     * @param eDate      체크아웃 날짜
+     * @param adultCount 어른 인원수
      * @return
      */
     @Override
-    public List<SinRoomDto> checkRoomList(String hotelName, String sDate, String eDate) {
+    public List<SinRoomDto> checkRoomList(int hotelNum, String sDate, String eDate, int adultCount) {
 
+        //  전체 방 리스트
+        List<SinRoomDto> roomList;
 
         //  체크인 체크아웃으로 필터링 된 예약된 방 룸코드
         List<SinRoomDto> reservationList;
-        //  전체 방 리스트
-        List<SinRoomDto> roomList;
 
         //        실제 예약가능한 리스트를 넣을 곳
 
@@ -166,56 +167,71 @@ public class SinServiceImpl implements SinService {
         //      필터링 할 Map
         Map<String, SinRoomDto> roomMap = new HashMap<>();
 
-        int hotelNum = sinMapper.getHotelNum(hotelName);
 
-//        선택된 호텔의 방 리스트 가져오기
-        if (hotelNum == 1 || hotelNum == 16) {
+        try {
+            //        선택된 호텔의 방 리스트 가져오기
+            if (hotelNum == 1 || hotelNum == 16) {
 //        DB에서 온 데이터를 넣음
-            roomList = sinMapper.getHotelRoomList(hotelNum);
-        } else {
-            roomList = sinMapper.getStayRoomList(hotelNum);
-        }
+                roomList = sinMapper.getHotelRoomList(SinFilterRoomDto.builder().hotelNum(hotelNum).adultCount(adultCount).build());
+            } else {
+                roomList = sinMapper.getStayRoomList(hotelNum);
+            }
 
 
-        reservationList = sinMapper.checkBookOverlap(SinReservDto.builder().hotelNum(hotelNum).checkIn(sDate).checkOut(eDate).build());
+            reservationList = sinMapper.checkBookOverlap(SinFilterRoomDto.builder().hotelNum(hotelNum).checkIn(sDate).checkOut(eDate).adultCount(adultCount).build());
+
+//            System.out.println(reservationList);
+
+            for (SinRoomDto sinRoomDto : roomList) {
+                roomMap.put(sinRoomDto.getRoomCode(), sinRoomDto);
+            }
 
 
-        for (SinRoomDto sinRoomDto : roomList) {
-            roomMap.put(sinRoomDto.getRoomCode(), sinRoomDto);
-        }
-
-
-        if (reservationList != null) {
-            for (SinRoomDto sinRoomDto : reservationList) {
+            if (reservationList != null) {
+                for (SinRoomDto sinRoomDto : reservationList) {
 //            동일한 코드가 있을시 dto를 null 처리
-                roomMap.put(sinRoomDto.getRoomCode(), null);
+                    roomMap.put(sinRoomDto.getReservationRoomCode(), null);
+                }
             }
-        }
 
-        roomMap.forEach((key, value) -> {
-            if (value != null) {
-                filterList.add(value);
-            }
-        });
+            roomMap.forEach((key, value) -> {
+                if (value != null) {
+                    filterList.add(value);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         return filterList;
     }
 
 
-
     /**
      * 방을 예약하는 서비스
+     *
      * @param sinReservDto
      */
     @Override
     public void reservationRoom(SinReservDto sinReservDto) {
+        int memberP = sinReservDto.getEarnPoint();
+        try {
 
-        sinMapper.reservationRoom(sinReservDto);
+            if (memberP != 0) {
+                sinMapper.updateMemberPoint(sinReservDto);
+            }
+
+            sinMapper.insertCustomer(sinReservDto);
+            sinMapper.reservationRoom(sinReservDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * 문의 게시글 리스트를 불러오는 서비스
+     *
      * @return List(SinInquiryDto)
      */
     @Override
@@ -231,6 +247,7 @@ public class SinServiceImpl implements SinService {
 
     /**
      * 호텔 이름 리스트를 불러오는 서비스
+     *
      * @return List(String)
      */
     @Override
@@ -242,6 +259,7 @@ public class SinServiceImpl implements SinService {
 
     /**
      * 임시 방 비교 서비스
+     *
      * @param roomCode 방 코드
      * @return SinRoomDto
      */
@@ -259,6 +277,7 @@ public class SinServiceImpl implements SinService {
 
     /**
      * 문의 답글을 DB에 넣는 서비스
+     *
      * @param sinAnswerChatDto
      */
     @Override
@@ -269,20 +288,21 @@ public class SinServiceImpl implements SinService {
 
     /**
      * roomCode를 받아 그 방의 호텔 조식과 방의 가격을 보내는 서비스
-     * @param roomCode
+     *
+     * @param hotelNum
      * @return SInRoomCostDto
      */
     @Override
-    public SInRoomCostDto getRoomCost(String roomCode) {
+    public MealCostDto getMealCost(int hotelNum) {
 
 
-
-        return sinMapper.getRoomAndMealCost(roomCode);
+        return sinMapper.getMealCost(hotelNum);
     }
 
 
     /**
      * roomCode 랜덤 생성 메서드
+     *
      * @return
      */
     public String roomCodeGenerate() {

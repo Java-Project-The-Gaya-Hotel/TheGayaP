@@ -1,29 +1,45 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
-import {AuthorityCheck, GetMemberIdByToken} from "../../functiontocheck/FunctionToCheck";
+import {AuthorityCheck} from "../../functiontocheck/FunctionToCheck";
+
+
 
 //문의 게시글의 정보를 가진 컴포넌트
 function InquiryItem(props) {
+    // const styleColor = () =>{
+    //     if(props.data.inquiryStatus === "Y"){
+    //
+    //     }}
 
-    const [goNum, setGoNum] = useState();
-    const [title, setTitle] = useState();
-    const [status, setStatus] = useState();
-    const [inquiryId, setInquiryId] = useState();
-    const [memberId, setMemberId] = useState(props.memberId);
+    const [goNum, setGoNum] = useState(0);
+    const [title, setTitle] = useState("");
+    const [inquiryId, setInquiryId] = useState("");
+    const [memberId, setMemberId] = useState(props.memberInfo.memberId);
+    const [memberRole, setMemberRole] = useState(props.memberInfo.memberRole);
 
     // 문의글들이 불러와질때
     useEffect(() => {
+        setMemberId(props.memberInfo.memberId);
+        setMemberRole(props.memberInfo.memberRole);
         setGoNum(props.data.inquiryNum);
-        setStatus(props.data.inquiryStatus);
         setInquiryId(props.data.inquiryUserName);
-        // hidden 속성에 문의글과 유저아이디의 이름이 맞지않을시 비밀글 처리
-        if (props.data.inquiryHidden === "Y" && props.data.inquiryUserName !== memberId) {
-            setTitle("비밀글입니다.");
-        } else {
-            setTitle(props.data.inquiryTitle);
+
+        if (memberId != null) {
+            // hidden 속성에 문의글과 유저아이디의 이름이 맞지않을시 비밀글 처리
+            if (props.data.inquiryHidden === "Y" && props.data.inquiryUserName !== memberId) {
+                if (memberRole != "ADMIN") {
+                    setTitle("비밀글입니다.");
+                } else {
+                    setTitle(props.data.inquiryTitle);
+                }
+            } else {
+                setTitle(props.data.inquiryTitle);
+
+            }
 
         }
+
+
 
 
     }, []);
@@ -46,11 +62,11 @@ function InquiryItem(props) {
                         navi("/login")
                         //     만료가 아니면 상세글 페이지로 이동
                     } else {
-                        navi(`/qa/list/detail?idx=${goNum}&title=${title}&status=${status}`);
+                        navi(`/qa/list/detail?idx=${goNum}`);
                     }
                 }
             } else {
-                navi(`/qa/list/detail?idx=${goNum}&title=${title}&status=${status}`);
+                navi(`/qa/list/detail?idx=${goNum}`);
             }
         }
     }
@@ -60,13 +76,11 @@ function InquiryItem(props) {
 
         <tr key={props.data.inquiryNum} onClick={onClickHandler} style={{cursor: "pointer"}}>
             <td>{props.data.inquiryHotelName}</td>
-            <td>{title}</td>
-            <td>{inquiryId}</td>
+            <td className={"text-start"}>{title}</td>
+            <td>{inquiryId.replace(inquiryId.substring(3), '***')}</td>
             <td>{props.data.inquiryCreateDate}</td>
             <td>{props.data.inquiryStatus}</td>
         </tr>
-
-
     );
 }
 

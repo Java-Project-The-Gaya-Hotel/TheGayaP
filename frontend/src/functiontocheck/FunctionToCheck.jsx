@@ -51,7 +51,7 @@ function SessionCheck() {
         // 지금 시간
         const currentTime = moment.now();
         // 로그인한 시간보다 숫자 밀리초 만큼 차이가 날시 세션 만료 및 스토리지 초기화
-        if (currentTime - loginTime > 300000) {
+        if (currentTime - loginTime > 3600000) {
             sessionStorage.removeItem("token");
             sessionStorage.removeItem("loginInfo");
             alert("로그인이 만료 됐습니다.");

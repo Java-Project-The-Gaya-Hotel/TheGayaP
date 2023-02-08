@@ -1,9 +1,6 @@
 package com.gaya.thegayap.service;
 
-import com.gaya.thegayap.dto.JeongCustomerDto;
-import com.gaya.thegayap.dto.JeongHotelDto;
-import com.gaya.thegayap.dto.JeongMemberDto;
-import com.gaya.thegayap.dto.JeongResvDto;
+import com.gaya.thegayap.dto.*;
 
 import java.util.List;
 
@@ -21,4 +18,12 @@ public interface JeongService {
     String findId(String memberName, String memberEmail) throws Exception;
 
     List<JeongHotelDto> hotelList() throws Exception;
+
+    void insertInquiry(SinInquiryDto inquiryDto) throws Exception;
+
+    List<JeongResvDto> notMemberResv(String customerName, int reservationNum) throws Exception;
+
+    List<JeongMemberDto> inquiryUserInfo(String userName) throws Exception;
+
+    List<SinInquiryDto> inquiryDetail(int idx) throws Exception;
 }

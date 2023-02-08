@@ -1,15 +1,11 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Link, Outlet} from "react-router-dom";
-import InquiryHotelInfo from "./InquiryHotelInfo/InquiryHotelInfo";
-import InquiryList from "./inquiryListComp/InquiryList";
-import InquiryWrite from "./InquiryWriteComp/InquiryWrite";
 import "./InquiryMain.css"
 
 
-
-const styles={
-    borderLine:{
-        width:"250px"
+const styles = {
+    borderLine: {
+        width: "250px"
     }
 }
 
@@ -32,22 +28,20 @@ function InquiryMain() {
 
     return (
         <div className={"container"}>
-            <div className={"d-flex"}>
-                <div className={"col-3 my-3 "}>
+            <div className={"row"}>
+                <div className={"col-2"}>
                     <nav>
-                        <div >
-                            <h5>고객 문의</h5>
-                            <hr style={styles.borderLine}/>
-                            <div className="nav__list">
-                                <Link to={"/qa"} className="nav__link"><span>가야 호텔 Reward</span></Link>
-                                <Link to={"list"} className="nav__link"><span>문의 리스트</span></Link>
-                                <Link to={"write"} className="nav__link"><span>문의 작성</span></Link>
+                        <ul>
+                            <h4>고객문의</h4>
+                            <hr className={"border-0"}/>
+                            <div className={"container my-3"}>
+                                <li><Link to={"/qa"}>Gaya Reward</Link></li>
+                                <li><Link to={"list"}>문의 목록</Link></li>
                             </div>
-                        </div>
+                        </ul>
                     </nav>
-
                 </div>
-                <hr className={"vr m-3"}/>
+
                 <div className={"col-9"}>
                     <Outlet/>
                 </div>

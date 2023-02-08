@@ -1,7 +1,5 @@
 // Modal.js
-import React, {useState} from "react";
-import ModalStyle from "./ModalCss.css"
-import axios from "axios";
+import React from "react";
 
 
 function Modal(props) {
@@ -14,14 +12,11 @@ function Modal(props) {
     <div className={"Modal"}>
       <div className={"modalBody"}>
         <div>
-          <div className={"mb-4"}>
-            <h4><span></span>찾기</h4>
-            <button id={"modalCloseBtn"} onClick={closeModal}>
-              ✖
-            </button>
-          </div>
-          {props.children}
+          <button id={"modalCloseBtn"} onClick={closeModal}>
+            ✖
+          </button>
         </div>
+        {props.children}
       </div>
     </div>
   );

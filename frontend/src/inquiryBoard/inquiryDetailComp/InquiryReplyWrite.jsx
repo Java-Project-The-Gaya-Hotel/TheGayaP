@@ -1,20 +1,31 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 
 //게시글 작성 페이지
 function InquiryReplyWrite(props) {
-    const [userName, setUserName] = useState("suppoter")
+    const [userName, setUserName] = useState("")
     const [contents, setContents] = useState("");
-    const [isAdmin, setIsAdmin] = useState("Y");
-    const [qaNum, setQaNum] = useState();
+    const [isAdmin, setIsAdmin] = useState("N");
+    const [qaNum, setQaNum] = useState(props.qaNum);
 
     const changeContents = (e) => {
         setContents(e.target.value);
     }
 
+
+    useEffect(()=>{
+        if (props.data.memberRole == "ADMIN"){
+            setUserName("suppoter");
+            setIsAdmin('Y');
+        }else{
+            setUserName(props.data.memberId);
+        }
+
+
+    },[])
+
+
     const insertReply = () => {
-        const qaNum = props.qaNum;
-        setQaNum(qaNum);
 
         const body = {
 
@@ -36,15 +47,18 @@ function InquiryReplyWrite(props) {
     }
 
     return (
-        <div className={"chat_input_box bg-secondary col-6 mx-auto p-3 mt-5"}>
-            <div className={"border-bottom"}>
-                <p>{userName}</p>
-            </div>
-            <div className={"col-11 mx-auto mt-4"}>
-                <input className={"form-control"} style={{height: 150}} onChange={changeContents}/>
-            </div>
-            <div className={"d-flex justify-content-end mt-3"}>
-                <button className={"btn btn-warning"} onClick={insertReply}>작성 하기</button>
+        <div className={"container"}>
+            <div className={"chat_input_box"}>
+                <div>
+                    <div className={"h5 fw-bold"}>{userName}</div>
+                </div>
+                <hr/>
+                <div className={"col-11 mx-auto my-4"}>
+                    <input className={"form-control rounded-0"} style={{height: 150}} onChange={changeContents}/>
+                </div>
+                <div className={"d-flex justify-content-end mt-3"}>
+                    <button className={"custom-btn2 custBtn"} onClick={insertReply}>작성 하기</button>
+                </div>
             </div>
         </div>
     );

@@ -34,7 +34,7 @@ public class MemberController {
             TokenInfo tokenInfo = memberService.login(memberId, password);
             return tokenInfo;
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return null;
         }
     }

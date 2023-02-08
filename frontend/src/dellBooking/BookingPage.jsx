@@ -1,6 +1,4 @@
 import React from "react";
-import RoutesLayout from "../dellMain/RoutesLayout";
-import MainFooter from "../dellMain/MainFooter";
 import "../dellBooking/dellBookingCss/BreadCrumb.css"
 // import 'animate.css'
 import BookingAccordion from "./BookingAccordion";
@@ -34,7 +32,6 @@ function BookingPage() {
                         <ol className="cd-multi-steps text-top">
                             <li className={"current fw-bold"}><a> Reservation Condition </a></li>
                             <li><em>Room Condition</em></li>
-                            <li><em>Find Room </em></li>
                             <li><em>Payment Information</em></li>
                         </ol>
                     </nav>

@@ -29,6 +29,9 @@ public class MemberTable {
     @Column(nullable = false)
     private String memberRole;
 
+    @Column(nullable = false)
+    private String memberDeletedYn;
+
 
 
 }

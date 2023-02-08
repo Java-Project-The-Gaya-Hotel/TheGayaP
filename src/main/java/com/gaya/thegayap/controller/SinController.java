@@ -1,15 +1,15 @@
 package com.gaya.thegayap.controller;
 
 import com.gaya.thegayap.dto.*;
+import com.gaya.thegayap.service.JeongService;
+import com.gaya.thegayap.service.JeongServiceImpl;
 import com.gaya.thegayap.service.SinService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -19,6 +19,8 @@ public class SinController {
 
 
     private final SinService sinService;
+
+    private final JeongService jeongService;
 
 
     //임시 db 입력 코드 시작
@@ -31,7 +33,19 @@ public class SinController {
     }
 
 
-    //    호텔 이름 가져오기
+
+
+
+    //임시 db 입력 코드 종료
+
+
+
+
+
+    /**
+     * 호텔 이름 가져오는 컨트롤러
+     * @return
+     */
     @GetMapping("/hotelname")
     public List<String> getHotel() {
         List<String> hotelName = sinService.getHotelName();
@@ -39,28 +53,16 @@ public class SinController {
         return hotelName;
     }
 
-    //    문의 게시판 글 리스트 가져오기
-    @GetMapping("/inquirylist")
-    public List<SinInquiryDto> getQAList() {
-
-        List<SinInquiryDto> inquiryList = sinService.getQAList();
-
-        return inquiryList;
-    }
-
-    //임시 db 입력 코드 종료
-
-
     /**
      * 체크인 체크아웃 날짜를 받아 해당 날짜에 미예약 방 리스트를 뿌려주는 컨트롤러
-     * @param hotelName 호텔이름
+     * @param hotelNum 호텔의 DB번호
      * @param sDate 체크인 날짜
      * @param eDate 체크아웃 날짜
-     * @param count 인원 수
+     * @param adultCount 인원 수
      * @return
      */
     @GetMapping("/roomlist")
-    public List<SinRoomDto> roomList(@RequestParam("hotelName") String hotelName, @RequestParam("sDate") String sDate, @RequestParam("eDate") String eDate, @RequestParam("count") String count) {
+    public List<SinRoomDto> roomList(@RequestParam("hotelNum") int hotelNum, @RequestParam("sDate") String sDate, @RequestParam("eDate") String eDate, @RequestParam("adultCount") int adultCount) {
 //        어떠한 정보들이 넘어오겠는가
 //        예약하려는 호텔/ 체크인시간/ 체크아웃시간/ 몇박/ 인원수
 
@@ -68,11 +70,8 @@ public class SinController {
 
         try {
 
-//            String hotelName = "서울가야호텔";
-//            String sDate = "2023-01-31";
-//            String eDate = "2023-02-05";
 
-            List<SinRoomDto> ableRoomList = sinService.checkRoomList(hotelName, sDate, eDate);
+            List<SinRoomDto> ableRoomList = sinService.checkRoomList(hotelNum, sDate, eDate,adultCount);
 
             return ableRoomList;
 
@@ -91,22 +90,25 @@ public class SinController {
 
 
 
-//    @RequestParam("roomCode") String roomCode
-    /**
-     * 방 코드를 받아 가격 정보를 보내주는 컨트롤러
-     * @param //roomCode  방의 코드
-     * @return SInRoomCostDto 타입으로 리턴
-     */
-    @GetMapping("/checkCost")
-    public SInRoomCostDto getRoomCost(){
 
-        String roomCode="stay-v09vu";
-        return sinService.getRoomCost(roomCode);
+    /**
+     * 호텔 번호 코드를 받아 가격 정보를 보내주는 컨트롤러
+     * @param hotelNum  호텔 번호
+     * @return MealCostDto 타입으로 리턴
+     */
+    @GetMapping("/checkmealcost")
+    public MealCostDto getMealCost(@RequestParam ("hotelNum")int hotelNum){
+
+
+        return sinService.getMealCost(hotelNum);
     }
 
 
-    // 방 예약 코드
-    @PostMapping("/bookRoom")
+    /**
+     * 방 예약 컨트롤러
+     * @param sinReservDto
+     */
+    @PostMapping("/bookroom")
     public void bookRoom(@RequestBody SinReservDto sinReservDto) {
 
 //        DB에 필요한 정보
@@ -121,34 +123,6 @@ public class SinController {
 //        옵션사항: 회원일시 아이디/ 조식옵션/
 
 //        System.currentTimeMillis() = 예약 번호 생성을 위한 1/1000초 생성
-
-//        백엔드가 진행해야할 정보
-//        예약번호 생성
-
-
-//        변수 지정
-
-
-//        long reservationNum = System.currentTimeMillis();
-//        int hotelNum = 1;
-//        String roomCode = "hotel-cKHEX";
-//        String customerName = "테스터1";
-//        String customerId = "test1";
-//        String checkIn = "2023-01-26";
-//        String checkOut = "2023-01-28";
-//        String reservationTime = "2023-01-04 22:23:00";
-//        int nights = 3;
-//        int breakfastAdultNum = 1;
-//        int breakfastChildNum = 1;
-//        int peopleAdultNum = 2;
-//        int peopleChildNum = 1;
-//        int reservationPeople = 3;
-//        int totalCost = 498550;
-//        String reservationRequest = "방 주세요";
-
-//        SinReservDto sinReservDto;
-
-//        sinReservDto = new SinReservDto(reservationNum, hotelNum, roomCode, customerName, customerId, checkIn, checkOut, reservationTime, nights, breakfastAdultNum, breakfastChildNum, peopleAdultNum, peopleChildNum, totalCost, reservationPeople, reservationRequest);
 
         sinService.reservationRoom(sinReservDto);
 
@@ -182,6 +156,18 @@ public class SinController {
     }
 
 
+    /**
+     * 문의 게시판 리스트 가져오는 컨트롤러
+     * @return
+     */
+    @GetMapping("/inquirylist")
+    public List<SinInquiryDto> getQAList() {
+
+        List<SinInquiryDto> inquiryList = sinService.getQAList();
+
+        return inquiryList;
+    }
+
     //  QA 답글 Insert
 
     /**
@@ -202,6 +188,9 @@ public class SinController {
         }
     }
 
-
+    @GetMapping("/userinfo")
+    public JeongMemberDto getUserInfo(@RequestParam ("memberId")String memberId) throws Exception {
+        return jeongService.profile(memberId);
+    }
 
 }

@@ -1,11 +1,7 @@
 package com.gaya.thegayap.controller;
 
 
-import com.gaya.thegayap.configuration.SecurityConfig;
-import com.gaya.thegayap.dto.JeongCustomerDto;
-import com.gaya.thegayap.dto.JeongHotelDto;
-import com.gaya.thegayap.dto.JeongMemberDto;
-import com.gaya.thegayap.dto.JeongResvDto;
+import com.gaya.thegayap.dto.*;
 import com.gaya.thegayap.service.JeongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -128,16 +124,63 @@ public class JeongController {
     @GetMapping("/login/findId")
     public String findId(@RequestParam("memberName") String memberName, @RequestParam("memberEmail") String memberEmail) throws Exception {
 
-        System.out.println(memberEmail);
         String result = jeongService.findId(memberName, memberEmail);
         return result;
     }
 
+    /**
+     * 고객이름과 예약번호로 예약 정보를 조회하는 컨트롤러
+     * @param customerName 고객이름
+     * @param reservationNum 예약번호
+     * @return 예약 정보
+     * @throws Exception
+     */
+    @GetMapping("/login/findResv")
+    public Object notMemberResvList(@RequestParam("customerName") String customerName, @RequestParam("reservationNum") int reservationNum) throws Exception {
+        List<JeongResvDto> notMemberResvList = jeongService.notMemberResv(customerName, reservationNum);
+
+        if (notMemberResvList.isEmpty()) return 0;
+
+        return notMemberResvList;
+    }
+
+//     호텔리스트 불러오기
     @GetMapping("/gaya/hotelList")
     public Object getHotelList() throws Exception {
         List<JeongHotelDto> hotelDto = jeongService.hotelList();
 
         return hotelDto;
+    }
+
+//    문의
+    // 문의 작성
+    @PostMapping("/qa/write")
+    public void writeInquiry(@RequestBody SinInquiryDto inquiryDto) throws Exception {
+
+        jeongService.insertInquiry(inquiryDto);
+    }
+
+    
+    // 문의 작성 유저정보 불러오기
+    @GetMapping("/qa/writeUser")
+    public Object inquiryUser(@RequestParam("userName") String userName) throws Exception {
+        List<JeongMemberDto> userInfo = jeongService.inquiryUserInfo(userName);
+
+        return userInfo;
+    }
+
+
+    /**
+     * 문의 상세페이지 정보 불러오는 컨트롤러
+     * @param idx 글번호
+     * @return inquiryDto
+     * @throws Exception
+     */
+    @GetMapping("/qa/getDetail")
+    public Object inquiryDetail(@RequestParam("idx") int idx) throws Exception {
+        List<SinInquiryDto> inquiryDto = jeongService.inquiryDetail(idx);
+
+        return inquiryDto;
     }
 
 }
