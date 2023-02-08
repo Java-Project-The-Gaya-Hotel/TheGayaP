@@ -1,7 +1,8 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import "./Join.css"
-import axios, {request} from "axios";
+import axios from "axios";
 import button from "bootstrap/js/src/button";
+import {ReactNode} from "react";
 
 
 function FootButton(props: { disabled: boolean, type: string, footButtonType: *, children: ReactNode }) {

@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import 'animate.css';
 import styled from 'styled-components'
 import "../dellMain/dellmainCss/BtnDateChoose.css"
-import {forEach} from "react-bootstrap/ElementChildren";
 
 //stay, hotel component 명명 위해 나눠둠.
 const HotelArea = styled.div`

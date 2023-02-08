@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import MypageNav from "./MypageNav";
-import {Outlet, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {AuthorityCheck, GetMemberIdByToken, SessionCheck} from "../functiontocheck/FunctionToCheck";
 import axios from "axios";
 
