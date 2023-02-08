@@ -34,7 +34,6 @@ function BookingPage() {
                         <ol className="cd-multi-steps text-top">
                             <li className={"current fw-bold"}><a> Reservation Condition </a></li>
                             <li><em>Room Condition</em></li>
-                            <li><em>Find Room </em></li>
                             <li><em>Payment Information</em></li>
                         </ol>
                     </nav>

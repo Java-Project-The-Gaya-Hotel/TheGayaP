@@ -37,7 +37,6 @@ transition:0.5s
 color:dark;
 border:1px solid black;
 }
-
 `
 
 function BookingAccordion() {
@@ -150,7 +149,7 @@ function BookingAccordion() {
         if (hotelName != null && hotelName !== "") {
             navigate(`/reservroom?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}&hotelNum=${hotelNum}`)
         } else {
-            alert("호텔을 선택해 주세요.")
+            Swal.fire('숙박할 호텔을 지정해 주세요.')
         }
 
     };
@@ -244,8 +243,7 @@ function BookingAccordion() {
                                     <div className={"row justify-content-center"}>
                                         {hotelList.map((item) => {
                                                 return (
-                                                    <InputBox key={item.hotelNum}  className={"text-center form-control rounded-0 m-3"} value={item.hotelName} name={item.hotelNum} readOnly={true}
-                                                              onClick={onBtnClick}/>
+                                                    <InputBox key={item.hotelNum}  className={"text-center form-control rounded-0 m-3"} value={item.hotelName} name={item.hotelNum} readOnly={true} onClick={onBtnClick}/>
                                                 );
                                             }
                                         )

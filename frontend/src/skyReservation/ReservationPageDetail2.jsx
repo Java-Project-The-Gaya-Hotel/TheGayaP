@@ -203,10 +203,19 @@ function ReservationPageDetail2() {
 
     const style = {
         boxSize: {
-            width: "300px"
+            width: "300px",
+            height: "30px"
         },
         boxSizePh: {
-            width: "238px"
+            width: "220px",
+            height: "30px"
+        },
+        selectSize:{
+            width: "50px",
+            height: "30px"
+        },
+        formBoxSize:{
+            width: "300px"
         }
     }
 
@@ -355,7 +364,7 @@ function ReservationPageDetail2() {
     return (
         <div>
             {/*main*/}
-            <div className={"container"}>
+            <div className={"container "}>
                 {/*breadcrumb*/}
                 <CrumbAni>
                     <section>
@@ -363,7 +372,6 @@ function ReservationPageDetail2() {
                             <ol className="cd-multi-steps text-top">
                                 <li className={"visited fw-lighter"}><em> Booking Condition </em></li>
                                 <li className={"visited fw-lighter"}><em> Room Condition</em></li>
-                                <li className={"visited fw-lighter"}><em> Find Room </em></li>
                                 <li className={"current fw-bold"}>
                                     <div> Payment Information</div>
                                 </li>
@@ -399,22 +407,22 @@ function ReservationPageDetail2() {
 
                                         <tr>
                                             <td><em className="ast">*</em> 이름 :</td>
-                                            <td><input onChange={onNameHandler} style={style.boxSize} type={"text"} className={"id"} autoComplete={"off"} placeholder={"Please Input Your Name"} value={customerName}/>
+                                            <td><input onChange={onNameHandler} style={style.boxSize} type={"text"} className={"id form-control rounded-0"} autoComplete={"off"} placeholder={"Please Input Your Name"} value={customerName}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><em className="ast">*</em> 이메일 :</td>
-                                            <td><input onChange={onEmailHandler} style={style.boxSize} type={"email"} placeholder={"Please Input Your Email"} value={customerEmail}/>
+                                            <td><input onChange={onEmailHandler} style={style.boxSize} type={"email"} className={"form-control rounded-0"} placeholder={"Please Input Your Email"} value={customerEmail}/>
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <td><em className="ast">*</em> 전화번호 :</td>
-                                            <td>
-                                                <select>
+                                            <td><div className={"row"}>
+                                                <select className={"col-2 mx-2"}  >
                                                     <option value="+82" title="+82">+82</option>
                                                 </select>
-                                                <input style={style.boxSizePh} className={"mx-2"} value={customerTel} placeholder={"Please Input Your Phone Number"} onChange={onNumHandler}/></td>
+                                                <input style={style.boxSizePh} className={"col-9 form-control rounded-0"} value={customerTel} placeholder={"Please Input Your Phone Number"} onChange={onNumHandler}/></div></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -491,7 +499,7 @@ function ReservationPageDetail2() {
                                         }
                                         <tr>
                                             <td>요청 사항 :</td>
-                                            <td><textarea onChange={(e) => {
+                                            <td><textarea className={"form-control rounded-0 small"} style={style.boxSize}  onChange={(e) => {
                                                 setReservationRequest(e.target.value)
                                             }
                                             }></textarea></td>
@@ -505,7 +513,7 @@ function ReservationPageDetail2() {
                                     <button onClick={onClickPayment} className={"btnDate"} role={"button"}><span
                                         className="text">결제하기</span>Payment
                                     </button>
-                                    <button onClick={reservButton}>임시 버튼</button>
+                                    {/*<button onClick={reservButton}>임시 버튼</button>*/}
                                 </div>
                             </div>
 
