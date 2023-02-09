@@ -64,12 +64,12 @@ function Join(props) {
     },[])
 
     const onNameHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const nameRegex =  /^(?=.*[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{2,5}$/
+        const nameRegex =  /^(?=.*[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|a-z|A-Z]).{2,10}$/
         const nameCurrent = e.target.value
         setName(nameCurrent)
 
         if (!nameRegex.test(nameCurrent)) {
-            setNameMes('')
+            setNameMes('올바른 이름을 입력해주세요')
             setIsName(false)
         } else {
             setNameMes('')
