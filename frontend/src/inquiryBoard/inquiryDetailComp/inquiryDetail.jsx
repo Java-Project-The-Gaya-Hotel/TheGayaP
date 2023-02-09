@@ -18,8 +18,8 @@ function InquiryDetail() {
     const [memberInfo, setMemberInfo] = useState([]);
     const navi = useNavigate();
 
-    const [memberId, setMemberId] = useState("");
-    const [memberRole, setMemberRole] = useState("");
+    const [memberId, setMemberId] = useState();
+    const [memberRole, setMemberRole] = useState();
     const [inquiryCategory, setInquiryCategory] = useState("");
     const [hotelName, setHotelName] = useState("");
     const [inquiryTitle, setInquiryTitle] = useState("");
@@ -30,17 +30,20 @@ function InquiryDetail() {
     const [inquiryStatus, setInquiryStatus] = useState("");
 
 
-    // 유저 정보 가져오기
-    const getMemberInfo = async ()=> {
-        const syncMemberId = await GetMemberIdByToken()
-        const syncMemberIdParam = syncMemberId.data
-        const syncMemberInfo = await axios.get("http://localhost:8080/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
-        setMemberInfo(syncMemberInfo.data);
-        setMemberId(memberInfo.memberId);
-        setMemberRole(memberInfo.memberRole);
-
-
-    }
+    // // 유저 정보 가져오기
+    // const getMemberInfo = async () => {
+    //     const syncMemberId = await GetMemberIdByToken()
+    //     const syncMemberIdParam = syncMemberId.data
+    //         setMemberId(syncMemberIdParam);
+    //     const syncMemberInfo = await axios.get("http://localhost:8080/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
+    //         console.log(syncMemberInfo);
+    //
+    //
+    //     console.log("유저 인포 셋타이밍");
+    //         setMemberInfo(syncMemberInfo.data);
+    //         setMemberRole(memberInfo.memberRole);
+    //
+    // }
 
     // 문의 상세 데이터 가져오기
     const getInquiryDetailData = async () => {
@@ -61,12 +64,13 @@ function InquiryDetail() {
             }
         })
         setQaDetailData(syncInquiryDetail.data);
+        console.log("QA디테일 셋");
 
     }
 
 
     // 글 상세 페이지 들어올시 발동
-    useEffect(() => {
+    useEffect( () => {
         // 세션이 유효한지 확인
         SessionCheck();
 
@@ -85,14 +89,41 @@ function InquiryDetail() {
                 )
 
             } else {
-                getMemberInfo();
+
+                const getMemberInfo = async () => {
+                    const syncMemberId = await GetMemberIdByToken()
+                    const syncMemberIdParam = syncMemberId.data
+                    setMemberId(syncMemberIdParam);
+                    console.log("멤버아이디 셋타이밍:" + memberId);
+                    const syncMemberInfo = await axios.get("http://localhost:8080/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
+                    console.log(syncMemberInfo);
+
+
+                    console.log("유저 인포 셋타이밍");
+                    setMemberInfo(syncMemberInfo.data);
+                    setMemberRole(memberInfo.memberRole);
+
+                }
+
+
+                 getMemberInfo()
+
+
+                // getMemberInfo();
+                // setMemberRole(memberInfo.memberRole);
+        console.log(memberRole);
+        console.log("useEffect 셋 타이밍");
             }
         }
-                getInquiryDetailData();
-        console.log(memberRole);
+        getInquiryDetailData();
+        console.log("useEffect 타이밍");
 
 
     }, [])
+
+    // useEffect( ()=>{
+    //
+    // },[memberRole])
 
 
     return (
@@ -148,8 +179,8 @@ function InquiryDetail() {
                 </div>
             </div>
             {
-                memberInfo.length == 0 ? null : inquiryStatus == "답변완료" ?   null : inquiryUserName != memberId ? null: memberRole != "ADMIN" ? null:
-                        <InquiryReplyWrite qaNum={userParam.get('idx')} data={memberInfo} status={inquiryStatus}/>
+                memberInfo.length == 0 ? null : inquiryStatus == "답변완료" ? null : inquiryUserName != memberId ? null : memberRole != "ADMIN" ? null :
+                    <InquiryReplyWrite qaNum={userParam.get('idx')} data={memberInfo} status={inquiryStatus}/>
             }
         </div>
     );
