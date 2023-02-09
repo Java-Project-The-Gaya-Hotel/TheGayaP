@@ -77,7 +77,7 @@ function Join(props) {
     }, [])
 
     const onNumberHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const numberRegex = /^[0-9-]*$/;
+        const numberRegex = /^([0-9]{3})-?([0-9]{4})-?([0-9]{4})$/;
         const numberCurrent = e.target.value;
         setNumber(numberCurrent);
 
@@ -88,7 +88,7 @@ function Join(props) {
             setNumberMes("")
             setIsNumber(true)
         }
-    }, [number])
+    }, [])
     // const onEmailHandler = (e) => {
     //     setEmail(e.target.value)
     // }
@@ -106,6 +106,14 @@ function Join(props) {
             setIsId(true)
         }
     },[])
+
+    useEffect(() => {
+
+        if (number.length === 11) {
+            setNumber(number.replace(/-/g, '').replace(/^(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
+        }
+    }, [number]);
+
 
     const onPasswordHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) =>{
             const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,25}$/
@@ -225,23 +233,7 @@ function Join(props) {
         }
     }
 
-    const handlePress = (e) => {
-        const regex = /^[0-9\b -]{0,13}$/;
-        if (regex.test(e.target.value)) {
-            setNumber(e.target.value);
-        }
-    }
 
-    useEffect(() => {
-
-
-        if (number.length === 10) {
-            setNumber(number.replace(/^(\d{2,3})(\d{3,4})(\d{4})/, '$1-$2-$3'));
-        }
-        if (number.length === 13) {
-            setNumber(number.replace(/-/g, '').replace(/^(\d{0,3})(\d{0,4})(\d{0,4})/, '$1-$2-$3'));
-        }
-    }, [number]);
 
 
     return (
