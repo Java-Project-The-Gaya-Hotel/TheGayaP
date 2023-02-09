@@ -1,7 +1,7 @@
 // FindId.jsx
 import React, {useState} from "react";
 import axios from "axios";
-import Modal from "./Modal";
+import Modal from "./Modal"
 
 
 function FindId(props) {
@@ -41,7 +41,6 @@ function FindId(props) {
 
 
 
-
   return (
       <div>
         {isFind ?
@@ -60,11 +59,7 @@ function FindId(props) {
                 <button id={"sendMail"} className={"form-label col-sm-4 my-auto"}>이메일 전송</button>
 
               </div>
-              <div className={"row mb-1 me-2"}>
 
-                <input type={"text"} className={"form-control col-sm"}/>
-                <button id={"userBtn"} className={"form-label col-sm-3 my-auto"}>인증 확인</button>
-              </div>
 
 
               <button className={"btn btn-primary mt-3"} onClick={findIdBtn}>확인</button>
