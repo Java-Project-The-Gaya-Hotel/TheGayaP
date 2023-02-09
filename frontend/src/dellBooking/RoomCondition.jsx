@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import 'animate.css';
 import styled from 'styled-components'
 import "../dellMain/dellmainCss/BtnDateChoose.css"
+import RoomCompareModal from "./RoomCompareModal";
 
 //stay, hotel component 명명 위해 나눠둠.
 const HotelArea = styled.div`
@@ -44,6 +45,7 @@ function RoomCondition(props) {
     const [chooseRoomWeekendCost, setChooseRoomWeekendCost] = useState(0);
     // 추후삭제
     const [roomCostDetail, setRoomCostDetail] = useState("");
+    const [modalOpen,setModalOpen]= useState(false);
 
     const roomCode = data.roomCode;
     const codeCall = roomCode.startsWith('hotel')
@@ -103,7 +105,7 @@ function RoomCondition(props) {
         });
         weekDayCost = (chooseRoomCost * weekDay);
         weekEndCost = (chooseRoomWeekendCost * weekEnd);
-        overAdultLimit = 20000 * (adultCount - 2);
+        overAdultLimit = 60000 * (adultCount - 2);
         // 어른 인원수가 2명이상일시 2만원 추가요금 계산
         if (adultCount > 2) {
             setCostSum((weekDayCost + weekEndCost) + overAdultLimit);
@@ -111,6 +113,7 @@ function RoomCondition(props) {
             setCostSum(weekDayCost + weekEndCost);
         }
 
+        // 추후삭제
         setRoomCostDetail(`주중 ${checkWeekDay} 박 요금 = ${weekDayCost} 주말 ${checkWeekEnd} 박 요금 = ${weekEndCost}`)
     }, [chooseRoomCost]);
 // -------------------------------------------------------------
@@ -127,6 +130,13 @@ function RoomCondition(props) {
     };
 
 
+    // 방 비교 담기
+    const roomCompareList = () =>{
+        if (sessionStorage.getItem("room1") )
+
+        sessionStorage.setItem(data.roomCode,JSON.stringify(data))
+    }
+
     return (
 
         <div>
@@ -136,9 +146,12 @@ function RoomCondition(props) {
                 <div className={"col"}><img src={`${data.roomImgUrl}`}/></div>
                 <div className={"col"}><img src={`${data.roomInfo}`}/></div>
                 <div className={"col"}>
-                    <button className={"btnDate"} role={"button"} onClick={() => setCOpen(!cOpen)}
+                    <button className={"btnDate mb-3"} role={"button"} onClick={() => setCOpen(!cOpen)}
                             aria-controls="example-collapse-text" aria-expanded={cOpen}><span
                         className="text">객실 찾기</span> Find Room
+                    </button>
+                    <button className={"btnDate"} role={"button"} onClick={roomCompareList}><span
+                        className="text">객실 비교</span> Compare Room
                     </button>
                 </div>
             </div>

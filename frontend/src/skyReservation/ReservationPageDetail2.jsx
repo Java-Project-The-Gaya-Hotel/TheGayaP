@@ -4,6 +4,7 @@ import {useLocation} from "react-router-dom";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 import {GetMemberIdByToken} from "../functiontocheck/FunctionToCheck";
+import {tr} from "date-fns/locale";
 
 
 const CrumbAni = styled.div`
@@ -38,6 +39,7 @@ function ReservationPageDetail2() {
     const costSum = searchParams.get('costSum')
     const nights = searchParams.get('nights');
     const roomName = searchParams.get("roomName");
+    const [customerData, setCustomerData] = useState([]);
     const [customerName, setCustomerName] = useState("");
     const [customerEmail, setCustomerEmail] = useState("");
     const [customerTel, setCustomerTel] = useState("");
@@ -52,6 +54,7 @@ function ReservationPageDetail2() {
     const [memberId, setMemberId] = useState("");
     const [reservationRequest, setReservationRequest] = useState("");
     const [memberTier, setMemberTier] = useState("");
+    const [reRender, setReRender] = useState(false);
 
 
     useEffect(() => {
@@ -64,13 +67,18 @@ function ReservationPageDetail2() {
                     params: {
                         memberId: response.data,
                     }
-                }).then(res => {
+                }).then(async (res) => {
                     const user = res.data;
-                    console.log(user);
+
+
+                    setCustomerData(user);
                     setCustomerName(user.memberName);
                     setCustomerEmail(user.memberEmail);
                     setCustomerTel(user.memberTel);
-                    setMemberTier(user.memberTier);
+                    setMemberTier(customerData.memberTier);
+                    // await setReRender(true);
+
+
                 })
             }).catch(e => {
                 setMemberId("");
@@ -89,8 +97,8 @@ function ReservationPageDetail2() {
             }).catch(e => {
             console.log(e);
         })
-
         setTotalCostSum(costSum);
+
         const jquery = document.createElement("script");
         jquery.src = "https://code.jquery.com/jquery-1.12.4.min.js";
         const iamport = document.createElement("script");
@@ -101,28 +109,40 @@ function ReservationPageDetail2() {
             document.head.removeChild(jquery);
             document.head.removeChild(iamport);
         }
+
+
     }, []);
+
+
 
     // 멤버쉽에 따른 할인율 적용
     useEffect(() => {
+        setMemberTier(customerData.memberTier);
         let cost = Number(totalCostSum);
         let discountCost;
 
         setCostComma(cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+
         if (memberTier == "GOLD") {
-            discountCost = Math.floor(cost * 0.9);
+            discountCost = Math.floor(cost * 0.90);
+
         } else if (memberTier == "PLATINUM") {
             discountCost = Math.floor(cost * 0.85);
         } else if (memberTier == "BLACK") {
-            discountCost = Math.floor(cost * 0.8);
+            discountCost = Math.floor(cost * 0.80);
+        } else if (memberTier == "PREMIER") {
+            discountCost = Math.floor(cost * 0.95);
         } else {
             discountCost = Math.floor(cost * 0.95);
         }
 
+
         setMemberTotalCostSum(discountCost);
         setDiscountCostComma(discountCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
 
-    }, [totalCostSum])
+
+
+    }, [{memberTier,totalCostSum}])
 
 
     const onClickPayment = () => {
@@ -221,11 +241,11 @@ function ReservationPageDetail2() {
             width: "220px",
             height: "30px"
         },
-        selectSize:{
+        selectSize: {
             width: "50px",
             height: "30px"
         },
-        formBoxSize:{
+        formBoxSize: {
             width: "300px"
         }
     }
@@ -243,12 +263,12 @@ function ReservationPageDetail2() {
 
 
     useEffect(() => {
-        if (customerTel.length === 10) {
-            setCustomerTel(customerTel.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
-        }
-        if (customerTel.length === 13) {
-            setCustomerTel(customerTel.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
-        }
+
+        // if (customerTel.length === 13) {
+        //     setCustomerTel(customerTel.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
+        // }else{
+        //
+        // }
     }, [customerTel]);
 
     // 조식 변경에 따른 총 가격 변경 useEffect
@@ -369,22 +389,32 @@ function ReservationPageDetail2() {
 
                                         <tr>
                                             <td><em className="ast">*</em> 이름 :</td>
-                                            <td><input onChange={onNameHandler} style={style.boxSize} type={"text"} className={"id form-control rounded-0"} autoComplete={"off"} placeholder={"Please Input Your Name"} value={customerName}/>
+                                            <td><input onChange={onNameHandler} style={style.boxSize} type={"text"}
+                                                       className={"id form-control rounded-0"} autoComplete={"off"}
+                                                       placeholder={"Please Input Your Name"} value={customerName}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><em className="ast">*</em> 이메일 :</td>
-                                            <td><input onChange={onEmailHandler} style={style.boxSize} type={"email"} className={"form-control rounded-0"} placeholder={"Please Input Your Email"} value={customerEmail}/>
+                                            <td><input onChange={onEmailHandler} style={style.boxSize} type={"email"}
+                                                       className={"form-control rounded-0"}
+                                                       placeholder={"Please Input Your Email"} value={customerEmail}/>
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <td><em className="ast">*</em> 전화번호 :</td>
-                                            <td><div className={"row"}>
-                                                <select className={"col-2 mx-2"}  >
-                                                    <option value="+82" title="+82">+82</option>
-                                                </select>
-                                                <input style={style.boxSizePh} className={"col-9 form-control rounded-0"} value={customerTel} placeholder={"Please Input Your Phone Number"} onChange={onNumHandler}/></div></td>
+                                            <td>
+                                                <div className={"row"}>
+                                                    <select className={"col-2 mx-2"}>
+                                                        <option value="+82" title="+82">+82</option>
+                                                    </select>
+                                                    <input style={style.boxSizePh}
+                                                           className={"col-9 form-control rounded-0"}
+                                                           value={customerTel}
+                                                           placeholder={"Please Input Your Phone Number"}
+                                                           onChange={onNumHandler}/></div>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -471,7 +501,8 @@ function ReservationPageDetail2() {
                                         }
                                         <tr>
                                             <td>요청 사항 :</td>
-                                            <td><textarea className={"form-control rounded-0 small"} style={style.boxSize}  onChange={(e) => {
+                                            <td><textarea className={"form-control rounded-0 small"}
+                                                          style={style.boxSize} onChange={(e) => {
                                                 setReservationRequest(e.target.value)
                                             }
                                             }></textarea></td>
