@@ -42,7 +42,6 @@ function FindId(props) {
 
 
 
-
   return (
       <div className={"container"}>
         {isFind ?

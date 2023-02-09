@@ -3,6 +3,7 @@ import LoginBody from "./loginComp/LoginBody";
 import 'animate.css'
 import styled from "styled-components";
 
+
 const CompHead = styled.div`
 font-size: 19px
 `;
