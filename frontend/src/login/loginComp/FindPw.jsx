@@ -42,7 +42,6 @@ function FindId(props) {
 
 
 
-
   return (
       <div className={"container"}>
         {isFind ?
@@ -54,19 +53,17 @@ function FindId(props) {
               </div>
 
               <div className={"row mb-1 me-2"}>
-                <label className={"form-label col-sm-3 my-auto fw-bold"} htmlFor={"email"}>이메일</label>
-                <input className={"form-control rounded-0 col-sm m-2 "} type={"email"} id={"email"} onChange={(e) => {setEmail(e.target.value)}}/>
-                <button id={"sendMail"} className={"form-label col-sm-3 my-auto rounded-0 custom-btn3 btn-Login"}>이메일 전송</button>
-              </div>
+                <label className={"form-label col-sm-3 my-auto"} htmlFor={"email"}><b>이메일</b></label>
+                <input className={"form-control col-sm"} type={"email"} id={"email"} onChange={(e) => {
+                  setEmail(e.target.value)
+                }}/>
+                <button id={"sendMail"} className={"form-label col-sm-4 my-auto"}>이메일 전송</button>
 
-              <div className={"row mb-1 me-2"}>
-                <label className={"form-label col-sm-3 my-auto fw-bold"}> 인증 확인 </label>
-                <input type={"text"} className={"form-control rounded-0 col-sm m-2"}/>
-                <button id={"userBtn"} className={"form-label col-sm-3 my-auto rounded-0 custom-btn3 btn-Login"}>인증 확인</button>
               </div>
 
 
-              <button className={"mt-3 rounded-0 custom-btn3 btn-Login"} onClick={findIdBtn}>확인</button>
+
+              <button className={"btn btn-primary mt-3"} onClick={findIdBtn}>확인</button>
             </div> :
             <div>
               {isMemberPw ?
