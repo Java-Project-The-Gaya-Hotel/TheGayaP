@@ -298,7 +298,7 @@
 }
 .react-datepicker__month--disabled:hover,
 .react-datepicker__quarter--disabled:hover {
-    cursor: default;
+    cursor: pointer;
     background-color: transparent;
 }
 
@@ -591,4 +591,11 @@
     padding: 0;
     width: 1px;
     white-space: nowrap;
+}
+
+.react-datepicker__day,
+.react-datepicker__month-text,
+.react-datepicker__quarter-text,
+.react-datepicker__year-text {
+    cursor: pointer;
 }

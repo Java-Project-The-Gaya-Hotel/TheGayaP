@@ -27,8 +27,7 @@ function MyPageMemberOff() {
                         }
                     }
                 ).then(response => {
-                    setMemberId(response.data.memberId)
-                    setMemberPw(response.data.memberPw)
+                    setMemberId(response.data.memberId);
                     console.log(memberId)
 
                 })

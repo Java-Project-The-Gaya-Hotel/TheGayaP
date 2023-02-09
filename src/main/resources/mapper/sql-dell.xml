@@ -29,9 +29,9 @@
     </update>
 
     <!-- 내 문의 내역 조회 -->
-    <select id="myqalistable" parameterType="String" resultType="com.gaya.thegayap.dto.SinInquiryDto">
+    <select id="myQaList" parameterType="String" resultType="com.gaya.thegayap.dto.SinInquiryDto">
         select *
         from inquiry_table
-        where inquiry_user_name
+        where inquiry_user_email=#{memberEmail}
     </select>
 </mapper>

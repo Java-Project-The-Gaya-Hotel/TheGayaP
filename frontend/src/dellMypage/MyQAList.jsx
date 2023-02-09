@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {AuthorityCheck, GetMemberIdByToken, SessionCheck} from "../functiontocheck/FunctionToCheck";
 import axios from "axios";
 
 
-
 function MyQAList() {
     const [customerId, setCustomerId] = useState("");
-    const [checkListTable, setCheckListTable] = useState([]);
+    const [checkQAList, setCheckQAList] = useState([]);
 
     const navi = useNavigate();
+
 
     useEffect(() => {
         SessionCheck();
@@ -20,21 +20,20 @@ function MyQAList() {
             GetMemberIdByToken().then(response => {
                 setCustomerId(response.data)
                 axios.get(
-                    "http://localhost:8080/mypage/",
+                    "http://localhost:8080/mypage/myqalist",
                     {
                         params: {
-                            customerId: response.data,
+                            memberId: response.data,
                         }
                     }
                 ).then(response => {
-                    console.log(response.data);
-                    setCheckListTable(response.data)
-
+                    setCheckQAList(response.data)
                 })
             })
         }
 
     }, [])
+
 
     return (
         <div>
@@ -42,7 +41,7 @@ function MyQAList() {
                 <div className={"row justify-content-center p-5"}>
                     <div className="card text-center col-md-11 p-0 border-dark">
                         <div className="card-header border-dark bg-white"> {customerId}님의 문의 내역</div>
-                        <div className="card-body" >
+                        <div className="card-body">
                             <div className={"container p-3"}>
 
                                 <table className={"table table-hover"}>
@@ -53,27 +52,23 @@ function MyQAList() {
                                         <th>문의 날짜</th>
                                         <th>문의 상태</th>
                                     </tr>
+
                                     </thead>
+                                    <tbody>
+                                    {checkQAList.map((item) => {
+                                        return (
+
+                                            <tr key={item.inquiryNum} style={{cursor: "pointer"}} onClick={()=>{navi(`/qa/list/detail?idx=${item.inquiryNum}`);}}>
+                                                <td>{item.inquiryHotelName}</td>
+                                                <td>{item.inquiryTitle}</td>
+                                                <td>{item.inquiryCreateDate}</td>
+                                                <td>{item.inquiryStatus}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                    </tbody>
 
 
-                                    {/*<tbody>*/}
-                                    {/*    {*/}
-                                    {/*        checkListTable.map((response, index)=>{*/}
-                                    {/*        return(*/}
-                                    {/*            <tr className={"small"} key = {index}>*/}
-                                    {/*                <td><small>{response.reservationDate}</small></td>*/}
-                                    {/*                <td>{response.reservationPeople}</td>*/}
-                                    {/*                <td>{response.reservationRoomName}</td>*/}
-                                    {/*                <td>{response.reservationCheckIn}</td>*/}
-                                    {/*                <td>{response.reservationCheckOut}</td>*/}
-                                    {/*                <td>{response.reservationCost}</td>*/}
-                                    {/*                <td>{response.reservationCustomerName}</td>*/}
-                                    {/*            </tr>*/}
-                                    {/*        )*/}
-
-                                    {/*    })}*/}
-
-                                    {/*</tbody>*/}
                                 </table>
 
                             </div>

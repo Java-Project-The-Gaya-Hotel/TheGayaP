@@ -19,5 +19,5 @@ public interface DellMapper {
 
     void withdrawalMember(String memberId);
 
-    SinInquiryDto myQaListTable(String memberId);
+    List<SinInquiryDto> myQaList(String memberEmail);
 }

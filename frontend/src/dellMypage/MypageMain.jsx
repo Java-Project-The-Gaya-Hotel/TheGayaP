@@ -44,7 +44,7 @@ function MypageMain() {
             <div className={"container"}>
                 <div className={"row justify-content-center p-5"}>
                     <div className="card text-center col-md-11 p-0 border-dark">
-                        <div className="card-header border-dark bg-white" >  {memberId} 님 | No. {memberNum}</div>
+                        <div className="card-header border-dark bg-white" >  {memberId} 님 | 회원 번호 No. {memberNum}</div>
                         <div className="card-body">
                             <h5 className="card-title"></h5>
                             <div className="card-text container py-4">

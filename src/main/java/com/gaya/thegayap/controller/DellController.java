@@ -40,8 +40,9 @@ public class DellController {
     public void withdrawalMember(@RequestParam ("memberId") String memberId){
     }
 
-    @GetMapping("/myqalistable")
-    public SinInquiryDto myQaListTable(@RequestParam ("memberId") String memberId){
+    @GetMapping("/myqalist")
+    public List<SinInquiryDto> myQaListTable(@RequestParam ("memberId") String memberId){
+
         return dellService.myQaListTable(memberId);
     }
 
