@@ -110,6 +110,3 @@ task copyReactBuildFiles(type: Copy) {
 tasks.bootJar {
     dependsOn "copyReactBuildFiles"
 }
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-mail'
-}
