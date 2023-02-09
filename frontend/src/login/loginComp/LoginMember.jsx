@@ -76,7 +76,7 @@ function LoginMember(props) {
                 console.log(response.data)
             } else {
                 // console.log(response.data);
-                alert(id + "님 환영합니다.")
+                // alert(id + "님 환영합니다.")
                 sessionStorage.setItem("token", JSON.stringify(response.data));
                 sessionStorage.setItem("loginInfo", moment.now().toString())
                 window.location.href = "/";
@@ -96,9 +96,9 @@ function LoginMember(props) {
     // 로그인 클릭 버튼 이벤트
     const loginUser = () => {
         if (memberId === "") {
-            alert("아이디를 입력해 주세요")
+            Swal.fire('아이디를 입력해 주세요!')
         } else if (memberPw === "") {
-            alert("비밀번호를 입력해주세요")
+            Swal.fire('비밀번호를 입력해 주세요!')
         } else {
             login(memberId, memberPw);
         }

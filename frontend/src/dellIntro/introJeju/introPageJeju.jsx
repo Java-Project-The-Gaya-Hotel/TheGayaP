@@ -15,7 +15,7 @@ function IntroPageJeju() {
     const mapScript = () => {
         let container = document.getElementById("map");
         let options = {
-            center: new kakao.maps.LatLng(35.156024, 129.059484),
+            center: new kakao.maps.LatLng(33.247632, 126.408058),
             level: 2,
         };
         //map
@@ -23,8 +23,8 @@ function IntroPageJeju() {
 
         //마커가 표시 될 위치
         let markerPosition = new kakao.maps.LatLng(
-            35.156024,
-            129.059484
+            33.247632,
+            126.408058
         );
 
         // 마커를 생성
@@ -57,10 +57,13 @@ function IntroPageJeju() {
                         </div>
                     </div>
                     <hr/>
-                    <div className={"container mb-5 pb-3"}>
+                    <div className={"container mb-5 pb-3 text-center"}>
                         <h6 className={"fw-bold text-center p-5"}>제주 가야 호텔 찾아오는 길</h6>
                         <div className={"d-flex justify-content-center"}>
                             <div id={"map"} style={{width: '500px', height: '300px'}}></div>
+                        </div>
+                        <div className={"py-4"}>
+                            주소 : 제주특별자치도 서귀포시 특별자치도, 중문관광로72번길 75
                         </div>
                     </div>
 

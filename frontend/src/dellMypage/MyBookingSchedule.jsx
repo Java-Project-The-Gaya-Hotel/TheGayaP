@@ -51,14 +51,14 @@ function MyBookingSchedule() {
 
                                 <table className={"table table-hover"}>
                                     <thead>
-                                    <tr className={"small "}>
-                                        <th>예약 날짜</th>
-                                        <th>예약 인원</th>
-                                        <th>예약 Room</th>
+                                    <tr className={"small"}>
+                                        <th>예약날짜</th>
+                                        <th>예약인원</th>
+                                        <th>예약Room</th>
                                         <th>Check In</th>
                                         <th>Check Out</th>
                                         <th>결제 금액</th>
-                                        <th>예약 이름</th>
+                                        <th>예약이름</th>
                                     </tr>
                                     </thead>
 
@@ -68,7 +68,7 @@ function MyBookingSchedule() {
                                             checkListTable.map((response, index)=>{
                                             return(
                                                 <tr className={"small"} key = {index}>
-                                                    <td>{response.reservationDate}</td>
+                                                    <td><small>{response.reservationDate}</small></td>
                                                     <td>{response.reservationPeople}</td>
                                                     <td>{response.reservationRoomName}</td>
                                                     <td>{response.reservationCheckIn}</td>
