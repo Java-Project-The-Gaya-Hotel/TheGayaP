@@ -59,8 +59,8 @@ function RoutesLayout(props) {
             title: '로그아웃 하시겠습니까?',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#DD3333FF',
+            cancelButtonColor: '#000000',
             confirmButtonText: '네',
             cancelButtonText: '취소',
         }).then((result) => {

@@ -25,7 +25,7 @@ animation-duration:4s;
 
 const MainCutionDiv = styled.div`
 animation:fadeInUp;
-animation-duration:6s;
+animation-duration:4s;
 `;
 
 function MainPage(props) {

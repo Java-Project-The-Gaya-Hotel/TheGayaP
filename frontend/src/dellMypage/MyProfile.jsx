@@ -8,6 +8,10 @@ import Swal from "sweetalert2";
 const styles = {
     cardBox: {
         height: "550px"
+    },
+    inputBox: {
+        width: "300px",
+        height: "35px"
     }
 }
 
@@ -61,16 +65,20 @@ function MyProfile() {
     }, []);
 
     const btnClick = () => {
-        axios.put(
-            "http://localhost:8080/mypage/updateProfile",
+        axios.put("http://localhost:8080/mypage/update",
             {
-                params: {
-                    memberId : memberId
-                }
-            }
-        ).then(response => {
-
-
+                memberEmail: memberEmail,
+                memberTel: memberPh
+            },
+            {
+                params: {memberId: memberId}
+            })
+            .then((req) => {
+                Swal.fire('데이터가 수정되었습니다. ')
+            }).catch(err => {
+            Swal.fire(
+                Swal.fire('오류가 발생하였습니다, 다시 시도해 주세요.')
+            )
         })
     }
 
@@ -82,39 +90,30 @@ function MyProfile() {
                     <div className="card text-center col-md-11 p-0 border-dark">
                         <div className="card-header border-dark bg-white"> {memberId} 의 회원 정보</div>
                         <div className="card-body" style={styles.cardBox}>
-                            <h5 className="card-title">Profile</h5>
-                            <div>
-                                <table className={"table table-hover m-0"}>
-                                    <thead className={"container"}>
+                            <h5 className="card-title fw-bold">Profile</h5>
+                            <div className={"p-5"}>
+                                <div className={"container"}>
+                                    <div className={"row justify-content-center my-2"}>
+                                        <label className={"col-2"}> ID : </label>
+                                        <input style={styles.inputBox} className={"form-control rounded-0 col-2"} value={memberId} readOnly={true}/>
+                                    </div>
 
-                                    </thead>
+                                    <div className={"row justify-content-center my-2"}>
+                                        <label className={"col-2"}> Name : </label>
+                                        <input style={styles.inputBox} className={"form-control rounded-0 col-2"} value={memberName} readOnly={true}/>
+                                    </div>
+                                    <div className={"row justify-content-center my-2"}>
+                                        <label className={"col-2"}> E-Mail : </label>
+                                        <input style={styles.inputBox} className={"form-control rounded-0 col-2"} value={memberEmail} onChange={(e) => setMemberEmail(e.target.value)}/>
+                                    </div>
+                                    <div className={"row justify-content-center my-2"}>
+                                        <label className={"col-2"}> PH : </label>
+                                        <input style={styles.inputBox} className={"form-control rounded-0 col-2"} value={memberPh} onChange={(e) => setMemberPh(e.target.value)}/>
+                                    </div>
+                                </div>
 
-                                    <tbody className={"container"}>
-
-                                    <tr>
-                                        <td> ID :</td>
-                                        <td><input value={memberId} readOnly={true}/></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td> Name :</td>
-                                        <td>
-                                            <input value={memberName} readOnly={true}/></td>
-                                    </tr>
-                                    <tr>
-                                        <td> E-Mail :</td>
-                                        <td>
-                                            <input value={memberEmail} onChange={(e)=>setMemberEmail(e.target.value)}/></td>
-                                    </tr>
-                                    <tr>
-                                        <td> Ph :</td>
-                                        <td>
-                                            <input value={memberPh} onChange={(e)=>setMemberPh(e.target.value)}/></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
                                 <div className={"p-5"}>
-                                    <button onClick={btnClick}> 수정하기 </button>
+                                    <button className={"custom-btn2 btnMypage"} onClick={btnClick}> 수정하기</button>
                                 </div>
                             </div>
                         </div>

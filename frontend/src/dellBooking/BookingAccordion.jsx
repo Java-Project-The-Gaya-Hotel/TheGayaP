@@ -222,7 +222,7 @@ function BookingAccordion() {
 
     return (
         <div>
-            <div className={"container"}>
+            <div className={"container p-5"}>
                 <div className="wrapper">
 
                     <ul className="mainMenu pb-5">
@@ -341,24 +341,28 @@ function BookingAccordion() {
                                         </div>
                                         <div className={"p-3"}>
                                             <p>
-                                                <p className={"fw-bold"}>성인 2인 1실 기준 요금이며 성인 3인 부터 1인당 추가 요금 2만원이 발생합니다.<br/> 주말에는 평일 요금 대비 10% 가 증가 합니다.</p>
-                                                13세 이하 어린이는 객실 인원 추가 요금을 받지 않으며 37개월 미만 유아는 조식이 무료입니다.<br/>
-                                                저희 The Gaya Hotel은 안내견을 제외한 반려동물은 입장은 불가하오니 양해부탁드립니다. <br/>
-                                                부모를 동반하지 않은 만 19세 미만 미성년자는 " 청소년 보호법 30조/58조" 로 인하여 투숙할 수 없으며 체크인
-                                                및 <br/>
-                                                객실 입장 시 등록카드 작성 및 투숙객 본인 확인을 위해 본인 사진이 포함된 신분증을 반드시 제시해 주시길 바랍니다.<br/>
+                                                <strong> 성인 2인 1실 기준 요금이며 성인 3인 부터 1인당 추가 요금 2만원이 발생</strong>합니다.<br/> <strong> 주말에는 평일 요금 대비 10% 증가</strong> 합니다. <br/>
+                                                <strong>13세 이하 어린이 </strong>는 객실 인원 추가 요금을 받지 않습니다. < br /> 37개월 미만 유아는 조식이 무료입니다.<br/>
+                                                가야 호텔은 안내견을 제외한 <strong>반려동물은 입장은 불가</strong>하오니 양해부탁드립니다. <br/>
+                                                부모를 동반하지 않은 만 19세 미만 미성년자는 " 청소년 보호법 30조/58조" 로 인하여 투숙할 수 없으며 체크인 및 객실 입장 시
+                                                등록카드 작성 및 투숙객 본인 확인을 위해 본인 사진이 포함된 신분증을 반드시 제시해 주시길 바랍니다.<br/>
                                             </p>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </li>
+
+                        <br/>
+                        <br/>
                     </ul>
 
                     <hr className={"border-1 p-2"}/>
 
                 </div>
+
+                <br/>
+                <br/>
 
                 <div className={"d-flex justify-content-center p-5"}>
                     <button className={"btnDate"} role={"button"} onClick={clickE}><span className="text">객실 찾기</span>Booking

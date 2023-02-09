@@ -16,7 +16,7 @@ function IntroPageStay(){
     const mapScript = () => {
         let container = document.getElementById("map");
         let options = {
-            center: new kakao.maps.LatLng(35.156024, 129.059484),
+            center: new kakao.maps.LatLng(35.159860, 129.158573),
             level: 2,
         };
         //map
@@ -24,8 +24,8 @@ function IntroPageStay(){
 
         //마커가 표시 될 위치
         let markerPosition = new kakao.maps.LatLng(
-            35.156024,
-            129.059484
+            35.159860,
+            129.158573
         );
 
         // 마커를 생성
@@ -61,6 +61,9 @@ function IntroPageStay(){
                         <h6 className={"fw-bold text-center p-5"}>가야 스테이 찾아오는 길</h6>
                         <div className={"d-flex justify-content-center"}>
                             <div id={"map"} style={{width: '500px', height: '300px'}}></div>
+                        </div>
+                        <div className={"py-4 text-center"}>
+                            주소 : 부산광역시 해운대구 해운대로570번길 46
                         </div>
                     </div>
 

@@ -4,7 +4,7 @@ import introImg2 from "../intoroImg/intro2.jpg"
 import introImg3 from "../intoroImg/intro3.jpg"
 import introImg4 from "../intoroImg/intro4.jpg"
 import introImg5 from "../intoroImg/intro5.jpg"
-
+import 'animate.css'
 import introTitle from "../intoroImg/aboutTitle.jpg"
 import styled from "styled-components";
 
@@ -15,12 +15,16 @@ height :250px;
 object-fit:cover
 ;
 `
+const ImgAnimation = styled.div`
+animation:fadeIn;
+animation-duration:1s;
+`
 
 
 function IntroPageMain() {
     return (
         <div className={"container"}>
-            <div className={"p-5"}><img src={introTitle}/></div>
+            <ImgAnimation className={"p-5"}><img src={introTitle}/></ImgAnimation>
 
 
             <br/>

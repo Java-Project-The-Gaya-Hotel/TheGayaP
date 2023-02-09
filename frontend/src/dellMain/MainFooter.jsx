@@ -35,12 +35,12 @@ function MainFooter() {
 
                             <div className="col-md-6 col-lg-3 page-more-info">
                                 <div className="footer-title">
-                                    <h4>More Info</h4>
+                                    <h4>Team - The Gaya</h4>
                                 </div>
                                 <ul>
-                                    <li><a href="#">Lorem ipsum</a></li>
-                                    <li><a href="#">Dolor sit amet</a></li>
-                                    <li><a href="#">Consectetur Adipisicing </a></li>
+                                    <li>Leader - 신현섭</li>
+                                    <li>Front - 박예린, 황하늘</li>
+                                    <li>Back - 신현섭, 정종율</li>
                                 </ul>
                             </div>
 

@@ -2,13 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {AuthorityCheck, GetMemberIdByToken, SessionCheck} from "../functiontocheck/FunctionToCheck";
 import axios from "axios";
+import myPageImg from "../dellMypage/mypageImg/myPageG.jpg"
 
-
-const styles = {
-    cardBox: {
-        height: "550px"
-    }
-}
 
 
 
@@ -50,9 +45,14 @@ function MypageMain() {
                 <div className={"row justify-content-center p-5"}>
                     <div className="card text-center col-md-11 p-0 border-dark">
                         <div className="card-header border-dark bg-white" >  {memberId} 님 | No. {memberNum}</div>
-                        <div className="card-body" style={styles.cardBox}>
-                            <h5 className="card-title">Grade</h5>
-                            <p className="card-text">{memberId} 님의 등급 : {memberTier}</p>
+                        <div className="card-body">
+                            <h5 className="card-title"></h5>
+                            <div className="card-text container py-4">
+                                <div className={"m-3"}><img src={myPageImg}/></div>
+                                <hr/>
+                                <div className={"h5 fw-bold"}>{memberId} 님의 회원 등급 :</div>
+                                <div> {memberTier} </div>
+                            </div>
                         </div>
                         <div className="card-footer text-muted border-dark bg-white">&nbsp;</div>
                     </div>

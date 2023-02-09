@@ -480,7 +480,7 @@ function ReservationPageDetail2() {
                                     </table>
                                 </div>
 
-                                <div className={"container col text-center"}>
+                                <div className={"container col text-center pt-5"}>
                                     <div className={"m-4 fw-bold h5"}>결제 하기</div>
                                     <button onClick={onClickPayment} className={"btnDate"} role={"button"}><span
                                         className="text">결제하기</span>Payment

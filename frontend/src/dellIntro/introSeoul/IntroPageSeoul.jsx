@@ -17,7 +17,7 @@ function IntroPageSeoul() {
     const mapScript = () => {
         let container = document.getElementById("map");
         let options = {
-            center: new kakao.maps.LatLng(35.156024, 129.059484),
+            center: new kakao.maps.LatLng(37.557785, 127.007631),
             level: 2,
         };
         //map
@@ -25,8 +25,8 @@ function IntroPageSeoul() {
 
         //마커가 표시 될 위치
         let markerPosition = new kakao.maps.LatLng(
-            35.156024,
-            129.059484
+            37.557785,
+            127.007631
         );
 
         // 마커를 생성
@@ -57,10 +57,13 @@ function IntroPageSeoul() {
                     </div>
                 </div>
                 <hr/>
-                <div className={"container mb-5 pb-3"}>
+                <div className={"container mb-5 pb-3 text-center"}>
                     <h6 className={"fw-bold text-center p-5"}>서울 가야 호텔 찾아오는 길</h6>
                     <div className={"d-flex justify-content-center"}>
                         <div id={"map"} style={{width: '500px', height: '300px'}}></div>
+                    </div>
+                    <div className={"py-4"}>
+                        주소 : 서울특별시 중구 동호로 249
                     </div>
                 </div>
 

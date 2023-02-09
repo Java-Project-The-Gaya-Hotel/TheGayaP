@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {AuthorityCheck, GetMemberIdByToken, SessionCheck} from "../functiontocheck/FunctionToCheck";
+import Swal from "sweetalert2";
 
 
 function MyPageMemberOff() {
@@ -39,37 +40,35 @@ function MyPageMemberOff() {
 
     const YesBtn = (e) => {
         e.preventDefault();
-        axios.put("http://localhost:8080/mypage/withdrawalMember", null,{
+        axios.put("http://localhost:8080/mypage/withdrawalMember", null, {
             params: {
-                memberId : memberId
+                memberId: memberId
             }
         })
             .then(() => {
-                alert("done")
+
+                Swal.fire({
+                    title: '정말로 탈퇴하시겠습니까?',
+                    html: "사용하시던 포인트와 유지하시던 등급이 <br/> 모두 사라지며 복원이 불가합니다. <br/>탈퇴하시겠습니까?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#4b4b4b',
+                    cancelButtonColor: '#ff0000',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            '삭제되었습니다. ',
+                            '이용해주셔서 감사합니다. ',
+                            'success',
+                        )
+                    }
+                })
             }).catch(err => {
                 console.log(err, "통신에러");
             }
         )
     };
-
-
-// Swal.fire({
-//     title: '정말로 탈퇴하시겠습니까?',
-//     html: "사용하시던 포인트와 유지하시던 등급이 <br/> 모두 사라지며 복원이 불가합니다. <br/>탈퇴하시겠습니까?",
-//     icon: 'warning',
-//     showCancelButton: true,
-//     confirmButtonColor: '#4b4b4b',
-//     cancelButtonColor: '#ff0000',
-//     confirmButtonText: 'Yes'
-// }).then((result) => {
-//     if (result.isConfirmed) {
-//         Swal.fire(
-//             '삭제되었습니다. ',
-//             '이용해주셔서 감사합니다. ',
-//             'success',
-//         )
-//     }
-// })
 
 
     const NoBtn = () => {
@@ -85,9 +84,14 @@ function MyPageMemberOff() {
                             <h5 className="card-title"></h5>
                             <div className="card-text">
                                 <div className={"container"}>
-                                    <div className={"row"}>
-                                        <button type={"button"} className={"col"} onClick={YesBtn}> Yes</button>
-                                        <button type={"button"} className={"col"} onClick={NoBtn}> No</button>
+                                    <div className={"m-5"}> 탈퇴하시겠습니까 ? </div>
+                                    <div className={"row m-3"}>
+                                        <div className={"col"}>
+                                            <button type={"button"} className={"custom-btn2 btnMypage"} onClick={YesBtn}> Yes</button>
+                                        </div>
+                                        <div className={"col"}>
+                                            <button type={"button"} className={"col custom-btn2 btnMypage"} onClick={NoBtn}> No</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
