@@ -61,6 +61,11 @@ function FindId(props) {
 
               </div>
 
+              <div className={"row mb-1 me-2"}>
+                <label className={"form-label col-sm-3 my-auto fw-bold"}> 인증 확인 </label>
+                <input type={"text"} className={"form-control rounded-0 col-sm m-2"}/>
+                <button id={"userBtn"} className={"form-label col-sm-3 my-auto rounded-0 custom-btn3 btn-Login"}>인증 확인</button>
+              </div>
 
 
               <button className={"btn btn-primary mt-3"} onClick={findIdBtn}>확인</button>
