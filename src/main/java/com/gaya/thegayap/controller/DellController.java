@@ -2,6 +2,8 @@ package com.gaya.thegayap.controller;
 
 
 import com.gaya.thegayap.dto.MemberNonPasswordDto;
+import com.gaya.thegayap.dto.SinAnswerChatDto;
+import com.gaya.thegayap.dto.SinInquiryDto;
 import com.gaya.thegayap.dto.SinReservDto;
 import com.gaya.thegayap.service.DellService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,8 @@ import java.util.List;
 
 
 //데이터만 이동
+
+
 @RestController
 @RequestMapping("/mypage")
 @RequiredArgsConstructor
@@ -35,5 +39,11 @@ public class DellController {
     @PutMapping("/withdrawalMember")
     public void withdrawalMember(@RequestParam ("memberId") String memberId){
     }
+
+    @GetMapping("/myqalistable")
+    public SinInquiryDto myQaListTable(@RequestParam ("memberId") String memberId){
+        return dellService.myQaListTable(memberId);
+    }
+
 
 }

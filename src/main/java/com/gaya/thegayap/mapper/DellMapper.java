@@ -1,6 +1,7 @@
 package com.gaya.thegayap.mapper;
 
 import com.gaya.thegayap.dto.MemberNonPasswordDto;
+import com.gaya.thegayap.dto.SinInquiryDto;
 import com.gaya.thegayap.dto.SinReservDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,4 +18,6 @@ public interface DellMapper {
     List<SinReservDto> reservationinfo(String customerId);
 
     void withdrawalMember(String memberId);
+
+    SinInquiryDto myQaListTable(String memberId);
 }

@@ -2,6 +2,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import Modal from "./Modal";
+import "../loginCss/ButtonCss.css"
 
 
 function FindId(props) {
@@ -43,31 +44,29 @@ function FindId(props) {
 
 
   return (
-      <div>
+      <div className={"container"}>
         {isFind ?
-            <div>
-              <div className={"row mb-1 me-2"}>
-                <label className={"form-label col-sm-3 my-auto"} htmlFor={"name"}><b>이름</b></label>
-                <input className={"form-control col-sm"} type={"text"} id={"name"} onChange={(e) => {
-                  setName(e.target.value)
-                }}/>
-              </div>
-              <div className={"row mb-1 me-2"}>
-                <label className={"form-label col-sm-3 my-auto"} htmlFor={"email"}><b>이메일</b></label>
-                <input className={"form-control col-sm"} type={"email"} id={"email"} onChange={(e) => {
-                  setEmail(e.target.value)
-                }}/>
-                <button id={"sendMail"} className={"form-label col-sm-4 my-auto"}>이메일 전송</button>
+            <div className={"p-3"}>
 
-              </div>
               <div className={"row mb-1 me-2"}>
+                <label className={"form-label col-sm-3 my-auto fw-bold"} htmlFor={"name"}>이름</label>
+                <input className={"form-control rounded-0 col-sm m-2"} type={"text"} id={"name"} onChange={(e) => {setName(e.target.value)}}/>
+              </div>
 
-                <input type={"text"} className={"form-control col-sm"}/>
-                <button id={"userBtn"} className={"form-label col-sm-3 my-auto"}>인증 확인</button>
+              <div className={"row mb-1 me-2"}>
+                <label className={"form-label col-sm-3 my-auto fw-bold"} htmlFor={"email"}>이메일</label>
+                <input className={"form-control rounded-0 col-sm m-2 "} type={"email"} id={"email"} onChange={(e) => {setEmail(e.target.value)}}/>
+                <button id={"sendMail"} className={"form-label col-sm-3 my-auto rounded-0 custom-btn3 btn-Login"}>이메일 전송</button>
+              </div>
+
+              <div className={"row mb-1 me-2"}>
+                <label className={"form-label col-sm-3 my-auto fw-bold"}> 인증 확인 </label>
+                <input type={"text"} className={"form-control rounded-0 col-sm m-2"}/>
+                <button id={"userBtn"} className={"form-label col-sm-3 my-auto rounded-0 custom-btn3 btn-Login"}>인증 확인</button>
               </div>
 
 
-              <button className={"btn btn-primary mt-3"} onClick={findIdBtn}>확인</button>
+              <button className={"mt-3 rounded-0 custom-btn3 btn-Login"} onClick={findIdBtn}>확인</button>
             </div> :
             <div>
               {isMemberPw ?
@@ -79,7 +78,7 @@ function FindId(props) {
                     <p>{email} 로 가입된 아이디가 존재하지 않습니다.</p>
                   </div>
               }
-              <button onClick={closeModal} className={"btn btn-primary mt-4"}>확인</button>
+              <button onClick={closeModal} className={"mt-4 rounded-0 custom-btn3 btn-Login"}>확인</button>
             </div>
         }
       </div>

@@ -229,7 +229,7 @@ function BookingAccordion() {
                         <li className="item" id="account">
                             <div className={"justify-content-between d-flex"}>
                                 <a href={"#account"} className="btnAcc">호텔 선택</a>
-                                <p className={"my-auto pe-3"}>{hotelName}</p>
+                                <p className={"my-auto pe-3 fw-bold"}>{hotelName}</p>
                             </div>
                             <div className="subMenu">
                                 <div className={"container"}>
@@ -250,9 +250,9 @@ function BookingAccordion() {
                                 <a href={"#about"} className="btnAcc">투숙 기간</a>
                                 {showDate &&
                                     <div className={"my-auto pe-3"}>
-                                        <span>{checkIn} - {checkOut}</span>
-                                        <span className={"mx-3"} style={{color: "lightgray"}}>|</span>
-                                        <span>{nights}박</span>
+                                        <span className={"fw-bold"}>{checkIn} - {checkOut}</span>
+                                        <span className={"mx-3 "} style={{color: "lightgray"}}>|</span>
+                                        <span className={"fw-bold"}>{nights}박</span>
                                     </div>
                                 }
                             </div>
@@ -286,7 +286,7 @@ function BookingAccordion() {
                         <li className="item" id="support">
                             <div className={"justify-content-between d-flex"}>
                                 <a href={"#support"} className="btnAcc">인원</a>
-                                <div className={"my-auto"}>
+                                <div className={"my-auto fw-bold"}>
                                     <span className={"pe-3"}>성인 : {adultCount} </span>
                                     <span className={"pe-3"}>어린이 : {childCount} </span>
                                 </div>
@@ -302,16 +302,16 @@ function BookingAccordion() {
                                             <div className={"container"}>
                                                 <div className={"row m-5 align-items-center"}>
                                                     <div className={"col"}>
-                                                        <button className={"btn btn-outline-dark rounded-0 fw-bold"}
+                                                        <button className={"custom-btn4 rounded-0 "}
                                                                 onClick={minusBtn}>-
                                                         </button>
                                                     </div>
-                                                    <div className={"col fw-bold"}><h4 className={"m-0"}>성인
-                                                        : {adultCount}</h4></div>
+
+                                                    <div className={"col p-0"}><h4 className={"m-0"}> 성인 : {adultCount}</h4></div>
+
                                                     <div className={"col"}>
-                                                        <button className={"btn btn-outline-dark rounded-0"}
-                                                                onClick={plusBtn}>+
-                                                        </button>
+                                                        <button className={"custom-btn4 rounded-0"} onClick={plusBtn}>+</button>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -319,16 +319,11 @@ function BookingAccordion() {
                                             <div className={"container"}>
                                                 <div className={"row m-5 align-items-center"}>
                                                     <div className={"col"}>
-                                                        <button className={"btn btn-outline-dark rounded-0"}
-                                                                onClick={cdMinusBtn}>-
-                                                        </button>
+                                                        <button className={"custom-btn4 rounded-0"} onClick={cdMinusBtn}>-</button>
                                                     </div>
-                                                    <div className={"col p-0"}><h4 className={"m-0"}>어린이 : {childCount}</h4>
+                                                    <div className={"col p-0 "}><h4 className={"m-0"}>어린이 : {childCount}</h4>
                                                     </div>
-                                                    <div className={"col"}>
-                                                        <button className={"btn btn-outline-dark rounded-0"}
-                                                                onClick={cdPlusBtn}>+
-                                                        </button>
+                                                    <div className={"col"}><button className={"custom-btn4 rounded-0"} onClick={cdPlusBtn}>+</button>
                                                     </div>
                                                 </div>
                                             </div>

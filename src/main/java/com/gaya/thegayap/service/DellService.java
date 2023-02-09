@@ -2,6 +2,8 @@ package com.gaya.thegayap.service;
 
 
 import com.gaya.thegayap.dto.MemberNonPasswordDto;
+import com.gaya.thegayap.dto.SinAnswerChatDto;
+import com.gaya.thegayap.dto.SinInquiryDto;
 import com.gaya.thegayap.dto.SinReservDto;
 import com.gaya.thegayap.mapper.DellMapper;
 import lombok.RequiredArgsConstructor;
@@ -28,4 +30,6 @@ public class DellService {
 
 
     public void withdrawalMember(String memberId) {}
+
+    public SinInquiryDto myQaListTable(String memberId) {return dellMapper.myQaListTable(memberId);}
 }

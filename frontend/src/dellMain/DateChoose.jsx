@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import Swal from "sweetalert2";
 import "../dellMain/dellmainCss/BtnDateChoose.css"
 import "../dellMain/dellmainCss/DatePickerCustomCss.css"
+import "../login/loginCss/ButtonCss.css"
 
 //button component
 
@@ -21,12 +22,12 @@ function DateChoose() {
     const MainDatePicker = () => {
 
         const CustomInput = forwardRef(({value, onClick}, ref) => (
-            <button className="btn btn-outline-dark rounded-0 p-1" onClick={onClick} ref={ref}>
+            <button className="btn btn-outline-dark rounded-0 custom-btn2" onClick={onClick} ref={ref}>
                 {value}
             </button>))
 
         return (
-            <div className={"d-flex justify-content-between"}>
+            <div className={"d-flex justify-content-around"}>
                 <div>
                     <DatePicker
                         dateFormat="yyyy-MM-dd"
@@ -40,6 +41,7 @@ function DateChoose() {
                         customInput={<CustomInput/>}
                     />
                 </div>
+                <br/>
 
                 <div>
                     <DatePicker
@@ -130,18 +132,18 @@ function DateChoose() {
             }
         }
         return (
-            <div className={"row"}>
+            <div className={"row d-flex justify-content-center"}>
                 <div className={"col"}>
-                    <div className={"fw-bold"}>성인</div>
-                    <button onClick={minusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> -</button>
-                    <span className={"p-2"}>  {adultCount} </span>
-                    <button onClick={plusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> +</button>
+                    <div className={"fw-bold m-2"}>성인</div>
+                    <button onClick={minusBtn} className={"btn btn-outline-dark rounded-0 custom-btn4"}> -</button>
+                    <span className={"p-2 px-4 fw-bold h5"}>  {adultCount} </span>
+                    <button onClick={plusBtn} className={"btn btn-outline-dark rounded-0 custom-btn4"}> +</button>
                 </div>
                 <div className={"col"}>
-                    <div className={"fw-bold"}>어린이</div>
-                    <button onClick={cdMinusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> -</button>
-                    <span className={"p-2"}>  {childCount} </span>
-                    <button onClick={cdPlusBtn} className={"btn btn-outline-dark rounded-0 btn-sm"}> +</button>
+                    <div className={"fw-bold m-2"}>어린이</div>
+                    <button onClick={cdMinusBtn} className={"btn btn-outline-dark rounded-0 custom-btn4"}> -</button>
+                    <span className={"p-2 px-4 fw-bold h5 "}>  {childCount} </span>
+                    <button onClick={cdPlusBtn} className={"btn btn-outline-dark rounded-0 custom-btn4"}> +</button>
                 </div>
             </div>
         )
@@ -164,20 +166,20 @@ function DateChoose() {
             <div className={"row align-items-center p-3"}>
 
                 <div className={"col"}>
-                    <div className={"container row p-0 m-0"}>
-                        <dt className={"col p-3 fw-bold"}>Check In | Check Out</dt>
-                        <dd>
+                    <div className={"container row text-center"}>
+                        <div className={"col fw-bold m-2 h6"}>Check In</div>
+                        <div className={"col fw-bold m-2 h6"}>Check Out</div>
+                        <div>
                             <MainDatePicker/>
-                        </dd>
+                        </div>
                     </div>
                 </div>
 
                 <div className={"col"}>
                     <div className={"container row p-0 m-0"}>
-                        <dt className={"col p-1 fw-bold"}> 인원</dt>
-                        <dd>
+                        <div>
                             <MainCounter/>
-                        </dd>
+                        </div>
                     </div>
                 </div>
 

@@ -53,7 +53,7 @@ function LoginMember(props) {
     }
 
     const onKeyPress = (e) => {
-        if(e.key === 'Enter') {
+        if (e.key === 'Enter') {
             loginUser();
         }
     }
@@ -130,11 +130,11 @@ function LoginMember(props) {
                             <div className={"row mt-2"}>
                                 <div className={'col-10'}>
                                     {/*아이디*/}
-                                    <input type={"text"} className={"col-11"} value={memberId} placeholder={"아이디 or 회원 번호"} onChange={onChangeMemberId}/>
+                                    <input type={"text"} className={"col-11 my-1"} value={memberId} placeholder={"아이디 or 회원 번호"} onChange={onChangeMemberId}/>
                                     {/*비밀번호*/}
                                     <input type={"password"} className={"col-11"} placeholder={"비밀번호"} onKeyPress={onKeyPress} onChange={onChangeMemberPw}/>
                                 </div>
-                                <div className={'col-2 p-0 d-flex row'}>
+                                <div className={'col-2 p-0 d-flex row justify-content-center align-items-center'}>
                                     {/*로그인 버튼*/}
                                     <button className={"custom-btn btn-Login"} style={{borderRadius: 0}} onClick={loginUser}>로그인
                                     </button>
@@ -147,7 +147,7 @@ function LoginMember(props) {
                             </div>
                         </div>
                         {/*회원가입 및 아이디 비밀번호 찾기*/}
-                        <div className={"d-flex"}>
+                        <div className={"d-flex justify-content-center"}>
                             <button className={"btn btn-dark p-1"} style={{borderRadius: 0}} onClick={goToSignup}>가야 리워즈
                                 가입
                             </button>
@@ -156,12 +156,12 @@ function LoginMember(props) {
                                 찾기
                             </button>
                             {findId && (
-                              <Modal closeModal={() => setFindId(!findId)}><FindId closeModal={() => setFindId(!findId)}/></Modal>
+                                <Modal closeModal={() => setFindId(!findId)}><FindId closeModal={() => setFindId(!findId)}/></Modal>
                             )}
                             <button onClick={() => setFindPw(!findPw)} className={"btn btn-secondary p-1"} style={{borderRadius: 0}}>비밀번호 찾기</button>
                             {findPw && (
-                            <Modal closeModal={() => setFindPw(!findPw)}><FindPw closeModal={() => setFindPw(!findPw)}/></Modal>
-                                )}
+                                <Modal closeModal={() => setFindPw(!findPw)}><FindPw closeModal={() => setFindPw(!findPw)}/></Modal>
+                            )}
                         </div>
                         <div className={"small p-2"}>이메일, 연락처 등의 정보가 변경되면 웹사이트에서 회원정보를 수정해주시기 바랍니다.</div>
                     </div>

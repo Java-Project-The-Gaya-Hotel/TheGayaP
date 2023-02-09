@@ -20,10 +20,18 @@
         from reservation_table
         where reservation_customer_id = #{customerId}
     </select>
-
+    <!-- 회원 탈퇴-->
     <update id="withdrawalMember">
         UPDATE member_table
-        SET member_deleted_yn = 'Y' ,member_delete_date=now()
+        SET member_deleted_yn = 'Y',
+            member_delete_date=now()
         WHERE member_id = #{memberId}
     </update>
+
+    <!-- 내 문의 내역 조회 -->
+    <select id="myqalistable" parameterType="String" resultType="com.gaya.thegayap.dto.SinInquiryDto">
+        select *
+        from inquiry_table
+        where inquiry_user_name
+    </select>
 </mapper>
