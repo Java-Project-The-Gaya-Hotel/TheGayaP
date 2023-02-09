@@ -24,6 +24,7 @@ import MypageNav from "./dellMypage/MypageNav";
 import ReservationPageDetail2 from "./skyReservation/ReservationPageDetail2";
 import MyPageMemberOff from "./dellMypage/MyPageMemberOff";
 import MypageTest from "./test/MypageTest";
+import MyQAList from "./dellMypage/MyQAList";
 
 
 
@@ -55,6 +56,7 @@ function MainReact(props) {
                         <Route path={"/mypage"} element={<MypageNav/>}>
                             <Route index element={<MypageMain/>}/>
                             <Route path={"myBookingSchedule"} element={<MyBookingSchedule/>}/>
+                            <Route path={"myqalist"} element={<MyQAList/>}/>
                             <Route path={"profilesave"} element={<MyProfile/>}/>
                             <Route path={"memberoff"} element={<MyPageMemberOff/>}/>
                         </Route>

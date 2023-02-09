@@ -44,35 +44,32 @@ function MainFooter() {
                                 </ul>
                             </div>
 
-                            <div className="col-md-6 col-lg-4 open-hours">
-                                <div className="footer-title mb-5">
+                            <div className="col-md-6 col-lg-4 page-more-info">
+                                <div className="footer-title">
                                     <h4>Contact</h4>
-                                    <ul className="footer-social">
-                                        <li><a href="" target="_blank"><i className="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="" target="_blank"><i className="fab fa-instagram"></i></a></li>
-                                        <li><a href="" target="_blank"><i className="fab fa-linkedin-in"></i></a></li>
+                                </div>
+                                <div>
+                                    <ul>
+                                        <li>
+                                            <div className={"m-3 row"}>
+                                                <div className={"col"}>The Gaya Hotel</div>
+                                                <div className={"col"}>02-2222-3333</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className={"m-3 row"}>
+                                                <div className={"col"}>The Gaya Stay</div>
+                                                <div className={"col"}>051-0000-1111</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className={"m-3 row"}>
+                                                <div className={"col"}>Service Open</div>
+                                                <div className={"col"}>Till 12:00am</div>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div>
-                                <table className="table">
-                                    <tbody>
-                                    <tr>
-                                        <td><i className="far fa-clock"></i>The Gaya Hotel</td>
-                                        <td>051-2222-3333</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i className="far fa-clock"></i>The Gaya Stay</td>
-                                        <td>051-0000-1111</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i className="far fa-clock"></i>Service center</td>
-                                        <td>051-5555-0111</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i className="far fa-clock"></i></td>
-                                        <td><small>Service Open Till 12:00am</small></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
 
                                 <div className="footer-logo">
 
