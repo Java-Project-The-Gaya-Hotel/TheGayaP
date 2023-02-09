@@ -1,6 +1,8 @@
 // Modal.js
 import React from "react";
-import "../loginComp/ModalCss.css"
+import ModalStyle from "./ModalCss.css"
+
+
 
 function Modal(props) {
 

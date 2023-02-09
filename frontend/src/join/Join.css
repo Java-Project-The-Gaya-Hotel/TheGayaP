@@ -2,6 +2,12 @@
     text-align: end;
 }
 
+.validation {
+    color: red;
+    font-size: 13px;
+}
+
+
 .Img {
 
     width: 866px;
@@ -49,10 +55,6 @@
     vertical-align: middle;
 }
 
-
-.id {
-    width: 130px;
-}
 
 .tableTypeB .number {
     size: 30px;
@@ -153,11 +155,6 @@
 
 .ast {
     color: #F33;
-}
-
-
-.id{
-    width: 130px;
 }
 
 

@@ -103,8 +103,8 @@
     <select id="getQAList" resultType="com.gaya.thegayap.dto.SinInquiryDto">
         select inquiry_user_name,
                (CASE
-                    WHEN (inquiry_create_date BETWEEN DATE_ADD(NOW(), INTERVAL -1 DAY) AND NOW()) THEN DATE_FORMAT(inquiry_create_date, '%H:%i')
-                    ELSE DATE_FORMAT(inquiry_create_date, '%Y.%m.%d')
+                    WHEN (inquiry_create_date BETWEEN DATE_ADD(curdate(), INTERVAL -1 DAY) AND curdate()) THEN DATE_FORMAT(inquiry_create_date, '%Y.%m.%d')
+                    ELSE DATE_FORMAT(inquiry_create_date, '%H:%i')
                 END) AS inquiry_create_date,
                inquiry_num, inquiry_category, inquiry_hotel_name, inquiry_reservation_num, inquiry_title, inquiry_contents, inquiry_user_email, inquiry_user_tel, inquiry_status, inquiry_password, inquiry_hidden
         from inquiry_table
