@@ -5,15 +5,14 @@ import com.gaya.thegayap.dto.*;
 import java.util.List;
 
 public interface JeongService {
-    void joinMember(JeongMemberDto member) throws Exception;
-    int idCheck(JeongMemberDto member) throws Exception;
-    int emailCheck(JeongMemberDto member) throws Exception;
+    void joinMember(MemberDto member) throws Exception;
+    int idCheck(MemberNonPasswordDto member) throws Exception;
+    int emailCheck(MemberNonPasswordDto member) throws Exception;
     List<JeongResvDto> resvList(String customerId) throws Exception;
-    JeongMemberDto profile(String memberId) throws Exception;
+    MemberNonPasswordDto profile(String memberId) throws Exception;
     List<JeongCustomerDto> checkPoints(String customerId) throws Exception;
-    void updateProfile(JeongMemberDto member) throws Exception;
+    void updateProfile(MemberNonPasswordDto member) throws Exception;
 
-    JeongMemberDto loginCheck(JeongMemberDto member) throws Exception;
 
     String findId(String memberName, String memberEmail) throws Exception;
 
@@ -23,7 +22,7 @@ public interface JeongService {
 
     List<JeongResvDto> notMemberResv(String customerName, int reservationNum) throws Exception;
 
-    List<JeongMemberDto> inquiryUserInfo(String userName) throws Exception;
+    List<MemberNonPasswordDto> inquiryUserInfo(String userName) throws Exception;
 
-    List<SinInquiryDto> inquiryDetail(int idx) throws Exception;
+    SinInquiryDto inquiryDetail(int idx) throws Exception;
 }

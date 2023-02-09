@@ -10,4 +10,5 @@ public class SinAnswerChatDto {
     private String answerCreateDate;
     private String answerUserName;
     private String answerIsAdmin;
+    private String answerStatus;
 }

@@ -14,17 +14,17 @@ public class JeongServiceImpl implements JeongService{
     JeongMapper jeongMapper;
 
     @Override
-    public void joinMember(JeongMemberDto member) throws Exception {
+    public void joinMember(MemberDto member) throws Exception {
         jeongMapper.joinMember(member);
     }
 
     @Override
-    public int idCheck(JeongMemberDto member) throws Exception {
+    public int idCheck(MemberNonPasswordDto member) throws Exception {
         return jeongMapper.idCheck(member);
     }
 
     @Override
-    public int emailCheck(JeongMemberDto member) throws Exception {
+    public int emailCheck(MemberNonPasswordDto member) throws Exception {
         return jeongMapper.emailCheck(member);
     }
 
@@ -34,8 +34,8 @@ public class JeongServiceImpl implements JeongService{
     }
 
     @Override
-    public JeongMemberDto profile(String memberId) throws Exception {
-        JeongMemberDto memberDto = jeongMapper.profile(memberId);
+    public MemberNonPasswordDto profile(String memberId) throws Exception {
+        MemberNonPasswordDto memberDto = jeongMapper.profile(memberId);
 
         return memberDto;
     }
@@ -46,15 +46,8 @@ public class JeongServiceImpl implements JeongService{
     }
 
     @Override
-    public void updateProfile(JeongMemberDto member) throws Exception {
+    public void updateProfile(MemberNonPasswordDto member) throws Exception {
         jeongMapper.updateProfile(member);
-    }
-
-    @Override
-    public JeongMemberDto loginCheck(JeongMemberDto member) throws Exception {
-        JeongMemberDto memberDto = jeongMapper.loginCheck(member);
-
-        return memberDto;
     }
 
     @Override
@@ -78,12 +71,12 @@ public class JeongServiceImpl implements JeongService{
     }
 
     @Override
-    public List<JeongMemberDto> inquiryUserInfo(String userName) throws Exception {
+    public List<MemberNonPasswordDto> inquiryUserInfo(String userName) throws Exception {
         return jeongMapper.inquiryUserInfo(userName);
     }
 
     @Override
-    public List<SinInquiryDto> inquiryDetail(int idx) throws Exception {
+    public SinInquiryDto inquiryDetail(int idx) throws Exception {
         return jeongMapper.inquiryDetail(idx);
     }
 

@@ -3,7 +3,6 @@ import {useNavigate} from "react-router-dom";
 import {AuthorityCheck} from "../../functiontocheck/FunctionToCheck";
 
 
-
 //문의 게시글의 정보를 가진 컴포넌트
 function InquiryItem(props) {
     // const styleColor = () =>{
@@ -24,23 +23,18 @@ function InquiryItem(props) {
         setGoNum(props.data.inquiryNum);
         setInquiryId(props.data.inquiryUserName);
 
-        if (memberId != null) {
-            // hidden 속성에 문의글과 유저아이디의 이름이 맞지않을시 비밀글 처리
-            if (props.data.inquiryHidden === "Y" && props.data.inquiryUserName !== memberId) {
-                if (memberRole != "ADMIN") {
-                    setTitle("비밀글입니다.");
-                } else {
-                    setTitle(props.data.inquiryTitle);
-                }
+
+        // hidden 속성에 문의글과 유저아이디의 이름이 맞지않을시 비밀글 처리
+        if (props.data.inquiryHidden === "Y" && props.data.inquiryUserName !== memberId) {
+
+            if (memberRole != "ADMIN") {
+                setTitle("비밀글입니다.");
             } else {
                 setTitle(props.data.inquiryTitle);
-
             }
-
+        } else {
+            setTitle(props.data.inquiryTitle);
         }
-
-
-
 
     }, []);
 

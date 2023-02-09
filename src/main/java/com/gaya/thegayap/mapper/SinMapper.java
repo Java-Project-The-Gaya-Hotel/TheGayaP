@@ -41,4 +41,6 @@ public interface SinMapper {
     MealCostDto getMealCost(int hotelNum);
 
     void updateMemberPoint(SinReservDto sinReservDto);
+
+    void updateInquiryStatus(SinAnswerChatDto answerStatus);
 }

@@ -1,15 +1,13 @@
 package com.gaya.thegayap.controller;
 
 
-import com.gaya.thegayap.dto.JeongCustomerDto;
-import com.gaya.thegayap.dto.JeongMemberDto;
+import com.gaya.thegayap.dto.MemberNonPasswordDto;
 import com.gaya.thegayap.dto.SinReservDto;
 import com.gaya.thegayap.service.DellService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 
 //데이터만 이동
@@ -22,7 +20,7 @@ public class DellController {
 
     //My page Home Data 가져오기
     @GetMapping("/getUserInfo")
-    public JeongMemberDto getUserInfo(@RequestParam("memberId") String memberId){
+    public MemberNonPasswordDto getUserInfo(@RequestParam("memberId") String memberId){
         return dellService.getUserInfo(memberId);
     }
 
