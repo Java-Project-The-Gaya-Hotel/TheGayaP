@@ -28,27 +28,56 @@ function InquiryReplyWrite(props) {
     // 답변 완료 버튼
     const answerDone = () => {
         Swal.fire({
-            icon: 'success',
-            title: '답변 완료',
-            text: ' 문의가 종료됐습니다. ',
-        }).then(res => {
-            const body = {
-                answerInquiryNum: qaNum,
-                answerStatus: "답변완료"
-            }
+            icon: 'info',
+            title: ' 문의를 종료하시겠습니까? ',
+            showCancelButton: true,
+            confirmButtonColor: '#4b4b4b',
+            cancelButtonColor: '#ff0000',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const body = {
+                    answerInquiryNum: qaNum,
+                    answerStatus: "답변완료"
+                }
 
-            axios.post("http://localhost:8080/gaya/qa/reply/insert", body)
-                .then(req => {
-                }).catch(e => {
-                console.log(e);
-            })
+                axios.post("http://localhost:8080/gaya/qa/reply/insert", body)
+                    .then(req => {
+                    }).catch(e => {
+                    console.log(e);
+                })
+                Swal.fire(
+                    ' 문의가 종료됐습니다. ',
+                ).then(res=>{
+                    if (res.isConfirmed) {
+                        window.location.reload();
+                    }
+                })
 
-            if (res.isConfirmed) {
-                window.location.reload();
             }
         })
-
-
+    // }
+    //     Swal.fire({
+    //         icon: 'success',
+    //         title: '문의 종료',
+    //         text: ' 문의가 종료됐습니다. ',
+    //     }).then(res => {
+    //         const body = {
+    //             answerInquiryNum: qaNum,
+    //             answerStatus: "답변완료"
+    //         }
+    //
+    //         axios.post("http://localhost:8080/gaya/qa/reply/insert", body)
+    //             .then(req => {
+    //             }).catch(e => {
+    //             console.log(e);
+    //         })
+    //
+    //         if (res.isConfirmed) {
+    //             window.location.reload();
+    //         }
+    //     })
+    //
     }
 
 
@@ -90,7 +119,7 @@ function InquiryReplyWrite(props) {
                 <div className={"d-flex justify-content-between mt-3"}>
                     {
                         props.data.memberRole !== "ADMIN" ?
-                            <button className={"custom-btn2 custBtn "} onClick={answerDone}>답변 완료</button> :
+                            <button className={"custom-btn2 custBtn "} onClick={answerDone}>문의 종료</button> :
                             <div></div>
 
                     }

@@ -73,7 +73,7 @@ function MyBookingSchedule() {
                                                     <td>{response.reservationRoomName}</td>
                                                     <td>{response.reservationCheckIn}</td>
                                                     <td>{response.reservationCheckOut}</td>
-                                                    <td>{response.reservationCost}</td>
+                                                    <td>{`${response.reservationCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원`}</td>
                                                     <td>{response.reservationCustomerName}</td>
                                                 </tr>
                                             )

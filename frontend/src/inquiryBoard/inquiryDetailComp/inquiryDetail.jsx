@@ -6,10 +6,12 @@ import {useNavigate, useSearchParams} from "react-router-dom";
 import axios from "axios";
 import {AuthorityCheck, GetMemberIdByToken, SessionCheck} from "../../functiontocheck/FunctionToCheck";
 import Swal from "sweetalert2";
+import {tr} from "date-fns/locale";
 
 
 // 문의 상세 글 함수
 function InquiryDetail() {
+
 
 
     const [userParam, setUserParam] = useSearchParams();
@@ -28,22 +30,23 @@ function InquiryDetail() {
     const [reservationNum, setReservationNum] = useState(0);
     const [inquiryCreateDate, setInquiryCreateDate] = useState("");
     const [inquiryStatus, setInquiryStatus] = useState("");
+    const [isAdmin, setIsAdmin] = useState();
+    const [writeBox, setWriteBox] = useState();
 
 
-    // // 유저 정보 가져오기
-    // const getMemberInfo = async () => {
-    //     const syncMemberId = await GetMemberIdByToken()
-    //     const syncMemberIdParam = syncMemberId.data
-    //         setMemberId(syncMemberIdParam);
-    //     const syncMemberInfo = await axios.get("http://localhost:8080/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
-    //         console.log(syncMemberInfo);
-    //
-    //
-    //     console.log("유저 인포 셋타이밍");
-    //         setMemberInfo(syncMemberInfo.data);
-    //         setMemberRole(memberInfo.memberRole);
-    //
-    // }
+    // 유저 정보 가져오기
+    const getMemberInfo = async () => {
+        const syncMemberId = await GetMemberIdByToken()
+        const syncMemberIdParam = syncMemberId.data
+        setMemberId(syncMemberIdParam);
+        const syncMemberInfo = await axios.get("http://localhost:8080/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
+        // console.log(syncMemberInfo);
+
+
+        console.log("유저 인포 셋타이밍");
+        setMemberInfo(syncMemberInfo.data);
+        setMemberRole(memberInfo.memberRole);
+    }
 
     // 문의 상세 데이터 가져오기
     const getInquiryDetailData = async () => {
@@ -64,13 +67,33 @@ function InquiryDetail() {
             }
         })
         setQaDetailData(syncInquiryDetail.data);
-        console.log("QA디테일 셋");
+        // console.log("QA디테일 셋");
 
+    }
+
+    let result = false;
+    const writeBoxShow = async () => {
+
+        console.log("isAdmin 조건 실행")
+        if (inquiryStatus == "답변완료" || inquiryUserName != memberInfo.memberId) {
+            await setIsAdmin(false);
+            result = false;
+        } else {
+            await setIsAdmin(true);
+            result = true;
+        }
+
+        if (memberInfo.memberRole == "ADMIN" && inquiryStatus != "답변완료") {
+            await setIsAdmin(true);
+            result = true;
+        }
+
+        return result;
     }
 
 
     // 글 상세 페이지 들어올시 발동
-    useEffect( () => {
+    useEffect(() => {
         // 세션이 유효한지 확인
         SessionCheck();
 
@@ -87,43 +110,58 @@ function InquiryDetail() {
                         }
                     }
                 )
-
             } else {
-
-                const getMemberInfo = async () => {
-                    const syncMemberId = await GetMemberIdByToken()
-                    const syncMemberIdParam = syncMemberId.data
-                    setMemberId(syncMemberIdParam);
-                    console.log("멤버아이디 셋타이밍:" + memberId);
-                    const syncMemberInfo = await axios.get("http://localhost:8080/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
-                    console.log(syncMemberInfo);
-
-
-                    console.log("유저 인포 셋타이밍");
-                    setMemberInfo(syncMemberInfo.data);
-                    setMemberRole(memberInfo.memberRole);
-
-                }
-
-
-                 getMemberInfo()
-
+                getMemberInfo()
 
                 // getMemberInfo();
                 // setMemberRole(memberInfo.memberRole);
-        console.log(memberRole);
-        console.log("useEffect 셋 타이밍");
+                // console.log(memberRole);
+                // console.log("useEffect 셋 타이밍");
             }
         }
         getInquiryDetailData();
-        console.log("useEffect 타이밍");
+        // console.log("useEffect 타이밍");
 
 
     }, [])
 
-    // useEffect( ()=>{
-    //
-    // },[memberRole])
+    // // 화면 재 렌더링을 위한 useEffect
+    // useEffect(() => {
+    //     writeBoxShow();
+    // }, [memberInfo])
+
+    // 실제 최종 화면 렌더링을 위한 useEffect
+    useEffect(() => {
+        writeBoxShow().then(r => {
+
+            if (result) {
+                setWriteBox(<InquiryReplyWrite qaNum={userParam.get('idx')} data={memberInfo} status={inquiryStatus}/>);
+                // window.location.reload();
+            } else {
+                setWriteBox(null);
+            }
+            console.log("멤버인포의 멤버롤 : "+memberInfo.memberRole);
+            console.log("현재 답변상태: " + inquiryStatus);
+            console.log("멤버아이디: " + memberId);
+            console.log("멤버롤: " + memberRole);
+            console.log(isAdmin);
+            // console.log("admin useEffect");
+        });
+
+        // if (isAdmin) {
+        //     setWriteBox(<InquiryReplyWrite qaNum={userParam.get('idx')} data={memberInfo} status={inquiryStatus}/>);
+        //     window.location.reload();
+        // } else {
+        //     setWriteBox(null);
+        // }
+        // console.log("멤버인포의 멤버롤 : "+memberInfo.memberRole);
+        // console.log("현재 답변상태: " + inquiryStatus);
+        // console.log("멤버아이디: " + memberId);
+        // console.log("멤버롤: " + memberRole);
+        // console.log(isAdmin);
+        // // console.log("admin useEffect");
+    }, [qaDetailData])
+
 
 
     return (
@@ -179,8 +217,7 @@ function InquiryDetail() {
                 </div>
             </div>
             {
-                memberInfo.length == 0 ? null : inquiryStatus == "답변완료" ? null : inquiryUserName != memberId ? null : memberRole != "ADMIN" ? null :
-                    <InquiryReplyWrite qaNum={userParam.get('idx')} data={memberInfo} status={inquiryStatus}/>
+                writeBox
             }
         </div>
     );
