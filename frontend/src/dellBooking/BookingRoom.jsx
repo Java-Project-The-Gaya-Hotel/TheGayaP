@@ -43,7 +43,6 @@ function BookingRoom() {
             .then((req) => {
                 const {data} = req
                 setHotelRoomList(data)
-                console.log(data)
             })
             .catch(e => {
                 console.log(e)
@@ -93,7 +92,7 @@ function BookingRoom() {
                         <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
                             <div>
                                 <div className={"container"}>
-                                    <hr className={"border-0"}/>
+                                        <hr className={"border-0"}/>
                                     <h2 className={"fw-bold"}>Room Condition</h2>
                                     <hr className={"border-0"}/>
 

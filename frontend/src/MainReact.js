@@ -21,7 +21,7 @@ import MyBookingSchedule from "./dellMypage/MyBookingSchedule";
 import MyProfile from "./dellMypage/MyProfile";
 import MypageMain from "./dellMypage/MypageMain";
 import MypageNav from "./dellMypage/MypageNav";
-import ReservationPageDetail2 from "./skyReservation/ReservationPageDetail2";
+import ReservationPageDetail from "./skyReservation/ReservationPageDetail";
 import MyPageMemberOff from "./dellMypage/MyPageMemberOff";
 import MypageTest from "./test/MypageTest";
 import MyQAList from "./dellMypage/MyQAList";
@@ -46,7 +46,7 @@ function MainReact(props) {
                         <Route path={"/menu1"} element={<BeingPage/>}/>
                         <Route path={"/login"} element={<Login/>}/>
                         <Route path={"/join"} element={<Join/>}/>
-                        <Route path={"/nextreserv"} element={<ReservationPageDetail2/>}/>
+                        <Route path={"/nextreserv"} element={<ReservationPageDetail/>}/>
                         <Route path={"/qa"} element={<InquiryMain/>}>
                             <Route index element={<InquiryHotelInfo/>}/>
                             <Route path={"list"} element={<InquiryListTable/>}/>

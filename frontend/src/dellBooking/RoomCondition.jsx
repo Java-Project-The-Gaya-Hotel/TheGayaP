@@ -132,9 +132,16 @@ function RoomCondition(props) {
 
     // 방 비교 담기
     const roomCompareList = () =>{
-        if (sessionStorage.getItem("room1") )
+        if (sessionStorage.getItem("room1") == null ){
+        sessionStorage.setItem("room1",JSON.stringify(data));
+        }else if (sessionStorage.getItem("room2") == null){
+        sessionStorage.setItem("room2",JSON.stringify(data));
+        }else if (sessionStorage.getItem("room3") == null){
+        sessionStorage.setItem("room3",JSON.stringify(data));
+        }else{
+            alert("방 비교는 총 3개 까지만 가능합니다.");
+        }
 
-        sessionStorage.setItem(data.roomCode,JSON.stringify(data))
     }
 
     return (

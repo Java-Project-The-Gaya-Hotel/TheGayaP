@@ -22,7 +22,7 @@ const Information = styled.div`
   animation-duration: 3s;
 `;
 
-function ReservationPageDetail2() {
+function ReservationPageDetail() {
 
     //////////////////////////////////////////////
     // 결제 추가
@@ -32,11 +32,11 @@ function ReservationPageDetail2() {
     const endDate = searchParams.get('eDate');
     const adultCount = searchParams.get('adultCount');
     const childCount = searchParams.get('childCount');
-    const totalCount = searchParams.get('total')
+    const totalCount = searchParams.get('total');
     const hotelName = searchParams.get('hotelName');
     const hotelNum = searchParams.get('hotelNum');
     const roomCode = searchParams.get('roomCode');
-    const costSum = searchParams.get('costSum')
+    const costSum = searchParams.get('costSum');
     const nights = searchParams.get('nights');
     const roomName = searchParams.get("roomName");
     const [customerData, setCustomerData] = useState([]);
@@ -264,11 +264,11 @@ function ReservationPageDetail2() {
 
     useEffect(() => {
 
-        // if (customerTel.length === 13) {
-        //     setCustomerTel(customerTel.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
-        // }else{
-        //
-        // }
+        if (customerTel.length === 13) {
+            setCustomerTel(customerTel.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
+        }else{
+
+        }
     }, [customerTel]);
 
     // 조식 변경에 따른 총 가격 변경 useEffect
@@ -496,7 +496,7 @@ function ReservationPageDetail2() {
                                         {
                                             memberId === "" ? null : <tr>
                                                 <td>할인 후 금액 :</td>
-                                                <td><span style={style.boxSize}/>{discountCostComma} 원</td>
+                                                <td><span style={style.boxSize} className={"text-danger"}/>{discountCostComma} 원</td>
                                             </tr>
                                         }
                                         <tr>
@@ -595,4 +595,4 @@ function ReservationPageDetail2() {
     )
 }
 
-export default ReservationPageDetail2;
+export default ReservationPageDetail;
