@@ -11,6 +11,7 @@ import javax.persistence.Id;
 
 /**
  * 실제 user 테이블
+ * author 신현섭
  */
 @Getter
 @Builder

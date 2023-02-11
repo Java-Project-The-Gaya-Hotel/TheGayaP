@@ -122,7 +122,7 @@ function RoomCondition(props) {
     // 예약하기를 눌렀을 때 발동
     const clickNextE = () => {
 
-        if (chooseRoomCost !== "") {
+        if (chooseRoomCost !== "" && chooseRoomCost != null && chooseRoomCost !== 0 ) {
             navigate(`/nextreserv?sDate=${startDate}&eDate=${endDate}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}&hotelNum=${hotelNum}&roomCode=${roomCode}&nights=${nights}&costSum=${costSum}&roomName=${data.roomName}`, {replace: true});
         } else {
             Swal.fire('사용하실 방을 선택해 주세요 ');

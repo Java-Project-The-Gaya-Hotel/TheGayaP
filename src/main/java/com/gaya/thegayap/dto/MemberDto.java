@@ -4,6 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * author 정종율
+ * 회원 가입 DTO
+ */
 @Getter
 @NoArgsConstructor
 @Setter

@@ -16,6 +16,7 @@ import java.io.IOException;
 
 /**
  * JWT 토큰을 추출하여 유효성을 검사하는 클래스
+ * author 신현섭
  */
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilterBean {

@@ -6,7 +6,7 @@
 
 <!-- namespace 속성에 지정한 패키지명을 가지고 있는 파일과 아래의 xml 구문을 연동한다는 의미 -->
 <!-- ★★★ xml 파일이기 때문에 스프링 프로젝트의 전체 구조를 모르기 때문에 전체 패키지 명을 다 입력해야 함 ★★★ -->
-<mapper namespace="com.gaya.thegayap.mapper.DellMapper">
+<mapper namespace="com.gaya.thegayap.mapper.MemberMyPageMapper">
 
     <!-- My page Home Data 가져오기 -->
     <select id="getUserInfo" parameterType="String" resultType="com.gaya.thegayap.dto.MemberNonPasswordDto">
@@ -15,7 +15,7 @@
         where member_id = #{memberId}
     </select>
     <!--   회원 예약 Table 가져오기 -->
-    <select id="reservationinfo" parameterType="String" resultType="com.gaya.thegayap.dto.SinReservDto">
+    <select id="reservationInfo" parameterType="String" resultType="com.gaya.thegayap.dto.ReservationDto">
         select *
         from reservation_table
         where reservation_customer_id = #{customerId}
@@ -29,7 +29,7 @@
     </update>
 
     <!-- 내 문의 내역 조회 -->
-    <select id="myqalistable" parameterType="String" resultType="com.gaya.thegayap.dto.SinInquiryDto">
+    <select id="myqalistable" parameterType="String" resultType="com.gaya.thegayap.dto.InquiryDto">
         select *
         from inquiry_table
         where inquiry_user_name

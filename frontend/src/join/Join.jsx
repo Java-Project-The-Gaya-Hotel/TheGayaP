@@ -4,6 +4,7 @@ import axios from "axios";
 import button from "bootstrap/js/src/button";
 import {useNavigate} from "react-router-dom";
 import {ReactNode} from "react";
+import Swal from "sweetalert2";
 
 
 
@@ -156,10 +157,24 @@ function Join(props) {
 
         axios.post("http://localhost:8080/join/insert", data)
             .then((req) => {
-                console.log("데이터 전송 성공")
-                console.log(data);
+                Swal.fire({
+                    icon: 'info',
+                    title: '가입 성공!',
+                }).then(res=>{
+                    if (res.isConfirmed){
+                        window.location.href = "/login";
+                    }
+                })
             }).catch(err => {
-            console.log(`데이터 전송 실패 $Z{err}`)
+            Swal.fire({
+                icon: 'warning',
+                title: '가입 실패!',
+                text: ' 알수없는 오류. ',
+            }).then(res=>{
+                if (res.isConfirmed){
+                    window.location.href = "/join";
+                }
+            })
         })
 
     }

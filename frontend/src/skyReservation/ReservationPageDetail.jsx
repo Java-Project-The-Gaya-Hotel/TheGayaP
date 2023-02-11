@@ -63,7 +63,7 @@ function ReservationPageDetail() {
         if (sessionStorage.getItem("token") != null) {
             GetMemberIdByToken().then(response => {
                 setMemberId(response.data);
-                axios.get("http://localhost:8080/gaya/userinfo", {
+                axios.get("http://localhost:8080/member/userinfo", {
                     params: {
                         memberId: response.data,
                     }
@@ -210,7 +210,14 @@ function ReservationPageDetail() {
                     Swal.fire({
                         icon: 'info',
                         title: '결제 완료!',
-                        text: ' 예약이 완료 됐습니다. '
+                        html: `예약이 완료 됐습니다. <br/>
+                         예약 번호 : ${merchant_uid} <br/>
+                         예약 체크인 : ${startDate} <br/>
+                         
+                         예약 체크아웃 : ${endDate} <br/>
+                         예약 하신 방 : ${roomName} <br/>
+                         결제 금액 : ${resultSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
+                         `
                     }).then(result => {
                         if (result.isConfirmed) {
                             window.location.href = "/";
@@ -264,7 +271,7 @@ function ReservationPageDetail() {
 
     useEffect(() => {
 
-        if (customerTel.length === 13) {
+        if (customerTel.length === 11) {
             setCustomerTel(customerTel.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
         }else{
 

@@ -4,12 +4,13 @@ import lombok.*;
 
 /**
  * 방 예약 dto
+ * reservation, cutomer, member Table 에 연관됨
  */
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SinReservDto {
+public class ReservationDto {
 
     private long reservationNum;
     private int reservationHotelNum;
@@ -32,6 +33,8 @@ public class SinReservDto {
     private String customerId;
     private String customerEmail;
     private String customerTel;
+
+    // member_table 포인트 적립
     private int earnPoint;
 
 

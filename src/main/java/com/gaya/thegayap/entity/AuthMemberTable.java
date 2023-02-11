@@ -12,6 +12,7 @@ import java.util.Collection;
 
 /**
  * 인증을 위한 Auth테이블
+ * author 신현섭
  */
 @Getter
 @Builder
