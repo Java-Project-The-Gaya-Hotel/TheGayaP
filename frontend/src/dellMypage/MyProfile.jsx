@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {AuthorityCheck, GetMemberIdByToken, SessionCheck} from "../functiontocheck/FunctionToCheck";
 import axios from "axios";
@@ -64,6 +64,27 @@ function MyProfile() {
 
     }, []);
 
+    const [email, setEmail] = useState("")
+    const [isEmail, setIsMemberEmail] = useState(false)
+    const [emailMes, setMemberEmailMes] = useState("")
+    const onMemberEmail = (e) => {
+        const currentEmail = e.target.value;
+        setMemberEmail(currentEmail);
+        const emailRegExp =
+            /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+
+        if (!emailRegExp.test(currentEmail)) {
+
+            setMemberEmailMes("이메일 형식으로 작성해주세요.");
+            setIsMemberEmail(false);
+        } else {
+            setMemberEmailMes("");
+            setIsMemberEmail(true);
+        }
+    };
+
+
+
     const btnClick = () => {
         axios.put("http://localhost:8080/mypage/update",
             {
@@ -104,7 +125,7 @@ function MyProfile() {
                                     </div>
                                     <div className={"row justify-content-center my-2"}>
                                         <label className={"col-2"}> E-Mail : </label>
-                                        <input style={styles.inputBox} className={"form-control rounded-0 col-2"} value={memberEmail} onChange={(e) => setMemberEmail(e.target.value)}/>
+                                        <input style={styles.inputBox} className={"form-control rounded-0 col-2"} value={memberEmail} onChange={onMemberEmail}/>
                                     </div>
                                     <div className={"row justify-content-center my-2"}>
                                         <label className={"col-2"}> PH : </label>

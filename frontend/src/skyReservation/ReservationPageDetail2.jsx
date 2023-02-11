@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
@@ -229,14 +229,52 @@ function ReservationPageDetail2() {
             width: "300px"
         }
     }
+    // 결제시 오류
+    const [number, setNumber] = useState("")
+    const [numberMes, setNumberMes] = useState("")
+    const [isNumber, setIsNumber] = useState(false)
+    const [customerNameMes, setCustomerNameMes] = useState("")
+    const [name, setName] = useState("")
+    const [isCustomerName, setIsCustomerName] = useState(false)
 
 
-    const onNumHandler = (event) => {
-        setCustomerTel(event.target.value)
-    }
-    const onNameHandler = (event) => {
-        setCustomerName(event.target.value)
-    }
+    const onNumHandler =  useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const numberRegex = /^([0-9]{3})-?([0-9]{4})-?([0-9]{4})$/;
+        const numberCurrent = e.target.value;
+        setCustomerTel(numberCurrent);
+
+        if (!numberRegex.test(numberCurrent)){
+            setNumberMes('올바른 전화번호를 입력해주세요')
+            setIsNumber(false)
+        }else {
+            setNumberMes("")
+            setIsNumber(true)
+        }
+    },[])
+    const onNameHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const nameRegex =  /^(?=.*[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{2,10}$/
+        const nameCurrent = e.target.value
+        setCustomerName(nameCurrent)
+
+        if (!nameRegex.test(nameCurrent)) {
+            setCustomerNameMes('올바른 이름을 입력해주세요')
+            setIsCustomerName(false)
+        } else {
+            setCustomerNameMes('')
+            setIsCustomerName(true)
+        }
+    }, [])
+    // const onNameHandler = (e:React.ChangeEvent) => {
+    //     const nameRegex =  /^(?=.*[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|a-z|A-Z]).{2,10}$/
+    //     setCustomerName (e.target.value)
+    //     if (!nameRegex.test(nameCurrent)) {
+    //                 setNameMes('올바른 이름을 입력해주세요')
+    //                 setIsName(false)
+    //             } else {
+    //                 setNameMes('')
+    //                 setIsName(true)
+    //             }
+    // }
     const onEmailHandler = (event) => {
         setCustomerEmail(event.target.value)
     }
@@ -369,7 +407,7 @@ function ReservationPageDetail2() {
 
                                         <tr>
                                             <td><em className="ast">*</em> 이름 :</td>
-                                            <td><input onChange={onNameHandler} style={style.boxSize} type={"text"} className={"id form-control rounded-0"} autoComplete={"off"} placeholder={"Please Input Your Name"} value={customerName}/>
+                                            <td><input onChange={onNameHandler} style={style.boxSize} type={"text"} className={"id form-control rounded-0"} autoComplete={"off"} placeholder={"Please Input Your Name"} value={name}/>
                                             </td>
                                         </tr>
                                         <tr>
