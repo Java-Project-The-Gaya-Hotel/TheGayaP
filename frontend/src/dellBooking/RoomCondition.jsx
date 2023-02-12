@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import 'animate.css';
 import styled from 'styled-components'
 import "../dellMain/dellmainCss/BtnDateChoose.css"
-import RoomCompareModal from "./RoomCompareModal";
 
 //stay, hotel component 명명 위해 나눠둠.
 const HotelArea = styled.div`
@@ -130,19 +129,19 @@ function RoomCondition(props) {
     };
 
 
-    // 방 비교 담기
-    const roomCompareList = () =>{
-        if (sessionStorage.getItem("room1") == null ){
-        sessionStorage.setItem("room1",JSON.stringify(data));
-        }else if (sessionStorage.getItem("room2") == null){
-        sessionStorage.setItem("room2",JSON.stringify(data));
-        }else if (sessionStorage.getItem("room3") == null){
-        sessionStorage.setItem("room3",JSON.stringify(data));
-        }else{
-            alert("방 비교는 총 3개 까지만 가능합니다.");
-        }
-
-    }
+    // // 방 비교 담기
+    // const roomCompareList = () =>{
+    //     if (sessionStorage.getItem("room1") == null ){
+    //     sessionStorage.setItem("room1",JSON.stringify(data));
+    //     }else if (sessionStorage.getItem("room2") == null){
+    //     sessionStorage.setItem("room2",JSON.stringify(data));
+    //     }else if (sessionStorage.getItem("room3") == null){
+    //     sessionStorage.setItem("room3",JSON.stringify(data));
+    //     }else{
+    //         alert("방 비교는 총 3개 까지만 가능합니다.");
+    //     }
+    //
+    // }
 
     return (
 
@@ -157,9 +156,9 @@ function RoomCondition(props) {
                             aria-controls="example-collapse-text" aria-expanded={cOpen}><span
                         className="text">객실 찾기</span> Find Room
                     </button>
-                    <button className={"btnDate"} role={"button"} onClick={roomCompareList}><span
-                        className="text">객실 비교</span> Compare Room
-                    </button>
+                    {/*<button className={"btnDate"} role={"button"} onClick={roomCompareList}><span*/}
+                    {/*    className="text">객실 비교</span> Compare Room*/}
+                    {/*</button>*/}
                 </div>
             </div>
 
