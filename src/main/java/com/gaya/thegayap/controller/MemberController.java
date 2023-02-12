@@ -97,22 +97,22 @@ public class MemberController {
 //        return checkPoints;
 //    }
 //
-//    // 프로필 수정페이지 프로필 조회
-//    @GetMapping("/mypage/profile")
-//    public Object profile(@RequestParam("memberId") String memberId) throws Exception {
-//        MemberNonPasswordDto memberDto = memberService.profile(memberId);
-//        return memberDto;
-//    }
-//
-//
-//    // 프로필 수정
-//    @PutMapping("/mypage/update")
-//    public void updateProfile(@RequestBody MemberNonPasswordDto member, @RequestParam("memberId") String memberId) throws Exception {
-//        member.setMemberId(memberId);
-//        memberService.updateProfile(member);
-//    }
+    // 프로필 수정페이지 프로필 조회
+    @GetMapping("/mypage/profile")
+    public Object profile(@RequestParam("memberId") String memberId) throws Exception {
+        MemberNonPasswordDto memberDto = memberService.profile(memberId);
+        return memberDto;
+    }
 
-//      안쓰는 코드
+
+    // 프로필 수정
+    @PutMapping("/mypage/update")
+    public void updateProfile(@RequestBody MemberNonPasswordDto member, @RequestParam("memberId") String memberId) throws Exception {
+        member.setMemberId(memberId);
+        memberService.updateProfile(member);
+    }
+
+
 
     /**
      * 이름과 이메일로 아이디 찾기

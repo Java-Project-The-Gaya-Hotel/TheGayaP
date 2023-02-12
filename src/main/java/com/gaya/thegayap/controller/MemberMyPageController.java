@@ -21,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/mypage")
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:3000")
 public class MemberMyPageController {
 
     private final MemberMyPageService memberMyPageService;
