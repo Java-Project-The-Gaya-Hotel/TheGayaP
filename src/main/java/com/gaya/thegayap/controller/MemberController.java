@@ -199,10 +199,4 @@ public class MemberController {
         return memberService.profile(memberId);
     }
 
-
-    /**
-     * 이메일 인증으로 비밀번호 변경
-     */
-
-
 }

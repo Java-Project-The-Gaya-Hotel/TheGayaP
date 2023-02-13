@@ -20,7 +20,7 @@ function MyQAList() {
             GetMemberIdByToken().then(response => {
                 setCustomerId(response.data)
                 axios.get(
-                    "http://localhost:8080/mypage/myqalistable",
+                    "http://localhost:8080/mypage/myqalist",
                     {
                         params: {
                             memberId: response.data,

@@ -7,12 +7,12 @@ import ModalStyle from "./ModalCss.css"
 function Modal(props) {
 
   function closeModal() {
-    props.closeModal();
+    props.setModalOpen(false);
   }
 
   return (
-    <div className={"Modal"} onClick={closeModal}>
-      <div className={"modalBody"} onClick={(e) => e.stopPropagation()}>
+    <div className={"Modal"}>
+      <div className={"modalBody"}>
         <div>
           <button id={"modalCloseBtn"} onClick={closeModal}>
             ✖
