@@ -78,10 +78,10 @@ function MyBookingSchedule() {
                                                 <tr className={"small"} key = {index}>
                                                     <td><small>{response.reservationDate}</small></td>
                                                     <td>{response.reservationPeople}</td>
-                                                    <td>{response.reservationRoomName}</td>
+                                                    <td><small>{response.reservationRoomName}</small></td>
                                                     <td>{response.reservationCheckIn}</td>
                                                     <td>{response.reservationCheckOut}</td>
-                                                    <td>{`${response.reservationCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원`}</td>
+                                                    <td><small>{`${response.reservationCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원`}</small></td>
                                                     <td>{response.reservationCustomerName}</td>
                                                 </tr>
                                             )
