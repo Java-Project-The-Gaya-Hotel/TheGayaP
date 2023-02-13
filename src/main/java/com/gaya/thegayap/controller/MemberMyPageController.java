@@ -1,6 +1,7 @@
 package com.gaya.thegayap.controller;
 
 
+import com.gaya.thegayap.dto.MemberLoginRequestDto;
 import com.gaya.thegayap.dto.MemberNonPasswordDto;
 import com.gaya.thegayap.dto.InquiryDto;
 import com.gaya.thegayap.dto.ReservationDto;
@@ -73,7 +74,7 @@ public class MemberMyPageController {
      * @return
      */
     @GetMapping("/myqalistable")
-    public InquiryDto myQaListTable(@RequestParam ("memberId") String memberId){
+    public List<InquiryDto> myQaListTable(@RequestParam ("memberId") String memberId){
         return memberMyPageService.myQaListTable(memberId);
     }
 
@@ -85,11 +86,26 @@ public class MemberMyPageController {
      * @param memberId
      * @throws Exception
      */
-    @PutMapping("/mypage/update")
+    @PutMapping("/update")
     public void updateProfile(@RequestBody MemberNonPasswordDto member, @RequestParam("memberId") String memberId) throws Exception {
         member.setMemberId(memberId);
         memberMyPageService.updateProfile(member);
     }
 
 
+    /**
+     * 마이페이지 비밀번호 변경
+     * author 신현섭
+     * @param memberLoginRequestDto
+     */
+    @PutMapping("/changepw")
+    public void pwCheck(@RequestBody MemberLoginRequestDto memberLoginRequestDto){
+
+        try{
+            memberMyPageService.changePw(memberLoginRequestDto);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

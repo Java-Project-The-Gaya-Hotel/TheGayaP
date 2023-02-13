@@ -1,11 +1,11 @@
-// FindId.jsx
+// FindPW.jsx
 import React, {useState} from "react";
 import axios from "axios";
 import Modal from "./Modal";
 import "../loginCss/ButtonCss.css"
 
 
-function FindId(props) {
+function FindPw(props) {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -87,4 +87,4 @@ function FindId(props) {
 }
 
 
-export default FindId;
+export default FindPw;
