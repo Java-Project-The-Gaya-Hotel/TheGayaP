@@ -38,7 +38,7 @@ function MyBookingSchedule() {
                     setCheckListTable(response.data);
                     }
 
-                }).catch(e=>{
+                }).catch(()=>{
                     setCheckListTable(null);
                 })
             })
@@ -87,7 +87,7 @@ function MyBookingSchedule() {
                                             )
 
                                             })
-                                            : <tr><td className={"text-center"}>예약 하신 정보가 없습니다.</td></tr>
+                                            : <tr><td className={"text-center"} colSpan={7}>예약 하신 정보가 없습니다.</td></tr>
                                         }
 
                                     </tbody>

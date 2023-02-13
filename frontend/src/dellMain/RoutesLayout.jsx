@@ -4,7 +4,7 @@ import MainLogo from "../mainImg/headerTitle.svg"
 import "./dellmainCss/LayoutCss.css"
 import Menucon from "../mainImg/icons8-key.svg"
 import MainFooter from "./MainFooter";
-import {SessionCheck} from "../functiontocheck/FunctionToCheck";
+import {GetMemberIdByToken, SessionCheck} from "../functiontocheck/FunctionToCheck";
 import Swal from "sweetalert2";
 
 
@@ -24,24 +24,35 @@ const styles = {
 
 function RoutesLayout(props) {
 
-    // const [sessionValid, setSessionValid] = useState(false);
-    //
-    // useEffect(()=>{
-    //     SessionCheck();
-    // },[sessionValid])
+    const [isLogin, setIsLogin] = useState();
+    // let isLogin ;
+    const [memberId, setMemberId] = useState();
+    const [memberBox, setMemberBox] = useState();
 
     useEffect(() => {
         SessionCheck();
+        if (sessionStorage.getItem("token") != null) {
+            // isLogin = true;
+            setIsLogin(true);
+            GetMemberIdByToken().then(res => {
+                setMemberId(res.data);
+            })
+        } else {
+            // isLogin = false;
+            setIsLogin(false);
+        }
     }, [])
 
-    const sessionValidCheck = () => {
-        if (sessionStorage.getItem("loginInfo") != null) {
-            SessionCheck();
+    useEffect(() => {
+        memberIdValid();
+    }, [isLogin, memberId])
+
+    const memberIdValid = () => {
+        if (memberId != null && memberId !== "" && memberId !== undefined) {
+            setMemberBox(<div className={"fs-6"}><span className={"fw-bolder"}>{memberId}</span> 님 환영합니다.</div>)
+        } else {
+            setMemberBox(null);
         }
-        // if(SessionCheck()){
-        //     setSessionValid(true);
-        // }
-        //     setSessionValid(false);
     }
 
 
@@ -92,6 +103,9 @@ function RoutesLayout(props) {
                             <li className={"col"}>{sessionStorage.getItem("loginInfo") != null ?
                                 <Link to={"/mypage"}>My Page</Link> : null}  </li>
                         </ul>
+                        <div className={"text-end p-3"}>{
+                            memberBox
+                        }</div>
                     </div>
                     <hr style={styles.HrHidden}/>
                     <div className="text-center border-bottom border-opacity-25 pb-3">

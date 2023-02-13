@@ -24,8 +24,6 @@ function LoginMember(props) {
 ////////////////////////////////////////////////////
 
 
-    //
-    //신현섭 코드
     const [memberId, setMemberId] = useState("");
     const [memberPw, setMemberPw] = useState("");
     const [isRemember, setIsRemember] = useState(false);
@@ -33,7 +31,7 @@ function LoginMember(props) {
     const navi = useNavigate();
 
 
-    // 아이디 저장용 코드
+    // 쿠키 아이디 저장
     useEffect(() => {
         if (cookies.rememberId !== undefined) {
             setMemberId(cookies.rememberId);
@@ -41,6 +39,7 @@ function LoginMember(props) {
         }
     }, []);
 
+    // 아이디 저장 체크박스
     const handleOnChangeRemember = (e) => {
         setIsRemember(e.target.checked);
         if (e.target.checked) {
@@ -59,7 +58,7 @@ function LoginMember(props) {
     }
 
 
-    // 로그인 버튼 클릭시 발동하는 함수
+    // 로그인 함수
     const login = async (id, pw) => {
         try {
             // 로그인 정보 보내는 axios
@@ -93,7 +92,7 @@ function LoginMember(props) {
     }
 
 
-    // 로그인 클릭 버튼 이벤트
+    // 로그인 이벤트
     const loginUser = () => {
         if (memberId === "") {
             Swal.fire('아이디를 입력해 주세요!')

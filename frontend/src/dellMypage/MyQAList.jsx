@@ -28,6 +28,8 @@ function MyQAList() {
                     }
                 ).then(response => {
                     setCheckQAList(response.data)
+                }).catch(()=>{
+                    setCheckQAList(null);
                 })
             })
         }
@@ -55,7 +57,9 @@ function MyQAList() {
 
                                     </thead>
                                     <tbody>
-                                    {checkQAList.map((item) => {
+                                    {
+                                        checkQAList != null ?
+                                        checkQAList.map((item) => {
                                         return (
 
                                             <tr key={item.inquiryNum} style={{cursor: "pointer"}} onClick={()=>{navi(`/qa/list/detail?idx=${item.inquiryNum}`);}}>
@@ -65,7 +69,9 @@ function MyQAList() {
                                                 <td>{item.inquiryStatus}</td>
                                             </tr>
                                         )
-                                    })}
+                                    })
+                                            : <tr><td className={"text-center"} colSpan={4}>문의 하신 정보가 없습니다.</td></tr>
+                                    }
                                     </tbody>
 
 

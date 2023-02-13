@@ -96,13 +96,13 @@ public class MemberController {
 //        List<JeongCustomerDto> checkPoints = memberService.checkPoints(customerId);
 //        return checkPoints;
 //    }
-
-    // 프로필 수정페이지 프로필 조회
-    @GetMapping("/mypage/profile")
-    public Object profile(@RequestParam("memberId") String memberId) throws Exception {
-        MemberNonPasswordDto memberDto = memberService.profile(memberId);
-        return memberDto;
-    }
+//
+//    // 프로필 수정페이지 프로필 조회
+//    @GetMapping("/mypage/profile")
+//    public Object profile(@RequestParam("memberId") String memberId) throws Exception {
+//        MemberNonPasswordDto memberDto = memberService.profile(memberId);
+//        return memberDto;
+//    }
 
 
 
