@@ -26,6 +26,8 @@ public class MemberMyPageController {
 
     private final MemberMyPageService memberMyPageService;
 
+
+
     /**
      * 멤버 아이디로 마이 페이지의 유저 정보 불러오기
      * author 박예린
@@ -61,6 +63,7 @@ public class MemberMyPageController {
      */
     @PutMapping("/withdrawalMember")
     public void withdrawalMember(@RequestParam ("memberId") String memberId){
+        memberMyPageService.withdrawalMember(memberId);
     }
 
     /**
@@ -72,6 +75,20 @@ public class MemberMyPageController {
     @GetMapping("/myqalistable")
     public InquiryDto myQaListTable(@RequestParam ("memberId") String memberId){
         return memberMyPageService.myQaListTable(memberId);
+    }
+
+
+    /**
+     * 프로필 수정
+     * author 박예린,정종율
+     * @param member
+     * @param memberId
+     * @throws Exception
+     */
+    @PutMapping("/mypage/update")
+    public void updateProfile(@RequestBody MemberNonPasswordDto member, @RequestParam("memberId") String memberId) throws Exception {
+        member.setMemberId(memberId);
+        memberMyPageService.updateProfile(member);
     }
 
 

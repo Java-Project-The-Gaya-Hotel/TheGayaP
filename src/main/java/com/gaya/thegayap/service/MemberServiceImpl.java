@@ -45,10 +45,7 @@ public class MemberServiceImpl implements MemberService {
         return memberMapper.checkPoints(customerId);
     }
 
-    @Override
-    public void updateProfile(MemberNonPasswordDto member) throws Exception {
-        memberMapper.updateProfile(member);
-    }
+
 
     @Override
     public String findId(String memberName, String memberEmail) throws Exception {

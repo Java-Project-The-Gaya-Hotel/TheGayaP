@@ -11,8 +11,6 @@ public interface MemberService {
     List<NotMemberReservDto> resvList(String customerId) throws Exception;
     MemberNonPasswordDto profile(String memberId) throws Exception;
     List<CustomerDto> checkPoints(String customerId) throws Exception;
-    void updateProfile(MemberNonPasswordDto member) throws Exception;
-
 
     String findId(String memberName, String memberEmail) throws Exception;
 

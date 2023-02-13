@@ -75,7 +75,7 @@ public class MemberController {
 
 //      안쓰는 코드
 
-//    마이페이지
+////    마이페이지
 //    // 예약확인 조회
 //    @GetMapping("/mypage/resv")
 //    public Object myResv(@RequestParam("customerId") String customerId) throws Exception {
@@ -96,7 +96,7 @@ public class MemberController {
 //        List<JeongCustomerDto> checkPoints = memberService.checkPoints(customerId);
 //        return checkPoints;
 //    }
-//
+
     // 프로필 수정페이지 프로필 조회
     @GetMapping("/mypage/profile")
     public Object profile(@RequestParam("memberId") String memberId) throws Exception {
@@ -105,12 +105,7 @@ public class MemberController {
     }
 
 
-    // 프로필 수정
-    @PutMapping("/mypage/update")
-    public void updateProfile(@RequestBody MemberNonPasswordDto member, @RequestParam("memberId") String memberId) throws Exception {
-        member.setMemberId(memberId);
-        memberService.updateProfile(member);
-    }
+
 
 
 

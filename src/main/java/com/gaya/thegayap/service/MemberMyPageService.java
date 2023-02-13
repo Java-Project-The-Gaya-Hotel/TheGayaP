@@ -32,7 +32,15 @@ public class MemberMyPageService {
 
 
 
-    public void withdrawalMember(String memberId) {}
+    public void withdrawalMember(String memberId) {
+        memberMyPageMapper.withdrawalMember(memberId);
+    }
 
     public InquiryDto myQaListTable(String memberId) {return memberMyPageMapper.myQaListTable(memberId);}
+
+
+
+    public void updateProfile(MemberNonPasswordDto member) throws Exception {
+        memberMyPageMapper.updateProfile(member);
+    }
 }

@@ -53,13 +53,6 @@
         ORDER BY resv.reservation_num DESC
     </select>
 
-<!--    프로필 수정 -->
-    <update id="updateProfile" parameterType="com.gaya.thegayap.dto.MemberNonPasswordDto">
-        UPDATE member_table
-        SET member_email = #{memberEmail},
-            member_tel  = #{memberTel}
-        WHERE member_id  = #{memberId}
-    </update>
 
 <!--    비밀번호 변경 -->
     <update id="changePw" parameterType="com.gaya.thegayap.dto.MemberDto">
@@ -67,15 +60,6 @@
         SET member_pw = #{memberPw}
         WHERE member_id  = #{memberId} AND member_pw = #{memberPw}
     </update>
-
-<!--    회원 탈퇴 -->
-    <update id="withdrawalMember" parameterType="com.gaya.thegayap.dto.MemberNonPasswordDto">
-        UPDATE member_table
-        SET member_withdrawal_yn = 'Y'
-        WHERE member_id = #{memberId}
-    </update>
-
-
 
 
 <!--    아이디 찾기 -->

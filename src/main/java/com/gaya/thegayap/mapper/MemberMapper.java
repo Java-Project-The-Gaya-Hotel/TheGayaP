@@ -19,7 +19,7 @@ public interface MemberMapper {
 
     List<CustomerDto> checkPoints(String customerId) throws Exception;
 
-    void updateProfile(MemberNonPasswordDto member) throws Exception;
+
 
 
     String findId(String memberName, String memberEmail) throws Exception;

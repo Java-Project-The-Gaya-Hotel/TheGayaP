@@ -20,13 +20,6 @@
         from reservation_table
         where reservation_customer_id = #{customerId}
     </select>
-    <!-- 회원 탈퇴-->
-    <update id="withdrawalMember">
-        UPDATE member_table
-        SET member_deleted_yn = 'Y',
-            member_delete_date=now()
-        WHERE member_id = #{memberId}
-    </update>
 
     <!-- 내 문의 내역 조회 -->
     <select id="myqalistable" parameterType="String" resultType="com.gaya.thegayap.dto.InquiryDto">
@@ -34,4 +27,21 @@
         from inquiry_table
         where inquiry_user_email=#{memberEmail}
     </select>
+
+    <!--    회원 탈퇴 -->
+    <update id="withdrawalMember" parameterType="String">
+        UPDATE member_table
+        SET member_withdrawal_yn = 'Y'
+            member_delete_date=now()
+        WHERE member_id = #{memberId}
+    </update>
+
+    <!--    프로필 수정 -->
+    <update id="updateProfile" parameterType="com.gaya.thegayap.dto.MemberNonPasswordDto">
+        UPDATE member_table
+        SET member_email = #{memberEmail},
+            member_tel  = #{memberTel}
+        WHERE member_id  = #{memberId}
+    </update>
+
 </mapper>

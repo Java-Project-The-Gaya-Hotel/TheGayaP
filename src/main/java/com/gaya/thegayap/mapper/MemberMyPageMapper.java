@@ -23,4 +23,7 @@ public interface MemberMyPageMapper {
     void withdrawalMember(String memberId);
 
     InquiryDto myQaListTable(String memberId);
+
+
+    void updateProfile(MemberNonPasswordDto member) throws Exception;
 }
