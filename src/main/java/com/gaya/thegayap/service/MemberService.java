@@ -17,7 +17,7 @@ public interface MemberService {
 
     void insertInquiry(InquiryDto inquiryDto) throws Exception;
 
-    List<NotMemberReservDto> notMemberResv(String customerName, int reservationNum) throws Exception;
+    List<NotMemberReservDto> notMemberResv(String customerName, long reservationNum) throws Exception;
 
     List<MemberNonPasswordDto> inquiryUserInfo(String userName) throws Exception;
 

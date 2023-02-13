@@ -59,7 +59,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<NotMemberReservDto> notMemberResv(String customerName, int reservationNum) throws Exception {
+    public List<NotMemberReservDto> notMemberResv(String customerName, long reservationNum) throws Exception {
         return memberMapper.notMemberResv(customerName, reservationNum);
     }
 

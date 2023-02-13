@@ -133,7 +133,7 @@ public class MemberController {
      * @throws Exception
      */
     @GetMapping("/login/findResv")
-    public Object notMemberResvList(@RequestParam("customerName") String customerName, @RequestParam("reservationNum") int reservationNum) throws Exception {
+    public Object notMemberResvList(@RequestParam("customerName") String customerName, @RequestParam("reservationNum") long reservationNum) throws Exception {
         List<NotMemberReservDto> notMemberResvList = memberService.notMemberResv(customerName, reservationNum);
 
         if (notMemberResvList.isEmpty()) return 0;
@@ -198,5 +198,11 @@ public class MemberController {
     public MemberNonPasswordDto getUserInfo(@RequestParam ("memberId")String memberId) throws Exception {
         return memberService.profile(memberId);
     }
+
+
+    /**
+     * 이메일 인증으로 비밀번호 변경
+     */
+
 
 }

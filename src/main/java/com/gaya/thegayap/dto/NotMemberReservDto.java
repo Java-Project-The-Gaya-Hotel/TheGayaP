@@ -2,6 +2,7 @@ package com.gaya.thegayap.dto;
 
 import lombok.Data;
 
+
 /**
  * 비회원 예약 확인을 위한 DTO
  */
@@ -20,7 +21,7 @@ public class NotMemberReservDto {
     private int reservationMealChild;
     private int reservationPeople;
     private int reservationCost;
-    private int reservationRequest;
+    private String reservationRequest;
 
     private String hotelName;
 }
