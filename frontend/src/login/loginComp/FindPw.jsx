@@ -16,11 +16,7 @@ function FindPw(props) {
     const [confirmPw, setConfirmPw] = useState("");
 
     const [isPassEmail, setIsPassEmail] = useState(true);
-
-
-    function closeModal() {
-        props.closeModal();
-    }
+    const [issendEmail, setIsSendEmail] = useState(false);
 
 
     // 이메일 인증 보내기
@@ -36,6 +32,7 @@ function FindPw(props) {
                 } else {
                     setEmailConfirm(req.data);
                     Swal.fire("인증번호를 전송하였습니다.")
+                    setIsSendEmail(true);
                 }
 
             }).catch(err => {
@@ -45,14 +42,20 @@ function FindPw(props) {
 
     // 인증 번호 확인
     const compareCheckCode = () => {
-        if (emailConfirmCode === memberConfirmCode) {
-            Swal.fire({html:"인증이 성공했습니다<br/>비밀번호를 변경해 주세요."}).then(res => {
-                if (res.isConfirmed) {
-                    setIsPassEmail(false);
-                }
-            })
+        if (!issendEmail) {
+            Swal.fire({
+                icon: 'warning',
+                title:"인증번호 전송을 먼저 해주세요."});
         } else {
-            Swal.fire("인증번호가 일치하지 않습니다.");
+            if (emailConfirmCode === memberConfirmCode) {
+                Swal.fire({html: "인증이 성공했습니다<br/>비밀번호를 변경해 주세요."}).then(res => {
+                    if (res.isConfirmed) {
+                        setIsPassEmail(false);
+                    }
+                })
+            } else {
+                Swal.fire("인증번호가 일치하지 않습니다.");
+            }
         }
     }
 
@@ -86,7 +89,7 @@ function FindPw(props) {
     return (
         <div className={"container"}>
             {isPassEmail ?
-                <div className={"p-3"}>
+                <div key={"1"} className={"p-3"}>
 
                     <div className={"row mb-1 me-2"}>
                         <label className={"form-label col-sm-3 my-auto fw-bold"} htmlFor={"name"}>아이디</label>
@@ -118,15 +121,18 @@ function FindPw(props) {
                                 onClick={compareCheckCode}>인증 확인
                         </button>
                     </div>
-                </div> :
-                <div>
+                </div>
+
+                :
+
+                <div key={"2"}>
                     <div className={"d-grid justify-content-center p-5"}>
                         <label className={"form-label col my-auto fw-bold"}> 변경 하실 비밀번호 </label>
-                        <input type={"text"} className={"rounded-0 col-sm m-2"} id={"changePw"} onChange={(e) => {
+                        <input type={"password"} className={"rounded-0 col-sm m-2"} onChange={(e) => {
                             setMemberPw(e.target.value)
                         }}/>
                         <label className={"form-label col my-auto fw-bold"}> 비밀번호 확인 </label>
-                        <input type={"text"} className={"rounded-0 col-sm m-2"} id={"confirmPw"}  onChange={(e) => {
+                        <input type={"password"} className={"rounded-0 col-sm m-2"} onChange={(e) => {
                             setConfirmPw(e.target.value)
                         }}/>
                     </div>
