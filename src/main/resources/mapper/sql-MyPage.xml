@@ -22,10 +22,10 @@
     </select>
 
     <!-- 내 문의 내역 조회 -->
-    <select id="myqalistable" parameterType="String" resultType="com.gaya.thegayap.dto.InquiryDto">
+    <select id="myQaListTable" parameterType="String" resultType="com.gaya.thegayap.dto.InquiryDto">
         select *
         from inquiry_table
-        where inquiry_user_email=#{memberEmail}
+        where inquiry_user_name=#{memberId}
     </select>
 
     <!--    회원 탈퇴 -->
@@ -41,6 +41,12 @@
         UPDATE member_table
         SET member_email = #{memberEmail},
             member_tel  = #{memberTel}
+        WHERE member_id  = #{memberId}
+    </update>
+    <!--    비밀번호 수정 -->
+    <update id="changePw" parameterType="String">
+        UPDATE member_table
+        SET member_pw = #{encodePw}
         WHERE member_id  = #{memberId}
     </update>
 

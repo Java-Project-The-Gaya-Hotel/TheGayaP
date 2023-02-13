@@ -22,8 +22,10 @@ public interface MemberMyPageMapper {
 
     void withdrawalMember(String memberId);
 
-    InquiryDto myQaListTable(String memberId);
+    List<InquiryDto> myQaListTable(String memberId);
 
 
     void updateProfile(MemberNonPasswordDto member) throws Exception;
+
+    void changePw(String memberId, String encodePw);
 }

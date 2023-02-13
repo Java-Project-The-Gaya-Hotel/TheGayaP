@@ -45,7 +45,6 @@ public class MemberLoginController {
         }
     }
 
-
     /**
      * 토큰 유효성 간단 통과 확인 컨트롤러
      * author 신현섭

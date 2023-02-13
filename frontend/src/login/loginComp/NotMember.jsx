@@ -9,7 +9,7 @@ function NotMember(props){
     const [resvList, setResvList] = useState([]);
     const [findResv, setFindResv] = useState(false);
     const [customerName, setCustomerName] = useState("");
-    const [reservationNum, setReservationNum] = useState("");
+    const [reservationNum, setReservationNum] = useState(0);
 
     const customerNameHandler = (e) => {
         setCustomerName(e.target.value);
