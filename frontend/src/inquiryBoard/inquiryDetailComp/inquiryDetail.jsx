@@ -40,10 +40,10 @@ function InquiryDetail() {
         const syncMemberIdParam = syncMemberId.data
         setMemberId(syncMemberIdParam);
         const syncMemberInfo = await axios.get("http://localhost:8080/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
-        // console.log(syncMemberInfo);
 
 
-        console.log("유저 인포 셋타이밍");
+
+
         setMemberInfo(syncMemberInfo.data);
         setMemberRole(memberInfo.memberRole);
     }
@@ -67,14 +67,12 @@ function InquiryDetail() {
             }
         })
         setQaDetailData(syncInquiryDetail.data);
-        // console.log("QA디테일 셋");
 
     }
 
     let result = false;
     const writeBoxShow = async () => {
 
-        console.log("isAdmin 조건 실행")
         if (inquiryStatus == "답변완료" || inquiryUserName != memberInfo.memberId) {
             await setIsAdmin(false);
             result = false;
@@ -113,22 +111,14 @@ function InquiryDetail() {
             } else {
                 getMemberInfo()
 
-                // getMemberInfo();
-                // setMemberRole(memberInfo.memberRole);
-                // console.log(memberRole);
-                // console.log("useEffect 셋 타이밍");
             }
         }
         getInquiryDetailData();
-        // console.log("useEffect 타이밍");
 
 
     }, [])
 
-    // // 화면 재 렌더링을 위한 useEffect
-    // useEffect(() => {
-    //     writeBoxShow();
-    // }, [memberInfo])
+
 
     // 실제 최종 화면 렌더링을 위한 useEffect
     useEffect(() => {
@@ -140,26 +130,8 @@ function InquiryDetail() {
             } else {
                 setWriteBox(null);
             }
-            console.log("멤버인포의 멤버롤 : "+memberInfo.memberRole);
-            console.log("현재 답변상태: " + inquiryStatus);
-            console.log("멤버아이디: " + memberId);
-            console.log("멤버롤: " + memberRole);
-            console.log(isAdmin);
-            // console.log("admin useEffect");
         });
 
-        // if (isAdmin) {
-        //     setWriteBox(<InquiryReplyWrite qaNum={userParam.get('idx')} data={memberInfo} status={inquiryStatus}/>);
-        //     window.location.reload();
-        // } else {
-        //     setWriteBox(null);
-        // }
-        // console.log("멤버인포의 멤버롤 : "+memberInfo.memberRole);
-        // console.log("현재 답변상태: " + inquiryStatus);
-        // console.log("멤버아이디: " + memberId);
-        // console.log("멤버롤: " + memberRole);
-        // console.log(isAdmin);
-        // // console.log("admin useEffect");
     }, [qaDetailData])
 
 

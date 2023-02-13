@@ -43,7 +43,6 @@ function BookingRoom() {
             .then((req) => {
                 const {data} = req
                 setHotelRoomList(data)
-                console.log(data)
             })
             .catch(e => {
                 console.log(e)
@@ -78,8 +77,8 @@ function BookingRoom() {
                 <div className={"container pt-5 pb-5"} id={"navLikBtnColor"}>
                     <nav>
                         <nav className="nav nav-tabs" id="nav-tab" role="tablist">
-                            <button className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">회원 전용 객실</button>
-                            {/*<button className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">일반 객실</button>*/}
+                            {/*<button className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">회원 전용 객실</button>*/}
+                            <button className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">일반 객실</button>
                         </nav>
 
                     </nav>
@@ -93,7 +92,7 @@ function BookingRoom() {
                         <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
                             <div>
                                 <div className={"container"}>
-                                    <hr className={"border-0"}/>
+                                        <hr className={"border-0"}/>
                                     <h2 className={"fw-bold"}>Room Condition</h2>
                                     <hr className={"border-0"}/>
 

@@ -1,7 +1,7 @@
 package com.gaya.thegayap.service;
 
 import com.gaya.thegayap.dto.*;
-import com.gaya.thegayap.mapper.SinMapper;
+import com.gaya.thegayap.mapper.HotelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,23 +10,17 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class SinServiceImpl implements SinService {
+public class HotelServiceImpl implements HotelService {
 
 
-    private final SinMapper sinMapper;
+    private final HotelMapper hotelMapper;
 
 
-    //    임시 호텔 입력 코드
-    @Override
-    public void insertHotel(SinDto sinDto) {
-        sinMapper.insertHotel(sinDto);
-
-    }
 
 
     //    임시 방 입력 코드
-    @Override
-    public void insertRoom(SinDto2 sinDto2) {
+//    @Override
+//    public void insertRoom(SinDto2 sinDto2) {
 
 //        int twinWeek = (int) (sinDto2.getRoomTwinCost() * 1.5);
 //        int familyWeek = (int) (sinDto2.getRoomFamilyCost() * 1.5);
@@ -55,34 +49,34 @@ public class SinServiceImpl implements SinService {
 //
 //        }
 
-        int[] hotelNum = {1, 16};
+//        int[] hotelNum = {1, 16};
+//
+//        int twinWeek1 = (int) (sinDto2.getRoomTwinCost() * 1.1);
+//
+//        for (int i = 0; i < 2; i++) {
+//            String code = "hotel-";
+//            code += roomCodeGenerate();
+//            if (hotelMapper.checkCodeOverlap(code) == 1) {
+//                i--;
+//                continue;
+//            }
+//
+//            SinDto2 sinDto11 = new SinDto2();
+//
+//            sinDto11.setRoomHotelIdx(hotelNum[i]);
+//            sinDto11.setRoomName(sinDto2.getRoomName());
+//            sinDto11.setRoomTwinCost(sinDto2.getRoomTwinCost());
+//            sinDto11.setRoomTwinWeekend(twinWeek1);
+//            sinDto11.setRoomCode(code);
+//            sinDto11.setRoomMaxAdult(sinDto2.getRoomMaxAdult());
+//
+//
+//            hotelMapper.insertRoom(sinDto11);
+//
+//        }
 
-        int twinWeek1 = (int) (sinDto2.getRoomTwinCost() * 1.1);
 
-        for (int i = 0; i < 2; i++) {
-            String code = "hotel-";
-            code += roomCodeGenerate();
-            if (sinMapper.checkCodeOverlap(code) == 1) {
-                i--;
-                continue;
-            }
-
-            SinDto2 sinDto11 = new SinDto2();
-
-            sinDto11.setRoomHotelIdx(hotelNum[i]);
-            sinDto11.setRoomName(sinDto2.getRoomName());
-            sinDto11.setRoomTwinCost(sinDto2.getRoomTwinCost());
-            sinDto11.setRoomTwinWeekend(twinWeek1);
-            sinDto11.setRoomCode(code);
-            sinDto11.setRoomMaxAdult(sinDto2.getRoomMaxAdult());
-
-
-            sinMapper.insertRoom(sinDto11);
-
-        }
-
-
-    }
+//    }
 
 
 //    Set 형식으로 필터
@@ -141,6 +135,17 @@ public class SinServiceImpl implements SinService {
 //    }
 
 
+    /**
+     * 호텔 리스트를 가져오는 메서드
+     * author 정종율
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<HotelDto> hotelList() throws Exception {
+        return hotelMapper.hotelList();
+    }
+
     //    Map형식으로 필터
 
     /**
@@ -153,44 +158,44 @@ public class SinServiceImpl implements SinService {
      * @return
      */
     @Override
-    public List<SinRoomDto> checkRoomList(int hotelNum, String sDate, String eDate, int adultCount) {
+    public List<RoomInfoDto> checkRoomList(int hotelNum, String sDate, String eDate, int adultCount) {
 
         //  전체 방 리스트
-        List<SinRoomDto> roomList;
+        List<RoomInfoDto> roomList;
 
         //  체크인 체크아웃으로 필터링 된 예약된 방 룸코드
-        List<SinRoomDto> reservationList;
+        List<RoomInfoDto> reservationList;
 
         //        실제 예약가능한 리스트를 넣을 곳
 
-        List<SinRoomDto> filterList = new ArrayList<>();
+        List<RoomInfoDto> filterList = new ArrayList<>();
         //      필터링 할 Map
-        Map<String, SinRoomDto> roomMap = new HashMap<>();
+        Map<String, RoomInfoDto> roomMap = new HashMap<>();
 
 
         try {
             //        선택된 호텔의 방 리스트 가져오기
             if (hotelNum == 1 || hotelNum == 16) {
 //        DB에서 온 데이터를 넣음
-                roomList = sinMapper.getHotelRoomList(SinFilterRoomDto.builder().hotelNum(hotelNum).adultCount(adultCount).build());
+                roomList = hotelMapper.getHotelRoomList(FilterRoomDto.builder().hotelNum(hotelNum).adultCount(adultCount).build());
             } else {
-                roomList = sinMapper.getStayRoomList(hotelNum);
+                roomList = hotelMapper.getStayRoomList(hotelNum);
             }
 
 
-            reservationList = sinMapper.checkBookOverlap(SinFilterRoomDto.builder().hotelNum(hotelNum).checkIn(sDate).checkOut(eDate).adultCount(adultCount).build());
+            reservationList = hotelMapper.checkBookOverlap(FilterRoomDto.builder().hotelNum(hotelNum).checkIn(sDate).checkOut(eDate).adultCount(adultCount).build());
 
 //            System.out.println(reservationList);
 
-            for (SinRoomDto sinRoomDto : roomList) {
-                roomMap.put(sinRoomDto.getRoomCode(), sinRoomDto);
+            for (RoomInfoDto roomInfoDto : roomList) {
+                roomMap.put(roomInfoDto.getRoomCode(), roomInfoDto);
             }
 
 
             if (reservationList != null) {
-                for (SinRoomDto sinRoomDto : reservationList) {
+                for (RoomInfoDto roomInfoDto : reservationList) {
 //            동일한 코드가 있을시 dto를 null 처리
-                    roomMap.put(sinRoomDto.getReservationRoomCode(), null);
+                    roomMap.put(roomInfoDto.getReservationRoomCode(), null);
                 }
             }
 
@@ -211,19 +216,19 @@ public class SinServiceImpl implements SinService {
     /**
      * 방을 예약하는 서비스
      *
-     * @param sinReservDto
+     * @param reservationDto
      */
     @Override
-    public void reservationRoom(SinReservDto sinReservDto) {
-        int memberP = sinReservDto.getEarnPoint();
+    public void reservationRoom(ReservationDto reservationDto) {
+        int memberP = reservationDto.getEarnPoint();
         try {
 
             if (memberP != 0) {
-                sinMapper.updateMemberPoint(sinReservDto);
+                hotelMapper.updateMemberPoint(reservationDto);
             }
 
-            sinMapper.insertCustomer(sinReservDto);
-            sinMapper.reservationRoom(sinReservDto);
+            hotelMapper.insertCustomer(reservationDto);
+            hotelMapper.reservationRoom(reservationDto);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -235,9 +240,9 @@ public class SinServiceImpl implements SinService {
      * @return List(SinInquiryDto)
      */
     @Override
-    public List<SinInquiryDto> getQAList() {
+    public List<InquiryDto> getQAList() {
         try {
-            List<SinInquiryDto> inquiryList = sinMapper.getQAList();
+            List<InquiryDto> inquiryList = hotelMapper.getQAList();
             return inquiryList;
         } catch (Exception e) {
             e.printStackTrace();
@@ -245,17 +250,6 @@ public class SinServiceImpl implements SinService {
         }
     }
 
-    /**
-     * 호텔 이름 리스트를 불러오는 서비스
-     *
-     * @return List(String)
-     */
-    @Override
-    public List<String> getHotelName() {
-        List<String> hotelName = sinMapper.getHotelName();
-
-        return hotelName;
-    }
 
     /**
      * 임시 방 비교 서비스
@@ -264,29 +258,29 @@ public class SinServiceImpl implements SinService {
      * @return SinRoomDto
      */
     @Override
-    public SinRoomDto getRoomBucket(String roomCode) {
-        return sinMapper.getRoomInfo(roomCode);
+    public RoomInfoDto getRoomBucket(String roomCode) {
+        return hotelMapper.getRoomInfo(roomCode);
     }
 
     @Override
-    public List<SinAnswerChatDto> getAnswerDataList(int idx) {
+    public List<AnswerChatDto> getAnswerDataList(int idx) {
 
 
-        return sinMapper.getAnswerList(idx);
+        return hotelMapper.getAnswerList(idx);
     }
 
     /**
      * 문의 답글을 DB에 넣는 서비스
      *
-     * @param sinAnswerChatDto
+     * @param answerChatDto
      */
     @Override
-    public void insertReply(SinAnswerChatDto sinAnswerChatDto) {
-        if (sinAnswerChatDto.getAnswerStatus() != null) {
-            sinMapper.updateInquiryStatus(sinAnswerChatDto);
+    public void insertReply(AnswerChatDto answerChatDto) {
+        if (answerChatDto.getAnswerStatus() != null) {
+            hotelMapper.updateInquiryStatus(answerChatDto);
         }
-        if (sinAnswerChatDto.getAnswerContents() != null) {
-            sinMapper.insertReply(sinAnswerChatDto);
+        if (answerChatDto.getAnswerContents() != null) {
+            hotelMapper.insertReply(answerChatDto);
         }
     }
 
@@ -301,7 +295,7 @@ public class SinServiceImpl implements SinService {
     public MealCostDto getMealCost(int hotelNum) {
 
 
-        return sinMapper.getMealCost(hotelNum);
+        return hotelMapper.getMealCost(hotelNum);
     }
 
 

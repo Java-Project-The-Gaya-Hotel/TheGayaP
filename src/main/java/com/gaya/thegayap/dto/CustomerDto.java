@@ -2,9 +2,12 @@ package com.gaya.thegayap.dto;
 
 import lombok.Data;
 
-
+/**
+ * author 정종율
+ * 예약 회원 DTO
+ */
 @Data
-public class JeongCustomerDto {
+public class CustomerDto {
 
     private String reservationNum;
     private String reservationDate;

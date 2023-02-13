@@ -6,26 +6,8 @@
 
 <!-- namespace 속성에 지정한 패키지명을 가지고 있는 파일과 아래의 xml 구문을 연동한다는 의미 -->
 <!-- ★★★ xml 파일이기 때문에 스프링 프로젝트의 전체 구조를 모르기 때문에 전체 패키지 명을 다 입력해야 함 ★★★ -->
-<mapper namespace="com.gaya.thegayap.mapper.SinMapper">
+<mapper namespace="com.gaya.thegayap.mapper.HotelMapper">
 
-
-    <!--    임시코드 시작-->
-    <insert id="insertHotel" parameterType="com.gaya.thegayap.dto.SinDto">
-        insert into hotel_table(hotel_name, hotel_addr, hotel_tel, hotel_meal_adult, hotel_meal_child)
-        values (#{hotelName}, #{hotelAddr}, #{hotelTel}, #{hotelMealAdult}, #{hotelMealChild});
-    </insert>
-
-    <insert id="insertRoom" parameterType="com.gaya.thegayap.dto.SinDto2">
-
-
-        insert into hotel_room_table(room_hotel_idx, room_name, room_twin_cost, room_twin_weekend, room_code,
-                                     room_max_adult)
-        values (#{roomHotelIdx}, #{roomName}, #{roomTwinCost}, #{roomTwinWeekend}, #{roomCode}, #{roomMaxAdult});
-
-
-    </insert>
-
-    <!--    임시코드 종료-->
 
     <!--    roomCode 중복확인-->
     <select id="checkCodeOverlap" parameterType="String" resultType="int">
@@ -39,7 +21,7 @@
 
 
     <!--    호텔에 방 리스트-->
-    <select id="getHotelRoomList" parameterType="com.gaya.thegayap.dto.SinFilterRoomDto" resultType="com.gaya.thegayap.dto.SinRoomDto">
+    <select id="getHotelRoomList" parameterType="com.gaya.thegayap.dto.FilterRoomDto" resultType="com.gaya.thegayap.dto.RoomInfoDto">
         SELECT *
         FROM hotel_room_table
         where room_hotel_num = #{hotelNum}
@@ -48,14 +30,14 @@
 
 
     <!--   스테이에 방 리스트 -->
-    <select id="getStayRoomList" parameterType="int" resultType="com.gaya.thegayap.dto.SinRoomDto">
+    <select id="getStayRoomList" parameterType="int" resultType="com.gaya.thegayap.dto.RoomInfoDto">
         SELECT *
         FROM stay_room_table
         where room_hotel_num = #{hotelNum}
     </select>
 
     <!--    예약 중복 확인-->
-    <select id="checkBookOverlap"  resultType="com.gaya.thegayap.dto.SinRoomDto">
+    <select id="checkBookOverlap"  resultType="com.gaya.thegayap.dto.RoomInfoDto">
 
         <choose>
             <when test="hotelNum.equals(1)||hotelNum.equals(16)">
@@ -85,7 +67,7 @@
     </select>
 
     <!--    예약 DB 입력-->
-    <insert id="reservationRoom" parameterType="com.gaya.thegayap.dto.SinReservDto">
+    <insert id="reservationRoom" parameterType="com.gaya.thegayap.dto.ReservationDto">
         insert into reservation_table
         values (#{reservationNum}, #{reservationHotelNum}, #{reservationRoomName}, #{reservationRoomCode}, #{customerName}, #{customerId},
                 #{reservationCheckIn}, #{reservationCheckOut},
@@ -94,13 +76,13 @@
     </insert>
 
     <!--    예약 고객테이블 DB 입력-->
-    <insert id="insertCustomer" parameterType="com.gaya.thegayap.dto.SinReservDto">
+    <insert id="insertCustomer" parameterType="com.gaya.thegayap.dto.ReservationDto">
         INSERT INTO customer_table
         VALUES (#{reservationNum}, #{customerId},#{customerName},#{customerEmail},#{customerTel},#{earnPoint})
     </insert>
 
     <!--    문의 게시글 -->
-    <select id="getQAList" resultType="com.gaya.thegayap.dto.SinInquiryDto">
+    <select id="getQAList" resultType="com.gaya.thegayap.dto.InquiryDto">
         select inquiry_user_name,
                (CASE
                     WHEN (inquiry_create_date BETWEEN DATE_ADD(curdate(), INTERVAL -1 DAY) AND curdate()) THEN DATE_FORMAT(inquiry_create_date, '%Y.%m.%d')
@@ -111,20 +93,21 @@
         where inquiry_deleted_yn = 'N'
         order by inquiry_num desc
     </select>
-    <!-- 전체 호텔 이름-->
-    <select id="getHotelName" resultType="String">
-        select hotel_name
-        from hotel_table
-        where 1 = 1
+
+    <!--    호텔 리스트 조회 -->
+    <select id="hotelList" resultType="com.gaya.thegayap.dto.HotelDto">
+        SELECT *
+        FROM hotel_table
     </select>
+
     <!-- 문의 답글 불러오기 -->
-    <select id="getAnswerList" parameterType="int" resultType="com.gaya.thegayap.dto.SinAnswerChatDto">
+    <select id="getAnswerList" parameterType="int" resultType="com.gaya.thegayap.dto.AnswerChatDto">
         select *
         from answer_table
         where answer_inquiry_num = #{idx}
     </select>
     <!-- 답글 DB 입력-->
-    <insert id="insertReply" parameterType="com.gaya.thegayap.dto.SinAnswerChatDto">
+    <insert id="insertReply" parameterType="com.gaya.thegayap.dto.AnswerChatDto">
         insert into answer_table(answer_inquiry_num, answer_contents, answer_create_date, answer_user_name,
                                  answer_is_admin)
         values (#{answerInquiryNum}, #{answerContents}, now(), #{answerUserName}, #{answerIsAdmin});
@@ -157,13 +140,13 @@
 
     </select>
 
-    <update id="updateMemberPoint" parameterType="com.gaya.thegayap.dto.SinReservDto">
+    <update id="updateMemberPoint" parameterType="com.gaya.thegayap.dto.ReservationDto">
         update member_table
         set member_point = member_point + #{earnPoint}
         where member_id = #{customerId};
     </update>
 <!--    문의 상태 바꾸기 -->
-    <update id="updateInquiryStatus" parameterType="com.gaya.thegayap.dto.SinReservDto">
+    <update id="updateInquiryStatus" parameterType="com.gaya.thegayap.dto.ReservationDto">
         update inquiry_table
         set inquiry_status = #{answerStatus}
         where inquiry_num = #{answerInquiryNum};

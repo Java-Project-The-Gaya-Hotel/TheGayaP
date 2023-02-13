@@ -3,7 +3,7 @@ package com.gaya.thegayap.dto;
 import lombok.Data;
 
 @Data
-public class JeongHotelDto {
+public class HotelDto {
     private int hotelNum;
     private String hotelName;
     private String hotelAddr;

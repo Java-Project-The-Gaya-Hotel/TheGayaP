@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gaya.thegayap.mapper.JeongMapper">
+<mapper namespace="com.gaya.thegayap.mapper.MemberMapper">
 
 <!--    회원 테이블 추가 -->
     <insert id="joinMember" parameterType="com.gaya.thegayap.dto.MemberDto">
@@ -24,7 +24,7 @@
     </select>
 
 <!--    내 예약확인 조회-->
-    <select id="resvList" resultType="com.gaya.thegayap.dto.JeongResvDto">
+    <select id="resvList" resultType="com.gaya.thegayap.dto.NotMemberReservDto">
         SELECT resv.*, ht.hotel_name,
             (CASE
                 WHEN (resv.reservation_hotel_num=1 OR resv.reservation_hotel_num=16)
@@ -45,7 +45,7 @@
     </select>
 
 <!--    내 포인트 사용내역 조회 -->
-    <select id="checkPoints" resultType="com.gaya.thegayap.dto.JeongCustomerDto">
+    <select id="checkPoints" resultType="com.gaya.thegayap.dto.CustomerDto">
         SELECT ct.customer_id, ct.customer_name, ct.customer_earned_points, ct.customer_used_points, resv.reservation_date, resv.reservation_num
         FROM customer_table AS ct
             JOIN reservation_table AS resv ON resv.reservation_num = ct.customer_reservation_num
@@ -76,11 +76,7 @@
     </update>
 
 
-<!--    호텔 리스트 조회 -->
-    <select id="hotelList" resultType="com.gaya.thegayap.dto.JeongHotelDto">
-        SELECT *
-        FROM hotel_table
-    </select>
+
 
 <!--    아이디 찾기 -->
     <select id="findId" parameterType="com.gaya.thegayap.dto.MemberNonPasswordDto" resultType="String">
@@ -90,7 +86,7 @@
     </select>
 
 <!--    회원 테이블 추가 -->
-    <insert id="insertInquiry" parameterType="com.gaya.thegayap.dto.SinInquiryDto">
+    <insert id="insertInquiry" parameterType="com.gaya.thegayap.dto.InquiryDto">
         INSERT INTO
             inquiry_table(inquiry_category, inquiry_hotel_name, inquiry_reservation_num, inquiry_title,
                           inquiry_contents, inquiry_user_name, inquiry_user_email, inquiry_user_tel,
@@ -100,7 +96,7 @@
     </insert>
 
 <!--    비회원 예약 조회 -->
-    <select id="notMemberResv" resultType="com.gaya.thegayap.dto.JeongResvDto">
+    <select id="notMemberResv" resultType="com.gaya.thegayap.dto.NotMemberReservDto">
         SELECT resv.*, ht.hotel_name,
                (CASE
                     WHEN (resv.reservation_hotel_num=1 OR resv.reservation_hotel_num=16)
@@ -121,7 +117,7 @@
     </select>
 
 <!--    문의 상세보기 -->
-    <select id="inquiryDetail" resultType="com.gaya.thegayap.dto.SinInquiryDto">
+    <select id="inquiryDetail" resultType="com.gaya.thegayap.dto.InquiryDto">
         SELECT *
         FROM inquiry_table
         WHERE inquiry_num = #{idx}

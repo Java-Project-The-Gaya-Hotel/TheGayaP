@@ -2,8 +2,11 @@ package com.gaya.thegayap.dto;
 
 import lombok.Data;
 
+/**
+ * 비회원 예약 확인을 위한 DTO
+ */
 @Data
-public class JeongResvDto {
+public class NotMemberReservDto {
     private long reservationNum;
     private int hotelNum;
     private String roomCode;

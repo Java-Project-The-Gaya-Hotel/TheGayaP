@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * JWT TOKEN Dto
+ * author 신현섭
  */
 @Builder
 @Data

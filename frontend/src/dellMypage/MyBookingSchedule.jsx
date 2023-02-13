@@ -31,9 +31,15 @@ function MyBookingSchedule() {
                         }
                     }
                 ).then(response => {
-                    console.log(response.data);
-                    setCheckListTable(response.data)
+                    if (response.data.length === 0){
+                    setCheckListTable(null);
+                    }else{
+                    console.log(response);
+                    setCheckListTable(response.data);
+                    }
 
+                }).catch(e=>{
+                    setCheckListTable(null);
                 })
             })
         }
@@ -65,6 +71,8 @@ function MyBookingSchedule() {
 
                                     <tbody>
                                         {
+                                            checkListTable != null ?
+
                                             checkListTable.map((response, index)=>{
                                             return(
                                                 <tr className={"small"} key = {index}>
@@ -78,7 +86,9 @@ function MyBookingSchedule() {
                                                 </tr>
                                             )
 
-                                        })}
+                                            })
+                                            : <tr><td className={"text-center"}>예약 하신 정보가 없습니다.</td></tr>
+                                        }
 
                                     </tbody>
                                 </table>

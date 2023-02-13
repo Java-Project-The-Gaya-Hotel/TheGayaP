@@ -44,6 +44,7 @@ function RoomCondition(props) {
     const [chooseRoomWeekendCost, setChooseRoomWeekendCost] = useState(0);
     // 추후삭제
     const [roomCostDetail, setRoomCostDetail] = useState("");
+    const [modalOpen,setModalOpen]= useState(false);
 
     const roomCode = data.roomCode;
     const codeCall = roomCode.startsWith('hotel')
@@ -103,7 +104,7 @@ function RoomCondition(props) {
         });
         weekDayCost = (chooseRoomCost * weekDay);
         weekEndCost = (chooseRoomWeekendCost * weekEnd);
-        overAdultLimit = 20000 * (adultCount - 2);
+        overAdultLimit = 60000 * (adultCount - 2);
         // 어른 인원수가 2명이상일시 2만원 추가요금 계산
         if (adultCount > 2) {
             setCostSum((weekDayCost + weekEndCost) + overAdultLimit);
@@ -111,6 +112,7 @@ function RoomCondition(props) {
             setCostSum(weekDayCost + weekEndCost);
         }
 
+        // 추후삭제
         setRoomCostDetail(`주중 ${checkWeekDay} 박 요금 = ${weekDayCost} 주말 ${checkWeekEnd} 박 요금 = ${weekEndCost}`)
     }, [chooseRoomCost]);
 // -------------------------------------------------------------
@@ -119,13 +121,27 @@ function RoomCondition(props) {
     // 예약하기를 눌렀을 때 발동
     const clickNextE = () => {
 
-        if (chooseRoomCost !== "") {
+        if (chooseRoomCost !== "" && chooseRoomCost != null && chooseRoomCost !== 0 ) {
             navigate(`/nextreserv?sDate=${startDate}&eDate=${endDate}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}&hotelNum=${hotelNum}&roomCode=${roomCode}&nights=${nights}&costSum=${costSum}&roomName=${data.roomName}`, {replace: true});
         } else {
             Swal.fire('사용하실 방을 선택해 주세요 ');
         }
     };
 
+
+    // // 방 비교 담기
+    // const roomCompareList = () =>{
+    //     if (sessionStorage.getItem("room1") == null ){
+    //     sessionStorage.setItem("room1",JSON.stringify(data));
+    //     }else if (sessionStorage.getItem("room2") == null){
+    //     sessionStorage.setItem("room2",JSON.stringify(data));
+    //     }else if (sessionStorage.getItem("room3") == null){
+    //     sessionStorage.setItem("room3",JSON.stringify(data));
+    //     }else{
+    //         alert("방 비교는 총 3개 까지만 가능합니다.");
+    //     }
+    //
+    // }
 
     return (
 
@@ -136,10 +152,13 @@ function RoomCondition(props) {
                 <div className={"col"}><img src={`${data.roomImgUrl}`}/></div>
                 <div className={"col"}><img src={`${data.roomInfo}`}/></div>
                 <div className={"col"}>
-                    <button className={"btnDate"} role={"button"} onClick={() => setCOpen(!cOpen)}
+                    <button className={"btnDate mb-3"} role={"button"} onClick={() => setCOpen(!cOpen)}
                             aria-controls="example-collapse-text" aria-expanded={cOpen}><span
                         className="text">객실 찾기</span> Find Room
                     </button>
+                    {/*<button className={"btnDate"} role={"button"} onClick={roomCompareList}><span*/}
+                    {/*    className="text">객실 비교</span> Compare Room*/}
+                    {/*</button>*/}
                 </div>
             </div>
 
