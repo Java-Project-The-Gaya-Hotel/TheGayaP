@@ -7,7 +7,7 @@ import ModalStyle from "./ModalCss.css"
 function Modal(props) {
 
   function closeModal() {
-    props.setModalOpen(false);
+    props.closeModal();
   }
 
   return (

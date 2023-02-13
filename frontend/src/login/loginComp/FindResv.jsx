@@ -6,7 +6,7 @@ function FindResv(props) {
 
 
     function closeModal() {
-        props.closeModal();
+        props.closeModal(true);
     }
 
 
