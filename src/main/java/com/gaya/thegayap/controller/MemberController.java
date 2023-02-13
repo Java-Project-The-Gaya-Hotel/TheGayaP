@@ -2,6 +2,7 @@ package com.gaya.thegayap.controller;
 
 
 import com.gaya.thegayap.dto.*;
+import com.gaya.thegayap.service.EmailService;
 import com.gaya.thegayap.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -22,8 +23,8 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
-
-
+    @Autowired
+    EmailService emailService;
 
 
 //    회원가입페이지
@@ -31,6 +32,7 @@ public class MemberController {
     /**
      * 회원 가입
      * author 정종율
+     *
      * @param member
      * @throws Exception
      */
@@ -47,12 +49,13 @@ public class MemberController {
     /**
      * ID 중복 체크
      * author 황하늘
+     *
      * @param member
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/join/idCheck", method = RequestMethod.GET)
-    public int idCheck(MemberNonPasswordDto member) throws Exception{
+    public int idCheck(MemberNonPasswordDto member) throws Exception {
         int idResult = memberService.idCheck(member);
 
         return idResult;
@@ -62,12 +65,13 @@ public class MemberController {
     /**
      * Email 중복 체크
      * author 황하늘
+     *
      * @param member
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/join/emailCheck", method = RequestMethod.GET)
-    public int emailCheck(MemberNonPasswordDto member) throws Exception{
+    public int emailCheck(MemberNonPasswordDto member) throws Exception {
         int emailResult = memberService.emailCheck(member);
 
         return emailResult;
@@ -105,13 +109,10 @@ public class MemberController {
 //    }
 
 
-
-
-
-
     /**
      * 이름과 이메일로 아이디 찾기
      * author 정종율
+     *
      * @param memberName
      * @param memberEmail
      * @return
@@ -127,7 +128,8 @@ public class MemberController {
     /**
      * 고객이름과 예약번호로 예약 정보를 조회하는 컨트롤러
      * author 정종율
-     * @param customerName 고객이름
+     *
+     * @param customerName   고객이름
      * @param reservationNum 예약번호
      * @return 예약 정보
      * @throws Exception
@@ -142,12 +144,12 @@ public class MemberController {
     }
 
 
-
 //    문의
 
     /**
      * 문의 작성
      * author 정종율
+     *
      * @param inquiryDto
      * @throws Exception
      */
@@ -161,6 +163,7 @@ public class MemberController {
     /**
      * 문의 작성 페이지에 유저 정보 가져오기
      * author 정종율
+     *
      * @param userName
      * @return
      * @throws Exception
@@ -175,6 +178,7 @@ public class MemberController {
 
     /**
      * 문의 상세페이지 정보 불러오는 컨트롤러
+     *
      * @param idx 글번호
      * @return inquiryDto
      * @throws Exception
@@ -190,19 +194,40 @@ public class MemberController {
     /**
      * 토큰의 ID로 유저의 정보를 가져오는 컨트롤러
      * author 박예린
+     *
      * @param memberId
      * @return
      * @throws Exception
      */
     @GetMapping("/member/userinfo")
-    public MemberNonPasswordDto getUserInfo(@RequestParam ("memberId")String memberId) throws Exception {
+    public MemberNonPasswordDto getUserInfo(@RequestParam("memberId") String memberId) throws Exception {
         return memberService.profile(memberId);
     }
 
 
     /**
-     * 이메일 인증으로 비밀번호 변경
+     * 이메일 인증번호 받기
+     * author 신현섭
+     * @param memberId
+     * @param memberEmail
+     * @return
+     * @throws Exception
      */
+    @GetMapping("/member/emailConfirm")
+    public String emailConfirm(@RequestParam("memberId")String memberId, @RequestParam("memberEmail")String memberEmail) throws Exception {
 
+
+        boolean isMember = memberService.checkMemberByIdAndEmail(memberId,memberEmail);
+
+        if (isMember) {
+
+            String confirm = emailService.sendSimpleMessage(memberEmail);
+            return confirm;
+
+        } else {
+            return "fail";
+        }
+
+    }
 
 }

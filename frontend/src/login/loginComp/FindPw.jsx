@@ -3,85 +3,96 @@ import React, {useState} from "react";
 import axios from "axios";
 import Modal from "./Modal";
 import "../loginCss/ButtonCss.css"
+import Swal from "sweetalert2";
 
 
 function FindPw(props) {
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [memberPw, setMemberPw] = useState("");
+    const [memberId, setMemberId] = useState("");
+    const [memberEmail, setMemberEmail] = useState("");
+    const [emailConfirmCode, setEmailConfirm] = useState("");
+    const [memberConfirmCode, setMemberConfirmCode] = useState("");
+    const [memberPw, setMemberPw] = useState("");
 
-  const [isFind, setIsFind] = useState(true);
-  const [isMemberPw, setIsMemberPw] = useState(true);
-
-
-  function closeModal() {
-    props.closeModal();
-  }
+    const [isPassEmail, setIsPassEmail] = useState(true);
 
 
-  const findIdBtn = () => {
-    axios.get("http://localhost:8080/login/findPw",
-        {
-          params: {memberName: name, memberEmail: email}
+
+    function closeModal() {
+        props.closeModal();
+    }
+
+
+    // 이메일 인증 보내기
+    const checkByIdAndEmail = () => {
+        axios.get("http://localhost:8080/member/emailConfirm",
+            {
+                params: {memberId: memberId, memberEmail: memberEmail}
+            })
+
+            .then((req) => {
+                console.log(req.data);
+                if (req.data === "fail") {
+                    Swal.fire("일치하는 유저가 존재하지 않습니다.")
+                } else {
+                    setEmailConfirm(req.data);
+                    Swal.fire("인증번호를 전송하였습니다.")
+                }
+
+            }).catch(err => {
+            Swal.fire("네트워크 오류가 발생했습니다.")
         })
-
-        .then((req) => {
-          console.log("데이터 전송 성공")
-          setMemberPw(req.data);
-          setIsFind(false);
-          if (memberPw === "") {
-            setIsMemberPw(false);
-          }
-          console.log(memberPw);
-
-        }).catch(err => {
-      console.log(`데이터 전송 실패 ${err}`)
-    })
-  }
+    }
 
 
+    return (
+        <div className={"container"}>
+            {isPassEmail ?
+                <div className={"p-3"}>
 
-  return (
-      <div className={"container"}>
-        {isFind ?
-            <div className={"p-3"}>
+                    <div className={"row mb-1 me-2"}>
+                        <label className={"form-label col-sm-3 my-auto fw-bold"} htmlFor={"name"}>아이디</label>
+                        <input className={"form-control rounded-0 col-sm m-2"} type={"text"} id={"name"}
+                               onChange={(e) => {
+                                   setMemberId(e.target.value)
+                               }}/>
+                    </div>
 
-              <div className={"row mb-1 me-2"}>
-                <label className={"form-label col-sm-3 my-auto fw-bold"} htmlFor={"name"}>이름</label>
-                <input className={"form-control rounded-0 col-sm m-2"} type={"text"} id={"name"} onChange={(e) => {setName(e.target.value)}}/>
-              </div>
+                    <div className={"row mb-1 me-2"}>
+                        <label className={"form-label col-sm-3 my-auto fw-bold"} htmlFor={"email"}>이메일</label>
+                        <input className={"form-control rounded-0 col-sm m-2 "} type={"email"} id={"email"}
+                               onChange={(e) => {
+                                   setMemberEmail(e.target.value)
+                               }}/>
+                        <button id={"sendMail"}
+                                className={"form-label col-sm-3 my-auto rounded-0 custom-btn3 btn-Login"}
+                                onClick={checkByIdAndEmail}>이메일 전송
+                        </button>
+                    </div>
 
-              <div className={"row mb-1 me-2"}>
-                <label className={"form-label col-sm-3 my-auto fw-bold"} htmlFor={"email"}>이메일</label>
-                <input className={"form-control rounded-0 col-sm m-2 "} type={"email"} id={"email"} onChange={(e) => {setEmail(e.target.value)}}/>
-                <button id={"sendMail"} className={"form-label col-sm-3 my-auto rounded-0 custom-btn3 btn-Login"}>이메일 전송</button>
-              </div>
-
-              <div className={"row mb-1 me-2"}>
-                <label className={"form-label col-sm-3 my-auto fw-bold"}> 인증 확인 </label>
-                <input type={"text"} className={"form-control rounded-0 col-sm m-2"}/>
-                <button id={"userBtn"} className={"form-label col-sm-3 my-auto rounded-0 custom-btn3 btn-Login"}>인증 확인</button>
-              </div>
+                    <div className={"row mb-1 me-2"}>
+                        <label className={"form-label col-sm-3 my-auto fw-bold"}> 인증 확인 </label>
+                        <input type={"text"} className={"form-control rounded-0 col-sm m-2"} onChange={(e)=>{setMemberConfirmCode()}}/>
+                        <button id={"userBtn"}
+                                className={"form-label col-sm-3 my-auto rounded-0 custom-btn3 btn-Login"}>인증 확인
+                        </button>
+                    </div>
 
 
-              <button className={"mt-3 rounded-0 custom-btn3 btn-Login"} onClick={findIdBtn}>확인</button>
-            </div> :
-            <div>
-              {isMemberPw ?
-                  <div>
-                    <p>{name} 님의 ID</p>
-                    <p>[{memberPw}]</p>
-                  </div> :
-                  <div className={"mt-5"}>
-                    <p>{email} 로 가입된 아이디가 존재하지 않습니다.</p>
-                  </div>
-              }
-              <button onClick={closeModal} className={"mt-4 rounded-0 custom-btn3 btn-Login"}>확인</button>
-            </div>
-        }
-      </div>
-  );
+                    <button className={"mt-3 rounded-0 custom-btn3 btn-Login"}>확인</button>
+                </div> :
+                <div>
+
+                        <div>
+
+                        </div> :
+
+
+                    <button onClick={closeModal} className={"mt-4 rounded-0 custom-btn3 btn-Login"}>확인</button>
+                </div>
+            }
+        </div>
+    );
 
 
 }

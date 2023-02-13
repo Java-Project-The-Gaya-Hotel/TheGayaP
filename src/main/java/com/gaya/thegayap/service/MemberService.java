@@ -22,4 +22,6 @@ public interface MemberService {
     List<MemberNonPasswordDto> inquiryUserInfo(String userName) throws Exception;
 
     InquiryDto inquiryDetail(int idx) throws Exception;
+
+    boolean checkMemberByIdAndEmail(String memberId, String memberEmail);
 }

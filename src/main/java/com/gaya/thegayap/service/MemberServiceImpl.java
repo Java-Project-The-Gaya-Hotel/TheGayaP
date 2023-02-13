@@ -46,7 +46,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
 
-
     @Override
     public String findId(String memberName, String memberEmail) throws Exception {
         return memberMapper.findId(memberName, memberEmail);
@@ -71,6 +70,22 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public InquiryDto inquiryDetail(int idx) throws Exception {
         return memberMapper.inquiryDetail(idx);
+    }
+
+    /**
+     * 이메일인증
+     * @param memberId
+     * @param memberEmail
+     * @return
+     */
+    @Override
+    public boolean checkMemberByIdAndEmail(String memberId, String memberEmail) {
+        try {
+            return memberMapper.checkMemberByIdAndEmail(memberId,memberEmail);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 

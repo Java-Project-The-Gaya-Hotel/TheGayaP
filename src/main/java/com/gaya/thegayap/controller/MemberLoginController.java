@@ -24,6 +24,8 @@ public class MemberLoginController {
     private final JwtTokenProvider jwtTokenProvider;
 
 
+
+
     /**
      * 로그인 컨트롤러
      * author 신현섭
@@ -84,5 +86,9 @@ public class MemberLoginController {
 
         return jwtTokenProvider.decodeId(acToken);
     }
+
+
+
+
 
 }
