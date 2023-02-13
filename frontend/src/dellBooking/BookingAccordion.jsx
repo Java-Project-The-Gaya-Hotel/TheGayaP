@@ -7,7 +7,7 @@ import axios from "axios";
 import "../dellMain/dellmainCss/BtnDateChoose.css"
 import "../dellBooking/dellBookingCss/AccoCss.css"
 import Swal from "sweetalert2";
-import {now} from "moment";
+import moment, {now} from "moment";
 import styled from "styled-components";
 
 
@@ -26,18 +26,20 @@ const styles = {
 
 
 const InputBox = styled.input`
-width: 190px ;
-height: 45px;
-cursor: pointer;
-&:hover{
-background-color:black;
-color:white;
-transition:0.5s
-}
-&:focus{
-color:black;
-border:1px solid black;
-}
+  width: 190px;
+  height: 45px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: black;
+    color: white;
+    transition: 0.5s
+  }
+
+  &:focus {
+    color: black;
+    border: 1px solid black;
+  }
 `
 
 function BookingAccordion() {
@@ -80,7 +82,7 @@ function BookingAccordion() {
                 setStartDate(new Date(now()));
             }
 
-            if (getAdultCount != null){
+            if (getAdultCount != null) {
                 setAdultCount(getAdultCount);
                 setChildCount(getChildCount);
                 setTotalCount(getTotalCount);
@@ -140,10 +142,17 @@ function BookingAccordion() {
 
     const navigate = useNavigate();
     const clickE = () => {
-        if (hotelName != null && hotelName !== "") {
-            navigate(`/reservroom?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}&hotelNum=${hotelNum}`)
+        const checkSDate = moment(startDate).format("YYMMDD");
+        const checkEDate = moment(endDate).format("YYMMDD")
+        if (checkSDate === checkEDate) {
+            Swal.fire(
+                {html:'<h4>입실날짜와 퇴실날짜는 같을수 없습니다.</h4>'});
         } else {
-            Swal.fire('숙박할 호텔을 지정해 주세요.')
+            if (hotelName != null && hotelName !== "") {
+                navigate(`/reservroom?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&adultCount=${adultCount}&childCount=${childCount}&total=${totalCount}&hotelName=${hotelName}&hotelNum=${hotelNum}`)
+            } else {
+                Swal.fire('숙박할 호텔을 지정해 주세요.');
+            }
         }
 
     };
@@ -237,7 +246,10 @@ function BookingAccordion() {
                                     <div className={"row justify-content-center"}>
                                         {hotelList.map((item) => {
                                                 return (
-                                                    <InputBox key={item.hotelNum}  className={"text-center form-control rounded-0 m-3"} value={item.hotelName} name={item.hotelNum} readOnly={true} onClick={onBtnClick}/>
+                                                    <InputBox key={item.hotelNum}
+                                                              className={"text-center form-control rounded-0 m-3"}
+                                                              value={item.hotelName} name={item.hotelNum} readOnly={true}
+                                                              onClick={onBtnClick}/>
                                                 );
                                             }
                                         )
@@ -308,10 +320,13 @@ function BookingAccordion() {
                                                         </button>
                                                     </div>
 
-                                                    <div className={"col p-0"}><h4 className={"m-0"}> 성인 : {adultCount}</h4></div>
+                                                    <div className={"col p-0"}><h4 className={"m-0"}> 성인
+                                                        : {adultCount}</h4></div>
 
                                                     <div className={"col"}>
-                                                        <button className={"custom-btn4 rounded-0"} onClick={plusBtn}>+</button>
+                                                        <button className={"custom-btn4 rounded-0"}
+                                                                onClick={plusBtn}>+
+                                                        </button>
 
                                                     </div>
                                                 </div>
@@ -320,11 +335,17 @@ function BookingAccordion() {
                                             <div className={"container"}>
                                                 <div className={"row m-5 align-items-center"}>
                                                     <div className={"col"}>
-                                                        <button className={"custom-btn4 rounded-0"} onClick={cdMinusBtn}>-</button>
+                                                        <button className={"custom-btn4 rounded-0"}
+                                                                onClick={cdMinusBtn}>-
+                                                        </button>
                                                     </div>
-                                                    <div className={"col p-0 "}><h4 className={"m-0"}>어린이 : {childCount}</h4>
+                                                    <div className={"col p-0 "}><h4 className={"m-0"}>어린이
+                                                        : {childCount}</h4>
                                                     </div>
-                                                    <div className={"col"}><button className={"custom-btn4 rounded-0"} onClick={cdPlusBtn}>+</button>
+                                                    <div className={"col"}>
+                                                        <button className={"custom-btn4 rounded-0"}
+                                                                onClick={cdPlusBtn}>+
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -339,9 +360,11 @@ function BookingAccordion() {
                                             <p>
                                                 <strong> 성인 2인 1실 기준 요금이며 성인 3인 부터 1인당 추가 요금 2만원이 발생</strong>합니다.<br/>
                                                 <strong> 주말에는 평일 요금 대비 10% 증가</strong> 합니다.
-                                                <strong> 13세 이하 어린이 </strong>는 객실 인원 추가 요금을 받지 않으며, 37개월 미만 유아는 조식이 무료입니다.<br/>
+                                                <strong> 13세 이하 어린이 </strong>는 객실 인원 추가 요금을 받지 않으며, 37개월 미만 유아는 조식이
+                                                무료입니다.<br/>
                                                 가야 호텔은 안내견을 제외한 <strong>반려동물은 입장은 불가</strong>하오니 양해부탁드립니다. <br/>
-                                                부모를 동반하지 않은 만 19세 미만 미성년자는 " 청소년 보호법 30조/58조" 로 인하여 투숙할 수 없으며 체크인 및 객실 입장 시
+                                                부모를 동반하지 않은 만 19세 미만 미성년자는 " 청소년 보호법 30조/58조" 로 인하여 투숙할 수 없으며 체크인 및 객실
+                                                입장 시
                                                 등록카드 작성 및 투숙객 본인 확인을 위해 본인 사진이 포함된 신분증을 반드시 제시해 주시길 바랍니다.<br/>
                                             </p>
                                         </div>

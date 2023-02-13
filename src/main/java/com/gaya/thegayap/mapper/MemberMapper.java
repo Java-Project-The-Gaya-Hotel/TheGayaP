@@ -33,4 +33,6 @@ public interface MemberMapper {
     List<MemberNonPasswordDto> inquiryUserInfo(String userName) throws Exception;
 
     InquiryDto inquiryDetail(int idx) throws Exception;
+
+    boolean checkMemberByIdAndEmail(String memberId, String memberEmail);
 }
