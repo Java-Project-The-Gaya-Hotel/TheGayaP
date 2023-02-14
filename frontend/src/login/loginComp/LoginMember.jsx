@@ -19,6 +19,7 @@ function LoginMember(props) {
      */
     const [findId, setFindId] = useState(false);
     const [findPw, setFindPw] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
 
 
 ////////////////////////////////////////////////////

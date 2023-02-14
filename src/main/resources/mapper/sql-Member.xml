@@ -107,4 +107,14 @@
         WHERE inquiry_num = #{idx}
     </select>
 
+
+<!--    이메일 인증용 멤버 확인-->
+    <select id="checkMemberByIdAndEmail" parameterType="com.gaya.thegayap.dto.MemberDto" resultType="boolean">
+        SELECT    IF(COUNT(*) = 1, 1, 0)
+        FROM    member_table
+        WHERE    member_id = #{memberId}
+        AND member_email = #{memberEmail}
+    </select>
+
+
 </mapper>
