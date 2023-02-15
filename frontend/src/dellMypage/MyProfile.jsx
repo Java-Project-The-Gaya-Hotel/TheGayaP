@@ -74,7 +74,11 @@ function MyProfile() {
                 params: {memberId: memberId}
             })
             .then((req) => {
-                Swal.fire('데이터가 수정되었습니다. ')
+                Swal.fire('데이터가 수정되었습니다. ').then(res=>{
+                    if (res.isConfirmed){
+                        navi("/mypage");
+                    }
+                })
             }).catch(err => {
             Swal.fire(
                 Swal.fire('오류가 발생하였습니다, 다시 시도해 주세요.')

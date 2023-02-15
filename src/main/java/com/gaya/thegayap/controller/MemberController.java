@@ -17,7 +17,7 @@ import java.util.List;
  * 고객에 관련된 컨트롤러
  */
 @RestController
-@CrossOrigin("http://localhost:3000")
+//@CrossOrigin("http://localhost:3000")
 public class MemberController {
 
     @Autowired

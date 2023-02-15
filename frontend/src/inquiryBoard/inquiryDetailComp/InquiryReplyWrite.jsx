@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import {useNavigate} from "react-router-dom";
 
 //게시글 작성 페이지
 function InquiryReplyWrite(props) {
@@ -8,7 +9,9 @@ function InquiryReplyWrite(props) {
     const [isAdmin, setIsAdmin] = useState("N");
     const [qaNum, setQaNum] = useState(props.qaNum);
     const [answerUserName, setAnswerUserName] = useState("");
-
+    const navi = useNavigate();
+    const [inquiryCount, setInquiryCount] = useState(0);
+    const [noReact,setNoReact]= useState(false);
     const changeContents = (e) => {
         setContents(e.target.value);
     }
@@ -103,8 +106,12 @@ function InquiryReplyWrite(props) {
             console.log(e);
         })
 
-        window.location.reload();
+        setInquiryCount(inquiryCount+1);
+        navi("/qa/list/detail?idx="+qaNum, {replace:true});
+
     }
+
+
 
     return (
         <div className={"container"}>
