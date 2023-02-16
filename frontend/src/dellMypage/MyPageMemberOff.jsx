@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
 import {AuthorityCheck, GetMemberIdByToken, SessionCheck} from "../functiontocheck/FunctionToCheck";
 import Swal from "sweetalert2";
+import {default as Axios} from "axios";
 
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 function MyPageMemberOff() {
 
@@ -20,7 +23,7 @@ function MyPageMemberOff() {
             GetMemberIdByToken().then(response => {
                 setMemberId(response.data)
                 axios.get(
-                    "http://localhost:8080/mypage/getUserInfo",
+                    "/mypage/getUserInfo",
                     {
                         params: {
                             memberId: response.data,
@@ -39,7 +42,7 @@ function MyPageMemberOff() {
 
     const YesBtn = (e) => {
         e.preventDefault();
-        axios.put("http://localhost:8080/mypage/withdrawalMember", null, {
+        axios.put("/mypage/withdrawalMember", null, {
             params: {
                 memberId: memberId
             }

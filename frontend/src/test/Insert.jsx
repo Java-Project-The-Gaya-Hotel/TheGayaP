@@ -1,5 +1,9 @@
 import React, {useState} from "react";
-import axios from "axios";
+import {default as Axios} from "axios";
+
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 function Insert(props) {
 
@@ -53,7 +57,7 @@ function Insert(props) {
         }
 
 
-        axios.post("http://localhost:8080/insert", roomInfo
+        axios.post("/insert", roomInfo
         ).then((req) => {
             console.log("데이터 전송 성공")
             console.log(req.data);

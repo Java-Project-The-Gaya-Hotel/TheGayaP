@@ -1,8 +1,10 @@
 import React, {useState} from "react";
 import Modal from "./Modal";
 import FindResv from "./FindResv";
-import axios from "axios";
-
+import {default as Axios} from "axios";
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 // 비회원 예약찾기
 function NotMember(props){
 
@@ -21,7 +23,7 @@ function NotMember(props){
 
     const resvBtn = () =>{
 
-        axios.get("http://localhost:8080/login/findResv", {params:
+        axios.get("/login/findResv", {params:
             {
                 customerName: customerName,
                 reservationNum: reservationNum,

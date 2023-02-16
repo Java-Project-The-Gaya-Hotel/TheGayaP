@@ -3,8 +3,11 @@ import RoomCondition from "./RoomCondition";
 import "../dellMain/dellmainCss/BtnDateChoose.css"
 import "./dellBookingCss/NavColor.css"
 import {useLocation} from "react-router-dom";
-import axios from "axios";
+import {default as Axios} from "axios";
 
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 function BookingRoom() {
 
@@ -31,7 +34,7 @@ function BookingRoom() {
     // 받아온 정보들로 axios 통신하여 예약이 중첩되지 않은 방을 가져오는 코드
     useEffect(() => {
 
-        axios.get("http://localhost:8080/gaya/roomlist", {
+        axios.get("/gaya/roomlist", {
 
             params: {
                 hotelNum: searchParams.get('hotelNum'),

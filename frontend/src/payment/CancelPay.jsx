@@ -1,13 +1,15 @@
 // CancelPay.jsx
 import React from "react";
-import axios from "axios";
-
+import {default as Axios} from "axios";
+const axios = Axios.create({
+  baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 function CancelPay() {
 
   const onClickCancel = () => {
     axios({
-      url: "http://localhost:8080/payments/cancel", // 예: http://www.myservice.com/payments/cancel
+      url: "/payments/cancel", // 예: http://www.myservice.com/payments/cancel
       method: "POST",
       headers: {
         "Content-Type": "application/json",

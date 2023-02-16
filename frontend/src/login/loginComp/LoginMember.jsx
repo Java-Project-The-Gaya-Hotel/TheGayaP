@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
+import {default as Axios} from "axios";
 import {useNavigate} from "react-router-dom";
 import moment from "moment";
 import "../loginCss/ButtonCss.css"
@@ -10,6 +10,10 @@ import {useCookies} from "react-cookie";
 import Swal from "sweetalert2";
 import FindPw from "./FindPw";
 
+
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 // 회원 로그인
 function LoginMember(props) {
 
@@ -63,7 +67,7 @@ function LoginMember(props) {
     const login = async (id, pw) => {
         try {
             // 로그인 정보 보내는 axios
-            const response = await axios.post("http://localhost:8080/members/login", {
+            const response = await axios.post("/members/login", {
                 memberId: id,
                 memberPw: pw
             })
