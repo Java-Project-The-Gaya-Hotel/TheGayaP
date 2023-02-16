@@ -14,7 +14,7 @@ import java.util.List;
  * 호텔관련 컨트롤러
  */
 @RestController
-@CrossOrigin("http://localhost:3000")
+//@CrossOrigin("http://localhost:3000")
 @RequestMapping("/gaya")
 @RequiredArgsConstructor
 public class HotelController {

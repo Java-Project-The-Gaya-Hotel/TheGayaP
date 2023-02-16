@@ -1,7 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {AuthorityCheck, GetMemberIdByToken, SessionCheck} from "../functiontocheck/FunctionToCheck";
-import axios from "axios";
+import {default as Axios} from "axios";
+
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 const styles = {
     cardBox: {
@@ -24,7 +28,7 @@ function MyBookingSchedule() {
             GetMemberIdByToken().then(response => {
                 setCustomerId(response.data)
                 axios.get(
-                    "http://localhost:8080/mypage/reservationinfo",
+                    "/mypage/reservationinfo",
                     {
                         params: {
                             customerId: response.data,
@@ -78,10 +82,10 @@ function MyBookingSchedule() {
                                                 <tr className={"small"} key = {index}>
                                                     <td><small>{response.reservationDate}</small></td>
                                                     <td>{response.reservationPeople}</td>
-                                                    <td>{response.reservationRoomName}</td>
+                                                    <td><small>{response.reservationRoomName}</small></td>
                                                     <td>{response.reservationCheckIn}</td>
                                                     <td>{response.reservationCheckOut}</td>
-                                                    <td>{`${response.reservationCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원`}</td>
+                                                    <td><small>{`${response.reservationCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원`}</small></td>
                                                     <td>{response.reservationCustomerName}</td>
                                                 </tr>
                                             )

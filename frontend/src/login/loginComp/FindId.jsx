@@ -1,8 +1,10 @@
 // FindId.jsx
 import React, {useState} from "react";
-import axios from "axios";
+import {default as Axios} from "axios";
 import {Link} from "react-router-dom";
-
+const axios = Axios.create({
+  baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 function FindId(props) {
 
@@ -22,7 +24,7 @@ function FindId(props) {
 
 
   const findIdBtn = () => {
-    axios.get("http://localhost:8080/login/findId",
+    axios.get("/login/findId",
       {
         params: {memberName: name, memberEmail: email}
       })

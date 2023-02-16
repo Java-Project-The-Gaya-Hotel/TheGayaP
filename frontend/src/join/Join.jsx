@@ -1,11 +1,13 @@
 import React, {useCallback, useEffect, useState} from "react";
 import "./Join.css"
-import axios from "axios";
+import {default as Axios} from "axios";
 import button from "bootstrap/js/src/button";
 import {useNavigate} from "react-router-dom";
 import {ReactNode} from "react";
 import Swal from "sweetalert2";
-
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 
 
@@ -19,6 +21,7 @@ function Join(props) {
     const [id, setId] = useState("")
     const [pw, setPw] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
+    const navi = useNavigate();
 
     // 오류 메세지
     const [idMes, setIdMes] = useState("")
@@ -155,14 +158,14 @@ function Join(props) {
             return alert('비밀번호와 비밀번호 확인은 같아야 합니다.')
         }   //여기서 걸리면 아래로 못감
 
-        axios.post("http://localhost:8080/join/insert", data)
+        axios.post("/join/insert", data)
             .then((req) => {
                 Swal.fire({
                     icon: 'info',
                     title: '가입 성공!',
                 }).then(res=>{
                     if (res.isConfirmed){
-                        window.location.href = "/login";
+                        navi("/login");
                     }
                 })
             }).catch(err => {
@@ -172,7 +175,7 @@ function Join(props) {
                 text: ' 알수없는 오류. ',
             }).then(res=>{
                 if (res.isConfirmed){
-                    window.location.href = "/join";
+                        navi("/join");
                 }
             })
         })
@@ -201,7 +204,7 @@ function Join(props) {
         if (!id) {
             setIdMes("아이디를 입력해주세요");
         }else {
-            axios.get("http://localhost:8080/join/idCheck",
+            axios.get("/join/idCheck",
                 {
                     params: {memberId: id}
                 })
@@ -231,7 +234,7 @@ function Join(props) {
         if (!email) {
             setEmailMes("이메일을 입력해주세요");
         }else {
-            axios.get("http://localhost:8080/join/emailCheck",
+            axios.get("/join/emailCheck",
                 {
                     params: {memberEmail: email}
                 })

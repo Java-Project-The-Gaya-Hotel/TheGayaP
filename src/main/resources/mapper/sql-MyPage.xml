@@ -25,7 +25,8 @@
     <select id="myQaListTable" parameterType="String" resultType="com.gaya.thegayap.dto.InquiryDto">
         select *
         from inquiry_table
-        where inquiry_user_name=#{memberId}
+        where inquiry_user_name = #{memberId}
+        order by inquiry_create_date desc
     </select>
 
     <!--    회원 탈퇴 -->

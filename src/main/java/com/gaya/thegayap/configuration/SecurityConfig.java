@@ -32,8 +32,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/members/login").permitAll()
-//                .antMatchers("/gaya/roomlist").hasAnyRole("USER")
-//                .anyRequest().authenticated()
+                .antMatchers("/mypage").hasAnyRole("USER","ADMIN")
+////                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 

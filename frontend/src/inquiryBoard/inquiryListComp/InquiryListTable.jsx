@@ -1,9 +1,13 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
+import {default as Axios} from "axios";
 import InquiryItem from "./InquiryItem";
 import {useNavigate} from "react-router-dom";
 import InquiryPagination from "./InquiryPageNation";
 import {GetMemberIdByToken} from "../../functiontocheck/FunctionToCheck";
+
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 // - Page 기능 List
 // 문의 게시판 테이블
@@ -28,11 +32,11 @@ function InquiryListTable(props) {
         if (sessionStorage.getItem("token") != null) {
             const syncMemberId = await GetMemberIdByToken()
             const syncMemberIdParam = syncMemberId.data
-            const syncMemberInfo = await axios.get("http://localhost:8080/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
+            const syncMemberInfo = await axios.get("/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
             setMemberInfo(syncMemberInfo.data);
 
         }
-        const syncQA = await axios.get("http://localhost:8080/gaya/inquirylist");
+        const syncQA = await axios.get("/gaya/inquirylist");
         setQAData(syncQA.data);
 
 

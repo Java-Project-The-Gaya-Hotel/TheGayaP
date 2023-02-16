@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import "../dellMain/dellmainCss/BtnDateChoose.css"
 import "../dellMain/dellmainCss/DatePickerCustomCss.css"
 import "../login/loginCss/ButtonCss.css"
+import moment from "moment/moment";
 
 //button component
 
@@ -152,12 +153,16 @@ function DateChoose() {
 
 
     const SendReservationInfo = () => {
-        Navigate(`/reservation?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&getAdultCount=${adultCount}&getChildCount=${childCount}&getTotal=${totalCount}`);
-        // Navigate('/reservation',
-        //     {state: {
-        //             startDate: startDate,
-        //             endDate: endDate,
-        //             count: count}})
+        const checkSDate = moment(startDate).format("YYMMDD");
+        const checkEDate = moment(endDate).format("YYMMDD")
+        if (checkSDate === checkEDate) {
+            Swal.fire(
+                {html: '<h4>입실날짜와 퇴실날짜는 같을수 없습니다.</h4>'});
+        } else {
+            Navigate(`/reservation?sDate=${startDate.toISOString().split('T')[0]}&eDate=${endDate.toISOString().split('T')[0]}&getAdultCount=${adultCount}&getChildCount=${childCount}&getTotal=${totalCount}`);
+        }
+
+
     }
 
 
@@ -184,7 +189,8 @@ function DateChoose() {
                 </div>
 
                 <div className={"col"}>
-                    <button className={"btnDate"} role={"button"} onClick={SendReservationInfo}><span className="text">객실 찾기</span>Booking</button>
+                    <button className={"btnDate"} role={"button"} onClick={SendReservationInfo}><span className="text">객실 찾기</span>Booking
+                    </button>
                 </div>
             </div>
         </div>)

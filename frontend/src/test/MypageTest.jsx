@@ -1,6 +1,10 @@
 // MypageTest.jsx
 import React, {useState} from "react";
-import axios from "axios";
+import {default as Axios} from "axios";
+
+const axios = Axios.create({
+  baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 
 function MypageTest(props) {
@@ -21,7 +25,7 @@ function MypageTest(props) {
   const resvListBtn = (e) => {
     e.preventDefault();
 
-    axios.get("http://localhost:8080/mypage/resv",
+    axios.get("/mypage/resv",
       {
         params: {customerId: id}
       })
@@ -37,7 +41,7 @@ function MypageTest(props) {
   const accountBtn = (e) => {
     e.preventDefault();
 
-    axios.get("http://localhost:8080/mypage/account",
+    axios.get("/mypage/account",
       {
         params: {memberId: id}
       })
@@ -52,7 +56,7 @@ function MypageTest(props) {
   const pointBtn = (e) => {
     e.preventDefault();
 
-    axios.get("http://localhost:8080/mypage/point",
+    axios.get("/mypage/point",
       {
         params: {customerId: id}
       })
@@ -67,7 +71,7 @@ function MypageTest(props) {
   const profileBtn = (e) => {
     e.preventDefault();
 
-    axios.get("http://localhost:8080/mypage/profile",
+    axios.get("/mypage/profile",
       {
         params: {memberId: id}
       })
@@ -85,7 +89,7 @@ function MypageTest(props) {
   const updateBtn = (e) => {
     e.preventDefault();
 
-    axios.put("http://localhost:8080/mypage/update",
+    axios.put("/mypage/update",
       updateData,
       {
         params: {memberId: id}

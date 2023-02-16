@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
+import {default as Axios} from "axios";
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 import {GetMemberIdByToken} from "../functiontocheck/FunctionToCheck";
 import {tr} from "date-fns/locale";
 
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 const CrumbAni = styled.div`
   animation: fadeInUp;
@@ -63,7 +66,7 @@ function ReservationPageDetail() {
         if (sessionStorage.getItem("token") != null) {
             GetMemberIdByToken().then(response => {
                 setMemberId(response.data);
-                axios.get("http://localhost:8080/member/userinfo", {
+                axios.get("/member/userinfo", {
                     params: {
                         memberId: response.data,
                     }
@@ -86,7 +89,7 @@ function ReservationPageDetail() {
         }
 
 
-        axios.get("http://localhost:8080/gaya/checkmealcost", {
+        axios.get("/gaya/checkmealcost", {
             params: {
                 hotelNum: searchParams.get('hotelNum'),
             }
@@ -185,7 +188,7 @@ function ReservationPageDetail() {
         }
 
         if (success) {
-            axios.post("http://localhost:8080/gaya/bookroom",
+            axios.post("/gaya/bookroom",
                 {
                     reservationNum: merchant_uid,
                     reservationHotelNum: Number(hotelNum),

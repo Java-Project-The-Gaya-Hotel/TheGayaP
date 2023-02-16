@@ -1,12 +1,16 @@
 // InquiryWrite.jsx
 import React, {useEffect, useState} from "react";
-import axios from "axios";
+import {default as Axios} from "axios";
 import "./InquiryWrite.css";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {GetMemberIdByToken} from "../../functiontocheck/FunctionToCheck";
 
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 function InquiryWrite() {
 
+    const navi = useNavigate();
     const [hotelList, setHotelList] = useState([]);
 
     const [userName, setUserName] = useState("");
@@ -68,7 +72,7 @@ function InquiryWrite() {
     useEffect(() => {
         if (sessionStorage.getItem("token") != null) {
             GetMemberIdByToken().then(response => {
-                axios.get("http://localhost:8080/qa/writeUser", { params: {userName: response.data}})
+                axios.get("/qa/writeUser", { params: {userName: response.data}})
                     .then((req) => {
                         console.log("통신성공")
                         console.log(req.data);
@@ -82,7 +86,7 @@ function InquiryWrite() {
                     })
             })
 
-            axios.get("http://localhost:8080/gaya/hotelList")
+            axios.get("/gaya/hotelList")
                 .then((req) => {
                     setHotelList(req.data);
                 })
@@ -113,11 +117,11 @@ function InquiryWrite() {
                 setPasswordVld("비밀번호를 입력해주세요");
             }
             else {
-                axios.post("http://localhost:8080/qa/write", inquiryData)
+                axios.post("/qa/write", inquiryData)
                     .then((req) => {
                         console.log("데이터 전송 성공");
                         console.log(inquiryData);
-                        window.location.href = "/qa/list";
+                        navi("/qa/list", {replace:true});
                     }).catch(err => {
                     console.log(`데이터 전송 실패 ${err}`)
                 })

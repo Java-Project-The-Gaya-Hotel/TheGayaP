@@ -96,6 +96,7 @@ function RoutesLayout(props) {
                 <nav role="navigation">
                     <div style={styles.LiFont}>
                         <ul className={"row row-cols-auto justify-content-end text-center px-5 pt-2"}>
+                            <li className={"col px-4"}>{memberBox}</li>
                             <li className={"col"}>{sessionStorage.getItem("loginInfo") ?
                                 <Link to={"#"} onClick={logout}>Log out</Link> : <Link to={"/login"}>login</Link>}</li>
                             <li className={"col"}>{sessionStorage.getItem("loginInfo") != null ? null :
@@ -103,9 +104,7 @@ function RoutesLayout(props) {
                             <li className={"col"}>{sessionStorage.getItem("loginInfo") != null ?
                                 <Link to={"/mypage"}>My Page</Link> : null}  </li>
                         </ul>
-                        <div className={"text-end p-3"}>{
-                            memberBox
-                        }</div>
+
                     </div>
                     <hr style={styles.HrHidden}/>
                     <div className="text-center border-bottom border-opacity-25 pb-3">

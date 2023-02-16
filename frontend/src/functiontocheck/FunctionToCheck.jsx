@@ -1,9 +1,13 @@
-import axios from "axios";
+
 import moment from "moment";
 
+import {default as Axios} from "axios";
+
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
+
 // 권한 확인을 위한 함수 모음
-
-
 
 // token의 유효성 검사 후 권한 확인
 function AuthorityCheck() {
@@ -15,7 +19,7 @@ function AuthorityCheck() {
         const acToken = tokenJson["accessToken"];
 
         // accessToken으로 토큰 만료 확인
-        axios.get("http://localhost:8080/members/actokencheck", {
+        axios.get("/members/actokencheck", {
                 headers: {
                     Authorization: `Bearer ${acToken}`
                 }
@@ -27,7 +31,7 @@ function AuthorityCheck() {
 
             try {
                 // refreshToken 으로 재발급 성공시 token 정보 재할당
-                const response = await axios.post("http://localhost:8080/members/refreshtokencheck", tokenJson);
+                const response = await axios.post("/members/refreshtokencheck", tokenJson);
                 sessionStorage.setItem("token", JSON.stringify(response.data));
                 return true;
             } catch (e) {
@@ -51,7 +55,7 @@ function SessionCheck() {
         // 지금 시간
         const currentTime = moment.now();
         // 로그인한 시간보다 숫자 밀리초 만큼 차이가 날시 세션 만료 및 스토리지 초기화
-        if (currentTime - loginTime > 1000) {
+        if (currentTime - loginTime > 1800000) {
             sessionStorage.removeItem("token");
             sessionStorage.removeItem("loginInfo");
             alert("로그인이 만료 됐습니다.");
@@ -68,7 +72,7 @@ async function GetMemberIdByToken() {
     try {
         const tokenJson = JSON.parse(sessionStorage.getItem("token"));
         const acToken = tokenJson["accessToken"];
-        const response = await axios.get("http://localhost:8080/members/access", {params: {accessToken: acToken}});
+        const response = await axios.get("/members/access", {params: {accessToken: acToken}});
         return response;
     } catch (e) {
         return null;
