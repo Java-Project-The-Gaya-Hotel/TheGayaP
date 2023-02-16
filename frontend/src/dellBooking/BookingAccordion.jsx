@@ -124,8 +124,8 @@ function BookingAccordion() {
     // hotel List 가져오기
     //axios input button roop connection
     useEffect(() => {
-        // axios.get("http://localhost:8080/gaya/hotelList")
-        axios.get("/gaya/hotelList")
+        axios.get("http://localhost:8080/gaya/hotelList")
+        // axios.get("/gaya/hotelList")
             .then((req) => {
                 setHotelList(req.data);
             })

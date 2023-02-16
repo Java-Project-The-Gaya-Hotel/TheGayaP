@@ -10,8 +10,6 @@ function InquiryReplyWrite(props) {
     const [qaNum, setQaNum] = useState(props.qaNum);
     const [answerUserName, setAnswerUserName] = useState("");
     const navi = useNavigate();
-    const [inquiryCount, setInquiryCount] = useState(0);
-    const [noReact,setNoReact]= useState(false);
     const changeContents = (e) => {
         setContents(e.target.value);
     }
@@ -102,13 +100,13 @@ function InquiryReplyWrite(props) {
 
         axios.post("http://localhost:8080/gaya/qa/reply/insert", body)
             .then(req => {
+                let countNum = props.Reload;
+                countNum++
+                props.setReLoad(countNum);
             }).catch(e => {
             console.log(e);
         })
-
-        setInquiryCount(inquiryCount+1);
-        navi("/qa/list/detail?idx="+qaNum, {replace:true});
-
+       document.querySelector("#writeChatBox").value = "";
     }
 
 
@@ -121,7 +119,7 @@ function InquiryReplyWrite(props) {
                 </div>
                 <hr/>
                 <div className={"col-11 mx-auto my-4"}>
-                    <input className={"form-control rounded-0"} style={{height: 150}} onChange={changeContents}/>
+                    <input className={"form-control rounded-0"} style={{height: 150}} id={"writeChatBox"} onChange={changeContents}/>
                 </div>
                 <div className={"d-flex justify-content-between mt-3"}>
                     {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useLayoutEffect, useState} from "react";
 import InquiryUserChat from "./inquiryUserChat";
 import InquiryAdminChat from "./inquiryAdminChat";
 import InquiryReplyWrite from "./InquiryReplyWrite";
@@ -32,6 +32,7 @@ function InquiryDetail() {
     const [inquiryStatus, setInquiryStatus] = useState("");
     const [isAdmin, setIsAdmin] = useState();
     const [writeBox, setWriteBox] = useState();
+    const [reloadCount, setReloadCount] = useState(0);
 
 
     // 유저 정보 가져오기
@@ -125,8 +126,7 @@ function InquiryDetail() {
         writeBoxShow().then(r => {
 
             if (result) {
-                setWriteBox(<InquiryReplyWrite qaNum={userParam.get('idx')} data={memberInfo} status={inquiryStatus}/>);
-                // window.location.reload();
+                setWriteBox(<InquiryReplyWrite Reload={reloadCount} setReLoad={setReloadCount} qaNum={userParam.get('idx')} data={memberInfo} status={inquiryStatus}/>);
             } else {
                 setWriteBox(null);
             }
@@ -135,6 +135,20 @@ function InquiryDetail() {
     }, [qaDetailData])
 
 
+    useEffect(()=>{
+        axios.get("http://localhost:8080/gaya/qa/detail", {
+            params: {
+                idx: userParam.get('idx'),
+            }
+        }).then(res=>{
+            setQaDetailData(res.data);
+
+        }).catch(e=>{
+            console.log(e);
+        })
+
+
+    },[reloadCount])
 
     return (
         <div className={"container min-vh-100 "}>
@@ -180,9 +194,9 @@ function InquiryDetail() {
                 <div className={"container"}>
                     <div id={"chat"} className={"text-center"}>
                         {
-                            qaDetailData.map((item, idx) => {
-                                return (item.answerIsAdmin === "N" ? <InquiryUserChat data={item} key={idx}/> :
-                                    <InquiryAdminChat data={item} key={idx}/>)
+                            qaDetailData.map((item) => {
+                                return (item.answerIsAdmin === "N" ? <InquiryUserChat data={item} key={item.answerNum}/> :
+                                    <InquiryAdminChat data={item} key={item.answerNum}/>)
                             })
                         }
                     </div>
