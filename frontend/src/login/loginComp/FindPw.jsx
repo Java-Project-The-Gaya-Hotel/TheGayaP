@@ -21,11 +21,26 @@ function FindPw(props) {
 
     // 이메일 인증 보내기
     const checkByIdAndEmail = () => {
+        let timerInterval
+        Swal.fire({
+            title: 'Loading',
+            html: '이메일을 전송중입니다.',
+            timer: 10000,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        })
         axios.get("http://localhost:8080/member/emailConfirm",
             {
                 params: {memberId: memberId, memberEmail: memberEmail}
             })
-
             .then((req) => {
                 if (req.data === "fail") {
                     Swal.fire("일치하는 유저가 존재하지 않습니다.")

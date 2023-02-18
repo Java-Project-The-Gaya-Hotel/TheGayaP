@@ -2,11 +2,12 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import "./InquiryWrite.css";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {GetMemberIdByToken} from "../../functiontocheck/FunctionToCheck";
 
 function InquiryWrite() {
 
+    const navi = useNavigate();
     const [hotelList, setHotelList] = useState([]);
 
     const [userName, setUserName] = useState("");
@@ -117,7 +118,7 @@ function InquiryWrite() {
                     .then((req) => {
                         console.log("데이터 전송 성공");
                         console.log(inquiryData);
-                        window.location.href = "/qa/list";
+                        navi("/qa/list", {replace:true});
                     }).catch(err => {
                     console.log(`데이터 전송 실패 ${err}`)
                 })

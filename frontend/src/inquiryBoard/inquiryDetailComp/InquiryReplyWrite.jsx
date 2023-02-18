@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import {useNavigate} from "react-router-dom";
 
 //게시글 작성 페이지
 function InquiryReplyWrite(props) {
@@ -8,7 +9,7 @@ function InquiryReplyWrite(props) {
     const [isAdmin, setIsAdmin] = useState("N");
     const [qaNum, setQaNum] = useState(props.qaNum);
     const [answerUserName, setAnswerUserName] = useState("");
-
+    const navi = useNavigate();
     const changeContents = (e) => {
         setContents(e.target.value);
     }
@@ -99,12 +100,16 @@ function InquiryReplyWrite(props) {
 
         axios.post("http://localhost:8080/gaya/qa/reply/insert", body)
             .then(req => {
+                let countNum = props.Reload;
+                countNum++
+                props.setReLoad(countNum);
             }).catch(e => {
             console.log(e);
         })
-
-        window.location.reload();
+       document.querySelector("#writeChatBox").value = "";
     }
+
+
 
     return (
         <div className={"container"}>
@@ -114,7 +119,7 @@ function InquiryReplyWrite(props) {
                 </div>
                 <hr/>
                 <div className={"col-11 mx-auto my-4"}>
-                    <input className={"form-control rounded-0"} style={{height: 150}} onChange={changeContents}/>
+                    <input className={"form-control rounded-0"} style={{height: 150}} id={"writeChatBox"} onChange={changeContents}/>
                 </div>
                 <div className={"d-flex justify-content-between mt-3"}>
                     {

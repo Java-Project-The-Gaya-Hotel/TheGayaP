@@ -27,8 +27,12 @@ function MyQAList() {
                         }
                     }
                 ).then(response => {
-                    setCheckQAList(response.data)
-                }).catch(()=>{
+                    if (response.data.length == 0) {
+                        setCheckQAList(null);
+                    } else {
+                        setCheckQAList(response.data)
+                    }
+                }).catch(() => {
                     setCheckQAList(null);
                 })
             })
@@ -59,18 +63,23 @@ function MyQAList() {
                                     <tbody>
                                     {
                                         checkQAList != null ?
-                                        checkQAList.map((item) => {
-                                        return (
+                                            checkQAList.map((item) => {
+                                                return (
 
-                                            <tr key={item.inquiryNum} style={{cursor: "pointer"}} onClick={()=>{navi(`/qa/list/detail?idx=${item.inquiryNum}`);}}>
-                                                <td>{item.inquiryHotelName}</td>
-                                                <td>{item.inquiryTitle}</td>
-                                                <td>{item.inquiryCreateDate}</td>
-                                                <td>{item.inquiryStatus}</td>
+                                                    <tr key={item.inquiryNum} style={{cursor: "pointer"}}
+                                                        onClick={() => {
+                                                            navi(`/qa/list/detail?idx=${item.inquiryNum}`);
+                                                        }}>
+                                                        <td>{item.inquiryHotelName}</td>
+                                                        <td>{item.inquiryTitle}</td>
+                                                        <td>{item.inquiryCreateDate}</td>
+                                                        <td>{item.inquiryStatus}</td>
+                                                    </tr>
+                                                )
+                                            })
+                                            : <tr>
+                                                <td className={"text-center"} colSpan={4}>문의 하신 정보가 없습니다.</td>
                                             </tr>
-                                        )
-                                    })
-                                            : <tr><td className={"text-center"} colSpan={4}>문의 하신 정보가 없습니다.</td></tr>
                                     }
                                     </tbody>
 

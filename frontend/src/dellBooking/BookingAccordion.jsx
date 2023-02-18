@@ -24,6 +24,9 @@ const styles = {
     },
 }
 
+// const axios = Axios.create({
+//     baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+// });
 
 const InputBox = styled.input`
   width: 190px;
@@ -122,6 +125,7 @@ function BookingAccordion() {
     //axios input button roop connection
     useEffect(() => {
         axios.get("http://localhost:8080/gaya/hotelList")
+        // axios.get("/gaya/hotelList")
             .then((req) => {
                 setHotelList(req.data);
             })

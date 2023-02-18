@@ -36,6 +36,7 @@ function MainReact(props) {
                 <Routes>
                     <Route path={"/"} element={<RoutesLayout/>}>
                         <Route index element={<MainPage/>}/>
+                        <Route path={"/"} element={<MainPage/>}/>
                         <Route path={"/reservation"} element={<BookingPage/>}/>
                         <Route path={"/welcome"} element={<IntroPage/>}>
                             <Route index element={<IntroPageMain/>}/>
@@ -63,7 +64,6 @@ function MainReact(props) {
                             <Route path={"memberoff"} element={<MyPageMemberOff/>}/>
                         </Route>
                         <Route path={"/test"} element={<MypageTest/>}/>
-
                     </Route>
                 </Routes>
             </BrowserRouter>

@@ -9,6 +9,7 @@ import lombok.Getter;
 @Getter
 public class AnswerChatDto {
 
+    private int answerNum;
     private String answerInquiryNum;
     private String answerContents;
     private String answerCreateDate;

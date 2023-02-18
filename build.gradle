@@ -47,12 +47,14 @@ tasks.named('test') {
 }
 
 
-//////  추가된 내용 //////////
 
-//  리액트 프로젝트 폴더를 변수에 저장
+//추가
+
+
+// 리액트 프로젝트 폴더를 변수에 저장
 def frontendDir = "$projectDir/frontend"
 
-//  리액트 소스코드 복사 장소
+// 리액트 소스코드 복사 장소
 sourceSets {
     main {
         resources {
@@ -61,53 +63,51 @@ sourceSets {
     }
 }
 
-
 processResources {
     dependsOn "copyReactBuildFiles"
 }
 
-//  task 명령어
-
-//  리액트 프로젝트의 module install
+// 리액트 프로젝트의 모듈 install
 task installReact(type: Exec) {
     workingDir "$frontendDir"
     inputs.dir "$frontendDir"
     group = BasePlugin.BUILD_GROUP
-//    os에 따라서 실행 방법 변경
+//    os 에 따라 실행 방법 변경
     if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
         commandLine "npm.cmd", "audit", "fix"
         commandLine "npm.cmd", "install"
-    } else {
+    }
+    else {
         commandLine "npm", "audit", "fix"
         commandLine "npm", "install"
     }
 }
 
-
-//  리액트 프로젝트 빌드, 함수 선언
+// 리액트 프로젝트 빌드, 함수 선언
 task buildReact(type: Exec) {
     dependsOn "installReact"
     workingDir "$frontendDir"
     inputs.dir "$frontendDir"
     group = BasePlugin.BUILD_GROUP
-//    os에 따라서 npm build 방식 변경, 리액트 프로젝트 빌드
+//    os 에 따라서 npm build 방식 변경, 리액트 프로젝트 빌드
     if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
         commandLine "npm.cmd", "run-script", "build"
-    } else {
+    }
+    else {  // linux, mac os 일때 실행
         commandLine "npm", "run-script", "build"
     }
 }
 
-//  리액트 프로젝트 빌드 파일을 스프링 프로젝트로 복사, 함수 선언
+// 리액트 프로젝트 빌드 파일을 스프링 프로젝트로 복사, 함수 선언
 task copyReactBuildFiles(type: Copy) {
     dependsOn "buildReact"
 //    리액트 프로젝트 빌드 완료 파일 위치
     from "$frontendDir/build"
-//    스프링 부트 프로젝트 빌드 파일 위치중 resources/main/static 폴더
+//    스프링부트 프로젝트 빌드 파일 위치 중 resources/main/static 폴더
     into "$buildDir/resources/main/static"
 }
 
-//  배포 시 리액트 프로젝트의 배포 파일도 함께 포함
+// 배포 시 리액트 프로젝트의 배포 파일도 함께 포함
 tasks.bootJar {
     dependsOn "copyReactBuildFiles"
 }
