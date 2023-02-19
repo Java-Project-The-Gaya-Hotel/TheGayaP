@@ -55,7 +55,9 @@ function InquiryReplyWrite(props) {
                     ' 문의가 종료됐습니다. ',
                 ).then(res=>{
                     if (res.isConfirmed) {
-                        props.setReLoadCount(+1);
+                        let countNum = props.Reload;
+                        countNum++
+                        props.setReLoad(countNum);
                     }
                 })
 
@@ -104,12 +106,13 @@ function InquiryReplyWrite(props) {
 
         axios.post("/gaya/qa/reply/insert", body)
             .then(req => {
-                props.setReLoadCount(props.reloadCount+1);
+                let countNum = props.Reload;
+                countNum++
+                props.setReLoad(countNum);
             }).catch(e => {
             console.log(e);
         })
-        navi("/qa/list/detail?idx="+qaNum);
-
+       document.querySelector("#writeChatBox").value = "";
     }
 
 
@@ -122,7 +125,7 @@ function InquiryReplyWrite(props) {
                 </div>
                 <hr/>
                 <div className={"col-11 mx-auto my-4"}>
-                    <input className={"form-control rounded-0"} style={{height: 150}} onChange={changeContents}/>
+                    <input className={"form-control rounded-0"} style={{height: 150}} id={"writeChatBox"} onChange={changeContents}/>
                 </div>
                 <div className={"d-flex justify-content-between mt-3"}>
                     {

@@ -142,11 +142,19 @@ function InquiryDetail() {
 
 
     useEffect(()=>{
+        axios.get("/gaya/qa/detail", {
+            params: {
+                idx: userParam.get('idx'),
+            }
+        }).then(res=>{
+            setQaDetailData(res.data);
 
-        console.log(reLoadCount);
+        }).catch(e=>{
+            console.log(e);
+        })
+
+
     },[reLoadCount])
-
-
 
     return (
         <div className={"container min-vh-100 "}>
@@ -192,9 +200,9 @@ function InquiryDetail() {
                 <div className={"container"}>
                     <div id={"chat"} className={"text-center"}>
                         {
-                            qaDetailData.map((item, idx) => {
-                                return (item.answerIsAdmin === "N" ? <InquiryUserChat data={item} key={idx}/> :
-                                    <InquiryAdminChat data={item} key={idx}/>)
+                            qaDetailData.map((item) => {
+                                return (item.answerIsAdmin === "N" ? <InquiryUserChat data={item} key={item.answerNum}/> :
+                                    <InquiryAdminChat data={item} key={item.answerNum}/>)
                             })
                         }
                     </div>
