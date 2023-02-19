@@ -142,16 +142,7 @@ function InquiryDetail() {
 
 
     useEffect(()=>{
-        axios.get("/gaya/qa/detail", {
-            params: {
-                idx: userParam.get('idx'),
-            }
-        }).then(res=>{
-            setQaDetailData(res.data);
-
-        }).catch(e=>{
-            console.log(e);
-        })
+        getInquiryDetailData();
 
 
     },[reLoadCount])
