@@ -55,9 +55,9 @@ function InquiryReplyWrite(props) {
                     ' 문의가 종료됐습니다. ',
                 ).then(res=>{
                     if (res.isConfirmed) {
-                        let countNum = props.Reload;
+                        let countNum = props.reloadCount;
                         countNum++
-                        props.setReLoad(countNum);
+                        props.setReLoadCount(countNum);
                     }
                 })
 
@@ -106,9 +106,9 @@ function InquiryReplyWrite(props) {
 
         axios.post("/gaya/qa/reply/insert", body)
             .then(req => {
-                let countNum = props.Reload;
+                let countNum = props.reloadCount;
                 countNum++
-                props.setReLoad(countNum);
+                props.setReLoadCount(countNum);
             }).catch(e => {
             console.log(e);
         })
