@@ -69,7 +69,7 @@ function InquiryWrite() {
     useEffect(() => {
         if (sessionStorage.getItem("token") != null) {
             GetMemberIdByToken().then(response => {
-                axios.get("http://localhost:8080/qa/writeUser", { params: {userName: response.data}})
+                axios.get("http://localhost:8081/qa/writeUser", { params: {userName: response.data}})
                     .then((req) => {
                         console.log("통신성공")
                         console.log(req.data);
@@ -83,7 +83,7 @@ function InquiryWrite() {
                     })
             })
 
-            axios.get("http://localhost:8080/gaya/hotelList")
+            axios.get("http://localhost:8081/gaya/hotelList")
                 .then((req) => {
                     setHotelList(req.data);
                 })
@@ -114,7 +114,7 @@ function InquiryWrite() {
                 setPasswordVld("비밀번호를 입력해주세요");
             }
             else {
-                axios.post("http://localhost:8080/qa/write", inquiryData)
+                axios.post("http://localhost:8081/qa/write", inquiryData)
                     .then((req) => {
                         console.log("데이터 전송 성공");
                         console.log(inquiryData);

@@ -28,11 +28,11 @@ function InquiryListTable(props) {
         if (sessionStorage.getItem("token") != null) {
             const syncMemberId = await GetMemberIdByToken()
             const syncMemberIdParam = syncMemberId.data
-            const syncMemberInfo = await axios.get("http://localhost:8080/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
+            const syncMemberInfo = await axios.get("http://localhost:8081/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
             setMemberInfo(syncMemberInfo.data);
 
         }
-        const syncQA = await axios.get("http://localhost:8080/gaya/inquirylist");
+        const syncQA = await axios.get("http://localhost:8081/gaya/inquirylist");
         setQAData(syncQA.data);
 
 

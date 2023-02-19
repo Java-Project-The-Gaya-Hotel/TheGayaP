@@ -53,7 +53,7 @@ function MyPasswordChange() {
 
         } else {
 
-            axios.put("http://localhost:8080/mypage/changepw",
+            axios.put("http://localhost:8081/mypage/changepw",
                 {
                     memberId: memberId,
                     memberPw: memberPw

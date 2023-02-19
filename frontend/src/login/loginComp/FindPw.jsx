@@ -37,7 +37,7 @@ function FindPw(props) {
                 clearInterval(timerInterval)
             }
         })
-        axios.get("http://localhost:8080/member/emailConfirm",
+        axios.get("http://localhost:8081/member/emailConfirm",
             {
                 params: {memberId: memberId, memberEmail: memberEmail}
             })
@@ -81,7 +81,7 @@ function FindPw(props) {
 
         } else {
 
-            axios.put("http://localhost:8080/mypage/changepw",
+            axios.put("http://localhost:8081/mypage/changepw",
                 {
                     memberId: memberId,
                     memberPw: memberPw

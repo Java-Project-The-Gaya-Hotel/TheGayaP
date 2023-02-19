@@ -43,7 +43,7 @@ function MyProfile() {
             GetMemberIdByToken().then(response => {
                 setMemberId(response.data)
                 axios.get(
-                    "http://localhost:8080/mypage/getUserInfo",
+                    "http://localhost:8081/mypage/getUserInfo",
                     {
                         params: {
                             memberId: response.data,
@@ -65,7 +65,7 @@ function MyProfile() {
     }, []);
 
     const btnClick = () => {
-        axios.put("http://localhost:8080/mypage/update",
+        axios.put("http://localhost:8081/mypage/update",
             {
                 memberEmail: memberEmail,
                 memberTel: memberPh

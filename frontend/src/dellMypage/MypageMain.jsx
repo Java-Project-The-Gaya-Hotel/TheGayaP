@@ -24,7 +24,7 @@ function MypageMain() {
                 GetMemberIdByToken().then(response => {
                     setMemberId(response.data)
                     axios.get(
-                        "http://localhost:8080/mypage/getUserInfo",
+                        "http://localhost:8081/mypage/getUserInfo",
                         {params:{
                                 memberId: response.data,
                             }}

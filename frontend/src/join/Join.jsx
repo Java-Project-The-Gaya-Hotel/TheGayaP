@@ -155,7 +155,7 @@ function Join(props) {
             return alert('비밀번호와 비밀번호 확인은 같아야 합니다.')
         }   //여기서 걸리면 아래로 못감
 
-        axios.post("http://localhost:8080/join/insert", data)
+        axios.post("http://localhost:8081/join/insert", data)
             .then((req) => {
                 Swal.fire({
                     icon: 'info',
@@ -201,7 +201,7 @@ function Join(props) {
         if (!id) {
             setIdMes("아이디를 입력해주세요");
         }else {
-            axios.get("http://localhost:8080/join/idCheck",
+            axios.get("http://localhost:8081/join/idCheck",
                 {
                     params: {memberId: id}
                 })
@@ -231,7 +231,7 @@ function Join(props) {
         if (!email) {
             setEmailMes("이메일을 입력해주세요");
         }else {
-            axios.get("http://localhost:8080/join/emailCheck",
+            axios.get("http://localhost:8081/join/emailCheck",
                 {
                     params: {memberEmail: email}
                 })

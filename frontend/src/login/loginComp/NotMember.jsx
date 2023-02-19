@@ -21,7 +21,7 @@ function NotMember(props){
 
     const resvBtn = () =>{
 
-        axios.get("http://localhost:8080/login/findResv", {params:
+        axios.get("http://localhost:8081/login/findResv", {params:
             {
                 customerName: customerName,
                 reservationNum: reservationNum,

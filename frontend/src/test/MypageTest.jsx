@@ -21,7 +21,7 @@ function MypageTest(props) {
   const resvListBtn = (e) => {
     e.preventDefault();
 
-    axios.get("http://localhost:8080/mypage/resv",
+    axios.get("http://localhost:8081/mypage/resv",
       {
         params: {customerId: id}
       })
@@ -37,7 +37,7 @@ function MypageTest(props) {
   const accountBtn = (e) => {
     e.preventDefault();
 
-    axios.get("http://localhost:8080/mypage/account",
+    axios.get("http://localhost:8081/mypage/account",
       {
         params: {memberId: id}
       })
@@ -52,7 +52,7 @@ function MypageTest(props) {
   const pointBtn = (e) => {
     e.preventDefault();
 
-    axios.get("http://localhost:8080/mypage/point",
+    axios.get("http://localhost:8081/mypage/point",
       {
         params: {customerId: id}
       })
@@ -67,7 +67,7 @@ function MypageTest(props) {
   const profileBtn = (e) => {
     e.preventDefault();
 
-    axios.get("http://localhost:8080/mypage/profile",
+    axios.get("http://localhost:8081/mypage/profile",
       {
         params: {memberId: id}
       })
@@ -85,7 +85,7 @@ function MypageTest(props) {
   const updateBtn = (e) => {
     e.preventDefault();
 
-    axios.put("http://localhost:8080/mypage/update",
+    axios.put("http://localhost:8081/mypage/update",
       updateData,
       {
         params: {memberId: id}

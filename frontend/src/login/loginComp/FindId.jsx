@@ -22,7 +22,7 @@ function FindId(props) {
 
 
   const findIdBtn = () => {
-    axios.get("http://localhost:8080/login/findId",
+    axios.get("http://localhost:8081/login/findId",
       {
         params: {memberName: name, memberEmail: email}
       })

@@ -7,7 +7,7 @@ function CancelPay() {
 
   const onClickCancel = () => {
     axios({
-      url: "http://localhost:8080/payments/cancel", // 예: http://www.myservice.com/payments/cancel
+      url: "http://localhost:8081/payments/cancel", // 예: http://www.myservice.com/payments/cancel
       method: "POST",
       headers: {
         "Content-Type": "application/json",

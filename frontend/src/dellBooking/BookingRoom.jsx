@@ -31,7 +31,7 @@ function BookingRoom() {
     // 받아온 정보들로 axios 통신하여 예약이 중첩되지 않은 방을 가져오는 코드
     useEffect(() => {
 
-        axios.get("http://localhost:8080/gaya/roomlist", {
+        axios.get("http://localhost:8081/gaya/roomlist", {
 
             params: {
                 hotelNum: searchParams.get('hotelNum'),

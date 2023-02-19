@@ -63,7 +63,7 @@ function ReservationPageDetail() {
         if (sessionStorage.getItem("token") != null) {
             GetMemberIdByToken().then(response => {
                 setMemberId(response.data);
-                axios.get("http://localhost:8080/member/userinfo", {
+                axios.get("http://localhost:8081/member/userinfo", {
                     params: {
                         memberId: response.data,
                     }
@@ -86,7 +86,7 @@ function ReservationPageDetail() {
         }
 
 
-        axios.get("http://localhost:8080/gaya/checkmealcost", {
+        axios.get("http://localhost:8081/gaya/checkmealcost", {
             params: {
                 hotelNum: searchParams.get('hotelNum'),
             }
@@ -185,7 +185,7 @@ function ReservationPageDetail() {
         }
 
         if (success) {
-            axios.post("http://localhost:8080/gaya/bookroom",
+            axios.post("http://localhost:8081/gaya/bookroom",
                 {
                     reservationNum: merchant_uid,
                     reservationHotelNum: Number(hotelNum),

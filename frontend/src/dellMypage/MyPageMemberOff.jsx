@@ -20,7 +20,7 @@ function MyPageMemberOff() {
             GetMemberIdByToken().then(response => {
                 setMemberId(response.data)
                 axios.get(
-                    "http://localhost:8080/mypage/getUserInfo",
+                    "http://localhost:8081/mypage/getUserInfo",
                     {
                         params: {
                             memberId: response.data,
@@ -39,7 +39,7 @@ function MyPageMemberOff() {
 
     const YesBtn = (e) => {
         e.preventDefault();
-        axios.put("http://localhost:8080/mypage/withdrawalMember", null, {
+        axios.put("http://localhost:8081/mypage/withdrawalMember", null, {
             params: {
                 memberId: memberId
             }

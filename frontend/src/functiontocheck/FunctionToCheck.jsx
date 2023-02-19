@@ -15,7 +15,7 @@ function AuthorityCheck() {
         const acToken = tokenJson["accessToken"];
 
         // accessToken으로 토큰 만료 확인
-        axios.get("http://localhost:8080/members/actokencheck", {
+        axios.get("http://localhost:8081/members/actokencheck", {
                 headers: {
                     Authorization: `Bearer ${acToken}`
                 }
@@ -27,7 +27,7 @@ function AuthorityCheck() {
 
             try {
                 // refreshToken 으로 재발급 성공시 token 정보 재할당
-                const response = await axios.post("http://localhost:8080/members/refreshtokencheck", tokenJson);
+                const response = await axios.post("http://localhost:8081/members/refreshtokencheck", tokenJson);
                 sessionStorage.setItem("token", JSON.stringify(response.data));
                 return true;
             } catch (e) {
@@ -68,7 +68,7 @@ async function GetMemberIdByToken() {
     try {
         const tokenJson = JSON.parse(sessionStorage.getItem("token"));
         const acToken = tokenJson["accessToken"];
-        const response = await axios.get("http://localhost:8080/members/access", {params: {accessToken: acToken}});
+        const response = await axios.get("http://localhost:8081/members/access", {params: {accessToken: acToken}});
         return response;
     } catch (e) {
         return null;

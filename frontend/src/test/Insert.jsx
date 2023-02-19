@@ -53,7 +53,7 @@ function Insert(props) {
         }
 
 
-        axios.post("http://localhost:8080/insert", roomInfo
+        axios.post("http://localhost:8081/insert", roomInfo
         ).then((req) => {
             console.log("데이터 전송 성공")
             console.log(req.data);

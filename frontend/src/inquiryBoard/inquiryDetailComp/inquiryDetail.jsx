@@ -40,7 +40,7 @@ function InquiryDetail() {
         const syncMemberId = await GetMemberIdByToken()
         const syncMemberIdParam = syncMemberId.data
         setMemberId(syncMemberIdParam);
-        const syncMemberInfo = await axios.get("http://localhost:8080/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
+        const syncMemberInfo = await axios.get("http://localhost:8081/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
 
 
 
@@ -52,7 +52,7 @@ function InquiryDetail() {
     // 문의 상세 데이터 가져오기
     const getInquiryDetailData = async () => {
 
-        const syncInquiryItem = await axios.get("http://localhost:8080/qa/getDetail", {params: {idx: userParam.get('idx')}})
+        const syncInquiryItem = await axios.get("http://localhost:8081/qa/getDetail", {params: {idx: userParam.get('idx')}})
         setInquiryCategory(syncInquiryItem.data.inquiryCategory);
         setHotelName(syncInquiryItem.data.inquiryHotelName);
         setInquiryTitle(syncInquiryItem.data.inquiryTitle);
@@ -62,7 +62,7 @@ function InquiryDetail() {
         setContents(syncInquiryItem.data.inquiryContents);
         setReservationNum(syncInquiryItem.data.inquiryReservationNum);
         // 상세 답글 을 가져오는 axios
-        const syncInquiryDetail = await axios.get("http://localhost:8080/gaya/qa/detail", {
+        const syncInquiryDetail = await axios.get("http://localhost:8081/gaya/qa/detail", {
             params: {
                 idx: userParam.get('idx'),
             }
@@ -126,7 +126,7 @@ function InquiryDetail() {
         writeBoxShow().then(r => {
 
             if (result) {
-                setWriteBox(<InquiryReplyWrite Reload={reloadCount} setReLoad={setReloadCount} qaNum={userParam.get('idx')} data={memberInfo} status={inquiryStatus}/>);
+                setWriteBox(<InquiryReplyWrite Reload={reloadCount} setReLoad={setReloadCount} qaNum={userParam.get('idx')} data={memberInfo} status={inquiryStatus} />);
             } else {
                 setWriteBox(null);
             }
@@ -136,17 +136,16 @@ function InquiryDetail() {
 
 
     useEffect(()=>{
-        axios.get("http://localhost:8080/gaya/qa/detail", {
-            params: {
-                idx: userParam.get('idx'),
+        getInquiryDetailData();
+
+        writeBoxShow().then(r => {
+
+            if (result) {
+                setWriteBox(<InquiryReplyWrite Reload={reloadCount} setReLoad={setReloadCount} qaNum={userParam.get('idx')} data={memberInfo} status={inquiryStatus}/>);
+            } else {
+                setWriteBox(null);
             }
-        }).then(res=>{
-            setQaDetailData(res.data);
-
-        }).catch(e=>{
-            console.log(e);
-        })
-
+        });
 
     },[reloadCount])
 

@@ -42,43 +42,20 @@ function InquiryReplyWrite(props) {
                     answerStatus: "답변완료"
                 }
 
-                axios.post("http://localhost:8080/gaya/qa/reply/insert", body)
+                axios.post("http://localhost:8081/gaya/qa/reply/insert", body)
                     .then(req => {
+                        let countNum = props.Reload;
+                        countNum++
+                        props.setReLoad(countNum);
                     }).catch(e => {
                     console.log(e);
                 })
                 Swal.fire(
                     ' 문의가 종료됐습니다. ',
-                ).then(res=>{
-                    if (res.isConfirmed) {
-                        window.location.reload();
-                    }
-                })
+                )
 
             }
         })
-    // }
-    //     Swal.fire({
-    //         icon: 'success',
-    //         title: '문의 종료',
-    //         text: ' 문의가 종료됐습니다. ',
-    //     }).then(res => {
-    //         const body = {
-    //             answerInquiryNum: qaNum,
-    //             answerStatus: "답변완료"
-    //         }
-    //
-    //         axios.post("http://localhost:8080/gaya/qa/reply/insert", body)
-    //             .then(req => {
-    //             }).catch(e => {
-    //             console.log(e);
-    //         })
-    //
-    //         if (res.isConfirmed) {
-    //             window.location.reload();
-    //         }
-    //     })
-    //
     }
 
 
@@ -98,7 +75,7 @@ function InquiryReplyWrite(props) {
             answerStatus: answerStatus
         }
 
-        axios.post("http://localhost:8080/gaya/qa/reply/insert", body)
+        axios.post("http://localhost:8081/gaya/qa/reply/insert", body)
             .then(req => {
                 let countNum = props.Reload;
                 countNum++

@@ -24,7 +24,7 @@ function MyBookingSchedule() {
             GetMemberIdByToken().then(response => {
                 setCustomerId(response.data)
                 axios.get(
-                    "http://localhost:8080/mypage/reservationinfo",
+                    "http://localhost:8081/mypage/reservationinfo",
                     {
                         params: {
                             customerId: response.data,

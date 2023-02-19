@@ -63,7 +63,7 @@ function LoginMember(props) {
     const login = async (id, pw) => {
         try {
             // 로그인 정보 보내는 axios
-            const response = await axios.post("http://localhost:8080/members/login", {
+            const response = await axios.post("http://localhost:8081/members/login", {
                 memberId: id,
                 memberPw: pw
             })
