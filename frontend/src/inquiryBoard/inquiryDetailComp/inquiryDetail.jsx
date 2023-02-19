@@ -138,15 +138,6 @@ function InquiryDetail() {
     useEffect(()=>{
         getInquiryDetailData();
 
-        writeBoxShow().then(r => {
-
-            if (result) {
-                setWriteBox(<InquiryReplyWrite Reload={reloadCount} setReLoad={setReloadCount} qaNum={userParam.get('idx')} data={memberInfo} status={inquiryStatus}/>);
-            } else {
-                setWriteBox(null);
-            }
-        });
-
     },[reloadCount])
 
     return (
