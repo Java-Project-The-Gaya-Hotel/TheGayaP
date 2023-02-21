@@ -1,10 +1,13 @@
 // FindPW.jsx
 import React, {useState} from "react";
-import axios from "axios";
 import Modal from "./Modal";
 import "../loginCss/ButtonCss.css"
 import Swal from "sweetalert2";
+import {default as Axios} from "axios";
 
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 function FindPw(props) {
 
@@ -30,14 +33,14 @@ function FindPw(props) {
                 Swal.showLoading()
                 const b = Swal.getHtmlContainer().querySelector('b')
                 timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
+                    // b.textContent = Swal.getTimerLeft()
                 }, 100)
             },
             willClose: () => {
                 clearInterval(timerInterval)
             }
         })
-        axios.get("http://localhost:8080/member/emailConfirm",
+        axios.get("/member/emailConfirm",
             {
                 params: {memberId: memberId, memberEmail: memberEmail}
             })
@@ -81,7 +84,7 @@ function FindPw(props) {
 
         } else {
 
-            axios.put("http://localhost:8080/mypage/changepw",
+            axios.put("/mypage/changepw",
                 {
                     memberId: memberId,
                     memberPw: memberPw

@@ -3,12 +3,13 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import {addDays} from "date-fns";
 import {ko} from "date-fns/esm/locale";
-import axios from "axios";
+import {default as Axios} from "axios";
 import "../dellMain/dellmainCss/BtnDateChoose.css"
 import "../dellBooking/dellBookingCss/AccoCss.css"
 import Swal from "sweetalert2";
 import moment, {now} from "moment";
 import styled from "styled-components";
+// import axios from "axios";
 
 
 const styles = {
@@ -24,9 +25,9 @@ const styles = {
     },
 }
 
-// const axios = Axios.create({
-//     baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
-// });
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 const InputBox = styled.input`
   width: 190px;
@@ -124,8 +125,8 @@ function BookingAccordion() {
     // hotel List 가져오기
     //axios input button roop connection
     useEffect(() => {
-        axios.get("http://localhost:8080/gaya/hotelList")
-        // axios.get("/gaya/hotelList")
+        // axios.get("localhost:8080/gaya/hotelList")
+        axios.get("/gaya/hotelList")
             .then((req) => {
                 setHotelList(req.data);
             })

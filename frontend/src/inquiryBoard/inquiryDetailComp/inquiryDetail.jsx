@@ -1,13 +1,16 @@
-import React, {useEffect, useLayoutEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import InquiryUserChat from "./inquiryUserChat";
 import InquiryAdminChat from "./inquiryAdminChat";
 import InquiryReplyWrite from "./InquiryReplyWrite";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import axios from "axios";
 import {AuthorityCheck, GetMemberIdByToken, SessionCheck} from "../../functiontocheck/FunctionToCheck";
 import Swal from "sweetalert2";
 import {tr} from "date-fns/locale";
+import {default as Axios} from "axios";
 
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 // 문의 상세 글 함수
 function InquiryDetail() {
@@ -32,7 +35,8 @@ function InquiryDetail() {
     const [inquiryStatus, setInquiryStatus] = useState("");
     const [isAdmin, setIsAdmin] = useState();
     const [writeBox, setWriteBox] = useState();
-    const [reloadCount, setReloadCount] = useState(0);
+    const [reLoadCount, setReLoadCount] = useState(0);
+
 
 
     // 유저 정보 가져오기
@@ -40,7 +44,7 @@ function InquiryDetail() {
         const syncMemberId = await GetMemberIdByToken()
         const syncMemberIdParam = syncMemberId.data
         setMemberId(syncMemberIdParam);
-        const syncMemberInfo = await axios.get("http://localhost:8080/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
+        const syncMemberInfo = await axios.get("/mypage/getUserInfo", {params: {memberId: syncMemberIdParam}});
 
 
 
@@ -52,7 +56,7 @@ function InquiryDetail() {
     // 문의 상세 데이터 가져오기
     const getInquiryDetailData = async () => {
 
-        const syncInquiryItem = await axios.get("http://localhost:8080/qa/getDetail", {params: {idx: userParam.get('idx')}})
+        const syncInquiryItem = await axios.get("/qa/getDetail", {params: {idx: userParam.get('idx')}})
         setInquiryCategory(syncInquiryItem.data.inquiryCategory);
         setHotelName(syncInquiryItem.data.inquiryHotelName);
         setInquiryTitle(syncInquiryItem.data.inquiryTitle);
@@ -61,8 +65,10 @@ function InquiryDetail() {
         setInquiryStatus(syncInquiryItem.data.inquiryStatus);
         setContents(syncInquiryItem.data.inquiryContents);
         setReservationNum(syncInquiryItem.data.inquiryReservationNum);
+
+
         // 상세 답글 을 가져오는 axios
-        const syncInquiryDetail = await axios.get("http://localhost:8080/gaya/qa/detail", {
+        const syncInquiryDetail = await axios.get("/gaya/qa/detail", {
             params: {
                 idx: userParam.get('idx'),
             }
@@ -126,7 +132,7 @@ function InquiryDetail() {
         writeBoxShow().then(r => {
 
             if (result) {
-                setWriteBox(<InquiryReplyWrite Reload={reloadCount} setReLoad={setReloadCount} qaNum={userParam.get('idx')} data={memberInfo} status={inquiryStatus}/>);
+                setWriteBox(<InquiryReplyWrite reloadCount={reLoadCount} setReLoadCount={setReLoadCount} qaNum={userParam.get('idx')} data={memberInfo} status={inquiryStatus}/>);
             } else {
                 setWriteBox(null);
             }
@@ -136,19 +142,10 @@ function InquiryDetail() {
 
 
     useEffect(()=>{
-        axios.get("http://localhost:8080/gaya/qa/detail", {
-            params: {
-                idx: userParam.get('idx'),
-            }
-        }).then(res=>{
-            setQaDetailData(res.data);
-
-        }).catch(e=>{
-            console.log(e);
-        })
+        getInquiryDetailData();
 
 
-    },[reloadCount])
+    },[reLoadCount])
 
     return (
         <div className={"container min-vh-100 "}>

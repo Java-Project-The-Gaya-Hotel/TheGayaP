@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {AuthorityCheck, GetMemberIdByToken, SessionCheck} from "../functiontocheck/FunctionToCheck";
-import axios from "axios";
 import Swal from "sweetalert2";
-
+import {default as Axios} from "axios";
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 const styles = {
     cardBox: {
@@ -53,7 +55,7 @@ function MyPasswordChange() {
 
         } else {
 
-            axios.put("http://localhost:8080/mypage/changepw",
+            axios.put("/mypage/changepw",
                 {
                     memberId: memberId,
                     memberPw: memberPw

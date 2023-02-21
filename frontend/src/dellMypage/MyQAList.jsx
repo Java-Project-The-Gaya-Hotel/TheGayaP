@@ -1,7 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {AuthorityCheck, GetMemberIdByToken, SessionCheck} from "../functiontocheck/FunctionToCheck";
-import axios from "axios";
+import {default as Axios} from "axios";
+
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 
 function MyQAList() {
@@ -20,7 +24,7 @@ function MyQAList() {
             GetMemberIdByToken().then(response => {
                 setCustomerId(response.data)
                 axios.get(
-                    "http://localhost:8080/mypage/myqalistable",
+                    "/mypage/myqalistable",
                     {
                         params: {
                             memberId: response.data,

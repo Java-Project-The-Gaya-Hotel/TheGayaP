@@ -1,7 +1,11 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
 import {useNavigate} from "react-router-dom";
+import {default as Axios} from "axios";
+
+const axios = Axios.create({
+    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+});
 
 //게시글 작성 페이지
 function InquiryReplyWrite(props) {
@@ -42,7 +46,7 @@ function InquiryReplyWrite(props) {
                     answerStatus: "답변완료"
                 }
 
-                axios.post("http://localhost:8080/gaya/qa/reply/insert", body)
+                axios.post("/gaya/qa/reply/insert", body)
                     .then(req => {
                     }).catch(e => {
                     console.log(e);
@@ -51,7 +55,9 @@ function InquiryReplyWrite(props) {
                     ' 문의가 종료됐습니다. ',
                 ).then(res=>{
                     if (res.isConfirmed) {
-                        window.location.reload();
+                        let countNum = props.reloadCount;
+                        countNum++
+                        props.setReLoadCount(countNum);
                     }
                 })
 
@@ -98,11 +104,11 @@ function InquiryReplyWrite(props) {
             answerStatus: answerStatus
         }
 
-        axios.post("http://localhost:8080/gaya/qa/reply/insert", body)
+        axios.post("/gaya/qa/reply/insert", body)
             .then(req => {
-                let countNum = props.Reload;
+                let countNum = props.reloadCount;
                 countNum++
-                props.setReLoad(countNum);
+                props.setReLoadCount(countNum);
             }).catch(e => {
             console.log(e);
         })
