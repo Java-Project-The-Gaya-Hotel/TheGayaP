@@ -6,7 +6,6 @@
 
 프론트 엔드는 React를 사용하고 백 엔드는 Spring Boot를 사용했습니다.
 
-<strong> aws링크: <a>http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080/<a/> <strong/>
 
 ## 🛫개발기간
 <br/>
