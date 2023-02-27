@@ -23,6 +23,7 @@
 #### 💺 개발 환경
 
 * JAVA
+* React
 * Mybatis
 * Framework: SpringBoot
 * IDE: Intellij
