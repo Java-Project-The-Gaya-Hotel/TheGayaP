@@ -26,7 +26,7 @@ const styles = {
 }
 
 const axios = Axios.create({
-    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+    baseURL: "http://ec2-13-125-182-95.ap-northeast-2.compute.amazonaws.com:8080"
 });
 
 const InputBox = styled.input`

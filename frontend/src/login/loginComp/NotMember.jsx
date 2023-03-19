@@ -3,7 +3,7 @@ import Modal from "./Modal";
 import FindResv from "./FindResv";
 import {default as Axios} from "axios";
 const axios = Axios.create({
-    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+    baseURL: "http://ec2-13-125-182-95.ap-northeast-2.compute.amazonaws.com:8080"
 });
 // 비회원 예약찾기
 function NotMember(props){

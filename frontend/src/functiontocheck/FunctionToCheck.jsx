@@ -4,7 +4,7 @@ import moment from "moment";
 import {default as Axios} from "axios";
 
 const axios = Axios.create({
-    baseURL: "http://ec2-13-125-220-237.ap-northeast-2.compute.amazonaws.com:8080"
+    baseURL: "http://ec2-13-125-182-95.ap-northeast-2.compute.amazonaws.com:8080"
 });
 
 // 권한 확인을 위한 함수 모음
